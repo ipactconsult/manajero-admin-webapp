@@ -1,0 +1,1 @@
+export const  enum ProjectStatus{IN_PTOGRESS,CLOSED,DONE};

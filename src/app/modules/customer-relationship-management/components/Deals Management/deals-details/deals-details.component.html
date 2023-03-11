@@ -1,0 +1,343 @@
+<div *ngIf="deal" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Deal Details </h2>
+    </div>
+
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/crm/update-deal/', deal.id]" class="w-25" fullWidth
+         nbButton nbTooltip="Click here to edit deal data" nbTooltipStatus="primary" shape="round" status="warning">
+        <nb-icon icon="edit-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/crm/deals']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to deals list" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-4">  
+      <nb-card>
+        <div class="ml-auto mr-auto">
+          <h4 class="mt-3 mx-3">Customer </h4>
+          <img width="150" height="150" class=" mt-3 mx-3 rounded-circle " src="{{deal?.visit?.customer?.image}}">
+        </div>
+
+
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="person-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-2">    {{deal?.visit?.customer?.name}}</p>
+          </div>
+        </div>
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="at-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-2">    {{deal?.visit?.customer?.workEmail}}</p>
+          </div>
+        </div>
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="globe-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-2">    {{deal?.visit?.customer?.workWebsite}}</p>
+          </div>
+        </div>
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="phone-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-2">   {{deal?.visit?.customer?.phone}}</p>
+          </div>
+        </div>
+      </nb-card>
+<!--
+      <nb-card>
+        <div>
+          <h4 class="mt-3 mx-3">Employee </h4>
+          <img class="w-50 mt-3 mx-3 rounded-circle" src="{{deal?.visit?.customer?.assignee?.employeeProfileImage}}">
+        </div>
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="person-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-1">    {{deal?.visit?.customer?.assignee?.employeeName}}</p>
+          </div>
+        </div>
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="at-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-1">     {{deal?.visit?.customer?.assignee?.employeeEmail}}</p>
+          </div>
+        </div>
+
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="globe-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-1">     {{deal?.visit?.customer?.assignee?.roleEmployee}}</p>
+          </div>
+        </div>
+        <div class="row mt-1 mx-1">
+          <div class="col-md-3">
+            <button nbButton
+                    shape="round"
+                    size="small"
+                    status="danger">
+              <nb-icon icon="phone-outline"></nb-icon>
+            </button>
+          </div>
+          <div class="col-md-7">
+            <p class="mt-1 mx-1">     {{deal?.visit?.customer?.assignee?.employeeCellPhone}}</p>
+          </div>
+        </div>
+
+      </nb-card>
+-->
+    </div>
+
+    <div class="col-md-8">
+      <nb-card>
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header>Deal Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Status</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                      <span *ngIf="deal.dealStatus === 'paused'"
+                            class="mb-2 badge badge-warning badge-pill">{{deal.dealStatus}}</span>
+                  <span *ngIf="deal.dealStatus === 'Done'"
+                        class="mb-2 badge badge-success badge-pill">{{deal.dealStatus}}</span>
+                  <span *ngIf="deal.dealStatus === 'In Progress'"
+                        class="mb-2 badge badge-light badge-pill">{{deal.dealStatus}}</span>
+                  <span *ngIf="deal.dealStatus === 'Canceled'"
+                        class="mb-2 badge badge-danger badge-pill">{{deal.dealStatus}}</span>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+
+                  <nb-tag-list>
+                    <nb-tag [text]="deal.dealType" appearance="outline" class="align-self-center"
+                            nbTooltip="Deal Type" nbTooltipStatus="primary"
+                            size="small"
+                            status="info"></nb-tag>
+
+                  </nb-tag-list>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Name</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.dealName}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Value</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.dealValue}}
+                </div>
+              </div>
+              <hr>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.dealType }}
+                </div>
+              </div>
+              <hr>
+
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Quote Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quote Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.quoteDate | date : 'YYYY MM dd'}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quote Value</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.quoteValue}}
+                </div>
+              </div>
+              <hr>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quote Vs Budget </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.quoteVsBudget }}
+                </div>
+              </div>
+              <hr>
+
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Extra Information for customer</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Win Chance</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.winChance}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Customer Budget</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.customerBudget}}
+                </div>
+              </div>
+              <hr>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Source </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.source }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Source </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.forecastDate | date : 'YYYY MM dd' }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Negotiation </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.negotiation }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Comment </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{deal.comment}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Visit Title </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <nb-tag-list>
+
+                    <nb-tag [text]="deal?.visit?.title" appearance="outline" class="align-self-center"
+                            nbTooltip="Visit Title"
+                            nbTooltipStatus="success" size="small"
+                            status="success"></nb-tag>
+                  </nb-tag-list>
+                </div>
+              </div>
+              <hr>
+
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+
+
+      </nb-card>
+    </div>
+
+
+  </div>
+</div>

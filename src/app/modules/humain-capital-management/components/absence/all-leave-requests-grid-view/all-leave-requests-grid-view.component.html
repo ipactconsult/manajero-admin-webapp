@@ -1,0 +1,207 @@
+<div class="row">
+    <div class="col-md-3 col-sm-12">
+        <h3 class="more-vertical">
+          Leaves Requests  
+        </h3>  
+    </div>
+    <div class="col-md-4">
+      <input fullWidth class=" mx-2"  nbTooltip="Fill this field to find department" nbTooltipStatus="primary" type="text"  fieldSize="large" nbInput placeholder="search by fields" >
+    </div>
+    <div class="col-md-3 col-sm-8" align="right">
+        <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/absences/allLeavesRequestsGridView']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+        &nbsp;
+        <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/absences/allLeavesRequestsKeypadView']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+        &nbsp;
+        <a [routerLink]="['/hr/absences/allLeavesRequestsTableView']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+        &nbsp;
+        <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success" ><i class="fas fa-file-excel text-white"></i>  </button>
+        &nbsp;
+  
+      
+        <br>
+  </div>
+  <div class="col-md-2 mt-1">
+    <nb-tag text={{calculateSumDuration()}} status="basic" appearance="filled"></nb-tag>
+  </div>
+</div>
+<div class="page-content container note-has-grid mt-4">
+   
+    <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                <nb-select (selectedChange)="filterByEmployee($event)"
+                 class="w-100 mt-3" selected="0">
+                 <nb-option  value="0" disabled>&nbsp;&nbsp;&nbsp; Employee</nb-option>
+                 <nb-option value="All" (click)="getAll()" >&nbsp;&nbsp;&nbsp; All</nb-option>
+                  <nb-option *ngFor="let employee of employees" value="{{employee.id}}">&nbsp;&nbsp;&nbsp; 
+                    <nb-user [name]="employee.employeeName" [picture]="employee.employeeProfileImage"></nb-user>
+                  </nb-option>
+        
+                </nb-select>
+              </nb-form-field>
+            </div>
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                <nb-select selected="0" (selectedChange)="filterByDepartment($event)" class="w-100 mt-3">
+                  <nb-option  value="0" disabled>&nbsp;&nbsp;&nbsp; Department</nb-option>
+                  <nb-option value="All" (click)="getAll()">&nbsp;&nbsp;&nbsp; All</nb-option>
+                  <nb-option *ngFor="let department of departments" value="{{department.id}}">&nbsp;&nbsp;&nbsp; {{department.departmentName}}</nb-option>
+                </nb-select>
+              </nb-form-field>
+            </div>
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                <nb-select (selectedChange)="getRequestByStatus($event)"  selected="0" class="w-100 mt-3">
+                  <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Status</nb-option>
+                  <nb-option value="All" (click)="getAll()">All</nb-option>
+                  <nb-option value="Validate" >Validate</nb-option>
+                  <nb-option value="Rejected" >Rejected</nb-option>
+                  <nb-option value="Await For Validation" >Await For Validation</nb-option>
+                </nb-select>
+              </nb-form-field>
+            </div>
+            
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                <nb-select (selectedChange)="getRequestByStart($event)"  selected="0" class="w-100 mt-3">
+                  <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Start</nb-option>
+                  <nb-option value="All" (click)="getAll()">&nbsp;&nbsp;&nbsp; All</nb-option>
+                  <nb-option value="In The Morning" >In The Morning</nb-option>
+                  <nb-option value="Afternoon" >Afternoon</nb-option>
+                
+                </nb-select>
+              </nb-form-field>
+            </div>
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                <nb-select (selectedChange)="getRequestByEnd($event)"  selected="0" class="w-100 mt-3">
+                  <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; End</nb-option>
+                  <nb-option value="All" (click)="getAll()">&nbsp;&nbsp;&nbsp; All</nb-option>
+                  <nb-option value="In The Morning" >In The Morning</nb-option>
+                  <nb-option value="Afternoon" >Afternoon</nb-option>   
+                </nb-select>
+              </nb-form-field>
+            </div>
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="flip-outline"></nb-icon>
+                <nb-select  selected="0" class="w-100 mt-3">
+                  <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Start Date</nb-option>
+                  <nb-option value="All" (click)="getAll()">&nbsp;&nbsp;&nbsp; All</nb-option>
+                  <nb-option value="Ascending" (click)="getAllAsc()">&nbsp;&nbsp;&nbsp; Ascending</nb-option>
+                  <nb-option value="Descending" (click)="getAllDesc()">&nbsp;&nbsp;&nbsp; Descending</nb-option>
+                
+                </nb-select>
+              </nb-form-field>
+            </div>
+            <div class="col-lg-9">
+              <nb-form-field>
+                <nb-icon nbPrefix class="mt-3" icon="flip-outline"></nb-icon>
+                <nb-select  selected="0" class="w-100 mt-3">
+                  <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; End Date</nb-option>
+                  <nb-option value="All" (click)="getAll()">&nbsp;&nbsp;&nbsp; All</nb-option>
+                  <nb-option value="Ascending" (click)="getAllAsc()" >&nbsp;&nbsp;&nbsp; Ascending</nb-option>
+                  <nb-option value="Descending" (click)="getAllDesc()">&nbsp;&nbsp;&nbsp; Descending</nb-option>
+                
+                </nb-select>
+              </nb-form-field>
+            </div>
+            <div class="col-lg-9">
+              <div class="mt-3">
+                <label for="">Item Per Page</label>
+                <input class="w-100" type="number" nbInput  [(ngModel)]="pageSize" min="4"/>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content">
+                <div id="note-full-container" class="note-has-grid row">
+                    <div *ngFor="let request of leaves | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: total}" class="col-md-6 single-note-item all-category">
+                        <nb-card class=" card-body">
+                            <span class="side-stick"></span>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <nb-user [name]="request?.employee?.employeeName" onlyPicture size="medium" [picture]="request?.employee?.employeeProfileImage"></nb-user>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p class="mt-2">{{request?.employee?.employeeName}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row  mt-2">
+                                        <div class="col-md-12">
+                                            <p class="note-date font-12 text-muted">
+                                                <nb-icon icon="calendar-outline"></nb-icon>
+
+                                                {{request.startDate | date : 'dd MMM YYYY'}}
+                                                <nb-icon icon="arrow-forward-outline"></nb-icon>
+                                                {{request.endDate | date : 'dd MMM YYYY'}}
+
+                                            </p>
+                                        </div>
+                                      
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="print-none" shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                        <nb-icon icon="more-horizontal-outline"></nb-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                           
+                                          <a [routerLink]="['/hr/absences/edit-request/',request.id]" style="text-decoration:none" nbTooltip="Click here to edit data" nbTooltipStatus="primary">
+                                            <button mat-menu-item>
+                                              <span ><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                                            </button>
+                                          </a>
+                                      
+                                        <a>
+                                            <button mat-menu-item>
+                                                <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon>&nbsp; Archive</span>
+                
+                                            </button>
+                                        </a>
+                                    
+                                      </mat-menu>
+                                </div>
+                            </div>
+
+                            <div class="note-content">
+                                <p>Start : {{request.start}}</p>
+                                <p>End : {{request.end}}</p>
+                                <p class="note-inner-content">
+                                  <nb-icon icon="edit-outline"></nb-icon> Comments :  {{request.comments}}
+                                </p>
+                                <p> <nb-icon icon="clock-outline"></nb-icon> {{request.duration}} day(s)</p>
+                            </div>
+                            
+                        </nb-card>
+                    </div>
+                    
+                    <div class="mt-3 col-md-5">
+                      <nb-card style="height: 35px; border-radius: 25px;">
+                        <pagination-controls class="pt-1 text-center" (pageChange)="current = $event"></pagination-controls>
+                      </nb-card>   
+                    </div>
+                </div>
+                
+            </div>
+            
+                        
+        </div>
+      
+    </div>
+
+
+
+</div>

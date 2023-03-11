@@ -1,0 +1,27 @@
+.table {
+  th {
+    font-weight: 500;
+    color: #827fc0;
+  }
+
+  thead {
+    background-color: #f3f2f7;
+
+  }
+
+  > {
+    tbody > tr > td, tfoot > tr > td, thead > tr > td {
+      padding: 14px 12px;
+      vertical-align: middle;
+    }
+  }
+
+  tr td {
+    color: #8887a9;
+  }
+}
+
+.materialNames:hover {
+  background-color: #2b8cf1;
+  color: white;
+}

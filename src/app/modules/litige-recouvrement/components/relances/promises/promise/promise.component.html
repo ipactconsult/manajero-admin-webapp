@@ -1,0 +1,79 @@
+
+<nb-flip-card  [flipped]="flippedState" [showToggleButton]="false">
+    <nb-card-front>
+      <nb-card>
+        <nb-card-header>  <nb-icon icon="chevron-left-outline" pack="nebular-essentials" aria-hidden="true"   (click)="flippe()"></nb-icon>
+            Promise     
+           </nb-card-header>
+        <nb-card-body>
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Add Promise</h3>
+            
+                </div>
+            
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <form class="container" [formGroup]="createProjectCharterform" (ngSubmit)="create()">
+                        <div class="col-lg-8">
+                            <h5>Invoice Reference : {{relance?.invoice?.title}}   </h5>
+                            <nb-tag status="success" appearance="filled" text="{{rest}} Dinars "></nb-tag>
+            
+            
+                        </div>
+            
+                        <br>
+                        <br>
+            
+                          
+            
+            
+                        <div class="col-lg-4">
+                            <label for="subject">Date:</label>
+                            <div class="form-group">
+                                <input placeholder="Payment Date" nbInput [nbDatepicker]="dateTimePicker" fullWidth
+                                    formControlName="datedepaiement" />
+                                <nb-datepicker #dateTimePicker></nb-datepicker>
+                                <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+                                    <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+                                </div>
+            
+                            </div>
+                        </div>
+            
+                            <div class="col-lg-4">
+                                <label for="subject">Amount</label>
+                                <div class="form-group">
+                                    <input  placeholder="Amount to be paid" nbInput type="text" fullWidth formControlName="amount" />
+                                    <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+                                        <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+                                    </div>
+            
+                                </div>
+                            </div>
+                        <br>
+                        <div class="col-md-12">
+                            <button nbButton status="success">
+                                <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                                Save Promise
+                            </button>
+            
+                        </div>
+            
+            
+                    </form>
+                </div>
+            </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      <nb-card>
+        <nb-card-body>
+            <ngx-historique-promise [relance]="relance"> </ngx-historique-promise>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-back>
+  </nb-flip-card>

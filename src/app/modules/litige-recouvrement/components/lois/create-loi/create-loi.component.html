@@ -1,0 +1,76 @@
+
+        <div class="row">
+          <div class="col-md-9">
+            <h3>Laws Mangement</h3>
+            
+          </div>
+          <div class="col-md-3" align="right">
+           <a shape="round" status="basic"  [routerLink]="['/litige/listloi']" nbButton>
+             <nb-icon icon="corner-down-right-outline"></nb-icon>
+           </a>
+          </div>
+        </div>
+       
+        <div class="row mt-3">
+          <div class="col-md-12">
+           <form class="container" [formGroup]="createProjectCharterform" (ngSubmit)="storeLoi()">
+             <div class="col-lg-6">
+               <label for="subject">Document Name:</label>
+             <div class="form-group">
+              <input  nbInput type="text" fullWidth formControlName="docName" />
+              <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+                <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+              </div>
+
+             </div>
+             </div>
+           <br>
+           <div class="col-lg-6">
+            <label for="subject">Document Type:</label>
+          <div class="form-group">
+           <input  nbInput type="text" fullWidth formControlName="docType" />
+           <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+             <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+           </div>
+
+          </div>
+          </div>
+           <br>
+           <div class="col-lg-6">
+            <label for="subject">Docuement File:</label>
+          <div class="form-group">
+           <input  nbInput type="file"    fullWidth formControlName="file" (change)="upload($event)" />
+           <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+             <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+           </div>
+
+          </div>
+          </div>
+          <div  class="col-lg-6">
+            <label for="subject">Document Category:</label>
+            <nb-select [selected]="selectedItem" name="cat"
+            [(ngModel)]="loi.cat"
+            id="cat"
+            placeholder="select category"
+                                  formControlName="cat"  (selectedChange)="getSelectedCategory($event)">
+                                  <nb-option *ngFor="let x of list_cat" value="{{x.id}}">{{x.categoriename}}
+                                  </nb-option>
+                              </nb-select>
+          </div>
+         
+        
+          
+           
+           <div class="col-md-12">
+             <button nbButton status="success">
+               <nb-icon icon="checkmark-circle-outline"></nb-icon> 
+               Create 
+             </button>
+       
+           </div>
+             
+           </form>
+          </div>
+        </div>
+     
+      

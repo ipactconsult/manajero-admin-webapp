@@ -1,0 +1,153 @@
+<div class="row">
+       <div class="col-md-4">
+              <h3>Create New Supplier</h3>
+       </div>
+       <div  class="col-md-8">
+              <button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </button>
+       </div>
+</div>
+       <form [formGroup]="supplierForm" class="mt-3">
+        <label class="mt-2">First Name</label>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input nbInput fullWidth type="text" class="form-control"
+               formControlName="supplierFirstName">
+            </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please enter the first name" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+         <label class="mt-2">Last Name</label>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input nbInput fullWidth type="text" class="form-control"
+               formControlName="supplierLastName">
+            </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please enter the last name" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+         <label class="mt-2">Email Address</label>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input nbInput fullWidth type="email" class="form-control"
+               formControlName="supplierEmail">
+            </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please enter the email" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+         <label class="mt-2">Phone Number</label>
+         <div class="row">
+           <div class="col-md-11">
+             <div class="form-group">
+               <input nbInput fullWidth type="number" class="form-control"
+                      formControlName="supplierPhone">
+             </div>
+           </div>
+           <div class="col-md-1">
+             <nb-icon icon="info-outline" nbTooltip="Please enter the phone number" nbTooltipStatus="primary"></nb-icon>
+           </div>
+         </div>
+         <label class="mt-2">Company</label>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input nbInput fullWidth type="text" class="form-control"
+               formControlName="supplierCompany">
+            </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please enter the company" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+         <label class="mt-2">Country</label>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <nb-select (selectedChange)="changeCountry($event)"
+                       fullWidth
+                       formControlName="supplierCountry" fieldSize="large">
+                <nb-option [value]="country.country_name" *ngFor="let country of countries">
+                  {{country.country_name}}
+                </nb-option>
+            </nb-select>
+            </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please select a country" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <label class="mt-2">Currency</label>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <nb-select nbSelect fullWidth placeholder="Select Supplier Currency" 
+                         (selectedChange)="selectCurrency($event)"
+                         formControlName="supplierCurrency">
+                <nb-option value="$">Dollar</nb-option>
+              <nb-option value="€">Euro</nb-option>
+              <nb-option value="TD">Tunisian Dinar</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please select the supplier currency" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+         <label class="mt-2">Image <small>(Optional)</small></label>
+         <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input (change)="onFileSelected($event)"
+                         formControlName="supplierImage"
+                         fullWidth
+                         nbInput
+                         type="file"
+                  />
+                  <a href="{{supplierImage}}" target="_blank" *ngIf="supplierImage != ''">
+                    View Image
+                   </a>
+              </div>
+          </div>
+          <div class="col-md-1">
+           <nb-icon icon="info-outline" nbTooltip="Please insert an image" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+         <div class="row mt-5">
+          <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="supplierForm.invalid" 
+                      status="success" (click)="open2Supp(dialog)">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon>Save Data
+                </button>
+          </div>
+         </div>
+       </form>
+        <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Confirm Supplier Creation ?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to create this supplier?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="createNewSupplier(ref)" class="float-right" nbButton status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+

@@ -1,0 +1,44 @@
+<nb-card>
+  <nb-card-body class="example-items-col">
+    <form class="form" [formGroup]="changeRquestForm" (ngSubmit)="save()">
+      <div>
+        <label for="subject">Change Type :</label>
+        <nb-select
+          placeholder="Choose probability"
+          formControlName="changeType"
+          fullWidth
+        >
+          <nb-option value="RESOURCES">RESOURCES</nb-option>
+          <nb-option value="SCHEDULE">SCHEDULE</nb-option>
+          <nb-option value="STAKEHOLDER">STAKEHOLDER</nb-option>
+          <nb-option value="COST">COST</nb-option>
+          <nb-option value="RESOURCES">RISK</nb-option>
+          <nb-option value="KPI">KPI</nb-option>
+          <nb-option value="GOALS">GOALS</nb-option>
+        </nb-select>
+      </div>
+      <div>
+        <label for="subject">Description:</label>
+        <textarea
+          nbInput
+          fullWidth
+          placeholder="description"
+          formControlName="description"
+        ></textarea>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <input
+      [ngClass]="
+        selectedItem === null
+          ? 'btn btn-success btnCreate'
+          : 'btn btn-warning btnCreate'
+      "
+      [value]="selectedItem === null ? 'Send' : 'Update'"
+      type="submit"
+      [disabled]="changeRquestForm.invalid"
+      (click)="selectedItem === null ? save() : update()"
+    />
+  </nb-card-footer>
+</nb-card>

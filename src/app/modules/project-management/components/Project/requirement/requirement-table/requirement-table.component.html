@@ -1,0 +1,82 @@
+<nb-flip-card [flipped]="flippedState" [showToggleButton]="false">
+  <nb-card-front>
+    <nb-card accent="info">
+      <nb-card-body>
+        <nb-card>
+          <nb-card-header>
+            Requirement List
+            <div>
+              <label for="subject"
+                ><nb-icon icon="funnel-outline"> </nb-icon>filtre :</label
+              >
+              <nb-select placeholder="Choose" (selectedChange)="filtre($event)">
+                <nb-option value="Active">Active</nb-option>
+                <nb-option value="Archived">Archived</nb-option>
+              </nb-select>
+            </div>
+          </nb-card-header>
+
+          <nb-card-body>
+            <ng2-smart-table
+              [settings]="settings"
+              [source]="list"
+              (delete)="confirmation($event, dialog)"
+              (create)="create()"
+              (userRowSelect)="onUserRowSelect($event)"
+            >
+            </ng2-smart-table>
+            <!--Delete Confirm -->
+            <ng-template #dialog let-data let-ref="dialogRef">
+              <nb-card>
+                <nb-card-header>Confirm Archive Operation</nb-card-header>
+                <nb-card-body>
+                  Are you sure you want to archive this item ?
+                </nb-card-body>
+                <nb-card-footer>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <button nbButton status="basic" (click)="ref.close()">
+                        <nb-icon icon="close"></nb-icon>Close
+                      </button>
+                    </div>
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                      <button
+                        nbButton
+                        status="danger"
+                        (click)="onArchive(selectedItem)"
+                      >
+                        <nb-icon icon="trash"></nb-icon>Archive
+                      </button>
+                    </div>
+                  </div>
+                </nb-card-footer>
+              </nb-card>
+            </ng-template>
+            <!--end Delete Confirm-->
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-front >
+  <nb-card-back *ngIf="flippedState">
+    <nb-card>
+      <nb-card-header>
+        <nb-icon
+          icon="chevron-left-outline"
+          pack="nebular-essentials"
+          aria-hidden="true"
+          (click)="flippe()"
+        ></nb-icon>
+        Back 
+      </nb-card-header>
+      <nb-card-body>
+        <ngx-add-requirement
+        [selectedItem]="selectedItem"
+        [stakeholderList]="stakeholderList"
+          (dataChanged)="refresh($event)"
+        ></ngx-add-requirement>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-back>
+</nb-flip-card>

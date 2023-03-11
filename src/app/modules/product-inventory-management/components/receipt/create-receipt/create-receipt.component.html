@@ -1,0 +1,149 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button><br/><br/>
+<form [formGroup]="receiptForm" class="mt-3">
+<nb-card>
+  <nb-card-body>
+    <h5 align = "center">Receipt Creation Process</h5><br/>
+<nb-stepper orientation="horizontal" disableStepNavigation>
+  <nb-step label="Purchase Order" class="col-md-11">
+    <h5 align = "center">Select Purchase Order</h5><br/>
+    <label class="mt-2">Purchase Order</label>
+       <div class="row">
+              <div class="col-md-11">
+                <nb-select nbSelect fullWidth (selectedChange)="selectPurchaseOrder($event)"
+                formControlName="purchaseOrder" [disabled]="disabledSelect">
+                  <nb-option *ngFor="let po of purchaseOrders" [value]="po">{{po.poNumber}}</nb-option>
+                </nb-select>
+              </div>
+              <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please select the purchase order" nbTooltipStatus="primary"></nb-icon>
+              </div>
+       </div><br/>
+       <div class = "row" *ngIf="selectedPurchaseOrder !== null">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Reference</th>
+            <th>Supplier</th>
+            <th>Materials</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+         <tbody>
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{selectedPurchaseOrder.poNumber}}</p>
+              </div>
+            </div>
+           </td>
+            <td>
+              <p class="fw-normal mb-1">
+              {{selectedPurchaseOrder.selectedSupplier?.supplierFirstName}} {{selectedPurchaseOrder.selectedSupplier?.supplierLastName}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="selectedPurchaseOrder.materials?.length === 1">
+                1 Material
+              </p>
+              <p class="fw-normal mb-1" *ngIf="selectedPurchaseOrder.materials?.length > 1">
+                {{selectedPurchaseOrder.materials?.length}} Materials
+              </p>
+            </td>
+            <td><p class="fw-normal mb-1 text-success font-weight-bold">{{selectedPurchaseOrder.poStatus}}</p></td>
+            <td><p class="fw-normal mb-1">{{moment(selectedPurchaseOrder.poCreationDate).format('DD MMM YYYY hh:mm A')}}</p></td>
+            <td>
+              <p class="fw-normal mb-1">
+                <button style="float: left" nbTooltip="Cancel Purchase Order Selection" 
+                        nbTooltipStatus="danger" shape="round" status="danger" 
+                 nbButton (click)="cancelSelection()">
+                     <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+            </div>
+          <div class="col-md-1" *ngIf="selectedPurchaseOrder !== null">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Selected Materials" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+       <div class="row">
+         <div class="col-md-11">
+           <button nbButton nbStepperNext [disabled]="selectedPurchaseOrder === null"
+                   status="success" style="float: right">
+             Proceed
+           </button>
+           <button nbButton nbStepperPrevious disabled
+                   status="primary" style="float: left">
+             Back
+           </button>
+         </div>
+       </div>
+  </nb-step>
+  <nb-step label="Finish" class="col-md-11">
+    <label class="mt-2" *ngIf="selectedPurchaseOrder !== null">Expected:
+      {{moment(selectedPurchaseOrder.receptionDate).format('DD MMM YYYY')}}</label><br/>
+    <label class="mt-2" *ngIf="selectedPurchaseOrder !== null">Delivered: 
+      {{moment(selectedPurchaseOrder.reelRD).format('DD MMM YYYY hh:mm A')}}</label><br/>
+  <label class="mt-2">Notes <small>(Optional)</small></label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <textarea nbInput fullWidth type="text" class="form-control"
+                               formControlName="notes"></textarea>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter notes" nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div><br/>
+    <label class="mt-2">Rate Receipt <span *ngIf="currentRate > 0">(Rate: {{currentRate}}/10)</span></label>
+    <div class="row">
+      <div class="col-md-11">
+        <ngb-rating [max]="10" [(rate)]="currentRate" [readonly]="false" (rateChange)="getRating(currentRate)"
+                    style="font-size: 3rem;" *ngIf="currentRate === 0">
+        </ngb-rating>
+        <ngb-rating [max]="10" [(rate)]="currentRate" [readonly]="false" (rateChange)="getRating(currentRate)"
+                    style="font-size: 3rem; color: red;" *ngIf="currentRate > 0 && currentRate <= 2">
+        </ngb-rating>
+        <ngb-rating [max]="10" [(rate)]="currentRate" [readonly]="false" (rateChange)="getRating(currentRate)"
+                    style="font-size: 3rem; color: orange;" *ngIf="currentRate > 2 && currentRate <= 4">
+        </ngb-rating>
+        <ngb-rating [max]="10" [(rate)]="currentRate" [readonly]="false" (rateChange)="getRating(currentRate)"
+                    style="font-size: 3rem; color: yellow;" *ngIf="currentRate > 4 && currentRate < 7">
+        </ngb-rating>
+        <ngb-rating [max]="10" [(rate)]="currentRate" [readonly]="false" (rateChange)="getRating(currentRate)"
+                    style="font-size: 3rem; color: #a2ff00;" *ngIf="currentRate >= 7 && currentRate < 9">
+        </ngb-rating>
+        <ngb-rating [max]="10" [(rate)]="currentRate" [readonly]="false" (rateChange)="getRating(currentRate)"
+                    style="font-size: 3rem; color: green;" *ngIf="currentRate >= 9">
+        </ngb-rating>
+      </div>
+      <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please rate receipt out of 10" nbTooltipStatus="primary"></nb-icon>
+      </div>
+    </div>
+  <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="receiptForm.invalid || currentRate === 0" 
+                      (click)="createNewReceipt()" status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+                </button>
+              <button nbButton nbStepperPrevious
+                   status="primary" style="float: left">
+             Back
+           </button>
+         </div>
+  </div>
+  </nb-step>
+</nb-stepper>
+    </nb-card-body>
+  </nb-card>
+</form>

@@ -1,0 +1,123 @@
+<h2>Journal {{journalname}} </h2>
+<nb-card class="mt-4">
+  <nb-card-header>
+    <div class="row"><div class="col-md-5"><h3>New Line</h3></div>
+    <div class="col-md-7"><a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/accounting/journallist']" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </a></div></div>
+  </nb-card-header>
+  <nb-card-body>
+    <form *ngIf="JournalLinesForm"
+          [formGroup]="JournalLinesForm"
+          (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="wording" class="label">Wording</label>
+            <input type="text" nbInput fullWidth id="wording" placeholder="wording" formControlName="wording">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="account" class="label">Account</label>
+            <nb-select placeholder="Select account" fullWidth  id="account" formControlName="account">
+                   <nb-option >Select account</nb-option>
+                   <nb-option *ngFor="let account of accounts" [value]="account">{{account.code}} - {{account.name}}</nb-option>
+            </nb-select> 
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="debit" class="label">Debit</label>
+            <input type="text" nbInput fullWidth id="debit" placeholder="debit" formControlName="debit">
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="credit" class="label">Credit</label>
+            <input type="text" nbInput fullWidth id="credit" placeholder="credit" formControlName="credit">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+        <div class="form-group">
+          <label for="filesProof" class="label">File proof</label>
+          <nb-select placeholder="Select a file proof" fullWidth  id="filesProof" formControlName="filesProof">
+            <nb-option >Select a file name</nb-option>
+            <nb-option *ngFor="let filesProof of filesProofs" [value]="filesProof">{{filesProof.title}}</nb-option>
+          </nb-select>
+        </div>
+        </div>
+      </div>
+       <div align="right"><button type="submit" nbButton status="success"><nb-icon icon="checkmark-circle-outline"></nb-icon>Add Line</button></div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+
+<nb-card>
+  <nb-card-body *ngIf="dataSource">
+    <div class="row">
+      <div class="col-md-3"><h3>Journal Lines</h3></div>
+      <div class="col-md-4" align="middle"><input  placeholder="Search" fullWidth nbInput [nbFilterInput]="dataSource"
+                                                 id="search" class="search-input">
+      </div>
+      <div class="col-md-5" align="right">
+        <button (click)="exportAsXLSX()" nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"><i
+          class="fas fa-file-excel text-white"></i></button>
+
+        <button (click)="exportAsPDF()" class="mx-2" nbTooltip="Export to pdf file" nbTooltipStatus="primary" nbButton status="danger"><i
+          class="fas fa-file-pdf text-white"></i></button>
+      </div>
+    </div>
+    <table class="mt-3" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+      <thread class="bg-light">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+          {{customColumn | titlecase}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+
+          {{row.data[customColumn]}}
+        </td>
+      </ng-container>
+        </thread>
+
+      <ng-container *ngFor="let column of defaultColumns | filter: term; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column | titlecase}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '0'}}</td>
+      </ng-container>
+    </table>
+
+  </nb-card-body>
+  <nb-card-footer>
+    <div align="right"><nb-tag-list> <nb-tag appearance="filled"  [text]="tagTotalDebit" status="success"></nb-tag>
+      <nb-tag appearance="filled"  [text]="tagTotalCredit" status="danger"></nb-tag>
+      <nb-tag appearance="filled"  [text]="tagTotalBalance" status="primary"></nb-tag></nb-tag-list></div>
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-card>
+  <nb-card-header>
+    Transaction proof
+  </nb-card-header>
+  <nb-card-body>
+    
+  </nb-card-body>
+</nb-card>

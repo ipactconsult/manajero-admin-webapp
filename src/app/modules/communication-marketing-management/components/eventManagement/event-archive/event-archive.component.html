@@ -1,0 +1,124 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-5">
+          <h3>Events archived</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   nbInput
+                   nbTooltip="Tap here to search your Event" nbTooltipStatus="primary" placeholder="search Event"
+                   type="text">
+                   &nbsp;
+                   <nb-select (selectedChange)="getEventbyCountry($event,'country')" [disabled]="dataEvents.length === 0"
+                   nbTooltip="Click here to sort by country"
+                   nbTooltipStatus="primary" placeholder="Filter by country">
+                  <nb-option (click)="getAllEvents()" value="All">All</nb-option>
+                 <nb-option *ngFor="let country of countries"
+                     value="{{country.country_name}}">{{country.country_name}}</nb-option>
+
+        </nb-select>
+        &nbsp;
+            <nb-select [disabled]="dataEvents.length === 0"
+                       placeholder="Sort by name"   nbTooltip="Tap here to sort by name your Event" nbTooltipStatus="primary" 
+                       selected="0">
+              <nb-option (click)="getAllEvents()" value="All">All</nb-option>
+              <nb-option (click)="getEventsAsc()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getEventsDesc()" value="2">Names (Z-A)</nb-option>
+            </nb-select>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <div>
+                        <button (click)="exportAsXLSX()"
+                    align="right" class="btn "
+                    nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                    style="background-color: #008000">
+              <i class="fas fa-file-excel text-white"></i></button>&nbsp;
+
+         
+
+          </div>
+        </div>
+      </div>
+
+
+    </nb-card-header>
+    <div *ngIf="!dataEvents || dataEvents.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataEvents | filter : search).length === 0" [hidden]="dataEvents.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+
+    <div class="row mt-3">
+      
+      <table class="table mb-0 " id="htmlData">
+        <thead class="bg-light">
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>adresse</th>
+          <th>Country</th>
+          <th>date</th>
+          <th>Time</th>
+          <th>Description</th>
+          <th>Actions</th>
+
+        </tr>
+        </thead>
+        <tbody
+          *ngFor="let e of dataEvents | filter : search | paginate : {itemsPerPage:10, currentPage: current,totalItems: total}"
+         >
+        <tr class="col-md-9 col-sm-10">
+        
+          <td><p class="fw-normal mb-1">{{e.title}}</p></td>
+          <td><p class="fw-normal mb-1">{{e.prix}}</p></td>
+          <td><p class="fw-normal mb-1">{{e.adresse}}</p></td>
+          <td><p class="fw-normal mb-1">{{e.country}}</p></td>
+          <td><p class="fw-normal mb-1">{{e.date   | date:"YYYY MMM dd"}}</p></td>
+          <td><p class="fw-normal mb-1">{{e.time   | date:'hh:mm' }}</p></td>
+          <td><p class="fw-normal mb-1">{{e.description}}</p></td>
+
+
+          <td>
+            <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                    aria-label="Example icon-button with a menu"
+                    nbButton nbTooltip="Click here to see advanced menu"
+                    nbTooltipStatus="primary"
+                    shape="round"
+                    size="small"
+                    status="basic">
+              <nb-icon icon="more-horizontal-outline"></nb-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                             <button mat-menu-item>
+                        <a (click)="onRestoreConfirm(e,e.id)" fullWidth nbButton>
+                          <span class="text-danger"><nb-icon icon="refresh-outline"></nb-icon></span>Restore
+                        </a>
+                      </button>
+            </mat-menu>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- end col -->
+
+    </div>
+    <!-- end row -->
+   <div class="d-flex justify-content-center">
+      <nb-card class="card ml-auto mr-auto" style="height: 30px; border-radius: 25px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+
+     </nb-card>
+    </div><!-- end row -->
+  </div>
+  <!-- container -->
+</div>

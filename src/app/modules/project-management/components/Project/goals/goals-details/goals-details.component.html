@@ -1,0 +1,24 @@
+<nb-card>
+  <nb-card-header>
+
+    <h6 ><em class="fas fa-award text-warning"></em>{{ selectedItem.title }}</h6>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+        <div class="col-10">
+      
+      <p ><nb-icon icon="calendar-outline" status="danger"></nb-icon><strong class="text-secondary">Due Date:</strong>
+      {{ selectedItem.dueDate | date: "fullDate" }}</p>
+    </div>
+      <div class="col-2">
+        <nb-tag status="primary" appearance="outline" text="Priority:{{ selectedItem.priority }}"></nb-tag>
+      </div>
+    </div>
+
+    <p class="text-secondary"><strong>Description:</strong></p>
+    <nb-alert>{{ selectedItem.description }}</nb-alert>
+    <p class="text-secondary"><strong>Activity :</strong></p>
+
+  </nb-card-body>
+  <ngx-activities-table [goalSelected]="selectedItem" [disabled]="disabled"></ngx-activities-table>
+</nb-card>

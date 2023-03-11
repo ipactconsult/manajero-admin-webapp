@@ -1,0 +1,1 @@
+export const  enum AreCategory {   ASSUMPTION, RESTRICTION, EXTERNAL_DEPENDENCY}

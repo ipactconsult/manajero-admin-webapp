@@ -1,0 +1,43 @@
+
+          <div >
+              <table
+                class="   table user-list" >
+                <thead >
+           <tr>
+                  <th><p class="fw-normal mb-1">Name</p></th>
+                  <th><p class="fw-normal mb-1">Customer Budget</p></th>
+                  <th><p class="fw-normal mb-1">Type</p></th>
+                  <th><p class="fw-normal mb-1">Deal Value</p></th>
+                  <th><p class="fw-normal mb-1">Source</p></th>
+                  <th><p class="fw-normal mb-1">Win Chance</p></th>
+                  <th><p class="fw-normal mb-1">Visit</p></th>
+                  <th><p class="fw-normal mb-1">Status</p></th>
+       </tr>
+                </thead>
+                <tbody *ngFor="let deal of dataDeals | paginate : {itemsPerPage:pageSize, currentPage: currentDeals  ,totalItems: dataDeals.length} ">
+                <td><p class="fw-normal mb-1">{{deal.dealName}}</p></td>
+                <td><p class="fw-normal mb-1">{{deal.customerBudget}}</p></td>
+                <td><p class="fw-normal mb-1">{{deal.dealType}}</p></td>
+                <td><p class="fw-normal mb-1">{{deal.dealValue}}</p></td>
+                <td><p class="fw-normal mb-1">{{deal.source}}</p></td>
+                <td><p class="fw-normal mb-1">{{deal.winChance}}</p></td>
+                <td><p class="fw-normal mb-1">{{deal?.visit?.title}}</p></td>
+
+                <td>  <span *ngIf="deal.dealStatus === 'paused'"
+                            class="mb-2 badge badge-warning badge-pill">{{deal.dealStatus}}</span>
+                  <span *ngIf="deal.dealStatus === 'Done'"
+                        class="mb-2 badge badge-success badge-pill">{{deal.dealStatus}}</span>
+                  <span *ngIf="deal.dealStatus === 'In Progress'"
+                        class="mb-2 badge badge-light badge-pill">{{deal.dealStatus}}</span>
+                  <span *ngIf="deal.dealStatus === 'Canceled'"
+                        class="mb-2 badge badge-danger badge-pill">{{deal.dealStatus}}</span></td>
+                </tbody>
+              </table>
+            </div>
+      
+  <div class="d-flex justify-content-center ">
+     <nb-card class="card ml-auto mr-auto" style="height: 30px; border-radius: 25px;">
+        <pagination-controls (pageChange)="currentDeals = $event" align="right"></pagination-controls>
+
+     </nb-card>
+    </div>

@@ -1,0 +1,1 @@
+export const  enum Status{APPROVED,DENIED,PENDING,UNDER_VALIDATION}

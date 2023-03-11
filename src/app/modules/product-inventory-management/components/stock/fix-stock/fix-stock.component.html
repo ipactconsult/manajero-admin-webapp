@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="col-md-10 col-sm-12">
+    <h2 class="more-vertical">
+      Fix Quantity in Stock </h2>
+  </div>
+  <div align="right" class="col-md-2 justify-content-end">
+    <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+       fullWidth nbButton nbTooltip="Go Back" nbTooltipStatus="primary" shape="round" status="basic">
+      <nb-icon icon="corner-up-right"></nb-icon>
+    </a>
+  </div>
+</div><br/>
+<nb-card>
+  <nb-card-header>Inventory of {{moment(existedInv.inventoryDate).format("DD MMM YYYY")}}</nb-card-header>
+  <nb-card-body>
+    <h6>Inventory</h6><br/>
+    <div class="row">
+      <div class="col-sm-6">
+        <b>Created At:</b> {{moment(existedInv.inventoryCreationDate).format("DD MMM YYYY hh:mm A")}}
+      </div>
+      <div class="col-sm-6">
+        <b>Reference:</b> {{existedInv.inventoryRef}}
+      </div>
+    </div><br/>
+    <div class="row">
+      <div class="col-sm-6" *ngIf="existedInv.materials?.length === 1">
+        <b>N° of Materials:</b> {{existedInv.materials?.length}} Material
+      </div>
+      <div class="col-sm-6" *ngIf="existedInv.materials?.length > 1">
+        <b>N° of Materials:</b> {{existedInv.materials?.length}} Materials
+      </div>
+      <div class="col-sm-6" *ngIf="existedInv.counting === 1">
+        <b>Counted:</b> {{existedInv.counting}} Time
+      </div>
+      <div class="col-sm-6" *ngIf="existedInv.counting === 2">
+        <b>Counted:</b> {{existedInv.counting}} Times
+      </div>
+    </div><br/><br/>
+    <div class = "row">
+      <h6>Materials</h6>
+      <table class="table mb-0">
+        <thead class="bg-light">
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Minimum Stock</th>
+          <th>Maximum Stock</th>
+          <th>Purchase Price</th>
+          <th>Stock</th>
+          <th>Stock Value</th>
+          <th>Reel Stock</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="col-md-9 col-sm-10" *ngFor="let material of existedInv.materials">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{material.materialType}}</p>
+              </div>
+            </div>
+          </td>
+          <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+          <td><p class="fw-normal mb-1 text-danger font-weight-bold">{{material.stockAlert}}</p></td>
+          <td><p class="fw-normal mb-1 text-success font-weight-bold">{{material.stockMax}}</p></td>
+          <td>
+            <p class="fw-normal mb-1">
+              {{material.materialPrice}} {{material.supplier?.supplierCurrency}}
+            </p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1 text-primary font-weight-bold"
+               *ngIf="material.quantityStock >= material.stockAlert">
+              {{material.quantityStock}}
+            </p>
+            <p class="fw-normal mb-1 text-danger font-weight-bold"
+               *ngIf="material.quantityStock < material.stockAlert">
+              {{material.quantityStock}}
+            </p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">
+              {{material.materialPrice * material.quantityStock
+            + material.materialPrice * material.quantityStock * (material.materialVAT/100)}}
+              {{material.supplier?.supplierCurrency}}
+              <small>(Incl. {{material.materialVAT}}% Taxes)</small>
+            </p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">
+                      <span *ngIf="material.quantityReel < material.quantityStock" class="font-weight-bold text-danger">
+                      {{material.quantityReel}}
+                    </span>
+              <span *ngIf="material.quantityReel === material.quantityStock" class="font-weight-bold text-success">
+                      {{material.quantityReel}}
+                    </span>
+              <span *ngIf="material.quantityReel > material.quantityStock" class="font-weight-bold text-warning">
+                      {{material.quantityReel}}
+                    </span>
+            </p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1" *ngIf="material.quantityReel !== material.quantityStock">
+              <button nbButton size="small" status="danger" [disabled]="disableFixBtn"
+                      (click)="fixInventoryStock(material)">
+                Fix
+              </button>
+            </p>
+            <p class="fw-normal mb-1 text-success font-weight-bold" 
+               *ngIf="material.quantityReel === material.quantityStock">
+              Stock Fixed
+            </p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div><br/>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <button type="submit" nbButton status="success" (click)="fixInventory()"
+                  [disabled]="countFixed < existedInv.materials?.length">
+            Finish <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

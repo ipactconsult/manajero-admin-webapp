@@ -1,0 +1,60 @@
+.blinking {
+    animation:blinkingText 1.2s infinite;
+    font-weight: bold;
+}
+@keyframes blinkingText {
+    0%{     color: #cc0000;    }
+    49%{    color: #cc0000; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #cc0000;    }
+}
+
+.table {
+    th {
+      font-weight: 500;
+      color: #827fc0;
+    }
+  
+    thead {
+      background-color: #f3f2f7;
+      
+    }
+  
+    > {
+      tbody > tr > td, tfoot > tr > td, thead > tr > td {
+        padding: 14px 12px;
+        vertical-align: middle;
+      }
+    }
+  
+    tr td {
+      color: #8887a9;
+    }
+  }
+
+  .card {
+    border: none;
+    -webkit-box-shadow: 1px 0 20px rgba(96, 93, 175, 0.05);
+    box-shadow: 1px 0 20px rgba(96, 93, 175, 0.05);
+    margin-bottom: 30px;
+  }
+
+  .thumb-sm {
+    height: 32px;
+    width: 32px;
+  }
+  
+  .badge-soft-warning {
+    background-color: rgba(248, 201, 85, 0.2);
+    color: #f8c955;
+  }
+  
+  .badge {
+    font-weight: 500;
+  }
+  
+  .badge-soft-primary {
+    background-color: rgba(96, 93, 175, 0.2);
+    color: #605daf;
+  }

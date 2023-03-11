@@ -1,0 +1,535 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic"
+        (click)="goToPreviousRoute()" nbButton>
+  <nb-icon icon="corner-up-right-outline"></nb-icon>
+</button><br/>
+<h4 align = "center">Create New Inventory</h4><br/><br/>
+<nb-card>
+  <nb-card-body>
+    <nb-stepper orientation="horizontal">
+      <nb-step label="Inventory Date" class="col-md-11">
+        <h5 align="center">Inventory Date</h5><br/>
+        <form [formGroup]="invDateForm">
+        <label class="mt-2">Inventory Date</label>
+        <div class = "row">
+          <div class = "col-md-11">
+            <div class = "form-group">
+              <input [nbDatepicker]="datepicker" nbInput fullWidth style="cursor: pointer"
+                     class = "form-control" formControlName="inventoryDate">
+              <nb-datepicker #datepicker [max]="dateToday" (dateChange)="invDateChange($event)"></nb-datepicker>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline"
+                     nbTooltip="Choose a date for your inventory." nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        </form>
+        <div class="row mt-5">
+          <div class="col-md-11">
+            <button style="float: right;" nbButton status="primary"
+                    nbStepperNext [disabled]="invDateForm.invalid || invDateEquality > 0">
+              Next
+            </button>
+            <button style="float: left;" nbButton nbStepperPrevious disabled>
+              Back
+            </button>
+          </div>
+        </div>
+      </nb-step>
+      <nb-step label="Stock Count #1" class="col-md-11">
+        <h5 align = "center">Stock Count #1</h5><br/>
+        <div class = "row">
+          <div class = "col-md-12">
+            <table class="table mb-0">
+              <thead class="bg-light">
+              <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Minimum Stock</th>
+                <th>Maximum Stock</th>
+                <th>Purchase Price</th>
+                <th>Quantity in Stock</th>
+                <th>Stock Value</th>
+                <th>Reel Stock</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="col-md-9 col-sm-10" *ngFor="let material of stockedMaterials">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <p class=" mb-1">{{material.materialType}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+                <td><p class="fw-normal mb-1 text-danger font-weight-bold">{{material.stockAlert}}</p></td>
+                <td><p class="fw-normal mb-1 text-success font-weight-bold">{{material.stockMax}}</p></td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    {{material.materialPrice}} {{material.supplier?.supplierCurrency}}
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1 text-primary font-weight-bold" 
+                     *ngIf="material.quantityStock >= material.stockAlert">
+                    {{material.quantityStock}}
+                  </p>
+                  <p class="fw-normal mb-1 text-danger font-weight-bold"
+                     *ngIf="material.quantityStock < material.stockAlert">
+                    {{material.quantityStock}}
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    {{material.materialPrice * material.quantityStock
+                  + material.materialPrice * material.quantityStock * (material.materialVAT/100)}}
+                    {{material.supplier?.supplierCurrency}}
+                    <small>(Incl. {{material.materialVAT}}% Taxes)</small>
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    <i class="fas fa-edit" nbTooltip="Update Reel Stock" 
+                       nbTooltipStatus="primary" style="cursor: pointer"
+                       (click)="open2(dialogMat, material.materialId)"></i>
+                    <span *ngIf="material.quantityReel 
+                    && material.quantityReel < material.quantityStock" class="font-weight-bold text-danger">
+                      {{material.quantityReel}}
+                    </span>
+                    <span *ngIf="material.quantityReel 
+                    && material.quantityReel === material.quantityStock" class="font-weight-bold text-success">
+                      {{material.quantityReel}}
+                    </span>
+                    <span *ngIf="material.quantityReel 
+                    && material.quantityReel > material.quantityStock" class="font-weight-bold text-warning">
+                      {{material.quantityReel}}
+                    </span>
+                  </p>
+                </td>
+                <ng-template #dialogMat let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Material View
+                    </nb-card-header>
+                    <nb-card-body>
+                      <label class="mt-2">Material Name</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.materialName">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Material Type</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.materialType">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Material Minimum Stock</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.stockAlert">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Material Maximum Stock</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.stockMax">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Current Stock</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.quantityStock">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label>Stock Reel</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="number" [(ngModel)]="stockReel" (change)="changeReelStock($event)"
+                                 class="form-control" [value]="existedMaterial.quantityReel"
+                                 nbTooltip="Update Reel Stock" nbTooltipStatus="info">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Enter the reel stock. Note that it should be less or equal than Maximum Capacity."
+                                   nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <div class="row mt-5">
+                        <div class="col-md-10">
+                          <button style="float: right;" nbButton [disabled]="!stockReel || stockReel > existedMaterial.stockMax || 
+                                stockReel < 0"
+                                  status="success" (click)="updateStock(ref)">
+                            <nb-icon icon="checkmark-circle-outline"></nb-icon>Save Data
+                          </button>
+                        </div>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </ng-template>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-11">
+            <button style="float: right;" nbButton (click)="goToThirdStep(dialog)"
+                    status="primary" nbStepperNext [disabled]="counterRS < stockedMaterials.length">
+              Next
+            </button>
+            <button style="float: left;" nbButton nbStepperPrevious>
+              Back
+            </button>
+          </div>
+        </div>
+        <ng-template #dialog let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-header>
+              Second counting
+            </nb-card-header>
+            <nb-card-body>
+              Would you like to do a second counting?
+            </nb-card-body>
+            <nb-card-footer>
+              <button class="float-left" nbButton status="danger" nbStepperNext (click)="goToLastStep(ref)">
+                No
+              </button>
+              <button (click)="secondCounting(ref)" class="float-right" nbButton
+                      status="success">
+                Yes
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+      </nb-step>
+      <nb-step label="Stock Count #2" class="col-md-11">
+        <h5 align = "center">Stock Count #2</h5><br/>
+        <div class = "row">
+          <div class = "col-md-12">
+            <table class="table mb-0">
+              <thead class="bg-light">
+              <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Minimum Stock</th>
+                <th>Maximum Stock</th>
+                <th>Purchase Price</th>
+                <th>Quantity in Stock</th>
+                <th>Stock Value</th>
+                <th>Reel Stock</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="col-md-9 col-sm-10" *ngFor="let material of stockedMaterials">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <p class=" mb-1">{{material.materialType}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+                <td><p class="fw-normal mb-1 text-danger font-weight-bold">{{material.stockAlert}}</p></td>
+                <td><p class="fw-normal mb-1 text-success font-weight-bold">{{material.stockMax}}</p></td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    {{material.materialPrice}} {{material.supplier?.supplierCurrency}}
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1 text-primary font-weight-bold"
+                     *ngIf="material.quantityStock >= material.stockAlert">
+                    {{material.quantityStock}}
+                  </p>
+                  <p class="fw-normal mb-1 text-danger font-weight-bold"
+                     *ngIf="material.quantityStock < material.stockAlert">
+                    {{material.quantityStock}}
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    {{material.materialPrice * material.quantityStock
+                  + material.materialPrice * material.quantityStock * (material.materialVAT/100)}}
+                    {{material.supplier?.supplierCurrency}}
+                    <small>(Incl. {{material.materialVAT}}% Taxes)</small>
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    <i class="fas fa-edit" nbTooltip="Update Reel Stock"
+                       nbTooltipStatus="primary" style="cursor: pointer"
+                       (click)="open2(dialogMat, material.materialId)"></i>
+                    <span *ngIf="material.quantityReel 
+                    && material.quantityReel < material.quantityStock" class="font-weight-bold text-danger">
+                      {{material.quantityReel}}
+                    </span>
+                    <span *ngIf="material.quantityReel 
+                    && material.quantityReel === material.quantityStock" class="font-weight-bold text-success">
+                      {{material.quantityReel}}
+                    </span>
+                    <span *ngIf="material.quantityReel 
+                    && material.quantityReel > material.quantityStock" class="font-weight-bold text-warning">
+                      {{material.quantityReel}}
+                    </span>
+                  </p>
+                </td>
+                <ng-template #dialogMat let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Material View
+                    </nb-card-header>
+                    <nb-card-body>
+                      <label class="mt-2">Material Name</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.materialName">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Material Type</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.materialType">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Material Minimum Stock</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.stockAlert">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Material Maximum Stock</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.stockMax">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label class="mt-2">Current Stock</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                 class="form-control" [value]="existedMaterial.quantityStock">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <label>Stock Reel</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input nbInput fullWidth type="number" [(ngModel)]="stockReel" (change)="changeReelStock($event)"
+                                 class="form-control" [value]="existedMaterial.quantityReel"
+                                 nbTooltip="Update Reel Stock" nbTooltipStatus="info">
+                        </div>
+                        <div class="col-md-1">
+                          <nb-icon icon="info-outline"
+                                   nbTooltip="Enter the reel stock. Note that it should be less or equal than Maximum Capacity."
+                                   nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+                      <div class="row mt-5">
+                        <div class="col-md-10">
+                          <button style="float: right;" nbButton [disabled]="!stockReel 
+                          || stockReel > existedMaterial.stockMax || stockReel < 0"
+                                  status="success" (click)="updateStock(ref)">
+                            <nb-icon icon="checkmark-circle-outline"></nb-icon>Save Data
+                          </button>
+                        </div>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </ng-template>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-11">
+            <button style="float: right;" nbButton (click)="lastStepSecondCounting()"
+                    status="primary" nbStepperNext [disabled]="counterRS < stockedMaterials.length">
+              Next
+            </button>
+            <button style="float: left;" nbButton nbStepperPrevious (click)="backToFirstCounting()">
+              Back
+            </button>
+          </div>
+        </div>
+      </nb-step>
+      <nb-step label="Inventory" class="col-md-11">
+        <h5 align = "center" *ngIf="inventory">
+          Inventory of {{moment(inventory.inventoryDate).format("DD MMM YYYY")}}
+        </h5><br/>
+          <div class="row" *ngIf="inventory">
+            <div class="col-sm-6">
+              <b>Reference:</b> {{inventory.inventoryRef}}
+            </div>
+          </div><br/>
+          <div class="row" *ngIf="inventory">
+            <div class="col-sm-6">
+              <b>Created:</b> {{moment(inventory.inventoryCreationDate).format("DD MMM YYYY hh:mm A")}}
+            </div>
+          </div><br/>
+          <div class="row" *ngIf="inventory">
+            <div class="col-sm-6" *ngIf="inventory.counting === 1">
+              <b>Materials Counted:</b> {{inventory.counting}} Time
+            </div>
+            <div class="col-sm-6" *ngIf="inventory.counting === 2">
+              <b>Materials Counted:</b> {{inventory.counting}} Times
+            </div>
+          </div><br/>
+          <div class="row" *ngIf="inventory">
+            <div class="col-sm-6">
+              <b>Number of Materials:</b> {{inventory.materials?.length}}
+            </div>
+          </div><br/><br/>
+        <h6>Stocked Materials</h6>
+        <div class = "row">
+          <div class = "col-md-12">
+            <table class="table mb-0">
+              <thead class="bg-light">
+              <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Minimum Stock</th>
+                <th>Maximum Stock</th>
+                <th>Purchase Price</th>
+                <th>Quantity in Stock</th>
+                <th>Stock Value</th>
+                <th>Reel Stock</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="col-md-9 col-sm-10" *ngFor="let material of stockedMaterials">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <p class=" mb-1">{{material.materialType}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+                <td><p class="fw-normal mb-1 text-danger font-weight-bold">{{material.stockAlert}}</p></td>
+                <td><p class="fw-normal mb-1 text-success font-weight-bold">{{material.stockMax}}</p></td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    {{material.materialPrice}} {{material.supplier?.supplierCurrency}}
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1 text-primary font-weight-bold"
+                     *ngIf="material.quantityStock >= material.stockAlert">
+                    {{material.quantityStock}}
+                  </p>
+                  <p class="fw-normal mb-1 text-danger font-weight-bold"
+                     *ngIf="material.quantityStock < material.stockAlert">
+                    {{material.quantityStock}}
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">
+                    {{material.materialPrice * material.quantityStock
+                  + material.materialPrice * material.quantityStock * (material.materialVAT/100)}}
+                    {{material.supplier?.supplierCurrency}}
+                    <small>(Incl. {{material.materialVAT}}% Taxes)</small>
+                  </p>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">
+                      <span *ngIf="material.quantityReel < material.quantityStock" class="font-weight-bold text-danger">
+                      {{material.quantityReel}}
+                    </span>
+                    <span *ngIf="material.quantityReel === material.quantityStock" class="font-weight-bold text-success">
+                      {{material.quantityReel}}
+                    </span>
+                    <span *ngIf="material.quantityReel > material.quantityStock" class="font-weight-bold text-warning">
+                      {{material.quantityReel}}
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-11">
+            <button style="float: right;" nbButton (click)="openConfirm(dialogConfirm)"
+                    status="primary" [disabled]="counterRS < stockedMaterials.length">
+              Finish
+            </button>
+            <button style="float: left;" nbButton nbStepperPrevious>
+              Back
+            </button>
+          </div>
+        </div>
+        <ng-template #dialogConfirm let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-header>
+              Confirm inventory creation?
+            </nb-card-header>
+            <nb-card-body>
+              Are you sure you would like to create this inventory?
+            </nb-card-body>
+            <nb-card-footer>
+              <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                No
+              </button>
+              <button (click)="createInventory(ref)" class="float-right" nbButton
+                      status="success">
+                Yes
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6">
+    <button
+      *ngIf="type === 'facebook'" size="small"
+      (click)="share()" nbButton status="primary">
+      Share on Facebook
+    </button>
+  </div>
+  <div class="col-md-6">
+    <button
+      *ngIf="type === 'twitter'" nbButton status="info"
+      (click)="share()" size="small">
+      Share on Twitter
+    </button>
+  </div>
+</div>

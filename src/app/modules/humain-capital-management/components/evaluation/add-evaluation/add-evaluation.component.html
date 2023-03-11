@@ -1,0 +1,100 @@
+<section id="sectionJobList" class="section section-job-list gradient-light--lean-left">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+              <h3>New Evaluation</h3>
+            </div>
+            <div class="col-md-8"></div>          
+           
+           
+         <div style="right: 0; left:auto" align="right" class="col-md-1 mt-1">
+            <a nbButton status="basic" shape="round" [routerLink]="['/hr/evaluation/grid']">
+              <nb-icon icon="corner-up-right-outline"></nb-icon>
+            </a>
+         </div> 
+       
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <form [formGroup]="evaluationForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">Employee</label>
+                            <nb-select [selected]="selectedItem"
+                            formControlName="employee"
+                            name="employee"
+                            nbTooltip="Select the right employee" nbTooltipStatus="primary"
+                            id="employee"
+                            fullWidth
+                            size="large"
+                            placeholder="select Employee"
+                            (selectedChange)="getEmployeeSelected($event)">
+                    <nb-option *ngFor="let x of employees" value="{{x.id}}">
+                        <nb-user [picture]="x.employeeProfileImage" [name]="x.employeeName"></nb-user>
+                    </nb-option>
+                
+                </nb-select>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="">Evaluation Type</label>
+                            <input [(ngModel)]="evaluation.evaluationType" formControlName="evaluationType" name="evaluationType" id="evaluationType" type="text" fieldSize="large" nbInput fullWidth>
+                            
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <label for="">Limit Date</label>
+                            <input [(ngModel)]="evaluation.limitDate" formControlName="limitDate" name="limitDate" id="limitDate" placeholder="Pick Date" [nbDatepicker]="dateTimePicker" fieldSize="large" nbInput fullWidth>
+                            <nb-datepicker #dateTimePicker></nb-datepicker>
+
+                        </div>
+                    
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-6">
+                            <label for="">Attachment</label>
+                             <input  
+                                     formControlName="attachmentEvaluation"
+                                     id="attachmentEvaluation"
+                                     name="attachmentEvaluation"
+                                     [(ngModel)]="evaluation.attachmentEvaluation"
+                                     (change)="toggleLoadingAnimation($event)"
+                                     type="file" 
+                                     fieldSize="large" 
+                                     accept=".*"
+                                     nbInput fullWidth>
+                        </div>
+
+                        <div class="col-lg-6 mt-2">
+                            <span [nbSpinner]="loading" nbSpinnerStatus="danger" *ngIf="evaluation.attachmentEvaluation == null; else erreur">
+                                <p class="text-warning mt-5">
+                                 <nb-icon icon="loader-outline"></nb-icon> This Space Is Reserved For Loading Files
+                                </p>                  
+                              </span>
+                              <ng-template #erreur>
+                                    <a class="mt-4" href="{{evaluation.attachmentEvaluation}}" nbButton target="_blank" status="danger">
+                                        <nb-icon icon="printer-outline"></nb-icon> Preview
+                                    </a>
+                              </ng-template>
+                        </div>
+                    
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-10"></div>
+                        <div class="col-md-2" align="right">
+                            <button (click)="addNew()" nbButton status="success">Save Data</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+
+        </div>
+
+        
+    </div>
+
+</section>

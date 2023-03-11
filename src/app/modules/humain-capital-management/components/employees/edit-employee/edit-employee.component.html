@@ -1,0 +1,240 @@
+<div class="container" *ngIf="employee">
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <h3>
+               Edit General Info  </h3>
+        </div>
+        <div class="col-md-2"></div>
+       
+      <div align="right" class="col-md-5 col-sm-8">
+        <a status="info" nbTooltip="View mode" nbTooltipStatus="primary" shape="round" [routerLink]="['/hr/employee/advanced/',employee.id]" nbButton>
+          <nb-icon icon="eye-outline"></nb-icon>
+        </a>
+        &nbsp;
+          <a nbTooltip="Back to employee list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/hr/employee/list_']" nbButton>
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        
+        </div>
+        
+    </div>
+  
+  <form [formGroup]="personal_form">
+    
+          <div class="row mt-3">
+            <div class="col-md-4 mb-3">
+              <nb-card>
+                <nb-card-body class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div class="row">
+                        <img  [nbSpinner]="loading" nbSpinnerStatus="danger" style="width: 150px;height: 150px;border-radius: 100%;"  src="{{employee?.employeeProfileImage}}" alt="">
+                      <br>
+                    </div>
+                    <div class="row mt-1 mx-1">
+                      <div class="col-md-5">
+                        <button (click)="updateEmployee()" status="success" nbButton shape="round" size="small">
+                          <nb-icon   icon="checkmark-outline"></nb-icon>
+                        </button>
+                      </div>
+                     
+                      <div class="col-md-5">
+                      <div  class="button">
+                        <label  status="primary" nbButton shape="round" size="small" for="employeeProfileImage">
+                          <nb-icon class="mt-1"  icon="upload-outline"></nb-icon>
+                        </label>
+                        <input  id="employeeProfileImage"
+                                (change)="toggleLoadingAnimation($event)"
+                                name="employeeProfileImage"
+                                autocomplete="off"
+                                
+                                formControlName="employeeProfileImage" 
+                                accept=".*"
+                                 type="file">
+                      </div>
+                      </div>
+                    </div>
+                   
+                  <div class="mt-3">
+                      <h4>{{employee?.employeeName}}</h4>
+                      <p class="text-secondary mb-1">Role : {{employee?.roleEmployee}}</p>
+                      <p class="text-muted font-size-sm">Address :{{employee?.employeeCity}} {{employee?.employeeCountry}}</p>
+                     
+                    </div>
+                  </div>
+                </nb-card-body>
+            </nb-card>
+
+           
+            </div>
+            
+                <div class="col-md-8">
+                    
+                        <nb-accordion>
+                        <nb-accordion-item>
+                        <nb-accordion-item-header>Personal Information</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Reference</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input readonly [(ngModel)]="employee.employeeReference" name="employeeReference" id="employeeReference"
+                                type="text" fieldSize="large" placeholder="Employee Reference" nbInput fullWidth
+                                formControlName="employeeReference">
+                 
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Full Name</p>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input [(ngModel)]="employee.employeeName" name="employeeName" id="employeeName" type="text"
+                                placeholder="Employee Name" fieldSize="large" nbInput fullWidth formControlName="employeeName">
+            
+                              </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Born on</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                              <input disabled [(ngModel)]="employee.employeeDateOfBirth" [nbDatepicker]="dateTimePicker"
+                                     fieldSize="large" formControlName="employeeDateOfBirth" fullWidth id="employeeDateOfBirth"
+                                     name="employeeDateOfBirth" nbInput
+                                     placeholder="Pick Date">
+                              <nb-datepicker #dateTimePicker></nb-datepicker>
+                            
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Nationality</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input [(ngModel)]="employee.employeeNationality" name="employeeNationality"
+                      id="employeeNationality" fieldSize="large" type="text" placeholder="Nationality" nbInput fullWidth
+                      formControlName="employeeNationality">
+                            </div>
+                            </div>
+                            <hr>
+                            <button status="success" (click)="updateEmployee()"  nbButton>Edit</button>
+                        </nb-accordion-item-body>
+                        </nb-accordion-item>
+                        </nb-accordion>  <br>
+                        <nb-accordion>
+                        <nb-accordion-item>
+                        <nb-accordion-item-header>Contact Information</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Email Address</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" fullWidth nbInput [(ngModel)]="employee.employeeEmail" name="employeeEmail"
+                                id="employeeEmail" fieldSize="large" formControlName="employeeEmail">
+             
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Cell Phone</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" fullWidth nbInput [(ngModel)]="employee.employeeCellPhone" name="employeeCellPhone"
+                                id="employeeCellPhone" fieldSize="large" formControlName="employeeCellPhone">
+                            
+                            </div>
+                            </div>
+                            <hr>
+                            <button status="success" (click)="updateEmployee()" nbButton>Edit</button>
+                        </nb-accordion-item-body>
+                        </nb-accordion-item>
+                        </nb-accordion> <br>
+                        <nb-accordion>
+                        <nb-accordion-item>
+                        <nb-accordion-item-header>Department Assigned</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Department Name</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                              
+                                <nb-select placeholder="Select Department"  [selected]="selectedItem" fullWidth class="w-100"
+                                 [(ngModel)]="employee.department" name="department"
+                                id="department" formControlName="department" (selectedChange)="getDepartmentSelected($event)" 
+                                fieldSize="large">
+
+                                <nb-option  *ngFor="let de of listDepts" value="{{de.id}}">{{de.departmentName}}</nb-option>
+
+                                </nb-select>
+                                <nb-tag-list class="mt-2">
+                                    <nb-tag  status="basic"  appearance="filled" text="Department Selected : {{employee?.department?.departmentName}}"></nb-tag>
+                                  </nb-tag-list>
+                            </div>
+                            </div>
+                            <hr>
+                            <button status="success" (click)="updateEmployee()" nbButton>Edit</button>
+                        </nb-accordion-item-body>
+                        </nb-accordion-item>
+                        </nb-accordion>  <br>
+                        <nb-accordion>
+                        <nb-accordion-item>
+                        <nb-accordion-item-header>Social Security Information</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Social Security</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" fieldSize="large" fullWidth nbInput [(ngModel)]="employee.employeeSocialSecurity"
+                                name="employeeSocialSecurity" id="employeeSocialSecurity" formControlName="employeeSocialSecurity">
+            
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Marital Status</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" fieldSize="large" nbInput fullWidth [(ngModel)]="employee.employeeMaritalStatus"
+                                name="employeeMaritalStatus" id="employeeMaritalStatus" formControlName="employeeMaritalStatus">
+            
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 text-sm">Number of Kids</p>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="number" fieldSize="large" nbInput fullWidth [(ngModel)]="employee.employeeNbKids"
+                                name="employeeNbKids" id="employeeNbKids" formControlName="employeeNbKids">
+            
+            
+                            </div>
+                            </div>
+                            <hr>
+                            <button status="success" (click)="updateEmployee()" nbButton>Edit</button>
+                        </nb-accordion-item-body>
+                        </nb-accordion-item>
+                        </nb-accordion> <br>
+                   
+             
+
+
+
+                </div>
+          </div>
+
+          
+
+  </form>
+    </div>

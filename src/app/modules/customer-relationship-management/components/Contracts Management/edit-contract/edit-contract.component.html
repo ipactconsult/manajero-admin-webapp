@@ -1,0 +1,146 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h5 class="more-vertical">
+          Update a contract </h5>
+      </div>
+
+      <div align="right" class="col-md-2 justify-content-end">
+        <a [routerLink]="['/crm/contract-details/',contract.id]" class="w-25 mx-2"
+           fullWidth nbButton nbTooltip="Show contract details" nbTooltipStatus="primary" shape="round"
+           status="info">
+          <nb-icon icon="eye-outline"></nb-icon>
+        </a>
+        <a [routerLink]="['/crm/contracts']" class="w-25 mx-2"
+           fullWidth nbButton nbTooltip="Back to contracts list" nbTooltipStatus="primary" shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="contractGroup">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label" for="contractName">Contract code</label>
+            <input [(ngModel)]="contract.contractCode"
+                   formControlName="contractCode" fullWidth
+                   id="contractCode" fieldSize="large"
+                   name="contractCode" nbInput placeholder="Contract code"
+                   type="text">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label" for="contractName">Contract Name</label>
+            <input [(ngModel)]="contract.contractName"
+                   formControlName="contractName" fullWidth
+                   id="contractName" fieldSize="large"
+                   name="contractName" nbInput placeholder="Contract Name" type="text">
+          </div>
+        </div>
+
+      </div>
+   
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label" for="state">state</label>
+            <input [(ngModel)]="contract.state"
+                   formControlName="state"
+                   fullWidth id="state" fieldSize="large"
+                   name="state" nbInput placeholder="State" type="text">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label" for="designation">Designation</label>
+            <input [(ngModel)]="contract.designation"
+                   formControlName="designation" fullWidth
+                   id="designation" fieldSize="large"
+                   name="designation" nbInput placeholder="Designation" type="text">
+          </div>
+        </div>
+      </div>
+
+     
+  
+      <div class="row mt-2">
+  
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="label" for="priceEffective">Price effective</label>
+              <input [(ngModel)]="contract.priceEffective"
+                     formControlName="priceEffective"
+                     fullWidth id="priceEffective" fieldSize="large"
+                     name="state" nbInput placeholder="Price Effective" type="text">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="label" for="designation">Final Price</label>
+              <input [(ngModel)]="contract.finalPrice"
+                     formControlName="finalPrice" fullWidth
+                     id="finalPrice" fieldSize="large"
+                     name="finalPrice" nbInput placeholder="Final price" type="text">
+            </div>
+          </div>
+      
+    
+      </div>
+          <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="label" for="designation">Tax</label><br>
+              <input [(ngModel)]="contract.tax"
+                     formControlName="tax" fullWidth
+                     id="tax" fieldSize="large"
+                     name="tax" nbInput placeholder="Tax" type="text">
+            </div>
+          </div>
+        </div>
+      <div class="row">
+              <div class="col-md-6">
+        <label class="label"> Deal </label> <br>
+        <nb-select (selectedChange)="onMenuItemSelectedDeal($event)"
+                   [(ngModel)]="contract.deal" class="w-100"
+                   formControlName="deal"
+                   fullWidth size="large"
+                   id="deal" name="deal"
+                   placeholder="deal">
+          <nb-option
+
+            *ngFor="let optionDeals of dataDeals"
+            value="{{optionDeals.id}}">{{optionDeals.dealName}}</nb-option>
+
+        </nb-select>
+        
+      </div>
+
+         <div class="col-md-6">
+          <div class="form-group">
+            <label class="label">Contract Type</label><br>
+            <nb-select (selectedChange)="onMenuItemSelectedContractType($event)"
+                       [(ngModel)]="contract.contractType"
+                       class="w-100" size="large"
+                       formControlName="contractType" fullWidth
+                       id="contractType" name="contractType"
+                       placeholder="Contract Type">
+
+              <nb-option
+
+                *ngFor="let option of options" value="{{option.value}}">{{option.value}}</nb-option>
+
+            </nb-select>
+          </div>
+        </div>
+      </div>
+
+    <div align="right">
+      <button (click)="updateContractFunction()"  nbButton status="success" type="submit">Create</button>
+    </div> </form>
+  </nb-card-body>
+</nb-card>

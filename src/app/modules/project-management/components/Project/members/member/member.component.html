@@ -1,0 +1,40 @@
+<nb-card>
+    <nb-card-body>
+    <div>
+      <input
+        [formControl]="inputFormControl"
+        nbInput
+        type="text"
+        placeholder="Search Employee by email"
+        [nbAutocomplete]="autoControl"
+      />
+  
+      <nb-autocomplete #autoControl>
+        <nb-option
+          *ngFor="let option of filteredControlOptions$ | async"
+          [value]="option"
+        >
+          {{ option }}
+        </nb-option>
+      </nb-autocomplete>
+  
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        status="success"
+        (click)="addToTeam()"
+      >
+        Add to member list
+      </button>
+    </div>
+    <div class="mt-5 mb-5">
+      <p><strong>Members List</strong></p>
+  
+      <nb-tag-list *ngFor="let member of project?.memberList">
+        <nb-tag status="info" appearance="outline" text="{{member}}"></nb-tag>
+      </nb-tag-list>
+    </div>
+</nb-card-body>
+  </nb-card>
+  

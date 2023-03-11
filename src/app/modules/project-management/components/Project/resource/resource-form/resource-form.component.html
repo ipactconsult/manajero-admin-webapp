@@ -1,0 +1,62 @@
+<div>
+  <form class="form" [formGroup]="resourceForm">
+
+  <div class="form-group">
+     
+    <input
+    formControlName="materialName"
+      nbInput
+      type="text"
+      placeholder="Search Resource by name"
+      [nbAutocomplete]="autoControl"
+      class="form-control mb-3"
+
+    />
+    <div *ngIf="materialName?.invalid && (materialName?.dirty || materialName?.touched) ">
+      <p class="text-danger" *ngIf="materialName?.errors?.required">*Required</p>
+    </div>
+    <nb-autocomplete #autoControl>
+      
+      <nb-option
+        *ngFor="let option of filteredControlOptions$ | async"
+        [value]="option.materialName"
+      >
+      <nb-tag status="info" appearance="outline" text="{{ option.materialName }} "></nb-tag>  | <nb-icon icon="layers-outline" status="success"></nb-icon> Available  Quantity:{{option.quantityStock}}
+      </nb-option>
+    </nb-autocomplete>
+    <input
+    formControlName="quantity"
+
+    nbInput
+    type="number"
+    placeholder="Quantity!"
+    class="form-control"
+    min="1" 
+    max="{{QuantityMaxValue}}"
+  />
+  <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched) ">
+    <p class="text-danger" *ngIf="quantity?.errors?.required">*Required</p>
+  </div>
+  <div *ngIf="enableErrorMessageQuantity">
+    <p class="text-danger">Quantity must be less than producy available  quantity </p>
+  </div>
+</div>
+
+<div>
+    <button
+      nbButton
+      shape="round"
+      size="small"
+      status="success"
+      (click)="addToTeam()"
+    >
+      Add to resources list
+    </button>
+  </div>
+  </form>
+  <div class="mt-5 mb-5" *ngIf="resourceList?.length>0">
+
+    <ngx-resource-table [resourceList]="resourceList" (refreshData)="refresh($event)"></ngx-resource-table>
+
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form class="container" [formGroup]="createProjectCharterform" (ngSubmit)="create()">
+            <div class="col-lg-12">
+                <label for="subject">Customer</label>
+                <div class="form-group">
+                    <nb-select fullWidth >
+                        <nb-option *ngFor="let optiondis of optionsdis" [value]="optiondis">
+                            {{ optiondis }}
+                        </nb-option>
+                    </nb-select>
+                </div>
+            </div>
+            <br>
+            <div class="col-lg-12">
+                <label for="subject">Responsible:</label>
+                <div class="form-group">
+                    <nb-select fullWidth >
+                        <nb-option *ngFor="let optiondis of optionsdis" [value]="optiondis">
+                            {{ optiondis }}
+                        </nb-option>
+                    </nb-select>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <label for="subject">1st Reminder Date:</label>
+                <div class="form-group">
+                    <input placeholder="pick date" nbInput [nbDatepicker]="dateTimePicker" fullWidth
+                      />
+                    <nb-datepicker #dateTimePicker></nb-datepicker>
+                    <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+                        <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button nbButton status="success">
+                    <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                    Create
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

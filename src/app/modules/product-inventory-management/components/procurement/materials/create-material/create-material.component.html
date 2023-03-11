@@ -1,0 +1,148 @@
+<div class="row">
+       <div class="col-md-4">
+              <h3>Create New Material</h3>
+       </div>
+       <div  class="col-md-8">
+              <button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </button>
+       </div>
+</div>
+<form [formGroup]="materialForm" class="mt-3">
+       <label class="mt-2">Material Type</label>
+       <div class="row">
+              <div class="col-md-11">
+                <nb-select nbSelect fullWidth (selectedChange)="selectMaterialType($event)"
+                formControlName="materialType">
+                  <nb-option value="Raw Material">Raw Material</nb-option>
+                  <nb-option value="Finished Product">Finished Product</nb-option>
+                  <nb-option value="Service">Service</nb-option>
+                </nb-select>
+              </div>
+              <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the material type" nbTooltipStatus="primary"></nb-icon>
+              </div>
+       </div>
+           <label class="mt-2">Material Name</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="text" class="form-control"
+               formControlName="materialName">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the material name" nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+           <label class="mt-2">Material Category</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <nb-select nbSelect fullWidth
+                         (selectedChange)="selectCategory($event)" formControlName="materialCategory"
+                         nbTooltip="Select Category or Create a new One" nbTooltipStatus="info">
+                <nb-option *ngFor = "let category of categories" [value]="category">
+                  {{category.categoryName}}
+                </nb-option>
+                <nb-option>
+                  <button nbButton (click)="open2Supp(dialog)" status="primary">Create New Category</button>
+                </nb-option>
+              </nb-select>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please select a category" nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+          <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Create New Category
+                    </nb-card-header>
+                    <nb-card-body>
+                      <form [formGroup]="categoryForm" (ngSubmit)="createNewCategory(ref)">
+        <div class="row">
+            <div class="form-group">
+              <label class="mt-2">Category Name</label>
+              <input nbInput fullWidth type="text" class="form-control"
+               formControlName="categoryName">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+              <label class="mt-2">Description</label>
+              <input nbInput fullWidth type="text" class="form-control"
+               formControlName="categoryDesc">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+              <button type="submit" nbButton status="success"
+                      [disabled]="categoryForm.invalid">
+                <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+              </button>
+            </div>
+        </div>
+       </form>
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" 
+                              nbButton status="primary">
+                        Close Window
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+           <label class="mt-2" [hidden]="stockInputHidden">Minimum Stock Capacity</label>
+           <div class="row" [hidden]="stockInputHidden">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="number" class="form-control"
+               formControlName="minStock" [(ngModel)]="minStockVal" [value]="minStockVal"
+               (change)="changeMinStock($event)">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the minimum stock capacity" 
+                     nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+           <label class="mt-2" [hidden]="stockInputHidden">Maximum Stock Capacity</label>
+           <div class="row" [hidden]="stockInputHidden">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="number" class="form-control"
+               formControlName="maxStock" [(ngModel)]="maxStockVal" [value]="maxStockVal"
+               (change)="changeMaxStock($event)">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the maximum stock capacity" 
+                     nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+  <label class="mt-2" [hidden]="inputBarcodeHidden">Material Barcode <small>(Optional)</small></label>
+  <div class="row" [hidden]="inputBarcodeHidden">
+    <div class="col-md-11">
+      <input nbInput fullWidth type="number" class="form-control" nbTooltip="Once you start typing, 
+                      the barcode will be shown below." nbTooltipStatus="primary"
+             formControlName="materialBarcode" [(ngModel)]="valueBarcode"><br/>
+      <div align="center">
+        <ngx-barcode [bc-value]="valueBarcode" [bc-display-value]="true"
+                     bc-height="36"></ngx-barcode>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter the material barcode" nbTooltipStatus="primary"></nb-icon>
+    </div>
+  </div>
+  <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="materialForm.invalid || 
+              (minStockVal <= 0 && selectedMaterialType === 'Finished Product')
+              || (maxStockVal <= 0 && selectedMaterialType === 'Finished Product') 
+              || (minStockVal <= 0 && selectedMaterialType === 'Raw Material')
+              || (maxStockVal <= 0 && selectedMaterialType === 'Raw Material')
+              || (minStockVal >= maxStockVal && selectedMaterialType === 'Finished Product')
+              || (minStockVal >= maxStockVal && selectedMaterialType === 'Raw Material')"
+                (click)="createNewMaterial()" 
+                      status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+                </button>
+         </div>
+  </div>
+</form>

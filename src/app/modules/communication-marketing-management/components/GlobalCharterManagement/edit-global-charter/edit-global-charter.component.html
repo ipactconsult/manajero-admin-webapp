@@ -1,0 +1,248 @@
+<div *ngIf="globalCharter" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Global Charter Charter </h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+    <!---- <a [routerLink]="['/communicationMarketing/DetailsCharter/',globalCharter.id]" class="w-25" status="primary"
+         fullWidth nbButton shape="round">
+        <nb-icon icon="eye-outline"></nb-icon>
+      </a>---->
+      <a [routerLink]="['/communicationMarketing/GlobalCharter']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to Graphical Charter list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="globalCharterGroup">
+
+    <label>Title </label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="title"
+         name="title" 
+         [(ngModel)]="globalCharter.title" 
+         formControlName="title" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+<br>
+
+
+
+
+
+<label>Module </label>
+<div class="row">
+  <div class="col-md-11">
+    <nb-select   [(ngModel)]="globalCharter.module" fieldSize="large" formControlName="module" 
+    fullWidth id="module"
+    name="module" placeholder="Select  Module " selected="0"
+    > 
+    
+                                 <nb-option disabled value="0">Autre</nb-option>
+                              <nb-option value="Global Manazello">Global Manazello</nb-option>
+
+                                   <nb-option value="Communication & Marketing">Communication & Marketing</nb-option>
+                                   <nb-option value="CRM">CRM</nb-option>
+                                   <nb-option value="Product & Stock">Product & Stock</nb-option>
+                                   <nb-option value="Human resources">Human resources</nb-option>
+                                   <nb-option value="Finance">Finance</nb-option>
+                                   <nb-option value="Accounting">Accounting</nb-option>
+                                   <nb-option value="Recovery & litigation">Recovery & litigation</nb-option>
+
+    
+    </nb-select>
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<!-----
+<br>
+<label>File </label>
+<div class="row">
+  <div class="col-md-11">
+    <input (change)="onFileSelected($event)" autocomplete="off" formControlName="file" fullWidth  
+    required   id="file" name="file" nbInput type="file" />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>---->
+
+<br>
+<label>typo</label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="typo"
+         name="typo" 
+         [(ngModel)]="globalCharter.typo" 
+         formControlName="typo" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+
+<br>
+<label>Icon</label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="icon"
+         name="icon" 
+         [(ngModel)]="globalCharter.icon" 
+         formControlName="icon" 
+         type="icon" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+
+
+
+<label>Logo</label>
+
+<div class="form-group row">
+  <label class="label col-sm-3 col-form-label"
+         for="logo">Logo</label>
+  <div class="col-sm-9">
+    <input (change)="onFileSelected($event)"
+           formControlName="logo"
+           id="logo"
+           name="logo"
+           type="file"
+          
+    />
+
+  </div>
+</div>
+
+
+
+
+
+
+<br>
+<label>Colors</label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="couleurs"
+         name="couleurs" 
+         [(ngModel)]="globalCharter.couleurs" 
+         formControlName="couleurs" 
+         type="couleurs" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+
+
+<label>Template</label>
+
+<div class="form-group row">
+  <label class="label col-sm-3 col-form-label"
+         for="template">Template</label>
+  <div class="col-sm-9">
+    <input (change)="onTemplateSelected($event)"
+           formControlName="template"
+           id="template"
+           name="template"
+           type="file"
+          
+    />
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<label>Description</label>
+
+
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="description"
+         name="description" 
+         [(ngModel)]="globalCharter.description" 
+         formControlName="description" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference"   status="success" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+<button (click)="updateGlobalCharter()" status="success" nbButton>Edit</button>
+
+
+   
+
+
+  </form>
+</div>
+

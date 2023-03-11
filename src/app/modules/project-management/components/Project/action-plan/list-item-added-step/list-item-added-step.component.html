@@ -1,0 +1,7 @@
+<div *ngIf="list.length != 0">
+  List of Item Added : <br />
+  <nb-tag-list *ngFor="let item of list">
+    {{ item }}
+    <nb-tag status="basic" appearance="outline" text="{{ item }}"></nb-tag>
+  </nb-tag-list>
+</div>

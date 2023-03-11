@@ -1,0 +1,260 @@
+<div class="col-lg-12">
+   <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
+    <div class="col-md-3">
+      <h2>Visits</h2>
+    </div>
+    <div class="col-md-5">
+      <input [(ngModel)]="search"
+             nbInput class="w-100" fieldSize="large" fullWidth
+             nbTooltip="Tap here to search a visit "
+             nbTooltipStatus="primary" placeholder="Search visit" type="text">
+
+    </div>
+    
+    <div class="btn-toolbar col-md-4" role="toolbar">
+
+      <div class="mr-auto mr-md-2 btn-group" role="group">
+          <a [routerLink]="['/crm/grid-visits']" aria-current="page"
+           class=" mx-1 align-self-center active text-white"
+           id="tooltipShowSimplGrid" nbTooltip="Visualize data on keypad "
+           nbTooltipStatus="primary" nbButton status="primary">
+          <nb-icon icon="grid-outline"></nb-icon>
+        </a>
+          <a [routerLink]="['/crm/visits']" aria-current="page"
+           class=" mx-1 align-self-center active text-white"
+           id="tooltipShowGrid" nbTooltip="Visualize data on keypad "
+           nbTooltipStatus="primary" nbButton status="warning">
+          <nb-icon icon="keypad-outline"></nb-icon>
+        </a>
+        <a [routerLink]="['/crm/list-visits']" nbButton status="basic"
+           class="mx-1 align-self-center"
+           id="tooltipShowList"
+           nbTooltip="Visualize data on list "
+           nbTooltipStatus="primary" >
+          <nb-icon icon="list-outline">
+          </nb-icon>
+        </a>
+        
+ <a [routerLink]="['/crm/calendar-visits']" aria-current="page"
+           class=" mx-1 align-self-center " nbButton status="danger"
+           id="tooltipShowCalendar" nbTooltip="Visualize data on calendar "
+           nbTooltipStatus="primary" >
+          <nb-icon icon="calendar-outline"></nb-icon>
+        </a>
+      
+        <a (click)="exportAsXLSX()" aria-current="page" class=" mx-1 align-self-center active"
+           id="tooltipExport" nbTooltip="Export data to excel file "
+           nbTooltipStatus="primary" nbButton 
+           status="success"> <i class="fas fa-file-excel text-white"></i>
+        </a>
+        <button [routerLink]="['/crm/add-visit']"
+                aria-current="page" class=" mx-1 align-self-center active" nbButton status="info"
+                id="tooltipAddDeal" nbTooltip="Click here to create a new visit"
+                nbTooltipStatus="primary"><nb-icon icon="plus-outline"></nb-icon> Add
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!dataVisits || dataVisits.length === 0" align="center">
+    <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+  </div>
+  <div *ngIf="(dataVisits | filter : search).length === 0" [hidden]="dataVisits.length === 0"
+       class="">
+    <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+      while typing your data
+    </nb-alert>
+  </div>
+
+
+  <div class="row mt-3">
+     <div class="col-md-3 mt-3">
+
+      <nb-form-field>
+        <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="getVisitsByStatus($event)"
+                   class="mx-2 w-75" nbTooltip="Click here to filter by status"
+                   nbTooltipStatus="primary"
+                   placeholder="&nbsp; Status"
+                   selected="0">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+
+          <nb-option value="UPCOMING">UPCOMING</nb-option>
+          <nb-option value="doing">Doing</nb-option>
+          <nb-option value="DONE">Done</nb-option>
+        </nb-select>
+      </nb-form-field>
+
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="getVisitsByAddress($event,'country')" [disabled]="dataVisits.length === 0"
+                   class="mt-3 mx-2 w-75" nbTooltip="Tap to filter by country"
+                   nbTooltipStatus="primary"
+                   placeholder="&nbsp;  Country">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+          <nb-option *ngFor="let country of countries"
+                     value="{{country.country_name}}">{{country.country_name}}</nb-option>
+
+        </nb-select>
+      </nb-form-field>
+
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="filterByEmployee($event)"
+                   class="mt-3 mx-2 w-75" nbTooltip="Click here to filter visit by employee"
+                   nbTooltipStatus="primary" placeholder="&nbsp;  Employee">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+          <nb-option
+            *ngFor="let optionEmployee of list"
+            value="{{optionEmployee.id}}">{{optionEmployee.employeeName}}</nb-option>
+
+
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="filterByProperty($event)"
+                   class="mt-3 mx-2 w-75" nbTooltip="Click here to filter visit by property"
+                   nbTooltipStatus="primary" placeholder=" &nbsp; Property">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+          <nb-option
+            *ngFor="let optionProperty of properties"
+            value="{{optionProperty.propertyId}}">{{optionProperty.propertyName}}</nb-option>
+        </nb-select>
+      </nb-form-field>
+
+      <nb-form-field>
+        <nb-icon class="mt-3 " icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="getVisitsByCustomer($event)"
+                   class="mt-3 mx-2 w-75" nbTooltip="Click here to filter visit by customer"
+                   nbTooltipStatus="primary" placeholder="&nbsp; Customer">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+          <nb-option
+            *ngFor="let customer of dataCustomers"
+            value="{{customer.id}}">{{customer.name}}</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="flip-outline" nbPrefix></nb-icon>
+        <nb-select [disabled]="dataVisits.length === 0"
+                   class="mx-2 mt-3 w-75" nbTooltip="Tap to sort by title "
+                   nbTooltipStatus="primary" placeholder="&nbsp; Title"
+                   selected="0">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+          <nb-option (click)="getVisitsTitleAsc()" value="1">Names (A-Z)</nb-option>
+          <nb-option (click)="getVisitsTitleDesc()" value="2">Names (Z-A)</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="flip-outline" nbPrefix></nb-icon>
+        <nb-select [disabled]="dataVisits.length === 0"
+                   class=" mx-2 mt-3 w-75" nbTooltip="Tap to sort by date creation"
+                   nbTooltipStatus="primary" placeholder=" &nbsp; Date creation"
+                   selected="0">
+          <nb-option (click)="getAllVisit()" value="All">All</nb-option>
+          <nb-option (click)="getVisitsCreatedDesc()" value="1">Recently added</nb-option>
+          <nb-option (click)="getVisitsCreatedAsc()" value="2">Old</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <div class="col-lg-10 mt-3">
+        <label>Visits Per Page : </label>
+        <input [(ngModel)]="pageSize" [disabled]="dataVisits.length === 0"
+
+               min="4" nbInput
+               nbTooltip="Tap a number to get Visits per page" nbTooltipStatus="primary"
+               placeholer="Number to get visits per page" type="number">
+      </div>
+    </div>
+    <div class="input-group col-md-9">
+      <table class="mb-0 table table-hover mt-3">
+        <thead>
+        <tr>
+          <th class="align-middle bt-0">Visit Ref</th>
+          <th class="align-middle bt-0">Title</th>
+          <th class="align-middle bt-0">Address</th>
+          <th class="align-middle bt-0">Date Visit</th>
+          <th class="align-middle bt-0">Hour Visit</th>
+          <th class="align-middle bt-0">Customer</th>
+          <th class="align-middle bt-0">Status</th>
+          <th class="align-middle bt-0 text-right">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let visit of dataVisits | filter : search | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: total}">
+          <td class="align-middle">
+            <p>{{visit.refVisit}}</p>
+          </td>
+          <td class="align-middle">
+            <p>{{visit.title}}</p>
+          </td>
+          <td class="align-middle"><p>  {{visit?.property?.propertyCity}}, {{visit?.property?.propertyCountry}} </p>
+          </td>
+
+          <td class="align-middle">
+            <p>{{visit.dateVisit | date :'EEEE, MMMM d, y '}}</p>
+          </td>
+          <td class="align-middle"><p>{{visit.hourVisit}} </p>
+          </td>
+          <td class="align-middle"><p>{{visit?.customer?.name}} </p>
+          </td>
+
+          <td class="align-middle">
+            <p *ngIf="visit.status === 'UPCOMING'"
+               class="mb-2 badge badge-danger badge-pill">{{visit.status}}</p>
+            <p *ngIf="visit.status === 'DONE'"
+               class="mb-2 badge badge-success badge-pill">{{visit.status}}</p>
+            <p *ngIf="visit.status === 'doing'"
+               class="mb-2 badge badge-warning badge-pill">{{visit.status}}</p>
+
+          </td>
+          <td class="align-middle text-right">
+            <div class="btn-group">
+              <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                      aria-label="Example icon-button with a menu" mat-icon-button
+                      nbButton nbTooltip="Click here to see advanced menu"
+                      nbTooltipStatus="primary"
+                      shape="round"
+                      size="small"
+                      status="basic">
+                <nb-icon icon="more-horizontal-outline"></nb-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <a [routerLink]="['/crm/edit-visit/',visit.id]"
+                     fullWidth nbButton>
+                      <span class="text-warning">
+                        <nb-icon icon="edit-outline"></nb-icon>
+                      </span> Edit
+                  </a>
+                </button>
+
+                <button mat-menu-item>
+                  <a [routerLink]="['/crm/details-visit/',visit.id]" fullWidth nbButton>
+                    <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                  </a>
+                </button>
+                <button mat-menu-item>
+                  <a fullWidth nbButton (click)="onArchiveConfirm(visit,visit.id)" status="basic">
+                   <nb-icon icon="eye-outline"></nb-icon>Archive
+                  </a>
+                </button>
+
+              </mat-menu>
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+     <div class="d-flex justify-content-center">
+      <nb-card class="card ml-auto mr-auto text-center" style="height: 30px; width: auto ;">
+        <pagination-controls (pageChange)="current = $event" align="right" nextLabel=""
+                             previousLabel=""></pagination-controls>
+
+      </nb-card>
+    </div>
+    </div>
+  
+
+  </div>
+</div>

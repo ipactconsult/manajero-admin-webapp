@@ -1,0 +1,308 @@
+<nb-card> 
+
+ <nb-card-header>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <h5 class="more-vertical">
+          Add a deal </h5>
+      </div>
+        <div class="col-md-4">
+ 
+        </div>
+      <div align="right" class="col-md-2 justify-content-end">
+        <a [routerLink]="['/crm/deals']" class="w-25 mx-3"
+           fullWidth nbButton nbTooltip="Back to deals list" nbTooltipStatus="primary"
+           shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+      </div>
+    </div>
+  </nb-card-header> 
+  <nb-card-body>
+    <form [formGroup]="dealGroup">
+      <nb-stepper #stepper >
+        <nb-step [stepControl]="customerGroup" label="Personal">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label" for="dealName">Deal Name</label>
+                <input [(ngModel)]="deal.dealName" formControlName="dealName"
+                       fullWidth
+                       id="dealName" fieldSize="large"
+                       name="dealName" nbInput placeholder="Deal Name" type="text">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label" for="dealValue">Deal value</label>
+                <input [(ngModel)]="deal.dealValue" formControlName="dealValue"
+                       fullWidth
+                       id="dealValue" fieldSize="large"
+                       name="dealValue" nbInput placeholder="Deal value" type="number">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label">Forecast Date</label>
+
+                <input [(ngModel)]="deal.forecastDate" [nbDatepicker]="dateTimePicker1"
+                       fieldSize="large"
+                       formControlName="forecastDate"
+                       fullWidth 
+                       id="forecastDate" name="forecastDate"
+                       nbInput
+                       placeholder="Forecast Date">
+                <nb-datepicker #dateTimePicker1></nb-datepicker>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label"> Win Chance</label>
+                <input [(ngModel)]="deal.winChance"
+                       formControlName="winChance"
+                       fullWidth fieldSize="large"
+                       id="winChance"
+                       name="winChance" nbInput placeholder="Win Chance" type="text">
+ </div>
+            </div>
+
+          </div>
+          
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group">
+              
+                   <label class="label"> Deal type</label>
+                 
+                <nb-select (selectedChange)="onMenuItemSelectedTypeDeal($event)"
+                           [(ngModel)]="deal.dealType"
+                             size="large" placeholder="Deal type"
+                           formControlName="dealStatus" class="w-100"
+                           fullWidth id="dealType"
+                           name="dealType">
+
+                  <nb-option
+
+                    *ngFor="let optionType of optionsType" value="{{optionType.value}}">{{optionType.value}}</nb-option>
+
+                </nb-select>
+                 
+              </div>
+            </div>
+     
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label"> Deal status</label> <br>
+                 
+                <nb-select (selectedChange)="onMenuItemSelected($event)"
+                           [(ngModel)]="deal.dealStatus"
+                            size="large" placeholder="Deal status"
+                           formControlName="dealStatus" class="w-100"
+                           fullWidth id="dealStatus" fieldSize="large"
+                           name="dealStatus">
+
+                  <nb-option
+
+                    *ngFor="let option of options" value="{{option.value}}">{{option.value}}</nb-option>
+
+                </nb-select>
+                 
+              </div>
+            </div>
+          </div>
+    <div class="row">
+                   <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label"> Deal Date</label>
+                <input [(ngModel)]="deal.dealDate" [nbDatepicker]="dateTimePicker4"
+                       fieldSize="large" formControlName="dealDate" fullWidth id="dealDate"
+                       name="dealDate" nbInput fieldSize="large"
+                       placeholder="Pick Date">
+                <nb-datepicker #dateTimePicker4></nb-datepicker>
+              </div>
+            </div>
+            </div>
+          <div class="row mt-2">
+            <div class="col-md-9"></div>
+            <div class="col-md-2 mt-2">
+              <button (click)="onDealFormSubmit()" class="w-100" nbButton nbStepperNext status="info"
+                      type="submit">next
+              </button>
+            </div>
+          </div>
+        </nb-step>
+          <nb-step [stepControl]="quotes_form" label="Quotes">
+          <form class="step-container" formGroupName="quotes_form">
+             <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="label"> Quote Value</label><br>
+                <input [(ngModel)]="deal.quoteValue"
+                       formControlName="quoteValue"
+                       fullWidth
+                       id="quoteValue" fieldSize="large"
+                       name="quoteValue"
+                       nbInput placeholder="quoteValue" type="number">
+
+              </div>
+            </div>
+          </div>
+           <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label"> Quote Vs Budget</label>
+                <input [(ngModel)]="deal.quoteVsBudget" formControlName="quoteVsBudget"
+                       fullWidth fieldSize="large"
+                       id="quoteVsBudget"
+                       name="quoteVsBudget" nbInput placeholder="Quote Vs Budget" type="text">
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label"> Quote Date</label>
+                <input [(ngModel)]="deal.quoteDate" [nbDatepicker]="dateTimePicker"
+                       fieldSize="large" formControlName="quoteDate" fullWidth id="quoteDate"
+                       name="quoteDate" nbInput
+                       placeholder="Pick Date">
+                <nb-datepicker #dateTimePicker></nb-datepicker>
+              </div>
+            </div>
+
+          </div>
+        
+      <div class="row mt-3">
+              <button class="col-md-2 " nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onQuotesFormSubmit()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+          </nb-step>
+        
+          <nb-step [stepControl]="budget_form" label="Budgets">
+          <form class="step-container" formGroupName="budget_form">
+            <div class="col-lg-12">
+               <label class="label"> Customer Budget</label> <br>
+                   <input [(ngModel)]="deal.customerBudget"
+                          formControlName="customerBudget"
+                          fullWidth fieldSize="large"
+                          id="customerBudget"
+                          name="customerBudget" nbInput placeholder="Customer budget" type="text">
+            
+            </div>
+                  <div class="col-lg-12">
+               <label class="label">Budget stage</label> <br>
+                   <input [(ngModel)]="deal.budgetStage"
+                          formControlName="budgetStage"
+                          fullWidth
+                          id="budgetStage" fieldSize="large"
+                          name="budgetStage" nbInput
+                          placeholder="Budget stage" type="text">
+            
+            </div>
+                  <div class="row mt-3">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onBudgetFormSubmit()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+          </nb-step>
+       <nb-step [stepControl]="visit_form" label="Visit">
+          <form class="step-container" formGroupName="visit_form">
+             <div class="col-lg-12">
+               <label class="label"> Visit </label> </div>
+               <div class="row">
+                       <div class="col-lg-12"> 
+          <nb-select (selectedChange)="onMenuItemSelectedVisit($event)"
+                     [(ngModel)]="deal.visit"
+                     class="w-100"
+                     formControlName="visit"
+                     fullWidth size="large"
+                     id="visit" name="visit"
+                     placeholder="Visit">
+            <nb-option
+              *ngFor="let optionVisit of dataVisits"
+              value="{{optionVisit.id}}">
+              {{optionVisit.title}}
+            </nb-option>
+          </nb-select>
+        </div>
+         
+  
+        
+        </div>
+                  <div class="row mt-3">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onVisitFormSubmit()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+       </nb-step>
+    
+         <nb-step [stepControl]="extra_form" label="Extra">
+          <form class="step-container" formGroupName="extra_form">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="label"> Negotiation</label>
+              <input
+                [(ngModel)]="deal.negotiation"
+                formControlName="negotiation"
+                fullWidth 
+                id="negotiation" fieldSize="large"
+                name="negotiation"
+                nbInput placeholder="Negotiation" type="text">
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="label"> Comment</label>
+              <textarea [(ngModel)]="deal.comment"
+                        formControlName="comment"
+                        fullWidth
+                        id="comment"
+                        name="comment" fieldSize="large"
+                        nbInput
+                        placeholder="Comment" rows="5" type="text">
+          </textarea>
+            </div>
+          </div>
+
+        </div>
+            
+            <div class="row">
+                   <div class="col-lg-12">
+               <div class="form-group">
+                 <label class="label"> Source</label>
+                 <input [(ngModel)]="deal.source" formControlName="source"
+                        fullWidth
+                        id="source" fieldSize="large"
+                        name="source" nbInput placeholder="Source" type="text">
+               </div></div>
+             </div>
+              <div class="row mt-3">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="addDealFunction()" class="col-md-2" nbButton nbStepperNext
+                      status="success" type="submit">Create
+              </button>
+            </div>
+          </form></nb-step>
+            
+      </nb-stepper>
+    </form>
+  </nb-card-body>
+</nb-card>

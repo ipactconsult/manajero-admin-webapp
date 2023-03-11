@@ -1,0 +1,72 @@
+
+    <nb-flip-card [flipped]="flippedState" [showToggleButton]="false" >
+      <nb-card-front>
+        <nb-card accent="info" >
+          <nb-card-header>
+            <div class="row">
+              <div class="col-md-11">Responsibility of the customer</div>
+              <div class="col-md-1">
+                <nb-icon
+                  icon="edit-outline"
+                  status="basic"
+                  (click)="flip()"
+                ></nb-icon>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body>
+            <ng2-smart-table
+              [settings]="settings"
+              [source]="dataTabel"
+              (delete)="confirmation($event,dialog)"
+              (create)="onCreate()"
+              (userRowSelect)="onUserRowSelect($event)"
+            >
+            </ng2-smart-table>
+             <!--Delete Confirm -->
+        <ng-template #dialog let-data let-ref="dialogRef">
+          <nb-card >
+            <nb-card-header>Confirm Delete Operation</nb-card-header>
+            <nb-card-body >
+              Are you sure you want to delete this item ?
+            </nb-card-body>
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-md-2">
+                  <button nbButton status="basic"  (click)="ref.close()"><nb-icon icon="close" ></nb-icon>Close</button>
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                  <button nbButton status="danger"  (click)="onDeleteConfirm(selectedItem)"><nb-icon icon="trash"></nb-icon>Delete</button>
+                </div>
+
+              </div>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template> 
+        <!--end Delete Confirm-->
+          </nb-card-body>
+        </nb-card>
+      </nb-card-front>
+      <nb-card-back *ngIf="flippedState">
+        <nb-card>
+          <nb-card-header>
+            <nb-icon
+              icon="chevron-left-outline"
+              pack="nebular-essentials"
+              aria-hidden="true"
+              (click)="flip()"
+            ></nb-icon>
+            Responsibility of the customer
+                          </nb-card-header>
+          <nb-card-body>
+            <ngx-addresponsibility-customer
+            [selectedItem]="selectedItem"
+            [projectCharter]="data"
+            (refreshData)="refresh($event)"
+            ></ngx-addresponsibility-customer>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-back>
+    </nb-flip-card>
+  

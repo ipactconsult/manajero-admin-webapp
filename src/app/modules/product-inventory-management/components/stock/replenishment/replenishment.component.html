@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-3">
+    <h3>Replenishment</h3>
+  </div>
+</div><br/>
+<div *ngIf="!rps || rps.length === 0" align="center">
+  <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+</div>
+<div class="row" *ngIf="rps.length > 0">
+  <div class="col-md-12">
+    <table class="table mb-0">
+      <thead class="bg-light">
+      <tr>
+        <th>Material(s)</th>
+        <th>Purchase Request</th>
+        <th>Supplier(s)</th>
+        <th>Step</th>
+        <th>Created</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let rp of rps">
+        <td>
+          <div *ngFor="let material of rp.pr?.material">
+            <a [routerLink]="['/pim/procurement/material', material.materialId]"
+               style="text-decoration: none">
+              <button nbButton shape="round" size="small"
+                      status="dark" class="materialNames">
+                {{material.materialName}}
+              </button>
+            </a><br/>
+          </div>
+        </td>
+        <td>
+            <button nbButton shape="round" size="small" *ngIf="rp.pr.purchaseRequisitionStatus === 'Pending'"
+                    status="dark" class="bg-warning text-dark" nbTooltip="{{rp.pr.purchaseRequisitionStatus}}"
+                    nbTooltipStatus="warning">
+              {{rp.pr.purchaseRequisitionNumber}}
+            </button>
+            <button nbButton shape="round" size="small" *ngIf="rp.pr.purchaseRequisitionStatus === 'Approved'"
+                  status="dark" class="bg-success text-white" nbTooltip="{{rp.pr.purchaseRequisitionStatus}}"
+                  nbTooltipStatus="success">
+              {{rp.pr.purchaseRequisitionNumber}}
+            </button>
+            <button nbButton shape="round" size="small" *ngIf="rp.pr.purchaseRequisitionStatus === 'Rejected'"
+                  status="dark" class="bg-danger text-white" nbTooltip="{{rp.pr.purchaseRequisitionStatus}}"
+                  nbTooltipStatus="danger">
+              {{rp.pr.purchaseRequisitionNumber}}
+            </button>
+        </td>
+        <td *ngIf="!rp.pr" class="text-white">
+          -
+        </td>
+        <td *ngFor="let supplier of rp.pr.material">
+          <a [routerLink]="['/pim/supplier', supplier.supplier?.supplierId]"
+             style="text-decoration: none">
+            <nb-user [name]="supplier.supplier?.supplierFirstName + ' ' + supplier.supplier?.supplierLastName"
+                     picture="{{supplier.supplier?.supplierImage}}" size="medium"></nb-user>
+          </a>
+        </td>
+        <td *ngIf="!rp.pr" class="text-white">
+          -
+        </td>
+        <td class="text-white">
+          {{rp.step}}
+        </td>
+        <td class="text-white">
+          {{moment(rp.rpCreation).format("DD MMM YYYY")}}
+        </td>
+        <td>
+          <button nbButton status="success" size="small"
+                  (click)="continuePurchase(rp, rp.pr?.material[0])" *ngIf="rp.pr?.purchaseRequisitionStatus === 'Approved' || 
+                  rp.pr?.purchaseRequisitionStatus === 'Pending'"
+                  [disabled]="rp.pr?.purchaseRequisitionStatus === 'Pending'">
+            Continue
+          </button><span style="pointer-events: none;">&nbsp;&nbsp;&nbsp;</span>
+          <button nbButton status="danger" size="small"
+                  (click)="open2(dialog)" *ngIf="rp.pr?.purchaseRequisitionStatus !== 'Rejected'">
+            Abandon
+          </button>
+          <ng-template #dialog let-data let-ref="dialogRef">
+            <nb-card>
+              <nb-card-header>
+                Confirm abandon operation ?
+              </nb-card-header>
+              <nb-card-body>
+                Are you sure you would like to abandon this replenishment?
+              </nb-card-body>
+              <nb-card-footer>
+                <button (click)="ref.close()" class="float-right" nbButton status="danger">
+                  No
+                </button>
+                <button (click)="abandonRP(rp, ref)" class="float-left" nbButton
+                        status="success">
+                  Yes
+                </button>
+              </nb-card-footer>
+            </nb-card>
+          </ng-template>
+          <button nbButton status="danger" size="small"
+                  (click)="endProcessRP(rp)" *ngIf="rp.pr?.purchaseRequisitionStatus === 'Rejected'"
+                  nbTooltip="Purchase Process must end because purchase requisition is REJECTED by the Finance Team."
+                  nbTooltipStatus="danger">
+            End Process
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,837 @@
+<!--<div *ngIf="persona" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Update Persona Details</h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/communicationMarketing/DetailsPersona/',persona.id]" class="w-25"
+         fullWidth nbButton shape="round">
+        <nb-icon icon="eye-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/communicationMarketing/Persona']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to Personas list" nbTooltipStatus="primary" outline shape="round" status="danger">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="personaGroup">
+    <label>Job</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="job"
+         name="job" 
+         [(ngModel)]="persona.job" 
+         formControlName="job" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+<label>Age</label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="age"
+         name="age" 
+         [(ngModel)]="persona.age" 
+         formControlName="age" 
+         type="number" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+
+<label>localisation</label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="localisation"
+         name="localisation" 
+         [(ngModel)]="persona.localisation" 
+         formControlName="localisation" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+
+<label>Motivation</label>
+
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="motivation"
+         name="motivation" 
+         [(ngModel)]="persona.motivation" 
+         formControlName="motivation" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>Interset</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="interset"
+         name="interset" 
+         [(ngModel)]="persona.interset" 
+         formControlName="interset" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+<label>Gender</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="gender"
+         name="gender" 
+         [(ngModel)]="persona.gender" 
+         formControlName="gender" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+<label>Situation</label>
+
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="situation"
+         name="situation" 
+         [(ngModel)]="persona.situation" 
+         formControlName="situation" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+<br>
+<label>Technologie</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="technologie"
+         name="technologie" 
+         [(ngModel)]="persona.technologie" 
+         formControlName="technologie" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>Goals</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="goals"
+         name="goals" 
+         [(ngModel)]="persona.goals" 
+         formControlName="goals" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+
+<label>SoftSkills</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="softSkills"
+         name="softSkills" 
+         [(ngModel)]="persona.softSkills" 
+         formControlName="softSkills" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>HardSkills</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="hardSkills"
+         name="hardSkills" 
+         [(ngModel)]="persona.hardSkills" 
+         formControlName="hardSkills" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+<button (click)="updatePersona()"  status="success" nbButton>Edit</button>
+
+
+   
+
+
+  </form>
+</div>--->
+
+
+<div *ngIf="persona" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Update Persona Details</h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/communicationMarketing/DetailsPersona/',persona.id]" class="w-25"
+         fullWidth nbButton shape="round" status="info">
+        <nb-icon icon="eye-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/communicationMarketing/Persona']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to Personas list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="PersonaGroup">
+
+    <div class="row mt-3">
+      <div class="col-md-4 mb-3">
+        <nb-card>
+          <nb-card-body class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="row">
+                <img alt=""
+                     src="{{persona.image}}" style="width: 150px;height: 150px;border-radius: 100%;">
+                <br>
+              </div>
+              <div class="row mt-1 mx-1">
+                <div class="col-md-5">
+                  <button (click)="updatePersona()" nbButton shape="round" size="small" status="success">
+                    <nb-icon icon="checkmark-outline"></nb-icon>
+                  </button>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="button">
+                    <label for="image" nbButton shape="round" size="small" status="primary">
+                      <nb-icon class="mt-1" icon="upload-outline"></nb-icon>
+                    </label>
+                    <input (change)="onFileSelected($event)"
+                           autocomplete="off"
+                           formControlName="image"
+                           id="image"
+                           name="image"
+                           type="file">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+
+      </div>
+
+      <div class="col-md-8">
+
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Personal Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+       <div class="form-group row">
+                <div class="col-sm-3">
+               <p class="mb-0 text-sm">First Name</p>
+             </div>
+             <div class="col-sm-9">
+               <input [(ngModel)]="persona.nom"
+                      formControlName="nom"
+                      fullWidth
+                      id="nom"
+                      name="nom"
+                      nbInput
+                      placeholder="nom"
+                      type="text"
+               />
+
+             </div>
+           </div>
+           <hr>
+              <div class="form-group row">
+                   <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Last Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <input [(ngModel)]="persona.prenom"
+                         formControlName="prenom"
+                         fullWidth
+                         id="prenom"
+                         name="prenom"
+                         nbInput
+                         placeholder="prenom"
+                         type="text"
+                  />
+
+                </div>
+              </div>
+              <hr>
+
+              
+    
+
+        <div class="form-group row">
+                 <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Gender</p>
+        </div>
+             <div class="col-sm-9">
+              <nb-select   [(ngModel)]="persona.gender" fieldSize="large" formControlName="gender" 
+              fullWidth id="gender"
+              name="gender" placeholder="Select Type" selected="0"
+              > 
+             
+             <nb-option disabled value="0">Gender</nb-option>
+              <nb-option value="male">male</nb-option>
+              <nb-option value="female">female</nb-option>
+            
+             </nb-select>
+
+             </div>
+         </div>
+     <hr>
+
+     <div class="form-group row">
+      <div class="col-sm-3">
+       <p class="mb-0 text-sm">Date of Birth</p>
+         </div>
+        <div class="col-sm-9">
+
+          <input [(ngModel)]="persona.dateofBirth" [nbDatepicker]="dateTimePicker" fieldSize="large"
+          formControlName="dateofBirth" fullWidth id="dateofBirth" name="dateofBirth" nbInput
+          placeholder="Pick Date">
+        <nb-datepicker #dateTimePicker></nb-datepicker>
+  
+  </div>
+</div>
+   
+<div class="form-group row">
+  <div class="col-sm-3">
+   <p class="mb-0 text-sm">Job</p>
+     </div>
+    <div class="col-sm-9">
+
+      <input [(ngModel)]="persona.job" fieldSize="large" formControlName="job" fullWidth id="job"
+      name="job" nbInput type="text" placeholder="job">
+
+</div>
+</div>
+
+
+      
+<div class="form-group row">
+  <div class="col-sm-3">
+   <p class="mb-0 text-sm">Job</p>
+     </div>
+    <div class="col-sm-9">
+
+      <nb-select   [(ngModel)]="persona.situation" fieldSize="large" formControlName="situation" 
+      fullWidth id="situation"
+      name="situation" placeholder="Select  Situation " selected="0"
+      > 
+      
+      <nb-option disabled value="0">Situation</nb-option>
+     
+                                     <nb-option value="married">married</nb-option>
+                                     <nb-option value="divorced">Divorced</nb-option>
+                                     <nb-option value="single">single</nb-option>
+                                     <nb-option value="in a relationship">in a relationship</nb-option>
+        </nb-select>
+
+   </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-3">
+   <p class="mb-0 text-sm">Age</p>
+     </div>
+    <div class="col-sm-9">
+
+      <input [(ngModel)]="persona.age" fieldSize="large" formControlName="age" fullWidth id="age"
+      name="age" nbInput placeholder="Persona Age" type="number">
+
+   </div>
+</div>
+             
+
+<div class="form-group row">
+  <div class="col-sm-3">
+   <p class="mb-0 text-sm">Children Number</p>
+     </div>
+    <div class="col-sm-9">
+
+      <input [(ngModel)]="persona.numberOfChildren" fieldSize="large" formControlName="numberOfChildren" fullWidth id="numberOfChildren"
+      name="numberOfChildren" nbInput placeholder=" Children number "type="number">
+
+   </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-3">
+   <p class="mb-0 text-sm">Nationality</p>
+     </div>
+    <div class="col-sm-9">
+
+      <input [(ngModel)]="persona.nationality" fieldSize="large" formControlName="nationality" fullWidth id="nationality"
+      name="nationality" nbInput placeholder=" nationality "type="text">
+
+   </div>
+</div>
+              
+
+              
+              <button (click)="updatePersona()"  status="success"nbButton>Edit</button>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+     <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Contact Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Email Address</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="persona.email" fieldSize="large" formControlName="email" fullWidth id="email"
+                  name="email" nbInput placeholder="Persona email" type="email">
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Phone</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="persona.phone" fieldSize="large" formControlName="phone" fullWidth id="phone"
+                        name="phone" nbInput placeholder="Persona phone" type="number">
+                     <div *ngIf="persona.phone">
+                    <div *ngIf="persona.touched">
+                      <p class="alert alert-warning text-dark" role="alert">Champ Obligatoire</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Adress</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="persona.adresse" fieldSize="large" formControlName="adresse" fullWidth id="adresse"
+                          name="adresse" nbInput placeholder="Persona adresse" type="email">
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Country</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <nb-select size="large" placeholder="Select Country" [(ngModel)]="persona.localisation" 
+                  class="mt-1" formControlName="localisation" fullWidth  
+                                 id="localisation" name="localisation" selected="0">
+                            <nb-option disabled value="0">Country</nb-option>
+                            <nb-option *ngFor="let localisation of countries" value="{{localisation.country_name}}">
+                              {{localisation.country_name}}</nb-option>
+                          </nb-select>   
+
+                </div>
+              </div>
+           
+
+    
+
+
+
+              <button (click)="updatePersona()"  status="success" nbButton>Edit</button>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+
+
+
+        <br>
+
+
+        <nb-accordion>
+             <nb-accordion-item>
+               <nb-accordion-item-header>Description  Information</nb-accordion-item-header>
+               <nb-accordion-item-body>
+                 <div class="row">
+                   <div class="col-sm-3">
+                     <p class="mb-0 text-sm">Bio</p>
+                   </div>
+                   <div class="col-sm-9 text-secondary">
+                    <textarea
+                    [(ngModel)]="persona.bio"
+                    formControlName="bio"
+                    fullWidth
+                    id="bio"
+                    name="bio"
+                    nbInput
+                    placeholder="bio">
+                    
+                  </textarea>
+                   
+   
+                   </div>
+                 </div>
+                 <hr>
+                 <div class="row">
+                   <div class="col-sm-3">
+                     <p class="mb-0 text-sm">Personality</p>
+                   </div>
+                   <div class="col-sm-9 text-secondary">
+                    <textarea
+                [(ngModel)]="persona.personality"
+                formControlName="personality"
+                fullWidth
+                id="personality"
+                name="personality"
+                nbInput
+                placeholder="personality">
+                
+              </textarea>
+
+                        <div *ngIf="persona.personality">
+                       <div *ngIf="persona.touched">
+                         <p class="alert alert-warning text-dark" role="alert">Champ Obligatoire</p>
+                       </div>
+                     </div>
+   
+                   </div>
+                 </div>
+                 <hr>
+                 <div class="row">
+                   <div class="col-sm-3">
+                     <p class="mb-0 text-sm">Frustrations</p>
+                   </div>
+                   <div class="col-sm-9 text-secondary">
+                    <textarea
+                    [(ngModel)]="persona.frustrations"
+                    formControlName="frustrations"
+                    fullWidth
+                    id="frustrations"
+                    name="frustrations"
+                    nbInput
+                    placeholder="frustrations">
+                    
+                  </textarea> 
+
+   
+                   </div>
+                 </div>
+                 <hr>
+                 <div class="row">
+                   <div class="col-sm-3">
+                     <p class="mb-0 text-sm">Goals</p>
+                   </div>
+                   <div class="col-sm-9 text-secondary">
+                    <textarea
+                    [(ngModel)]="persona.goals"
+                    formControlName="goals"
+                    fullWidth
+                    id="goals"
+                    name="goals"
+                    nbInput
+                    placeholder="goals">
+                    
+                  </textarea>
+    
+   
+                   </div>
+                 </div>
+              
+                 <hr>
+                 <div class="row">
+                   <div class="col-sm-3">
+                     <p class="mb-0 text-sm">Interset</p>
+                   </div>
+                   <div class="col-sm-9 text-secondary">
+                    <textarea
+                    [(ngModel)]="persona.interset"
+                    formControlName="interset"
+                    fullWidth
+                    id="interset"
+                    name="interset"
+                    nbInput
+                    placeholder="interset">
+                    
+                  </textarea>
+    
+   
+                   </div>
+                 </div>
+   
+                 
+       
+   
+   
+   
+                 <button (click)="updatePersona()"  status="success" nbButton>Edit</button>
+               </nb-accordion-item-body>
+             </nb-accordion-item>
+           </nb-accordion>
+
+           <br>
+
+
+           <nb-accordion>
+                <nb-accordion-item>
+                  <nb-accordion-item-header>Skills  Information</nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0 text-sm">Languages</p>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                       <textarea
+                       [(ngModel)]="persona.languages"
+                       formControlName="languages"
+                       fullWidth
+                       id="languages"
+                       name="languages"
+                       nbInput
+                       placeholder="languages">
+                       
+                     </textarea>
+                      
+      
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0 text-sm">Technologie</p>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                       <textarea
+                   [(ngModel)]="persona.technologie"
+                   formControlName="technologie"
+                   fullWidth
+                   id="technologie"
+                   name="technologie"
+                   nbInput
+                   placeholder="technologie">
+                   
+                 </textarea>
+   
+                           <div *ngIf="persona.personality">
+                          <div *ngIf="persona.touched">
+                            <p class="alert alert-warning text-dark" role="alert">Champ Obligatoire</p>
+                          </div>
+                        </div>
+      
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0 text-sm">SoftSkills</p>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                       <textarea
+                       [(ngModel)]="persona.softSkills"
+                       formControlName="softSkills"
+                       fullWidth
+                       id="softSkills"
+                       name="softSkills"
+                       nbInput
+                       placeholder="softSkills">
+                       
+                     </textarea> 
+   
+      
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0 text-sm">HardSkills</p>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                       <textarea
+                       [(ngModel)]="persona.hardSkills"
+                       formControlName="hardSkills"
+                       fullWidth
+                       id="hardSkills"
+                       name="hardSkills"
+                       nbInput
+                       placeholder="hardSkills">
+                       
+                     </textarea>
+       
+      
+                      </div>
+                    </div>
+                 
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0 text-sm">Description</p>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                       <textarea
+                       [(ngModel)]="persona.description"
+                       formControlName="description"
+                       fullWidth
+                       id="description"
+                       name="description"
+                       nbInput
+                       placeholder="description">
+                       
+                     </textarea>
+       
+      
+                      </div>
+                    </div>
+      
+                    
+          
+      
+      
+      
+                    <button (click)="updatePersona()"  status="success" nbButton>Edit</button>
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+   
+
+
+
+
+      </div>
+    </div>
+
+
+  </form>
+</div>
+
+
+

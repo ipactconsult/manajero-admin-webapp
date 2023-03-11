@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-lg-12">
+      <h3>PaySheet Form</h3>
+  </div>
+  <div class="col-lg-12">
+    <form [formGroup]="payForm">
+      <div class="row">
+        <div class="col-lg-12">
+          <label class="small">Conventional Bonus</label>
+          <input formControlName="primeConventionnelle" [(ngModel)]="pay.primeConventionnelle" name="primeConventionnelle" id="primeConventionnelle" fullWidth fieldSize="large" type="text" nbInput placeholder="conventional bonus"/>
+        </div>
+        <div class="col-lg-12">
+          <label class="small">Nun-Conventional Bonus</label>
+          <input formControlName="primeNonConventionnelle" [(ngModel)]="pay.primeNonConventionnelle" name="primeNonConventionnelle" id="primeNonConventionnelle" fullWidth fieldSize="large" type="text" nbInput placeholder="nun-conventional bonus"/>
+        </div>
+        <div class="col-lg-12 mt-1" align="right">
+          <button  [nbSpinner] ="loading" nbSpinnerStatus="success" [disabled]="payForm.invalid" (click)="calculate()" nbButton status="danger">
+            <nb-icon icon="edit-outline"></nb-icon> Calculate</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

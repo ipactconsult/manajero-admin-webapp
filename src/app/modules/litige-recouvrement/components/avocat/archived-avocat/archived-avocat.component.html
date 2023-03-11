@@ -1,0 +1,123 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>List Lawyers</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   class="w-75" nbInput filedSize="large" fullWidth
+                   nbTooltip="Tap here to search your lawyer" nbTooltipStatus="primary" placeholder="Search Lawyer"
+                   type="text">
+
+          </div>
+        </div>
+        
+            
+      </div>
+
+
+    </nb-card-header>
+    <div *ngIf="!dataAvocats || dataAvocats?.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataAvocats | filter : search).length === 0" [hidden]="dataAvocats?.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getAvocatsBySpeciality($event)"
+                     class="mx-2 mt-3 w-75" nbTooltip="Click here to filter by Speciality"
+                     nbTooltipStatus="primary"
+                     placeholder="&nbsp;Filter by Speciality"
+          >
+            <nb-option (click)="getAllAvocats()" value="All">All</nb-option>
+
+            <nb-option value="Real estate law">Real estate law</nb-option>
+            <nb-option value="Criminal law of business affairs">Criminal law of business affairs</nb-option>
+            <nb-option value="Right of persons">Right of persons</nb-option>
+
+          </nb-select>
+        </nb-form-field>
+     
+      </div>
+
+      <div class="input-group col-md-9">
+        <div
+          *ngFor="let avocat of dataAvocats |filter: search
+           | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: dataAvocats?.length}"
+
+          align="center" class="col-lg-6 input-group">
+          <div class="mx-1 row">
+            <nb-card>
+              <nb-card-body class="pt-2= pb-2">
+                <div class="">
+                  <div class="row mt-2">
+                    <div class="col-lg-12">
+                      <div align="right" class="">
+                     
+                       
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <nb-user
+                        [name]="avocat.nom"
+                        class="text-dark justify-content-center"
+                        onlyPicture picture="{{avocat.imageUrl}}" size="giant"></nb-user>
+                    </div>
+                  </div>
+                </div>
+                <div align="center">
+                  <h4>{{avocat.nom}}</h4>
+                  <span class="text-sm-center mt-2">{{avocat.gmail}}</span>
+                  <p class="text-muted mt-2">{{avocat.specialite}}</p>
+                </div>
+              
+                <div class="mt-4">
+                  <div class="row">
+                    <div class="col-lg">
+                      <div class="mt-3">
+                        <span>{{avocat.numtelephone}}</span>
+                        <p class="mb-0 text-muted">Phone</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div align="center" class="col-lg ">
+                      <div class="mt-3">
+                        <div align="center" class="col-lg mt-1">
+                          <nb-icon icon="home-outline"></nb-icon>
+                          &nbsp;
+                        <p>{{avocat.adresse}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+
+  </div>
+
+</div>

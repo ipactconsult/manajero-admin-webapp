@@ -1,0 +1,54 @@
+<nb-card style="align-items: center;"> 
+ 
+
+    <nb-card-body>
+  
+      <p class="text-center">Choose Annual Budget Plan Year</p>
+      <nb-select (selectedChange)="yearChange($event)" 
+                  name="year" placeholder ="Please choose budget plan year">
+        <nb-option *ngFor="let label of array" [value]="label"   >{{label}}</nb-option>
+      </nb-select>
+  
+    </nb-card-body>
+</nb-card>
+    <nb-card>
+  
+      <nb-card-header>
+            <div class="row">
+              <div class="col-md-5 col-sm-3">    
+                  <h3>Annual Budget Plan {{this.defaultYear}}  </h3>
+          
+                </div>
+                <div class="col-md-7 col-sm-12 " style="text-align: right;">
+                    <button  nbTooltip="Export to excel file" nbTooltipStatus="primary" (click)="exportExcel()"  nbButton status="success"  ><i class="fas fa-file-excel text-white"></i>  </button>
+              
+              
+                    <button style="margin-left: 10px" nbTooltip="Click here for help" nbTooltipStatus="primary" nbButton status="basic" (click) ="openWindow()"><i class="fas fa-exclamation-circle fa-lg"></i>  </button>
+              
+                  </div>
+                  </div>
+      </nb-card-header>
+      <nb-card-body>
+          <h5>Expenses</h5>
+        <div  class ="row" >
+      
+
+            <ng2-smart-table [settings]="expenseSettings"  class ="table" (createConfirm) ="addExpense($event)" (editConfirm) ="updateExpense($event)" (deleteConfirm) ="deleteExpense($event)" [source] ="expenses" >
+            </ng2-smart-table>
+      
+            
+            
+        </div>
+        <h5>Income</h5>
+
+        <div  class ="row" >
+      
+
+            <ng2-smart-table [settings]="incomeSettings"  class ="table" (createConfirm) ="addIncome($event)" (editConfirm) ="updateIncome($event)" (deleteConfirm) ="deleteIncome($event)"  [source] ="incomes" >
+            </ng2-smart-table>
+      
+            
+            
+        </div>
+      </nb-card-body>
+    </nb-card>

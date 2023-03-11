@@ -1,0 +1,25 @@
+.card {
+  border: none;
+  -webkit-box-shadow: 1px 0 20px rgba(96, 93, 175, 0.05);
+  box-shadow: 1px 0 20px rgba(96, 93, 175, 0.05);
+  margin-bottom: 30px;
+}
+
+.thumb-sm {
+  height: 32px;
+  width: 32px;
+}
+
+.badge-soft-warning {
+  background-color: rgba(248, 201, 85, 0.2);
+  color: #f8c955;
+}
+
+.badge {
+  font-weight: 500;
+}
+
+.badge-soft-primary {
+  background-color: rgba(96, 93, 175, 0.2);
+  color: #605daf;
+}

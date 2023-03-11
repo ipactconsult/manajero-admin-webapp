@@ -1,0 +1,48 @@
+
+  <nb-card>
+    <nb-card-header class ="row" >
+
+      <div class ="col-md-10">
+        <h3>Income Statement</h3>
+      </div>
+      <div  align="right">
+        <button  nbTooltip="Export to excel file" (click)="exportExcel()" nbTooltipStatus="primary" nbButton status="success"   ><i class="fas fa-file-excel text-white"></i>  </button>
+
+
+
+
+        <button style="margin-left: 10px" nbTooltip="Click here for help" nbTooltipStatus="primary" nbButton status="basic" (click) ="openWindow()"><i class="fas fa-exclamation-circle fa-lg"></i>  </button>
+
+
+
+      </div>
+
+    </nb-card-header>
+    <nb-card-body>
+      <h5> Choose Periode Interval</h5>
+      <div class="row">
+       
+        <div class="col-6">
+      <label for="ddDate">Start Date:</label>
+
+      <input  nbInput id ="ddDate" fieldSize="large" placeholder="Start Date"  value="{{this.from}}" fullWidth [nbDatepicker]="dateTimePicker">
+      <nb-datepicker withSeconds (dateChange) ="startDate($event)" #dateTimePicker></nb-datepicker>
+        </div>
+        <div class="col-6">
+      <label for="aaDate">End Date:</label>
+
+      <input   nbInput id ="aaDate" fieldSize="large" placeholder="End Date"  value="{{this.to}}" fullWidth [nbDatepicker]="dateTimePicker2">
+      <nb-datepicker  (dateChange) ="endDate($event)"withSeconds #dateTimePicker2></nb-datepicker>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <nb-card>
+    <nb-card-header>
+      <h5> Transactions between {{this.from}} and {{this.to}}</h5>
+    </nb-card-header>
+    <nb-card-body>
+      <ng2-smart-table [settings]="Settings" class ="table" [source]="source" >
+    </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>

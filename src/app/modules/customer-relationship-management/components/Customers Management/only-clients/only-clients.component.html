@@ -1,0 +1,24 @@
+<div class="row">
+
+  <h4>Clients</h4>
+  <div *ngFor="let client of onlyClients; let i = index" class="col-lg-12 mt-3">
+    <div class="row mt-2">
+      <div class="col-md-2">
+
+        <img alt="" class="mt-2" height="55px" src="{{client.image}}" width="55px">
+
+      </div>
+      <div class="col-md-6">
+        <p class="mt-1" ngxCopyPaste #cp="copy">{{client.workEmail}} </p>
+        <button (click)="cp.copy() ; getCopyPaste()" nbTooltip="Copy email" nbTooltipStatus="primary"
+                shape="round" nbButton status="danger" class="mx-2" size="small">
+                            <nb-icon icon="copy-outline"></nb-icon>
+                        </button>
+        <nb-tag [text]="client.status" nbTooltip="Client" nbTooltipStatus="primary" class="mb-4" size="tiny" status="info"></nb-tag>
+  
+      </div>
+
+
+    </div>
+  </div>
+</div>

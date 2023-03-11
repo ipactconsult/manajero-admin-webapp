@@ -1,0 +1,283 @@
+<nb-card>
+  <div class="content">
+    <div class="container">
+      
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-3">
+            <h2>Orders</h2>
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              <input [(ngModel)]="search"
+                     class="w-100" fieldSize="large" nbInput
+                     nbTooltip="Tap here to search your order" nbTooltipStatus="primary"
+                     placeholder="Search order"
+                     type="text">
+            </div>
+          </div>
+          <div class="col-md-4 pt-1">
+            <div>
+              <a [routerLink]="['/crm/grid-orders']"
+                 nbButton nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+                <nb-icon icon="grid-outline"></nb-icon>
+              </a>&nbsp;
+              <a [routerLink]="['/crm/orders']" class="mx-1" nbButton
+                 nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+                <nb-icon icon="keypad-outline"></nb-icon>
+              </a>
+              <a [routerLink]="['/crm/list-orders']" class="mx-1" nbButton
+                 nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+                <nb-icon icon="list-outline"></nb-icon>
+              </a>
+              <button (click)="exportAsXLSX()"
+                      align="right" class="mx-1"
+                      nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                      status="success">
+                <i class="fas fa-file-excel text-white"></i>
+              </button>
+              <button [routerLink]="['/crm/add-order']" class="mx-1" nbButton
+                      nbTooltip="Click here to create order" nbTooltipStatus="primary"
+                      status="info">
+                <nb-icon icon="plus-outline"></nb-icon>
+                Add
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+      
+      <nb-card-body>
+        <div *ngIf="!dataOrders || dataOrders.length === 0" align="center">
+          <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+        </div>
+        <div *ngIf="(dataOrders | filter : search).length === 0" [hidden]="dataOrders.length === 0"
+             class="">
+          <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+            while typing your data
+          </nb-alert>
+        </div>
+        <div class="row">
+          <div class="col-md-3 mt-3">
+            <div class="row">
+              <div class="col-lg-11">
+                 <nb-form-field>
+              <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+              <nb-select (selectedChange)="filterByOrderStatus($event)"
+                         class="mx-2 w-75" nbTooltip="Click here to filter by status"
+                         nbTooltipStatus="primary"
+                         placeholder="&nbsp; Status"
+                         selected="0">
+                <nb-option (click)="getAllOrders()" value="All">All</nb-option>
+
+                <nb-option value="Pending">Pending</nb-option>
+                <nb-option value="In Progress">In Progress</nb-option>
+                <nb-option value="Done">Done</nb-option>
+              </nb-select>
+            </nb-form-field>
+              </div>
+            </div>
+           
+            
+            <div class="row">
+              <div class="col-lg-11">
+                            <nb-form-field>
+              <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+              <nb-select (selectedChange)="filterByEmployee($event)"
+                         class="mt-3 mx-2 w-75" nbTooltip="Click here to filter orders by employee"
+                         nbTooltipStatus="primary" placeholder="&nbsp; Employee">
+                <nb-option (click)="getAllOrders()" value="All">All</nb-option>
+                <nb-option
+                  *ngFor="let optionEmployee of list"
+                  value="{{optionEmployee.id}}">{{optionEmployee.employeeName}}</nb-option>
+              </nb-select>
+            </nb-form-field>
+              </div>
+            </div>
+
+
+            
+            
+            <div class="row">
+              <div class="col-lg-11">
+                            <nb-form-field>
+              <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+              <nb-select (selectedChange)="filterByCustomer($event)"
+                         class="mt-3 mx-2 w-75" nbTooltip="Click here to filter orders by customer"
+                         nbTooltipStatus="primary" placeholder="&nbsp; Customer">
+                <nb-option (click)="getAllOrders()" value="All">All</nb-option>
+                <nb-option
+                  *ngFor="let customer of dataCustomers"
+                  value="{{customer.id}}">{{customer.name}}</nb-option>
+              </nb-select>
+            </nb-form-field>
+              </div>
+            </div>
+
+
+            
+            
+            <div class="row">
+              <div class="col-lg-11">
+                   <nb-form-field>
+              <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+              <nb-select (selectedChange)="filterByProduct($event)"
+                         class="mt-3 mx-2 w-75" nbTooltip="Click here to filter orders by Product"
+                         nbTooltipStatus="primary" placeholder="&nbsp; Product">
+                <nb-option (click)="getAllOrders()" value="All">All</nb-option>
+                <nb-option
+                  *ngFor="let product of dataProducts"
+                  value="{{product.materialId}}">{{product.materialName}}</nb-option>
+              </nb-select>
+            </nb-form-field>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-lg-9">
+                              <label>orders Per Page : </label>
+              <input [(ngModel)]="pageSize" [disabled]="dataOrders.length === 0"
+                     class="w-100"
+                     min="9" nbInput
+                     nbTooltip="Tap a number to get orders per page" nbTooltipStatus="primary"
+                     placeholer="Number to get orders per page" type="number">
+            
+              </div>
+            </div>
+
+          
+          </div>
+          
+          
+          <div class="col-md-9">
+            
+            <div class="row">
+              
+              <nb-card *ngFor="let order of dataOrders | filter: search| paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: dataOrders?.length}" class="col-md-5 mx-1">
+                  <div class="row mx-1 mt-1">
+                      <div class="col-md-10">
+                        <nb-user size="medium" [name]="order?.deals?.visit?.customer?.name"  [picture]="order?.deals?.visit?.customer?.image"></nb-user>
+                      </div>
+                      <div class="col-md-2">
+                          <button [matMenuTriggerFor]="menu" aria-expanded="false"
+                                                                aria-haspopup="true"
+                                                                aria-label="Example icon-button with a menu"
+                                                                class="float-right"
+                                                                mat-icon-button nbButton
+                                                                nbTooltip="Click here to see advanced menu"
+                                                                nbTooltipStatus="primary"
+                                                                shape="round"
+                                                                size="small"
+                                                                status="basic">
+               <nb-icon icon="more-horizontal-outline"></nb-icon>
+             </button>
+         <mat-menu #menu="matMenu">
+               <button mat-menu-item>
+                 <a [routerLink]="['/crm/edit-order/',order.id]"
+                    fullWidth nbButton>
+                       <span class="text-warning">
+                         <nb-icon icon="edit-outline"></nb-icon>
+                       </span> Edit
+                 </a>
+               </button>
+               
+               
+                <button mat-menu-item *ngIf="order.status === 'Pending'">
+                 <a  fullWidth nbButton (click)="inProgressOrder(order.id,order)">
+                   <span class="text-info"><nb-icon icon="trending-up-outline"></nb-icon></span>In progress
+                 </a>
+               </button>      
+                <button mat-menu-item *ngIf="order.status === 'InProgress'">
+                 <a  fullWidth nbButton (click)="validateOrder(order.id,order)">
+                   <span class="text-info"><nb-icon icon="trending-up-outline"></nb-icon></span>Validate
+                 </a>
+               </button>   
+               <button mat-menu-item *ngIf="order.status ==='Done'">
+                 <a  fullWidth nbButton (click)="saleOrder(order.id,order)">
+                   <span class="text-info"><nb-icon icon="trending-up-outline"></nb-icon></span>Rent
+                 </a>
+               </button>       
+               
+               <button mat-menu-item *ngIf="order.status ==='SALE'">
+                 <a  fullWidth nbButton [routerLink]="['/crm/add-contract/', order.id]">
+                   <span class="text-info"><nb-icon icon="file-text-outline"></nb-icon></span>Assign Contract
+                 </a>
+               </button>  
+               <button mat-menu-item>
+                 <a [routerLink]="['/crm/tracking-order/',order.id]" fullWidth nbButton>
+                   <span class="text-primary"><nb-icon icon="map-outline"></nb-icon></span>Tracking
+                 </a>
+               </button>
+               <button mat-menu-item>
+                 <a (click)="onArchiveConfirm(order,order.id)" fullWidth nbButton status="basic">
+               <nb-icon icon="archive-outline"></nb-icon>Archive
+                 </a>
+               </button>
+             </mat-menu>
+ 
+                      </div>
+                  </div>
+                
+                <div class="row mt-2 mx-2">
+                  <div class="col-md-12 mt-2">
+                    <nb-icon nbTooltip="Order Code" class="text-info" icon="text-outline"></nb-icon> {{order.orderCode}}
+                  </div>
+                  <div class="col-md-12 mt-2">
+                    <nb-icon nbTooltip="Order Name" class="text-info" icon="flag-outline"></nb-icon> {{order.orderName}}
+                  </div>
+                  <div class="col-md-12 mt-2">
+                    <nb-icon nbTooltip="Order Address" class="text-info" icon="pin-outline"></nb-icon> {{order?.deals?.visit?.customer?.address}}
+                  </div>
+                  
+                  <div class="col-md-12 mt-2" align="left">
+                      <h6> <nb-icon icon="shopping-bag-outline" class="text-primary"></nb-icon> Product Details</h6>
+                  </div>
+                  <hr>
+                   <div class="col-md-12 mt-2">
+                     <div *ngIf="order?.product?.materialName !== null; else data">
+                       <nb-icon nbTooltip="Order Product" class="text-info" icon="gift-outline"></nb-icon> {{order?.product?.materialName}}
+                     </div>
+                     <ng-template #data>
+                       <nb-icon nbTooltip="Order Product" class="text-info" icon="gift-outline"></nb-icon> <span class="text-danger mx-1">No Product Found</span>
+                     </ng-template>
+                   </div>
+                  
+                   <div class="col-md-12 mt-2">
+                     <nb-icon nbTooltip="Order Product Price" class="text-info" icon="shopping-bag-outline"></nb-icon> {{order?.product?.materialPrice}} {{order.currency}}
+                   </div>
+                  <hr>
+                  <div class="col-md-12 mt-2" align="left">
+                    <h6> <nb-icon icon="shopping-bag-outline" class="text-primary"></nb-icon> Order Cost</h6>
+                  </div>
+                   <div class="col-md-12 mt-2">
+                     <nb-icon nbTooltip="Order Quantity" class="text-info" icon="pie-chart-outline"></nb-icon> {{order?.quantity}}
+                   </div>
+                  
+                  <div class="col-md-12 mt-2">
+                     <nb-icon nbTooltip="Order Paid" class="text-info" icon="edit-2-outline"></nb-icon> {{order?.product?.materialPrice * order?.quantity}} {{order.currency}}
+                   </div>
+                  <div class="col-md-12 mt-2"></div>
+                </div>
+                
+                
+                
+              </nb-card>
+              
+            </div>
+            <div class="d-flex justify-content-center">
+      <nb-card class="card ml-auto mr-auto text-center" style="height: 30px; width: auto ;">
+        <pagination-controls (pageChange)="current = $event" align="right" nextLabel=""
+                             previousLabel=""></pagination-controls>
+
+      </nb-card>
+    </div>
+          </div>
+         
+
+        </div>
+
+      </nb-card-body>
+    </div>
+  </div>
+</nb-card> 

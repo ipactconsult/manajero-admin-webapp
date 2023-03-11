@@ -1,0 +1,74 @@
+<nb-card>
+  <nb-card-header>
+    <h2>Rental requests</h2>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-flip-card [flipped]="flippedState" [showToggleButton]="false">
+      <nb-card-front>
+        <nb-card>
+            <ng2-smart-table
+              (delete)="confirmation($event, dialog)"
+              (userRowSelect)="onUserRowSelect($event)"
+              [settings]="settings"
+              [source]="list"
+              class="order-table">
+              
+            </ng2-smart-table>
+        </nb-card>
+      </nb-card-front>
+      
+      <!--Delete Confirm -->
+      <ng-template #dialog let-data let-ref="dialogRef">
+        <nb-card>
+          <nb-card-header>Confirm Archive Operation</nb-card-header>
+          <nb-card-body class="alert alert-warning">
+            Are you sure you want to archive this item ?
+          </nb-card-body>
+          <nb-card-footer>
+            <div class="row">
+              <div class="col-md-2">
+                <button (click)="ref.close()" nbButton status="basic">
+                  <nb-icon icon="close"></nb-icon>
+                  Close
+                </button>
+              </div>
+              <div class="col-md-5"></div>
+              <div class="col-md-2">
+                <button
+                  (click)="onDeleteConfirm(selectedItem)"
+                  nbButton
+                  status="danger"
+                >
+                  <nb-icon icon="trash"></nb-icon>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template>
+      <!--end Delete Confirm-->
+      
+      <nb-card-back *ngIf="flippedState">
+        <nb-card>
+          <nb-card-header>
+            <nb-icon
+              (click)="flipBack()"
+              aria-hidden="true"
+              icon="chevron-left-outline"
+              pack="nebular-essentials"
+            ></nb-icon>
+            Back
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-rental-request-details
+                        (dataChanged)="refresh($event)"
+             [selectedRentalRequest]="selectedRentalRequest"
+             [rentalRequest]="dataRentalRequest"
+            ></ngx-rental-request-details>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-back>
+    </nb-flip-card>
+  </nb-card-body>
+</nb-card>

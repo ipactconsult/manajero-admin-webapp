@@ -1,0 +1,113 @@
+
+.widget {
+   
+    display: block;
+    position: relative;
+}
+.widget .widget-header,
+.widget-reminder-content,
+.widget-reminder-time,
+a.widget-header-title {
+    padding: 0rem;
+}
+.widget-chat-message:after,
+.widget-chat-message:before,
+.widget-reminder-container:after,
+.widget-reminder-container:before {
+    display: table;
+    content: "";
+    clear: both;
+}
+.widget-footer.with-border,
+.widget-reminder-container + .widget-reminder-container {
+    border-top: 1px solid #efeff4;
+}
+.widget-footer.with-bg,
+.widget-header.with-bg {
+    background: #efeff4;
+}
+.widget-header.with-border {
+    border-bottom: 1px solid #efeff4;
+}
+.widget-reminder-header {
+    padding: 0.9825rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+}
+.widget-reminder-container {
+    position: relative;
+    height: 35%;
+}
+.inverse-mode .widget-reminder-container + .widget-reminder-container {
+    border-color: #333;
+}
+.inverse-mode .widget-reminder-header {
+    background: #212121;
+}
+.widget-reminder-time {
+    width: 3rem;
+    float: left;
+    text-align: right;
+    font-size: 0.625rem;
+}
+.widget-reminder-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 5rem;
+    width: 0.125rem;
+    background: #efeff4;
+}
+.widget-reminder-content {
+    margin-left: 5.125rem;
+}
+.widget-header-title {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+.widget .widget-title, .widget .widget-title a {
+    font-size: .75rem;
+   
+    line-height: 1rem;
+}
+.widget .widget-title {
+    font-weight: 600;
+    margin: 0;
+}
+.widget-desc, .widget-desc a {
+    font-size: .8875rem;
+    line-height: 1rem;
+    color: #8A8A8F;
+    font-weight: 500;
+}
+.img-circle {
+    border-radius: 50%;
+}
+
+.pull-left {
+    float: left!important;
+}
+.pull-right {
+    float: right!important;
+}
+.m-t-15 {
+    margin-top: 15px!important;
+}
+
+.m-r-5 {
+    margin-right: 5px!important;
+}
+
+.widget .widget-header, .widget-reminder-content, .widget-reminder-time, a.widget-header-title {
+    padding: .625rem;
+}
+
+
+nb-progress-bar ~ nb-progress-bar {
+  margin-top: 1rem;
+}
+
+.control-status-example {
+  margin-top: 1rem;
+}

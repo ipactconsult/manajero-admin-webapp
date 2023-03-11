@@ -1,0 +1,20 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+
+
+}
+::ng-deep {
+  ng2-st-tbody-edit-delete {
+    display: none;
+    height: 0 !important;
+  }
+
+  ng2-st-tbody-custom {
+    display: flex;
+    text-align: center;
+  }
+}

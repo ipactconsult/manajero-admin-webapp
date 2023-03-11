@@ -1,0 +1,1747 @@
+<!--<div *ngIf="persona" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Add New Persona</h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+ 
+      <a [routerLink]="['/communicationMarketing/Persona']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to Personas list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="PersonaGroup">
+
+    <label>Nom</label>
+
+    <div class="row">
+      <div class="col-md-11">
+             <input id="nom"
+             name="nom" 
+             [(ngModel)]="persona.nom" 
+             formControlName="nom" 
+             type="text" 
+             class="form-control" 
+             nbInput
+             fullWidth
+             required
+             />
+    
+      </div>
+      <div class="col-md-1">
+             <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+    
+      </div>
+    </div>
+    
+    <label>Prenom</label>
+
+    <div class="row">
+      <div class="col-md-11">
+             <input id="prenom"
+             name="prenom" 
+             [(ngModel)]="persona.prenom" 
+             formControlName="prenom" 
+             type="text" 
+             class="form-control" 
+             nbInput
+             fullWidth
+             required
+             />
+    
+      </div>
+      <div class="col-md-1">
+             <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+    
+      </div>
+    </div>
+
+
+
+
+       
+    <label>email</label>
+
+    <div class="row">
+      <div class="col-md-11">
+             <input id="email"
+             name="email" 
+             [(ngModel)]="persona.email" 
+             formControlName="email" 
+             type="text" 
+             class="form-control" 
+             nbInput
+             fullWidth
+             required
+             />
+    
+      </div>
+      <div class="col-md-1">
+             <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+    
+      </div>
+    </div>
+
+
+
+
+    <label>Picture</label>
+
+    <div class="row">
+      <div class="col-md-11">
+        <input (change)="onFileSelected($event)"
+        formControlName="image"
+        onlyPicture
+        id="image"
+        name="image"
+        type="file"
+        required
+ />
+    
+      </div>
+      <div class="col-md-1">
+             <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+    
+      </div>
+    </div>
+
+
+
+
+    <label>Job</label>
+
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="job"
+         name="job" 
+         [(ngModel)]="persona.job" 
+         formControlName="job" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         required
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+<label>Age</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="age"
+         name="age" 
+         [(ngModel)]="persona.age" 
+         formControlName="age" 
+         type="number" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         required
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+
+<label>Localisation</label>
+
+<div class="row">
+  <div class="col-md-11">
+    <nb-select size="large" placeholder="Select Country" [(ngModel)]="persona.localisation" 
+    class="mt-1" formControlName="localisation" fullWidth required
+                       id="localisation" name="localisation" selected="0">
+              <nb-option disabled value="0">Country</nb-option>
+              <nb-option *ngFor="let localisation of countries" value="{{localisation.country_name}}">
+                {{localisation.country_name}}</nb-option>
+            </nb-select>
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>Phone</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="phone"
+         name="phone" 
+         [(ngModel)]="persona.phone" 
+         formControlName="phone" 
+         type="number" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+
+
+<label>Date of Birth</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="dateofBirth"
+         name="dateofBirth" 
+         [(ngModel)]="persona.dateofBirth" 
+         formControlName="dateofBirth" 
+         [nbDatepicker]="dateTimePicker"
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+         <nb-datepicker #dateTimePicker></nb-datepicker>
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+
+
+<label>Gender</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <nb-select   [(ngModel)]="persona.gender" fieldSize="large" formControlName="gender" required
+         fullWidth id="gender"
+         name="gender" placeholder="Select Type" selected="0"
+         > 
+        
+        <nb-option disabled value="0">Gender</nb-option>
+         <nb-option value="male">male</nb-option>
+         <nb-option value="female">female</nb-option>
+       
+        </nb-select>
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+<label>numberOfChildren</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="numberOfChildren"
+         name="numberOfChildren" 
+         [(ngModel)]="persona.numberOfChildren" 
+         formControlName="numberOfChildren" 
+         type="number" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+<br>
+
+
+
+<label>BIO </label>
+
+<div class="row">
+  <div class="col-md-11">
+    <textarea
+    [(ngModel)]="parternership.bio"
+    formControlName="bio"
+    fullWidth
+    id="bio"
+    name="description"
+    nbInput
+    placeholder="bio">
+    
+  </textarea>
+
+  </div>
+  <div class="col-md-1">
+    <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+<br>
+
+
+
+<label>Personality </label>
+
+<div class="row">
+  <div class="col-md-11">
+    <textarea
+    [(ngModel)]="parternership.personality"
+    formControlName="personality"
+    fullWidth
+    id="personality"
+    name="personality"
+    nbInput
+    placeholder="personality">
+    
+  </textarea>
+
+  </div>
+  <div class="col-md-1">
+    <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+<br>
+
+
+<label>Frustrations </label>
+
+<div class="row">
+  <div class="col-md-11">
+    <textarea
+    [(ngModel)]="parternership.frustrations"
+    formControlName="frustrations"
+    fullWidth
+    id="frustrations"
+    name="frustrations"
+    nbInput
+    placeholder="frustrations">
+    
+  </textarea>
+
+  </div>
+  <div class="col-md-1">
+    <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+
+<br>
+
+
+<label>Languages </label>
+
+<div class="row">
+  <div class="col-md-11">
+    <textarea
+    [(ngModel)]="parternership.languages"
+    formControlName="languages"
+    fullWidth
+    id="languages"
+    name="languages"
+    nbInput
+    placeholder="languages">
+    
+  </textarea>
+
+  </div>
+  <div class="col-md-1">
+    <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+<div class="row">
+  <div class="col-md-11">
+    <textarea
+    [(ngModel)]="parternership.frustrations"
+    formControlName="frustrations"
+    fullWidth
+    id="frustrations"
+    name="frustrations"
+    nbInput
+    placeholder="frustrations">
+    
+  </textarea>
+
+  </div>
+  <div class="col-md-1">
+    <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<label>Motivation</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="motivation"
+         name="motivation" 
+         [(ngModel)]="persona.motivation" 
+         formControlName="motivation" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>Interset</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="interset"
+         name="interset" 
+         [(ngModel)]="persona.interset" 
+         formControlName="interset" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+
+<label>Situation</label>
+
+<div class="row">
+        <nb-select   [(ngModel)]="persona.situation" fieldSize="large" formControlName="situation" required
+fullWidth id="situation"
+name="gender" placeholder="Select Type" selected="0"
+> 
+
+<nb-option disabled value="0">Situation</nb-option>
+<nb-option (click)="getAllpersonas()" value="All">All</nb-option>
+                               <nb-option value="married">married</nb-option>
+                               <nb-option value="divorced">Divorced</nb-option>
+                               <nb-option value="single">single</nb-option>
+                               <nb-option value="in a relationship">in a relationship</nb-option>
+
+
+
+
+</nb-select>
+
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<label>Technologie</label>
+
+<br>
+<div class="row">
+  <div class="col-md-11">
+         <input id="technologie"
+         name="technologie" 
+         [(ngModel)]="persona.technologie" 
+         formControlName="technologie" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>Goals</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="goals"
+         name="goals" 
+         [(ngModel)]="persona.goals" 
+         formControlName="goals" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+
+<label>SoftSkills</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="softSkills"
+         name="softSkills" 
+         [(ngModel)]="persona.softSkills" 
+         formControlName="softSkills" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>HaerdSkills</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="hardSkills"
+         name="hardSkills" 
+         [(ngModel)]="persona.hardSkills" 
+         formControlName="hardSkills" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+
+
+<br>
+<label>Description</label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="description"
+         name="description" 
+         [(ngModel)]="persona.description" 
+         formControlName="description" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+
+<div class="row mt-3">
+  <div class="col-md-11">
+       <button style="float: right;"  nbButton [disabled]="persona.invalid" (click)="addPersonaFunction()"  status="success">
+              <nb-icon icon="checkmark-circle-outline"></nb-icon>   Save Data 
+         </button>
+  </div>
+
+</div>
+
+   
+
+
+  </form>
+</div>
+
+---->
+
+<!---
+<div class="row">
+  <div class="col-md-4">
+    <h3>Create New Partner </h3>
+  </div>
+  <div  class="col-md-8">
+    <a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/communicationMarketing/Parternership']" nbButton>
+      <nb-icon icon="corner-up-right-outline"></nb-icon>
+    </a>
+  </div>
+</div>
+<form [formGroup]="ParternershipGroup" class="mt-3">
+ 
+
+
+  <label>Name</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="parternershipName"
+             name="parternershipName"
+             [(ngModel)]="parternership.parternershipName"
+             formControlName="parternershipName"
+             type="text"
+             class="form-control"
+             nbInput
+             fullWidth required
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+
+  <label>Domain</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="parternershipDomain"
+             name="parternershipDomain"
+             [(ngModel)]="parternership.parternershipDomain"
+             formControlName="parternershipDomain"
+             type="text"
+             class="form-control"
+             nbInput
+             fullWidth  required
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+
+  <label>WebSite Link</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="parternershipWebSiteLink"
+             name="parternershipWebSiteLink"
+             [(ngModel)]="parternership.parternershipWebSiteLink"
+             formControlName="parternershipWebSiteLink"
+             type="parternershipWebSiteLink"
+             class="form-control"
+             nbInput
+             fullWidth
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+  <label>Email</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="parternershipEmail"
+             name="parternershipEmail"
+             [(ngModel)]="parternership.parternershipEmail"
+             formControlName="parternershipEmail"
+             type="parternershipEmail"
+             class="form-control"
+             nbInput
+             fullWidth  required
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+  <label>Adresse</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="description"
+             name="description"
+             [(ngModel)]="parternership.parternershipAdresse"
+             formControlName="parternershipAdresse"
+             type="text"
+             class="form-control"
+             nbInput
+             fullWidth
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+
+  <label>Linkedin</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="parternershipLinkedin"
+             name="parternershipLinkedin"
+             [(ngModel)]="parternership.parternershipLinkedin"
+             formControlName="parternershipLinkedin"
+             type="text"
+             class="form-control"
+             nbInput
+             fullWidth
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+
+  <label>phone</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <input id="parternershipPhone"
+             name="parternershipPhone"
+             [(ngModel)]="parternership.parternershipPhone"
+             formControlName="parternershipPhone"
+             type="text"
+             class="form-control"
+             nbInput
+             fullWidth  required
+      />
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+  <label>Country</label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <nb-select size="large" placeholder="Select Country" [(ngModel)]="parternership.country" 
+      class="mt-1" formControlName="country" fullWidth required
+                         id="country" name="country" selected="0">
+                <nb-option disabled value="0">Country</nb-option>
+                <nb-option *ngFor="let country of countries" value="{{country.country_name}}">
+                  {{country.country_name}}</nb-option>
+              </nb-select>
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+  
+  
+
+
+
+
+
+
+  <label>Logo</label>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"
+           for="parternershipLogo">Logo</label>
+    <div class="col-sm-9">
+      <input (change)="onFileSelected($event)"
+             formControlName="parternershipLogo"
+             id="parternershipLogo"
+             name="parternershipLogo"
+             type="file"  required
+      />
+    
+
+    </div>
+  </div>
+
+
+  <label>Description </label>
+
+  <div class="row">
+    <div class="col-md-11">
+      <textarea
+      [(ngModel)]="parternership.description"
+      formControlName="description"
+      fullWidth
+      id="description"
+      name="description"
+      nbInput
+      placeholder="Description">
+      
+    </textarea>
+
+    </div>
+    <div class="col-md-1">
+      <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+    </div>
+  </div>
+
+
+  <div class="row mt-3">
+    <div class="col-md-11">
+      <button style="float: right;"  nbButton [disabled]="ParternershipGroup.invalid" (click)="addPartnerFunction()"  status="success">
+        <nb-icon icon="checkmark-circle-outline"></nb-icon>   Save Data
+      </button>
+    </div>
+
+  </div>
+
+
+</form>
+
+---> 
+
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h5 class="more-vertical">
+          Create Persona </h5>
+      </div>
+
+      <div align="right" class="col-md-2 justify-content-end">
+
+        <a [routerLink]="['/communicationMarketing/Persona']" class="w-25 mx-3" fullWidth nbButton nbTooltip="Back to Persona list"
+          nbTooltipStatus="primary" shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+
+
+    <form [formGroup]="PersonaGroup">
+      <nb-stepper #stepper>
+        <nb-step [stepControl]="PersonaGroup" label="Personal">
+       <!--<label class="small">First Name</label>
+          <div class="row">
+            <div class="col-md-11">
+              <input [(ngModel)]="persona.nom" fieldSize="large" formControlName="nom" fullWidth id="nom" name="nom"
+                nbInput placeholder="Name" type="text">
+            </div>
+            <div class="col-md-1 mt-3">
+              <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary">
+              </nb-icon>
+            </div>
+          </div>--->
+    <div class="row mt-3">
+        <div class="col-md-6">
+              <label class="small">First Name</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="persona.nom" fieldSize="large" formControlName="nom" fullWidth id="nom"
+                    name="prenom" nbInput placeholder="Persona First Name" type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary">
+                  </nb-icon>
+                </div>
+              </div>
+
+
+              <div *ngIf="(nom.invalid && nom.touched)" class="col-lg-11">
+                <div *ngIf="nom.errors?.required">
+                  <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Required Field</p>
+                </div>
+                <div *ngIf="nom.errors?.pattern" class="mx-3 w-100">
+                  <p class="mt-2 alert alert-danger text-dark text-center" role="alert">
+                    Only caracters can be
+                            accepted
+   </p>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div class="col-md-6">
+              <label class="small col-lg-12">Last Name</label>
+              <br>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="persona.prenom" fieldSize="large" formControlName="prenom" fullWidth id="nom"
+                  name="prenom" nbInput placeholder="Persona Last Name" type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+              <div *ngIf="(prenom.invalid && prenom.touched)" class="col-lg-11">
+                <div *ngIf="prenom.errors?.required">
+                  <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Required Field</p>
+                </div>
+                <div *ngIf="prenom.errors?.pattern" class="mx-3 w-100">
+                  <p class="mt-2 alert alert-danger text-dark text-center" role="alert">
+                    Only caracters can be
+                            accepted
+   </p>
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+          <!--- <div class="col-md-6">
+              <img alt="" class="w-25" src="{{persona.imageUrl}}" style="border-radius: 5px;">
+            </div>--->
+
+
+
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Gener</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <nb-select   [(ngModel)]="persona.gender" fieldSize="large" formControlName="gender" 
+                  fullWidth id="gender"  
+                  name="gender" placeholder="Select Type" selected="0"
+                  > 
+                 
+                 <nb-option disabled value="0">Gender</nb-option>
+                  <nb-option value="male">male</nb-option>
+                  <nb-option value="female">female</nb-option>
+                
+                 </nb-select>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select Gender" nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="small">Date Of Birth</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="persona.dateofBirth" [nbDatepicker]="dateTimePicker" fieldSize="large"
+                    formControlName="dateofBirth" fullWidth id="dateofBirth" name="dateofBirth" nbInput 
+                    placeholder="Pick Date">
+                  <nb-datepicker #dateTimePicker></nb-datepicker>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select Persona birthdate" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Job</label>
+              <div class="row">
+                <div class="col-md-10">
+
+
+                  <input [(ngModel)]="persona.job" fieldSize="large" formControlName="job" fullWidth id="job"
+                    name="job" nbInput type="text" placeholder="job">
+
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Tap job" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="small">Situation</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <nb-select   [(ngModel)]="persona.situation" fieldSize="large" formControlName="situation" 
+                  fullWidth id="situation"
+                  name="situation" placeholder="Select  Situation " selected="0"
+                  > 
+                  
+                  <nb-option disabled value="0">Situation</nb-option>
+                 
+                                                 <nb-option value="married">married</nb-option>
+                                                 <nb-option value="divorced">Divorced</nb-option>
+                                                 <nb-option value="single">single</nb-option>
+                                                 <nb-option value="in a relationship">in a relationship</nb-option>
+                  
+                  
+                  
+                  
+                  </nb-select>
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Delect your Situation" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+      <div class="row mt-3">
+            <div class="col-md-6">
+                  <label class="small">Age</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="persona.age" fieldSize="large" formControlName="age" fullWidth id="age"
+                        name="age" nbInput placeholder="Persona Age" type="number">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted" nbTooltipStatus="primary">
+                      </nb-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="small col-lg-12"> Children  number</label>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="persona.numberOfChildren" fieldSize="large" formControlName="numberOfChildren" fullWidth id="nom"
+                      name="numberOfChildren" nbInput placeholder=" Children number "type="number">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  </div>
+    
+                </div>
+                       <!--- <div class="col-md-6">
+                         <img alt="" class="w-25" src="{{persona.imageUrl}}" style="border-radius: 5px;">
+                     </div>--->
+    
+    
+    
+              </div>
+
+
+
+              <div class="row mt-3">
+                <div class="col-md-6">
+                      <label class="small">Nationality</label>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input [(ngModel)]="persona.nationality" fieldSize="large" formControlName="nationality" fullWidth id="nationality"
+                            name="nationality" nbInput placeholder="Persona nationality" type="text">
+                        </div>
+                        <div class="col-md-1 mt-3">
+                          <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted" nbTooltipStatus="primary">
+                          </nb-icon>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="small col-lg-12"> Profile Image</label>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input (change)="onFileSelected($event)"  fieldSize="large" formControlName="image" fullWidth id="image"
+                          name="image" nbInput placeholder=" Profile Image "type="file">
+                        </div>
+                        <div class="col-md-1 mt-3">
+                          <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted" nbTooltipStatus="primary"></nb-icon>
+                        </div>
+                      </div>
+        
+                    </div>
+                            <div class="col-md-6">
+                             <img alt="" class="w-25" src="{{persona.image}}" style="border-radius: 5px;">
+                         </div>
+        
+        
+        
+                  </div>
+    
+
+
+
+              
+
+
+           
+
+
+          <div class="row mt-2">
+            <div class="col-md-9"></div>
+            <div class="col-md-2 mt-2">
+              <button (click)=" onContactFormSubmit()" class="w-100" nbButton nbStepperNext status="info"
+                type="submit">next
+              </button>
+            </div>
+          </div>
+
+
+
+        </nb-step>
+
+
+
+
+        <nb-step [stepControl]="contact_form" label="Contact">
+          <form formGroupName="contact_form" class="contact_form">
+
+
+            <div class="row mt-3">
+              <div class="col-md-6">
+                    <label class="small">Email</label>
+                    <div class="row">
+                      <div class="col-md-10">
+                        <input [(ngModel)]="persona.email" fieldSize="large" formControlName="email" fullWidth id="email"
+                          name="email" nbInput placeholder="Persona email" type="email">
+                      </div>
+                      <div class="col-md-1 mt-3">
+                        <nb-icon icon="info-outline" nbTooltip="ERROR !!" nbTooltipStatus="primary">
+                        </nb-icon>
+                      </div>
+                    </div>
+
+
+
+
+
+
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small col-lg-12">Phone</label>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-10">
+                        <input [(ngModel)]="persona.phone" fieldSize="large" formControlName="phone" fullWidth id="phone"
+                        name="phone" nbInput placeholder="Persona phone" type="number">
+                      </div>
+                      <div class="col-md-1 mt-3">
+                        <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted" nbTooltipStatus="primary"></nb-icon>
+                      </div>
+                    </div>
+      
+                  </div>
+            
+      
+      
+                </div>
+
+
+
+
+                
+            <div class="row mt-3">
+              <div class="col-md-6">
+                    <label class="small">Address</label>
+                    <div class="row">
+                      <div class="col-md-10">
+                        <input [(ngModel)]="persona.adresse" fieldSize="large" formControlName="adresse" fullWidth id="adresse"
+                          name="adresse" nbInput placeholder="Persona adresse" type="email">
+                      </div>
+                      <div class="col-md-1 mt-3">
+                        <nb-icon icon="info-outline" nbTooltip="ERROR !!" nbTooltipStatus="primary">
+                        </nb-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small col-lg-12">Country </label>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-10">
+
+                        <nb-select size="large" placeholder="Select Country" [(ngModel)]="persona.localisation" 
+                        class="mt-1" formControlName="localisation" fullWidth  
+                                       id="localisation" name="localisation" selected="0">
+                                  <nb-option disabled value="0">Country</nb-option>
+                                  <nb-option *ngFor="let localisation of countries" value="{{localisation.country_name}}">
+                                    {{localisation.country_name}}</nb-option>
+                                </nb-select>   
+
+
+                      </div>
+
+
+
+                      <div class="col-md-1 mt-3">
+                        <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted" nbTooltipStatus="primary"></nb-icon>
+                      </div>
+                    </div>
+      
+                  </div>
+                <!--- <div class="col-md-6">
+                    <img alt="" class="w-25" src="{{persona.imageUrl}}" style="border-radius: 5px;">
+                  </div>--->
+      
+      
+      
+                </div>
+
+
+
+
+          <!----  <div class="row">
+              <div class="col-md-6">
+                <label class="mt-2 small">Motivation</label> <br>
+
+
+                <input [(ngModel)]="persona.motivation" formControlName="motivation" fullWidth id="motivation" name="motivation" nbInput
+                  placeholder="motivation" type="motivation">
+
+              </div>
+              <div class="col-md-1 mt-2">
+                <nb-icon icon="info-outline" nbTooltip="motivation" nbTooltipStatus="primary"></nb-icon>
+              </div>
+              <div class="col-md-6">
+                <label class="mt-2 small">Interset</label> <br>
+                    <input [(ngModel)]="persona.interset" formControlName="interset" fullWidth id="interset"
+                  name="interset" nbInput placeholder="Interset" type="text">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="mt-2 small">Technologie</label> <br>
+                <input [(ngModel)]="persona.technologie" placeholder="technologie" class="w-100 col-lg-12"
+                  fieldSize="large" formControlName="technologie" fullWidth id="technologie" name="technologie"
+                  nbInput  type="text">
+
+              </div>
+              <div class="col-md-1 mt-2">
+                <nb-icon icon="info-outline" nbTooltip="Technologie" nbTooltipStatus="primary"></nb-icon>
+              </div>
+              <div class="col-md-6">
+                <label class="mt-2 small">Goals</label> <br>
+                <input [(ngModel)]="persona.goals" placeholder="goals" class="w-100 col-lg-12"
+                  fieldSize="large" formControlName="goals" fullWidth id="goals" name="goals" nbInput
+                   type="text">
+              </div>
+            </div>
+              <br>
+            <label class="small">Bio</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.bio"
+                formControlName="bio"
+                fullWidth
+                id="bio"
+                name="bio"
+                nbInput
+                placeholder="bio">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="Adress" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+            <br>
+            <label class="small">Personality</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.personality"
+                formControlName="personality"
+                fullWidth
+                id="personality"
+                name="personality"
+                nbInput
+                placeholder="bio">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="Adress" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+
+
+
+            <br>
+            <label class="small">Languages</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.languages"
+                formControlName="languages"
+                fullWidth
+                id="languages"
+                name="languages"
+                nbInput
+                placeholder="bio">
+                
+              </textarea>
+                </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="Adress" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+            <br>
+
+
+
+
+
+
+            <br>
+            <label class="small">Frustrations</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.frustrations"
+                formControlName="frustrations"
+                fullWidth
+                id="frustrations"
+                name="frustrations"
+                nbInput
+                placeholder="bio">
+                
+              </textarea>
+                </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="Adress" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+
+            
+            <label class="small">Description</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.description"
+                formControlName="description"
+                fullWidth
+                id="description"
+                name="description"
+                nbInput
+                placeholder="Description">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="Adress" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+            
+            
+            --->
+
+            <div class="row mt-2">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onDescriptionFormSubmit()" class="col-md-2" nbButton nbStepperNext status="info"
+                type="submit">Next
+              </button>
+            </div>
+
+
+          </form>
+        </nb-step>
+
+
+        <nb-step [stepControl]="description" label="Description">
+          <form formGroupName="description_form" class="description_form">
+
+                  
+            <label class="small">Bio</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.bio"
+                formControlName="bio"
+                fullWidth
+                id="bio"
+                name="bio"
+                nbInput
+                placeholder="bio">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="bio" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+
+
+
+            <label class="small">Personality</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.personality"
+                formControlName="personality"
+                fullWidth
+                id="personality"
+                name="personality"
+                nbInput
+                placeholder="personality">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="personality" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+
+            <label class="small">Frustrations</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.frustrations"
+                formControlName="frustrations"
+                fullWidth
+                id="frustrations"
+                name="frustrations"
+                nbInput
+                placeholder="frustrations">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="frustrations" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+
+            <label class="small">Goals</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.goals"
+                formControlName="goals"
+                fullWidth
+                id="goals"
+                name="goals"
+                nbInput
+                placeholder="goals">
+                
+              </textarea>
+
+
+
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="goals" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+            <label class="small">Interset</label>
+            <div class="row">
+              <div class="col-md-11">
+                <textarea
+                [(ngModel)]="persona.interset"
+                formControlName="interset"
+                fullWidth
+                id="interset"
+                name="interset"
+                nbInput
+                placeholder="interset">
+                
+              </textarea>
+
+                 </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="interset" nbTooltipStatus="primary">
+                </nb-icon>
+              </div>
+            </div>
+
+
+
+            <div class="row mt-2">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onSkillsFormSubmit()" class="col-md-2" nbButton nbStepperNext status="info"
+                type="submit">Next
+              </button>
+            </div>
+
+
+
+
+
+            </form>
+
+            </nb-step>
+            <nb-step [stepControl]="description" label="Skills">
+              <form formGroupName="Skills_form" class="Skills_form">
+
+
+                
+                <label class="small">Languages</label>
+                <div class="row">
+                  <div class="col-md-11">
+                    <textarea
+                    [(ngModel)]="persona.languages"
+                    formControlName="languages"
+                    fullWidth
+                    id="languages"
+                    name="languages"
+                    nbInput
+                    placeholder="languages">
+                    
+                  </textarea>
+    
+    
+    
+                  </div>
+                  <div class="col-md-1 mt-3">
+                    <nb-icon icon="info-outline" nbTooltip="languages" nbTooltipStatus="primary">
+                    </nb-icon>
+                  </div>
+                </div>
+
+
+                <label class="small">Technologie</label>
+                <div class="row">
+                  <div class="col-md-11">
+                    <textarea
+                    [(ngModel)]="persona.technologie"
+                    formControlName="technologie"
+                    fullWidth
+                    id="technologie"
+                    name="technologie"
+                    nbInput
+                    placeholder="technologie">
+                    
+                  </textarea>
+    
+    
+    
+                  </div>
+                  <div class="col-md-1 mt-3">
+                    <nb-icon icon="info-outline" nbTooltip="technologie" nbTooltipStatus="primary">
+                    </nb-icon>
+                  </div>
+                </div>
+
+
+
+                <label class="small">SoftSkills</label>
+                <div class="row">
+                  <div class="col-md-11">
+                    <textarea
+                    [(ngModel)]="persona.softSkills"
+                    formControlName="softSkills"
+                    fullWidth
+                    id="softSkills"
+                    name="softSkills"
+                    nbInput
+                    placeholder="softSkills">
+                    
+                  </textarea>
+    
+    
+    
+                  </div>
+                  <div class="col-md-1 mt-3">
+                    <nb-icon icon="info-outline" nbTooltip="softSkills" nbTooltipStatus="primary">
+                    </nb-icon>
+                  </div>
+                </div>
+
+
+                <label class="small">HardSkills</label>
+                <div class="row">
+                  <div class="col-md-11">
+                    <textarea
+                    [(ngModel)]="persona.hardSkills"
+                    formControlName="hardSkills"
+                    fullWidth
+                    id="hardSkills"
+                    name="hardSkills"
+                    nbInput
+                    placeholder="hardSkills">
+                    
+                  </textarea>
+    
+                     </div>
+                  <div class="col-md-1 mt-3">
+                    <nb-icon icon="info-outline" nbTooltip="hardSkills" nbTooltipStatus="primary">
+                    </nb-icon>
+                  </div>
+                </div>
+
+
+       
+
+
+                <label class="small">Description</label>
+                <div class="row">
+                  <div class="col-md-11">
+                    <textarea
+                    [(ngModel)]="persona.description"
+                    formControlName="description"
+                    fullWidth
+                    id="description"
+                    name="description"
+                    nbInput
+                    placeholder="description">
+                    
+                  </textarea>
+    
+                     </div>
+                  <div class="col-md-1 mt-3">
+                    <nb-icon icon="info-outline" nbTooltip="description" nbTooltipStatus="primary">
+                    </nb-icon>
+                  </div>
+                </div>
+
+
+
+  
+
+
+                <div class="row mt-2">
+                  <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+                  <div class="col-md-8">
+                       <button style="float:  right;"    nbButton [disabled]="PersonaGroup.invalid" (click)="addPatnerFunction()"  status="success">
+                              <nb-icon icon="checkmark-circle-outline"></nb-icon>   Add Persona
+                         </button>
+                  </div>
+               
+           </div>
+
+
+
+
+
+
+                </form>
+                </nb-step>
+
+
+
+
+
+
+
+
+
+
+
+      </nb-stepper>
+    </form>
+  </nb-card-body>
+</nb-card>

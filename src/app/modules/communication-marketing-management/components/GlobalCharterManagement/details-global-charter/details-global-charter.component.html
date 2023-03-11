@@ -1,0 +1,63 @@
+<div *ngIf="globalCharter" class="container">
+  <div class="col-md-10 col-sm-12">
+
+ </div>
+ 
+ <div class="row">
+  <div class="col-md-10 col-sm-12">
+   
+  </div>
+ <br>
+  <div align="right" class="col-md-2 justify-content-end">
+    <a [routerLink]="['/communicationMarketing/EditGlobalCharter',globalCharter.id]" class="w-25"
+       fullWidth nbButton nbTooltip="Click here to edit GlobalCharter data" nbTooltipStatus="primary" shape="round" status="">
+      <nb-icon icon="edit-outline"></nb-icon>
+    </a>
+    <a [routerLink]="['/communicationMarketing/GlobalCharter']" class="w-25 mx-3"
+       fullWidth nbButton nbTooltip="Back to GlobalCharter list" nbTooltipStatus="primary" outline shape="round" status="basic">
+      <nb-icon icon="corner-up-right-outline"></nb-icon>
+    </a>
+
+  </div>
+
+</div>
+&nbsp;
+
+
+
+ <nb-card accent="info">
+   <nb-card-header>  Global   Graphical Charter Details</nb-card-header>
+   <nb-card-body> Title  : {{globalCharter.title}}
+     <br>
+     <br>
+ 
+     Module  : {{globalCharter.module}}
+ 
+     <br>
+     <br>
+ 
+     Typo   : {{globalCharter.typo}}
+ 
+     <br>
+     <br>
+ 
+     couleurs  : {{globalCharter.couleurs}}
+     <br>
+     <br>
+ 
+     Icon  : {{globalCharter.icon}}
+     <br>
+    
+     <br>
+ 
+     Description  : {{globalCharter.description}}
+     <br>
+ 
+ 
+ 
+   </nb-card-body>
+ </nb-card>
+ </div>
+ 
+ 
+ 

@@ -1,0 +1,161 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Stock Movements</h3>
+        </div>
+        <div class="col-md-4">
+            <input [(ngModel)]="search"
+                   nbInput class="w-75" placeholder="Search Stock Movement"
+                   type="text">
+        </div>
+        <div class="col-md-5">
+           <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/pim/stock/movements/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+    &nbsp;
+    <a [routerLink]="['/pim/stock/movements']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+          <a [routerLink]="['/pim/stock/movements/list']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+    &nbsp;
+    <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"  (click)="exportAsXLSX()"><i class="fas fa-file-excel text-white"></i>  </button>
+    &nbsp;
+      <br>
+        </div>
+      </div>
+    </nb-card-header>
+</div>
+<div class="row" *ngIf="!stockMovements || stockMovements.length === 0">
+  <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+</div>
+<div [hidden]="stockMovements.length === 0" class="row" *ngIf="(stockMovements | filter : search).length === 0">
+  <nb-alert outline="danger" class="w-100 mt-3">
+    Item Not Found
+  </nb-alert>
+</div>
+<div class="row mt-3">
+  <div class="col-md-3">
+    <nb-form-field>
+      <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+      <input [nbDatepicker]="datepicker" placeholder="Filter By Date"
+             style="cursor: pointer"
+             class="mx-2 mt-3 w-75" nbInput>
+      <nb-datepicker #datepicker
+                     (dateChange)="getSMsByCreationDate($event)"></nb-datepicker>
+    </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Filter by Material" class="mx-2 mt-3 w-75"
+                       selected="0" (selectedChange)="getSMByMaterial($event)">
+              <nb-option (click)="getAllSMs()" value="All">All</nb-option>
+              <nb-option *ngFor="let material of materials" [value]="material.materialName">
+                {{material.materialName}}
+              </nb-option>
+            </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Sort by Reference" class="mx-2 mt-3 w-75"
+                       selected="0">
+              <nb-option (click)="getAllSMs()" value="All">All</nb-option>
+              <nb-option (click)="getAllSMsASCByCode()" value="1">References (A-Z)</nb-option>
+              <nb-option (click)="getAllSMsDESCByCode()" value="2">References (Z-A)</nb-option>-
+            </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+        <label>Movements Per Page :</label>
+        <input [(ngModel)]="pageSize" placeholder="Number to get stock movements per page"
+                 nbTooltip="Tap a number to get stock movements per page" nbTooltipStatus="primary"
+               class="w-100" min="6" nbInput type="number">
+       </div>
+      </div>
+   <div class="input-group col-md-9">
+  <div class="col-md-4"
+           *ngFor="let movement of stockMovements  | filter : search | paginate : 
+           {itemsPerPage:pageSize, currentPage: current,totalItems: stockMovements.length} ; let i =index">
+  <nb-card>
+    <nb-card-body>
+      <div align="right" class="">
+        <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                aria-label="Example icon-button with a menu"
+                nbButton nbTooltip="Click here to see advanced menu"
+                nbTooltipStatus="primary"
+                shape="round"
+                size="small"
+                status="basic">
+          <nb-icon icon="more-horizontal-outline"></nb-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <a (click)="openDialog(dialog)" fullWidth nbButton>
+              <span class="text-secondary"><nb-icon icon="archive-outline"></nb-icon></span>Archive
+            </a>
+          </button>
+        </mat-menu>
+        <ng-template #dialog let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-header>
+              Confirm archive operation ?
+            </nb-card-header>
+            <nb-card-body>
+              Are you sure you want to archive this stock movement?
+            </nb-card-body>
+            <nb-card-footer>
+              <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                No
+              </button>
+              <button (click)="onArchiveConfirm(movement, ref)" class="float-right" nbButton
+                      status="success">
+                Yes
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+      </div>
+      <div align="center">
+                <h4>{{movement.smCode}}</h4>
+        <span class="text-sm-center mt-2">
+            {{moment(movement.dateSM).format('DD MMM YYYY hh:mm A')}}
+        </span><br/><br/>
+        <span class="text-sm-center mt-2 text-success font-weight-bold" *ngIf="movement.stateSM === 'In'">
+          {{movement.smLabel}}
+        </span>
+        <span class="text-sm-center mt-2 text-danger font-weight-bold" *ngIf="movement.stateSM === 'Out'">
+          {{movement.smLabel}}
+        </span>
+              </div>
+      <div class="row">
+        <div class="col-md-10"><br/><br>
+          <span *ngIf="movement.stateSM === 'In'">Quantity In: {{movement.quantitySM}}
+          </span>
+          <span *ngIf="movement.stateSM === 'Out'">Quantity Out: {{movement.quantitySM}}
+          </span><br/><br>
+          <span *ngIf="movement.stateSM === 'In'">Quantity Before: {{movement.material.quantityStock - movement.quantitySM}}
+          </span>
+          <span *ngIf="movement.stateSM === 'Out'">Quantity Before: {{movement.material.quantityStock + movement.quantitySM}}
+          </span><br/><br>
+          <span>Quantity After: {{movement.material.quantityStock}}
+          </span><br/><br>
+          <span>Material: <a [routerLink]="['/pim/procurement/material', movement.material.materialId]"
+                    style="text-decoration: none">
+               <button nbButton shape="round" size="small" 
+                       status="dark" class="materialName">
+                  {{movement.material.materialName}}
+               </button>
+            </a></span>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+ </div>
+</div>
+</div>
+  <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+</div>
+

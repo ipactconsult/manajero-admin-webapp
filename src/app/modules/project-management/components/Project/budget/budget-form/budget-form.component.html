@@ -1,0 +1,80 @@
+<form class="form" [formGroup]="budgetForm">
+  <div class="form-group">
+      <label for="subject">Title:</label>
+      <input
+        nbInput
+        fullWidth
+        class="form-control"
+        type="text"
+        formControlName="title"
+      />
+    
+    </div>
+    <div class="form-group">
+      <label class="text-label" for="text">Amount:</label>
+      <input
+        nbInput
+        fullWidth
+        class="form-control"
+        type="number"
+        formControlName="amount"
+
+
+      />
+     
+    </div>
+    <div class="form-group">
+      <label class="text-label" for="text">Notes:</label>
+      <textarea
+        nbInput
+        fullWidth
+        class="form-control"
+        type="number"
+        formControlName="notes"
+
+      >
+      </textarea>
+      
+     
+    </div>
+    <div class="form-group">
+      <label class="text-label" for="text">Motif:</label>
+      <input
+      type="file"
+      nbInput
+      fullWidth
+      (change)="upload($event)"
+      accept=".*"
+      
+    />
+    <nb-tag
+    status="basic"
+    (click)="uploadImage()"
+    appearance="outline"
+    text="+new Document"
+  ></nb-tag>
+  <nb-card
+  *ngIf="loader"
+  [nbSpinner]="loader"
+  nbSpinnerSize="giant"
+  nbSpinnerStatus="warning"
+  nbSpinnerMessage="file uploading ..."
+>
+  <nb-card-body> </nb-card-body>
+</nb-card>
+     
+    </div>
+    
+    <input
+    [ngClass]="
+      (selectedItem === null|| selectedItem===undefined)
+        ? 'btn btn-success btnCreate'
+        : 'btn btn-warning btnCreate'
+    "
+    [value]="(selectedItem === null|| selectedItem===undefined)? 'Send Request' : 'Update  Request'"
+    type="submit"
+    [disabled]="budgetForm.invalid"
+    (click)="(selectedItem === null|| selectedItem===undefined)? save() : update()"
+  />
+  </form>
+  

@@ -1,0 +1,152 @@
+
+<form class="form" [formGroup]="activityForm" >
+  <div class="form-group">
+    <label for="subject">Title:</label>
+    <input nbInput fullWidth class="form-control" type="text"       formControlName="title"
+    />
+  </div>
+
+  <div>
+    <label for="subject">Priorty:</label>
+    <nb-select placeholder="Choose Priorty" fullWidth       formControlName="priority"
+    >
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="success"
+        ></nb-icon>
+        <p class="my-1">LOW</p>
+      </nb-option>
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="warning"
+        ></nb-icon>
+        <p class="my-1">MEDIUM</p></nb-option
+      >
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="danger"
+        ></nb-icon>
+        <p class="my-1">HIGH</p></nb-option
+      >
+    </nb-select>
+  </div>
+  <div *ngIf="selectedItem?.goal===null"> 
+    <label for="subject">Goal:</label>
+    <nb-select placeholder="Choose Goal" fullWidth       formControlName="goal"
+   
+    >
+      <nb-option
+      *ngFor="let goal of goalList"
+       value="{{goal.id}}"
+        ><nb-icon
+          icon="award-outline"
+          class="my-1 mx-1"
+          status="warning"
+        ></nb-icon>
+        <p class="my-1">{{goal.title}}</p></nb-option
+      >
+    
+    </nb-select>
+  </div>
+  <div > 
+    <label for="subject"> Status:</label>
+    <nb-select placeholder="Choose Status" fullWidth 
+          (selectedChange)="selectStatus($event)"
+    >
+      <nb-option
+      *ngFor="let status of statusActivity"
+       value="{{status.id}}"
+        ><nb-icon
+          icon="flag-outline"
+          class="my-1 mx-1"
+          status="success"
+        ></nb-icon>
+        <p class="my-1">{{status.id}}</p></nb-option
+      >
+    
+    </nb-select>
+  </div>
+  <div>
+    <label for="subject">Start Date :</label>
+    <input
+      nbInput
+      fullWidth
+      placeholder="Pick Date"
+      [nbDatepicker]="dateTimePicker1"
+      formControlName="startDate"
+      
+
+    />
+    <nb-datepicker #dateTimePicker1></nb-datepicker>
+   
+  </div>
+  <div>
+    <label for="subject">End Date :</label>
+    <input
+      nbInput
+      fullWidth
+      placeholder="Pick Date"
+      [nbDatepicker]="dateTimePicker2"
+      formControlName="dueDate"
+
+    />
+    <nb-datepicker #dateTimePicker2></nb-datepicker>
+  
+  </div>
+  <label for="subject">List skills needed :</label>
+
+  <nb-tag-list (tagRemove)="onTagRemove($event)">
+    <nb-tag *ngFor="let tree of trees" [text]="tree" removable></nb-tag>
+    <input type="text" nbTagInput (tagAdd)="onTagAdd($event)" fullWidth>
+  </nb-tag-list>
+  <nb-card>
+    <nb-card-body>
+  
+      <nb-tabset>
+        <nb-tab tabTitle="Responsable">
+          <ngx-assign-employee  (dataChanged)="assignEmploy($event)" [selectedItem]="selectedItem"></ngx-assign-employee>
+        </nb-tab>
+        <nb-tab tabTitle="Resources">
+          <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+              <nb-icon icon="checkmark-circle-outline" status="success"></nb-icon>  Available Resource
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <ngx-resource-form (refreshData)="refresh($event)" [resourceListSelected]="selectedItem?.resource"></ngx-resource-form>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                <nb-icon icon="close-circle-outline" status="danger"></nb-icon>  unavailable Resource
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <ngx-resource-form></ngx-resource-form>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          
+          </nb-accordion>
+        </nb-tab>
+       
+      </nb-tabset>
+  
+    </nb-card-body>
+  </nb-card>
+  <input
+    [ngClass]="
+      selectedItem === null
+        ? 'btn btn-success btnCreate'
+        : 'btn btn-warning btnCreate'
+    "
+    [value]="selectedItem === null ? 'Save' : 'Update'"
+    
+    [disabled]="activityForm.invalid"
+    (click)="selectedItem === null ? save() : update()"
+  />
+</form>

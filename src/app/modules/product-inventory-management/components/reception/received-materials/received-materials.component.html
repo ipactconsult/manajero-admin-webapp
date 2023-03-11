@@ -1,0 +1,216 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Reception</h3>
+        </div>
+        <div class="col-md-4">
+            <input [(ngModel)]="search" class="w-75"
+                   nbInput
+                   placeholder="Search Received Material"
+                   type="text">
+        </div>
+        <div class="col-md-5">
+            <a [routerLink]="['/pim/received-materials/grid']" nbButton
+               nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+              <nb-icon icon="grid-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/received-materials']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/received-materials/list']" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>&nbsp;
+            <button (click)="exportAsXLSX()"
+                    align="right" nbButton 
+                    nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                    status="success">
+              <i class="fas fa-file-excel text-white"></i>
+            </button>
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!dataMaterials || dataMaterials.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataMaterials | filter : search).length === 0" [hidden]="dataMaterials.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">
+        Item Not Found.
+      </nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getMaterialsByMaterialType($event)"
+                   class="mx-2 mt-3 w-75" placeholder="Filter by Type"
+                        nbTooltip="Click here to filter by material type"
+                       nbTooltipStatus="primary"
+                   selected="0">
+              <nb-option (click)="getAllMaterials()" value="All">All</nb-option>
+              <nb-option value="Raw Material">Raw Material</nb-option>
+              <nb-option value="Finished Product">Finished Product</nb-option>
+              <nb-option value="Service">Service</nb-option>
+          </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getMaterialsByCategory($event)"
+                       class="mx-2 mt-3 w-75" placeholder="Filter by Category"
+                       selected="0">
+              <nb-option (click)="getAllMaterials()" value="All">All</nb-option>
+              <nb-option *ngFor="let category of dataCategories" [value]="category.categoryName">
+                {{category.categoryName}}
+              </nb-option>
+            </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select nbTooltip="Click here to sort by name" nbTooltipStatus="primary"
+                       placeholder="Sort by name"
+                       selected="0" class="mx-2 mt-3 w-75">
+              <nb-option (click)="getAllMaterials()" value="All">All</nb-option>
+              <nb-option (click)="getAllMaterialsASC()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getAllMaterialsDESC()" value="2">Names (Z-A)</nb-option>
+            </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+          <label>Materials Per Page : </label>
+          <input [(ngModel)]="pageSize" class="w-100"
+                 min="3" nbInput
+                 nbTooltip="Tap a number to get materials per page" nbTooltipStatus="primary"
+                 placeholder="Number to get materials per page" type="number">
+        </div>
+      </div>
+      <div class="input-group col-md-9">
+      <div
+        *ngFor="let material of dataMaterials |filter: search
+           | paginate : {itemsPerPage:8, currentPage: current,totalItems: dataMaterials.length}"
+         [hidden]="material.materialState === false"
+        align="center" class="col-md-4">
+          <nb-card>
+            <nb-card-body class="pt-2 pb-2">
+              <div class="">
+                <div class="row mt-2">
+                  <div class="col-lg-12">
+                  <div align="right" class="">
+                    <ng-template #dialogConfirm let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Confirm Material Stock?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Stock this Material to warehouse {{material.warehouse?.warehouseLocation}}?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="stockMaterialW(material, material.warehouse, ref)" class="float-right" nbButton
+                      status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+                  </div></div>
+                </div>
+              </div>
+              <div align="center">
+                <h4>{{material.materialSKU}}</h4>
+                <span class="text-sm-center mt-2">{{material.materialType}}</span><br/>
+              </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Name</p>
+                      <span>{{material.materialName}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Category</p>
+                      <span>{{material.materialCategory.categoryName}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Price</p>
+                      <span>{{material.materialPrice}} {{material.supplier?.supplierCurrency}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Quantity</p>
+                      <span *ngIf="!material.materialQuantity && material.materialType !== 'Service'">0</span>
+                      <span *ngIf="material.materialQuantity > 0 && material.materialType !== 'Service'">
+                        {{material.materialQuantity}}
+                      </span>
+                      <span *ngIf="material.materialType === 'Service'">-</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Total Price <small>
+                        (Incl. <b style="color: white;"><u>{{material.materialVAT}}%</u></b> Taxes)</small></p>
+                      <span>{{material.materialPrice * material.materialQuantity + 
+                        material.materialPrice * material.materialQuantity * (material.materialVAT)/100}} 
+                        {{material.supplier?.supplierCurrency}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Supplier</p>
+                      <a [routerLink]="['/pim/supplier', material.supplier?.supplierId]" 
+                          style="text-decoration: none; color: white;">
+                        {{material.supplier.supplierFirstName}} {{material.supplier.supplierLastName}}<br/>
+                        <img alt="Supplier Image" [src]="material.supplier.supplierImage"/>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <button nbButton status="success" *ngIf="!material.warehouse" size="small"
+                    [disabled]="material.materialType === 'Service'" (click)="goToStockMaterial(material)">
+              Stock
+            </button>
+            <button nbButton status="success" *ngIf="material.warehouse" size="small"
+                    [disabled]="material.materialType === 'Service'" (click)="openConfirm(dialogConfirm)">
+              Stock
+            </button><span style="pointer-events: none">&nbsp;&nbsp;&nbsp;</span>
+            <button nbButton status="danger" size="small"
+            (click)="goToCreatePurchaseReturn(material)">
+              Return
+            </button>
+                    </div>
+                  </div>
+                </div>
+            </nb-card-body>
+          </nb-card>
+      </div>
+     </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+  </div>
+</div>

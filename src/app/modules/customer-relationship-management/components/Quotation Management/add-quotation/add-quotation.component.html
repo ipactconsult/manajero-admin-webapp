@@ -1,0 +1,80 @@
+<nb-card>
+
+
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-6 col-sm-12 ">
+          <h5 class="more-vertical">
+            Demand quotation </h5>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div align="right" class="col-md-2 justify-content-end">
+
+          <a [routerLink]="['/crm/quotations']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to quotations list"
+             nbTooltipStatus="primary" shape="round" status="basic">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+
+        </div>
+      </div>
+    </nb-card-header>  
+  <nb-card-body>
+    <form [formGroup]="quotationGroup">
+
+      <div class="col-lg-12">
+        <div class="col-lg-12">
+          <label for="title">Title</label>
+        </div>
+        <div class="col-lg-12">
+             <input [(ngModel)]="quotation.title" 
+                       formControlName="title"
+                       fieldSize="large"
+                       fullWidth id="title" name="title" nbInput
+                       placeholder="Enter your title">
+        </div>
+      </div> 
+      <div class="col-lg-12 mt-3">
+        <div class="col-lg-12">
+          <label for="comment">Comment</label>
+        </div>
+        <div class="col-lg-12">
+             <textarea [(ngModel)]="quotation.comment" cols="25"
+                       formControlName="comment"
+
+                       fullWidth id="comment" name="comment" nbInput
+                       placeholder="Enter your comment" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="col-lg-12 mt-3">
+        <div class="col-lg-12">
+          <label for="comment">Visit</label>
+        </div>
+        <div class="col-lg-12">
+          <nb-select (selectedChange)="onMenuItemSelectedVisit($event)"
+                     [(ngModel)]="quotation.visit"
+                     size="large"
+                     formControlName="visit" fullWidth
+                     id="visit" name="visit"
+                     placeholder="Visit">
+            <nb-option
+              *ngFor="let optionVisit of dataVisits"
+              value="{{optionVisit.id}}">
+              {{optionVisit.title}}
+            </nb-option>
+          </nb-select>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+          <button (click)="demandQuotation()" class="mt-4" nbButton status="success" >Send Request</button>
+        </div>
+      </div>
+      
+    </form>
+  </nb-card-body>
+</nb-card>

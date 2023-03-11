@@ -1,0 +1,94 @@
+<div class="row">
+       <div class="col-md-4">
+              <h3>Create Purchase Return</h3>
+       </div>
+       <div  class="col-md-8">
+              <button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </button>
+       </div>
+</div><br/>
+<form [formGroup]="purchaseReturnForm">
+        <label class="mt-2">Material</label>
+        <div class="row">
+          <div class="col-md-11">
+           <table class="table mb-0 " id="htmlData">
+        <thead class="bg-light">
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Warehouse</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+          <th>Supplier</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="col-md-9 col-sm-10">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{existedMaterial.materialType}}</p>
+              </div>
+            </div>
+          </td>
+          <td><p class="fw-normal mb-1">{{existedMaterial.materialName}}</p></td>
+          <td><p class="fw-normal mb-1">{{existedMaterial.materialCategory?.categoryName}}</p></td>
+          
+          <td *ngIf="!existedMaterial.warehouse">
+            <p class="fw-normal mb-1">-</p>
+          </td>
+          <td *ngIf="existedMaterial.warehouse">
+            <p class="fw-normal mb-1">{{existedMaterial.warehouse?.warehouseLocation}}</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{existedMaterial.materialPrice}} {{existedMaterial.supplier.supplierCurrency}}</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{existedMaterial.materialQuantity}}</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{existedMaterial.materialPrice * existedMaterial.materialQuantity 
+              + existedMaterial.materialPrice * existedMaterial.materialQuantity * (existedMaterial.materialVAT/100)}} 
+            {{existedMaterial.supplier.supplierCurrency}}<br/><small>(+{{existedMaterial.materialVAT}}% Taxes)</small></p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">
+              <a [routerLink]="['/pim/supplier', existedMaterial.supplier?.supplierId]" style="text-decoration: none;">
+                <nb-user [name]="existedMaterial.supplier?.supplierFirstName + ' ' + existedMaterial.supplier?.supplierLastName" 
+                     picture="{{existedMaterial.supplier?.supplierImage}}" size="medium"></nb-user>
+              </a>
+            </p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+          </div>
+          <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Material information" nbTooltipStatus="primary"></nb-icon>
+                  </div>
+        </div>
+        <label class="mt-2">Reason</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <textarea nbInput fullWidth type="text" class="form-control"
+                               formControlName="reason"></textarea>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" 
+                              nbTooltip="Please enter the reason why you would like to return this material" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+  <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="purchaseReturnForm.invalid" (click)="createNewPurchaseReturn()" 
+                      status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+                </button>
+         </div>
+  </div>
+</form>

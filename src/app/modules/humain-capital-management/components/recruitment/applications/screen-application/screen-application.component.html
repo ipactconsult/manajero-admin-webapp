@@ -1,0 +1,232 @@
+<div class="container" *ngIf="application">
+    <div class="row">
+      <div class="col-md-5 col-sm-12">
+        <h2 class="more-vertical">
+          Screen Profile 
+        </h2>
+      </div>
+      <div align="right" class="col-md-7">
+          <a align="right" nbButton status="basic" shape="round" [routerLink]="['/hr/recruitment/applications/grid']">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+      </div>
+  
+    
+  
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4 mb-3">
+        <nb-card>
+          <nb-card-body class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="row">
+  
+                <img alt="" src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" style="width: 150px;height: 150px;border-radius: 100%;">
+              </div>
+  
+              <div class="mt-3">
+                <h4>{{application?.firstName}}{{" "}}{{application.lastName}}</h4>
+                <div class="row">
+                  
+                  <div class="col-md-12">
+                       <nb-tag-list>
+                    <nb-tag [text]="application.status" status="primary" appearance="filled"></nb-tag>
+                  </nb-tag-list>
+                  </div>
+                </div>
+           
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      
+     
+      </div>
+      <form class="col-md-8">
+      <div class="">
+        <nb-accordion>
+          <nb-accordion-item expanded="false">
+            <nb-accordion-item-header>General Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quality</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <p>{{application.quality}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">CIN</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <p>{{application.cin}}</p>
+                </div>
+              </div>
+              <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <p>{{application.date| date :"EEEE dd MMM YYYY"}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Gender</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <p>{{application.gender}}</p>
+                </div>
+              </div>
+              
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">City</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <p>{{application.city}}</p>
+                </div>
+              </div> 
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header>Contact Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Email</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                   <p>{{application.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Phone Number</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                   <p>{{application.phoneNumber}}</p>
+                </div>
+              </div>
+              
+            
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+            <nb-accordion-item expanded="true">
+              <nb-accordion-item-header>Professional Information</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Diploma</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                     <p>{{application.diploma}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">University</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                     <p>{{application.university}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Obtained Diploma</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                      <div class="row">
+                          <div class="col-md-9">
+                              <p>{{application?.obtainedDate | date : "EEEE MMM YYYY"}}</p>
+                          </div>
+                          
+                      </div>
+                  </div>
+                </div>
+
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm"> Domain</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                      <div class="row">
+                          <div class="col-md-9">
+                              <p>{{application?.domain}}</p>
+                          </div>
+                          
+                      </div>
+                  </div>
+                </div>
+
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm"> Seniority</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                      <div class="row">
+                          <div class="col-md-9">
+                              <p>{{application?.seniority}}</p>
+                          </div>
+                          
+                      </div>
+                  </div>
+                </div>
+              
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+          <br>
+          <nb-accordion>
+            <nb-accordion-item expanded="true">
+              <nb-accordion-item-header>Screening</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0 text-sm">Status</p>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p>{{application?.status}}</p>
+                            </div>
+                            <div class="col-md-7">
+                                <nb-toggle [hidden]="application.status === 'SCREENING' " [disabled]="clicked" (change)="screenStep(); clicked = true" status="success">SCREENING</nb-toggle>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </nb-accordion-item-body>
+
+            </nb-accordion-item>
+         </nb-accordion>
+
+        
+        <br>
+      </div>
+       </form>
+    </div>
+  
+  
+  
+  
+  </div>

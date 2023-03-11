@@ -1,0 +1,116 @@
+<div class="row">
+       <div class="col-md-4">
+              <h3>Create New department</h3>
+       </div>
+       <div  class="col-md-8">
+              <a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/hr/department/list']" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </a>
+       </div>
+</div>
+<form [formGroup]="department_form" class="mt-3">
+       <label>Reference</label>
+
+       <div class="row">
+              <div class="col-md-11">
+                     <input id="departmentReference"
+                     name="departmentReference" 
+                     [(ngModel)]="dept.departmentReference" 
+                     formControlName="departmentReference" 
+                     type="text" 
+                     nbInput
+                     fullWidth
+                     fieldSize="large"
+                     />
+          
+              </div>
+              <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+              </div>
+       </div>
+   
+
+           <label class="mt-2">Name</label>
+
+           <div class="row">
+                  <div class="col-md-11">
+                     <input 
+                     id="departmentName"
+                     name="departmentName" 
+                     [(ngModel)]="dept.departmentName" 
+                     formControlName="departmentName" 
+                     type="text" 
+                     nbInput
+                     fullWidth
+                     fieldSize="large"
+
+                     /> 
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter a valid name" nbTooltipStatus="primary"></nb-icon>
+
+                  </div>
+           </div>
+          <!--  <label class="mt-2">Responsable</label> -->
+
+          <!--  <div class="row">
+                  <div class="col-md-11">
+                     <nb-select [selected]="employeeSelected"
+                        [(ngModel)]="dept.employee"
+                        formControlName="employee"
+                        name="employee"
+                        nbTooltip="Select Responsable" nbTooltipStatus="primary"
+                        id="employee"
+                        fullWidth
+                        size="large"
+                        placeholder="select Responsable"
+                        (selectedChange)="getEmployeeSelected($event)">
+                <nb-option *ngFor="let empS of listEmps" value="{{empS.id}}">{{empS.employeeName}}</nb-option>
+        
+            </nb-select>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter a valid name" nbTooltipStatus="primary"></nb-icon>
+
+                  </div>
+           </div> -->
+
+           <label class="mt-2">Level</label>
+
+           <div class="row">
+                  <div class="col-md-11">
+                     <nb-select [selected]="levelSelected"
+                     [(ngModel)]="dept.level"
+                     formControlName="level"
+                     name="level"
+                     nbTooltip="Select Level" nbTooltipStatus="primary"
+                     id="level"
+                     fullWidth
+                     size="large"
+                     placeholder="select Level"
+                     (selectedChange)="getLevelSelected($event)">
+             <nb-option *ngFor="let lvl of listLvls" value="{{lvl.id}}">{{lvl.levelReference}}</nb-option>
+     
+         </nb-select>
+        
+                  </div>
+                  
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter a valid name" nbTooltipStatus="primary"></nb-icon>
+
+                  </div>
+           </div>
+
+           
+   
+  <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;"  nbButton [disabled]="department_form.invalid" (click)="storeDept()"  status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon>   Save Data 
+                </button>
+         </div>
+      
+  </div>
+    
+</form>

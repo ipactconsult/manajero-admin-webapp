@@ -1,0 +1,18 @@
+<ngx-list-item-added-step
+[newItem]="newItem"
+></ngx-list-item-added-step>
+<form class="form" [formGroup]="activityStatusForm" (ngSubmit)="save()">
+  <div class="form-group">
+    <label for="subject">Title:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      type="text"
+      formControlName="title"
+      (change)="titleIsValid('title')"
+    />
+  </div>
+  
+  <input class="btn btn-success btnCreate" value="Create" type="submit"  [disabled]="activityStatusForm.invalid || titleIsValid()"/>
+</form>

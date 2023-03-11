@@ -1,0 +1,193 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+
+  <nb-card class="rounded" id="comments" *ngIf="postData">
+    <nb-card-body>
+      <div class="row">
+        <div class="col-md-10 col-sm-12">
+
+        </div>
+        
+        <div align="right" class="col-md-2 justify-content-end">
+          <ng-container  *ngIf="postData.name ===  connectedUser.email"  >
+            <a [routerLink]="['/communicationMarketing/updatePost',postData.id]" class="w-25"
+               fullWidth nbButton nbTooltip="Click here to edit Post data" nbTooltipStatus="primary" status="info" shape="round">
+              <nb-icon icon="edit-outline"></nb-icon>
+            </a>
+          </ng-container>
+
+
+
+          <a [routerLink]="['/communicationMarketing/SocialNetwork']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to Social Network " nbTooltipStatus="primary"  status="basic" outline shape="round" >
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+
+        </div>
+
+      </div>
+    </nb-card-body>
+  </nb-card>
+    <nb-card class="rounded">   
+    	<nb-card-body>
+            <div class="col-sm-8">   
+
+              <div class="d-flex align-items-center">
+                <img class="img-xs rounded-circle" src="{{'https://avatars.dicebear.com/api/identicon/ ' + postData.name+'.svg'}}"
+                
+                width="57"
+                height="40"
+                alt="">
+               <div class="ml-2">
+                
+               <h4 class="media-heading">{{postData.name?.substring(0, postData.name.indexOf('@'))}}</h4>
+
+                    <ul class="list-unstyled list-inline media-detail pull-left">
+                      <li><i class="fa fa-calendar"></i>{{postData.createdAt   | date:"YYYY MMM dd"}}</li>
+                   
+                  </ul>
+                </div>
+            </div>
+            <div class="card-body">
+              <p class="mb-3 tx-14">{{postData.description}}</p>
+              <img class="img-fluid" src="{{postData.imageUrl}}" alt="">
+          </div>
+
+              
+         <form>
+                	<h3 class="pull-left">New Comment</h3>
+                  <form [formGroup]="commentForm" (ngSubmit)="create(postData)">
+                    <div class="form-group">
+                        <textarea       value="Create"
+                            class="form-control" placeholder="Leave a comment" formControlName="comment" [ngClass]="{ 'is-invalid': submitted && commentForm.controls['comment'].errors }"></textarea>
+                        <div class="invalid-feedback" *ngIf="submitted && commentForm.controls['comment'].errors">
+                            <div *ngIf="commentForm.controls['comment'].errors.required">Comment is required</div>
+                            <div *ngIf="commentForm.controls['comment'].errors.minlength">Comment must be at least 6 characters</div>
+                            <div *ngIf="commentForm.controls['comment'].errors.maxlength">Comment must be at most 100 characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Post Comment</button>
+                    </div>
+                </form>
+
+                </form>
+                
+                <h3> {{postData.comments?.length}} Comments</h3>
+                
+             
+                <div class="media" *ngFor="let  c of postData.comments">
+                    <a class="pull-left" href="#">
+                      <img class="img-xs rounded-circle" src="{{'https://avatars.dicebear.com/api/identicon/ ' + postData.name+'.svg'}}"
+                     width="57"
+                      height="40"
+                      alt="">
+
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{c.creatorName?.substring(0, c.creatorName.indexOf('@'))}}</h4>
+                        <p>{{c.content}}</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>{{c.createdAt   | date:"YYYY MMM dd"}}</li>
+                         
+                        </ul>
+                     
+                    </div>
+
+                    <ng-container   *ngIf="postData.name ===  connectedUser.email"   >  
+                      <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                      aria-label="Example icon-button with a menu"
+                      nbButton nbTooltip="Click here to see advanced menu"
+                      nbTooltipStatus="primary"
+                      shape="round"
+                      size="small"
+                      status="basic">
+                     <nb-icon icon="more-horizontal-outline"></nb-icon>
+                    </button>
+                 </ng-container>
+    
+                 
+            <mat-menu #menu="matMenu">
+
+              
+              <button   mat-menu-item class="btn btn-primary " (click)="openWindow(contentTemplate , c.id)">
+                <i class="fas fa-plus-circle text-white">&nbsp; Edit Comment </i>
+              </button>
+      
+            <ng-template #contentTemplate let-data let-ref="dialogRef">
+              <!----<ngx-edit-comment  [id]="existedComment.id"  (click)="EditComment($event)"></ngx-edit-comment>---->
+           
+
+             <nb-card>
+              <nb-card-header>
+                Update Comment
+              
+              </nb-card-header>
+              <br>
+              <nb-card-body>
+                
+                <form [formGroup]="commentEdit">
+  
+                <input nbInput fullWidth type="text"    formControlName="comment"
+           class="form-control" [value]="existedComment.content">
+           <br>
+          <button (click)="editComment(postData, ref)"  status="success" nbButton>Edit</button>
+  
+               </form>
+                
+              
+              </nb-card-body>
+                 </nb-card>
+
+             </ng-template>
+
+           <!--- <button mat-menu-item>
+                <a [routerLink]="['/communicationMarketing/updatePost/',c.id]" 
+                   fullWidth nbButton>
+              <span class="text-warning">
+                <nb-icon icon="edit-outline"></nb-icon>
+              </span> Edit
+                </a>
+              </button>--->
+            <button mat-menu-item>
+                  <button
+                  (click)="onDeleteComment(c.id)"
+                    fullWidth nbButton
+                  >
+                    <span   class="text-danger"><nb-icon icon="trash-outline"></nb-icon></span>
+                    Delete
+                  </button>
+    
+             <!----  <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>
+                        Confirm delete operation ?
+                      </nb-card-header>
+                      <nb-card-body>
+                        Are you sure you want to delete this Comment?
+                      </nb-card-body>
+                      <nb-card-footer>
+                        <button (click)="ref.close()" class="float-left" nbButton>
+                          Close
+                        </button>
+                        <button (click)="onDeleteComment(c.id)" class="float-right" nbButton>
+                          Delete
+                        </button>
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>---->
+                </button>
+              </mat-menu>
+            </div>
+
+             
+             
+                
+          
+            
+            </div>
+        </nb-card-body>
+    </nb-card>

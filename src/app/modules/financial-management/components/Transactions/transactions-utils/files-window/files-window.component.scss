@@ -1,0 +1,21 @@
+
+
+:host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+
+  text-align: center;
+  margin-top: 50px;
+}
+
+:host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+  color: #5dcfe3;}
+
+:host /deep/ ng2-smart-table tbody > tr > td{
+  text-align: center;
+}
+
+:host /deep/ ng2-smart-table thead th{
+  text-align: center;
+}
+:host /deep/ ng2-smart-table thead input-filter input{
+  text-align: center;
+}

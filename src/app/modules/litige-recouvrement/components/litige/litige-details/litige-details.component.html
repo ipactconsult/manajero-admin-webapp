@@ -1,0 +1,53 @@
+<div  *ngIf="projectCharter?.id, else noData">
+ 
+    <ngx-project-charter-general-info [data]="projectCharter">
+    </ngx-project-charter-general-info>
+    <ngx-problematic
+      [problematic]="projectCharter"
+      (refreshData)="refresh($event)"
+    ></ngx-problematic>
+
+    <nb-card>
+      <nb-card-header>Goals</nb-card-header>
+
+      <nb-tabset fullWidth (changeTab)="loadData($event)">
+        <nb-tab tabTitle="Goals">
+         <ngx-goal-table  [data]="projectCharter"></ngx-goal-table>
+        </nb-tab>
+        <nb-tab tabTitle="Scheduling goals/milestones">
+          <p><b>Scheduling goals/milestones List</b></p>
+        </nb-tab>
+      </nb-tabset>
+    </nb-card>
+    <ngx-project-product-description
+      [data]="projectCharter"
+      (refreshData)="refresh($event)"
+    ></ngx-project-product-description>
+    <ngx-delivery-units-table
+      [data]="projectCharter"
+      (refreshData)="refresh($event)"
+    ></ngx-delivery-units-table>
+    <ngx-success-criteria-table
+      [data]="projectCharter"
+      (refreshData)="refresh($event)"
+    ></ngx-success-criteria-table>
+
+    <ngx-high-level-risk-table></ngx-high-level-risk-table>
+    <ngx-key-stakeholders-table></ngx-key-stakeholders-table>
+    <ngx-are-table
+      [data]="projectCharter"
+      (refreshData)="refresh($event)"
+    ></ngx-are-table>
+
+    <ngx-responsibility-customer-table></ngx-responsibility-customer-table>
+
+    <ngx-budget-table  [data]="projectCharter"></ngx-budget-table>
+ 
+</div>
+<ng-template #noData>
+  <nb-card [nbSpinner]="true" nbSpinnerSize="giant"nbSpinnerStatus="warning" nbSpinnerMessage="Data Loading ...">
+    <nb-card-body>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+

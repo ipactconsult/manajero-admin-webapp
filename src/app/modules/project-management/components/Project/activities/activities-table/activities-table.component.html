@@ -1,0 +1,63 @@
+
+  
+    <nb-card  *ngIf="flippedState">
+      <nb-card-header>
+        <div class="row" *ngIf="selectedItem!==null" >
+          <div class="col-md-11">Activities List </div>             
+        </div>
+      </nb-card-header>
+
+      <nb-card-body >
+        <ng2-smart-table
+            class="order-table"
+            [settings]="settings"
+            [source]="activityList"
+            (delete)="confirmation($event,dialog)"
+            (create)="onCreate()"
+            (userRowSelect)="onUserRowSelect($event)"
+          >
+          </ng2-smart-table>
+           <!--Delete Confirm -->
+           
+      <ng-template #dialog let-data let-ref="dialogRef">
+        <nb-card >
+          <nb-card-header>Confirm Delete Operation</nb-card-header>
+          <nb-card-body class="alert alert-warning ">
+            Are you sure you want to delete this item ?
+          </nb-card-body>
+          <nb-card-footer>
+            <div class="row">
+              <div class="col-md-2">
+                <button nbButton status="basic"  (click)="ref.close()"><nb-icon icon="close" ></nb-icon>Close</button>
+              </div>
+              <div class="col-md-5"></div>
+              <div class="col-md-2">
+                <button nbButton status="danger"  (click)="onDeleteConfirm(selectedItem)"><nb-icon icon="trash"></nb-icon>Delete</button>
+              </div>
+            </div>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template> 
+      <!--end Delete Confirm-->
+
+
+      </nb-card-body>
+    </nb-card>
+    <nb-card accent="info"  *ngIf="!flippedState">
+     
+      <nb-card-header>
+        <nb-icon
+        icon="chevron-left-outline"
+        pack="nebular-essentials"
+        aria-hidden="true"
+        (click)="flipBack()"
+      ></nb-icon>
+        Back
+      </nb-card-header>
+      <nb-card-body>
+      <ngx-activities-form [selectedItem]="selectedItem" (dataChanged)="refresh($event)">
+      </ngx-activities-form>
+      <ngx-ativity-resource [selectedItem]="selectedItem"></ngx-ativity-resource>
+      </nb-card-body>
+    </nb-card>
+            

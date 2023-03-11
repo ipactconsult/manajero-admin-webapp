@@ -1,0 +1,148 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-5">
+          <h3>Global Charter archived</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   nbInput
+                   nbTooltip="Tap here to search your GlobalCharter" nbTooltipStatus="primary" placeholder="search Charter"
+                   type="text">
+            
+        &nbsp;
+        <!--- <nb-select [disabled]="dataGlobalCharters.length === 0"
+                       placeholder="Sort by name"   nbTooltip="Tap here to sort by name your Event" nbTooltipStatus="primary" 
+                       selected="0">
+              <nb-option (click)="getAllPersonas()" value="All">All</nb-option>
+              <nb-option (click)="getPersonasAsc()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getPersonasDesc()" value="2">Names (Z-A)</nb-option>
+            </nb-select>--->
+          </div>
+        </div>
+        <div class="col-md-1">
+          <div>
+                        <button (click)="exportAsXLSX()"
+                    align="right" class="btn "
+                    nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                    style="background-color: #008000">
+              <i class="fas fa-file-excel text-white"></i></button>&nbsp;
+
+         
+
+          </div>
+        </div>
+      </div>
+
+
+    </nb-card-header>
+    <div *ngIf="!dataGlobalCharters || dataGlobalCharters.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="dataGlobalCharters.length === 0" [hidden]="dataGlobalCharters.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+
+    <div class="row mt-3">
+      
+      <table class="table mb-0 " id="htmlData">
+        <thead class="bg-light">
+        <tr>
+          <th>Title</th>
+          <th>Module</th>
+          <th>Typo</th>
+          <th>Couleurs</th>
+          <th>Icon</th>
+          <th>Description</th>
+          <th>Actions</th>
+
+        </tr>
+        </thead>
+        <tbody
+          *ngFor="let e of dataGlobalCharters | filter : search | paginate : {itemsPerPage:10, currentPage: current}"
+         >
+        <tr class="col-md-9 col-sm-10">
+        
+          <td>
+   
+            <td><p class="fw-normal mb-1">{{e.title}}</p></td>
+        
+            <td>
+            <nb-tag-list>
+              <nb-tag *ngIf="e.module === 'Global Manazello' " [text]="e.module" size="small" status="danger"></nb-tag>
+  
+              <nb-tag *ngIf="e.module === 'Communication & Marketing' " [text]="e.module" size="small" status="basic"></nb-tag>
+              <nb-tag *ngIf="e.module === 'CRM' " [text]="e.module" size="small"
+                      status="danger"></nb-tag>
+  
+              <nb-tag *ngIf="e.module === 'Product & Stock' " [text]="e.module" size="small"
+                      status="primary"></nb-tag>
+  
+                      <nb-tag *ngIf="e.module === 'Human resources' " [text]="e.module" size="small"
+                      status="info"></nb-tag>
+  
+  
+                      <nb-tag *ngIf="e.module === 'Finance' " [text]="e.module" size="small"
+                      status="success"></nb-tag>
+  
+                      
+                      <nb-tag *ngIf="e.module === 'Accounting' " [text]="e.module" size="small"
+                      status="warning"></nb-tag>
+  
+                      <nb-tag *ngIf="e.module === 'Recovery & litigation' " [text]="e.module" size="small"
+                      status="info"></nb-tag>
+  
+  
+  
+            </nb-tag-list>
+          
+          </td>
+  
+  
+            
+            <td><p class="fw-normal mb-1">{{e.typo}}</p></td>
+            <td><p class="fw-normal mb-1">{{e.couleurs}}</p></td>
+            <td><p class="fw-normal mb-1">{{e.icon}}</p></td>
+            <td><p class="fw-normal mb-1">{{e.description}}</p></td>         
+
+          <td>
+            <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                    aria-label="Example icon-button with a menu"
+                    nbButton nbTooltip="Click here to see advanced menu"
+                    nbTooltipStatus="primary"
+                    shape="round"
+                    size="small"
+                    status="basic">
+              <nb-icon icon="more-horizontal-outline"></nb-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                             <button mat-menu-item>
+                        <a (click)="onRestoreConfirm(e,e.id)" fullWidth nbButton>
+                          <span class="text-danger"><nb-icon icon="refresh-outline"></nb-icon></span>Restore
+                        </a>
+                      </button>
+            </mat-menu>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- end col -->
+
+    </div>
+    <!-- end row -->
+   <div class="d-flex justify-content-center">
+      <nb-card class="card ml-auto mr-auto" style="height: 30px; border-radius: 25px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+
+     </nb-card>
+    </div><!-- end row -->
+  </div>
+  <!-- container -->
+</div>

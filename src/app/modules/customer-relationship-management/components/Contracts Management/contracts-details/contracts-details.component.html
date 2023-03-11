@@ -1,0 +1,525 @@
+<!--
+<div *ngIf="order;  let i=index;" class="container" >
+  <div class="row">
+    <div class="col-md-9 col-sm-12">
+      <h2 class="more-vertical">
+        Contract Details </h2>
+    </div>
+    
+  </div>
+  <div class="row" #pdfTable>
+    <div class="col-md-3">
+      <nb-card >
+        <div align="center">
+          <h4 class="mt-3">Customer </h4>
+
+          <img class="w-50 mt-3 rounded-circle" src="{{order?.contract?.deal?.visit?.customer?.image}}">
+        </div>
+        <p class="text-center mt-2">
+          <nb-icon class="mx-2" icon="person-outline"></nb-icon>
+          {{order?.contract?.deal?.visit?.customer?.name}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="at-outline"></nb-icon>
+          {{contract?.deal?.visit?.customer?.workEmail}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="globe-outline"></nb-icon>
+          {{contract?.deal?.visit?.customer?.workWebsite}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="phone-outline"></nb-icon>
+          {{contract?.deal?.visit?.customer?.phone}}</p>
+      </nb-card>
+      <nb-card>
+        <div align="center">
+          <h4 class="mt-3">Employee </h4>
+          <img class="w-50 mt-3 rounded-circle" src="{{contract?.deal?.visit?.customer?.assignee?.employeeProfileImage}}">
+        </div>
+        <p class="text-center mt-2">
+          <nb-icon class="mx-2" icon="person-outline"></nb-icon>
+          {{contract?.deal?.visit?.customer?.assignee?.employeeName}}</p>
+       
+      </nb-card>
+    </div>
+
+    <div class="col-md-9">
+      <nb-card>
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header> contract Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Contract </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.contractName}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Contract type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.contractType}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Contract date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.dateContract | date : 'EEEE MMMM dd'}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Contract designation</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.designation}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Price effective</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.priceEffective}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Law</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.laws[i]?.docName}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Laws category</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.laws?.cat?.categoriename}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Description</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.laws?.description}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Law Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.laws?.docType}}
+
+                </div>
+              </div>
+              <hr>
+
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header>Order Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm"></p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <span *ngIf="contract?.deal?.dealStatus === 'Done'"
+                        class="mb-2 badge badge-success badge-pill">{{contract?.deal?.dealStatus}}</span>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+
+                  <nb-tag-list>
+                    <nb-tag [text]="contract?.deal?.dealType" appearance="outline" class="align-self-center"
+                            nbTooltip="Deal Type" nbTooltipStatus="primary"
+                            size="small"
+                            status="info"></nb-tag>
+
+                  </nb-tag-list>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Name</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.dealName}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Value</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.dealValue}}
+                </div>
+              </div>
+              <hr>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Deal Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.dealType }}
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quote Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.quoteDate | date : 'YYYY MM dd'}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quote Value</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.quoteValue}}
+                </div>
+              </div>
+              <hr>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Quote Vs Budget </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.quoteVsBudget }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Win Chance</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.winChance}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Source </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.forecastDate | date : 'YYYY MM dd' }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Negotiation </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.negotiation }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Comment </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.comment}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Visit Title </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <nb-tag-list>
+
+                    <nb-tag [text]="contract?.deal?.visit?.title" appearance="outline" class="align-self-center"
+                            nbTooltip="Visit Title"
+                            nbTooltipStatus="success" size="small"
+                            status="success"></nb-tag>
+                  </nb-tag-list>
+                </div>
+              </div>
+              <hr>
+
+
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Property Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Property Name</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertyName}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Property Price</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertyPrice}}
+                  {{contract?.deal?.visit?.property?.propertyCurrency}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Property Tax</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertyTax}}
+
+                </div>
+              </div>
+              <hr>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Surface </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertySurface }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Property </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.saleOrRental }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Pieces </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertyPieces }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Rooms </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertyRooms}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Address </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.propertyCity}}
+                  {{contract?.deal?.visit?.property?.propertyCountry}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Additionnal features </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract?.deal?.visit?.property?.otherPropFeatures}}
+
+                </div>
+              </div>
+              <hr>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </nb-card>
+    </div>
+  </div>
+</div>-->
+
+
+<div *ngIf="order; let i=index;" >
+  <nb-card-header>
+    
+        <div class="row">
+        <div class="col-md-9  ">
+          <h5 class="more-vertical">
+          Contract details </h5>
+        </div>
+          
+        <div  class="col-md-3 " align="right">
+       
+        </div>
+      </div>  
+ 
+    
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container-fluid">
+
+      <div class="container">
+
+        <!-- Main content -->
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Details -->
+
+            <nb-alert class="mb-4" outline="primary">
+              <div class="mb-3 d-flex justify-content-between">
+                <div>
+                  <span class="me-3">Contract : {{order?.contract?.contractName}}</span>
+                </div>
+                <div class="d-flex">
+                  <nb-tag [text]="order?.contract?.contractType" status="success"></nb-tag>
+                  
+                </div> 
+               
+              </div>
+              <table class="table table-borderless">
+                <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <h6 class="small mb-0">
+                          {{order?.contract?.contractCode}}</h6>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+                 <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="calendar-outline"></nb-icon>
+                          {{order?.contract?.dateContract | date : "EEEE MMMM YYYY"}}</p>
+                      </div>
+                     
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="bookmark-outline"></nb-icon>
+                          {{order?.contract?.duration}}</p>
+                      </div>
+                     
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+                      <div class="flex-lg-grow-1 ms-1">
+                        <p class="small mb-0">
+                          <nb-icon icon="shopping-cart-outline"></nb-icon>
+                          {{order?.contract?.state}}</p>
+
+                      </div>
+                        <div class="flex-lg-grow-1 ms-1">
+                                <p class="small mb-0">
+                                  <nb-icon icon="shopping-cart-outline"></nb-icon>
+                                  {{order?.contract?.designation}}</p>
+        
+                        </div>
+
+                   
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+              </table>
+            </nb-alert>
+
+        
+          </div>
+          <div class="col-lg-4">
+            <!-- Customer Notes -->
+            <nb-alert class="mb-4" outline="primary">
+
+              <h3 class="h6"><nb-icon icon="clipboard-outline"></nb-icon> Laws </h3>
+              <p>{{order?.contract?.laws[i]?.cat?.categoriename}} 
+               </p> 
+              <h3 class="h6">Document name</h3>
+              <p>{{order?.contract?.laws[i]?.docName}}</p>
+              <h3 class="h6">Document type</h3>
+              <p>{{order?.contract?.laws[i]?.docType}}</p>
+            </nb-alert>
+           
+            <nb-alert class="mb-4" outline="primary">
+
+              <h3 class="h6">Customer</h3>
+              <address>
+                <p>{{order?.deals?.visit?.customer?.name}}</p>  
+                <p>{{order?.deals?.visit?.customer?.phone}}</p>  
+                <p>{{order?.deals?.visit?.customer?.workEmail}}</p>  
+                <p>{{order?.deals?.visit?.customer?.address}}, {{order?.deals?.visit?.customer?.country}}, {{order?.deals?.visit?.customer?.city}} </p>  
+               
+              </address>
+            </nb-alert>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</div>

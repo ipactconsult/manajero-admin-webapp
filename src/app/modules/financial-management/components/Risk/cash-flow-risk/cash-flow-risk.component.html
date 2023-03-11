@@ -1,0 +1,303 @@
+<nb-card style="align-items: center;">
+
+
+  <nb-card-body>
+
+    <p class="text-center">Choose the Year</p>
+    <nb-select (selectedChange)="yearChange($event)" 
+               name="year" placeholder ="Please choose the transaction's year">
+      <nb-option *ngFor="let label of array" [value]="label"   >{{label}}</nb-option>
+    </nb-select>
+
+  </nb-card-body>
+</nb-card>
+<nb-card>
+
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-6 col-sm-3">    <h3>Performance Risk Study of {{chosenYear}}</h3>
+
+      </div>
+      <div class="col-md-6 col-sm-12 " style="text-align: right;">
+       
+      </div>
+    </div>
+    <br>
+    <div>  <nb-alert outline="info">This section contains statistics which give information about the financial health of the enterprise. But , this analysis should be compared to the competitor's information in order to have optimal decisions. </nb-alert>
+    </div>
+
+
+  </nb-card-header>
+ 
+
+  <nb-card-body>
+    <nb-card>
+      
+      <nb-card-header>
+        <h4>Financial Turnover Values Study</h4>
+      </nb-card-header>
+     
+      <nb-card-body>
+      <h5>Financial Turnover Evolution Curve</h5>
+      <canvas id="turnover" width="400px" ></canvas>
+      <br>
+        <h5>Curve Analysis </h5>
+        <div *ngIf =" turnState=='danger' " >
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              The turnover value in the last month has <span class="badge badge-danger"> decreased </span>  comparing to the previous month and the maximum reached value.
+              A review of the business strategies of the enterprise is necessary in order to catch-up this regression.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div *ngIf="turnState=='success'">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              The turnover value in the last month has <span class="badge badge-success"> increased </span>  comparing to the previous month and has reached its peak.
+              This result is maybe satisfying but  can cause an <span class="badge badge-warning"> increase </span> of the total expenses.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div>
+          <div *ngIf="turnState=='warning'">
+            <nb-card accent="warning">
+
+              <nb-card-body>
+                The turnover value evolution comparing to the previous month and the maximum reached value a <span class="badge badge-warning"> warning </span> about the financial health of the enterprise.
+                Potentially , the situation can reach to a  <span class="badge badge-danger"> dangerous </span> zone.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+        <div>
+          <div *ngIf="turnState=='neutral'">
+            <nb-card accent="basic">
+
+              <nb-card-body>
+                Not enough data provided.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      <div>
+      <h5>Turnover Rate Chart By Percentage </h5>
+      <canvas id="rate" width="400px" ></canvas>
+      </div>
+        <br>
+        <h5>Chart Analysis </h5>
+        <div *ngIf =" rateState=='danger' " >
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              The turnover rate of change value in the last period has <span class="badge badge-danger"> decreased </span> comparing to the previous period and the maximum reached value. It represents a <span class="badge badge-danger"> negative </span> value.
+              A review of the business strategies of the enterprise is necessary in order to catch-up this regression.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div *ngIf="rateState=='success'">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              The turnover rate of change value in the last period is <span class="badge badge-success"> positive</span>.
+              This result is maybe satisfying but  can cause an <span class="badge badge-warning"> increase </span> of the total expenses.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div>
+          <div *ngIf="rateState=='warning'">
+            <nb-card accent="warning">
+
+              <nb-card-body>
+                The turnover rate of change value evolution comparing to the previous period and the maximum value represents a <span class="badge badge-warning"> warning </span> about the financial health of the enterprise.
+                Potentially , the situation can reach to the  <span class="badge badge-danger"> dangerous </span> zone.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+        <div>
+          <div *ngIf="rateState=='neutral'">
+            <nb-card accent="basic">
+
+              <nb-card-body>
+                Not enough data provided.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+
+
+      </nb-card-body>
+      
+    </nb-card>
+
+
+
+    <nb-card>
+      <nb-card-header>
+        <h4>Net Profitability Rate Values Study</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <h5>Net Profitability Chart By Percentage</h5>
+      <canvas id="yield" width="400px" ></canvas>
+      <br>
+        <h5>Chart Analysis </h5>
+        <div *ngIf =" yieldState=='danger' " >
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              The yield value in the last month is <span class="badge badge-danger"> less than </span> 0% which represents a <span class="badge badge-danger"> dangerous </span> value.
+              A review of the business strategies of the enterprise is necessary in order to catch-up this regression.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div *ngIf="yieldState=='success'">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              The yield value in the last month is  <span class="badge badge-success"> greater</span> than 0% and represents a  <span class="badge badge-success"> peak </span> value.
+              This result is maybe satisfying but measures should be taken in order to prevent a <span class="badge badge-warning"> decrease </span> comparing to the maximum reached value and the threshold of 0%.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div>
+          <div *ngIf="yieldState=='warning'">
+            <nb-card accent="warning">
+
+              <nb-card-body>
+                The yield value in the last month presents a <span class="badge badge-success"> progress </span> comparing to 0% and the maximum reached value but it's also a  <span class="badge badge-warning"> warning </span> about the financial health of the enterprise.
+                Measures should be taken to prevent the entry to the  <span class="badge badge-danger"> dangerous </span> zone.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+        <div>
+          <div *ngIf="yieldState=='neutral'">
+            <nb-card accent="basic">
+
+              <nb-card-body>
+                Not enough data provided.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>
+        <h4>Productivity Ratio Values Study</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <h5>Productivity Ratio Evolution Chart</h5>
+        <canvas id="productivity" width="400px" ></canvas>
+        <br>
+        <h5>Curve Analysis</h5>
+        <div *ngIf =" productivityState=='danger' " >
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              The productivity ratio value in the last month has <span class="badge badge-danger"> decreased </span>  comparing to the previous month  and the maximum reached value which represents a <span class="badge badge-danger"> dangerous </span> value.
+              A review of the business strategies of the enterprise is necessary in order to catch-up this regression.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div *ngIf="productivityState=='success'">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              The productivity ratio value in the last month represents a  <span class="badge badge-success"> peak </span>.
+              This result is maybe satisfying but measures should be taken in order to prevent a potential <span class="badge badge-warning"> decrease </span>.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div>
+          <div *ngIf="productivityState=='warning'">
+            <nb-card accent="warning">
+
+              <nb-card-body>
+                The productivity ratio value in the last month represents a <span class="badge badge-success"> progress </span> comparing to the previous month but still <span class="badge badge-warning"> lesser than </span>  the reached peak.
+                Measures should be taken to prevent the entry to the  <span class="badge badge-danger"> dangerous </span> zone.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+        <div>
+          <div *ngIf="productivityState=='neutral'">
+            <nb-card accent="basic">
+
+              <nb-card-body>
+                Not enough data provided.
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+
+      </nb-card-body>
+      <nb-card-body>
+        
+
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>
+        <h4>Annual Budget Plan Risk Study</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <ng2-smart-table [settings]="tabSettings"  class ="table" [source] ="tabSource" >
+        </ng2-smart-table>
+        <br>
+        <h5>Table Analysis </h5>
+        <div *ngIf="tabSource.length==0">
+          <nb-card accent="basic">
+
+            <nb-card-body>
+              Not enough data provided.
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div *ngIf="difference>0">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              The difference between the total balance and the total needed budget is <span class="badge badge-success"> positive </span>. The enterprise should conserve this result and prevent a potential <span class="badge badge-warning"> decrease </span>  which can cause a decline to the enterprise financial health.
+              
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div *ngIf="difference<0">
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              The difference between the total balance and the total needed budget is <span class="badge badge-danger"> negative </span>. This <span class="badge badge-danger"> dangerous </span> result prevents the enterprise from fulfilling its activities. Measures should be taken in order to put an end to this danger.
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div *ngIf="difference==0">
+          <nb-card accent="warning">
+
+            <nb-card-body>
+              The difference between the total balance and the total needed budget is <span class="badge badge-success"> null </span>. This result presents a potential <span class="badge badge-warning"> danger </span>   to the enterprise financial health.
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+
+
+</nb-card>
+
+ 

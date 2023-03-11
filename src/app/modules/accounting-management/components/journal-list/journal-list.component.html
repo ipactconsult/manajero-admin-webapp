@@ -1,0 +1,148 @@
+<div class="content">
+  <div class="container">
+    
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-2">
+          <h3>Journals</h3>
+        </div>
+     
+        <div class="col-md-7">
+             <div class="row">
+          <input [(ngModel)]="search" class="w-50"
+                  nbInput
+                 nbTooltip="Tap here to search your journal" nbTooltipStatus="primary" placeholder="search journal"
+                 type="text">
+      
+          <nb-select [disabled]="dataJournals.length === 0"
+                   placeholder="Sort by name"  class="mx-1 w-50"  
+                     nbTooltip="Tap to sort by name " nbTooltipStatus="primary"
+                   selected="0">
+          <nb-option (click)="getAllJournals()" value="All">All</nb-option>
+          <nb-option (click)="getJournalsAsc()" value="1">Names (A-Z)</nb-option>
+          <nb-option (click)="getJournalsDesc()" value="2">Names (Z-A)</nb-option>
+        </nb-select>
+        </div>
+        </div>
+        <div class="col-md-3">
+          <div>
+            
+            <button [routerLink]="['/accounting/addjournal']" class="mx-1" nbButton
+                    nbTooltip="Click here to create customer" nbTooltipStatus="primary"
+                    status="primary">
+              <nb-icon icon="plus-outline"></nb-icon>New Journal
+            </button>
+            
+          </div>
+        </div>
+        
+      </div>
+
+
+    </nb-card-header>
+    
+    <div *ngIf="!dataJournals || dataJournals.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+  
+    <div *ngIf="(dataJournals | filter : search).length === 0" [hidden]="dataJournals.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+
+    <div class="row mt-3" align="center">
+
+    
+      <div  class="col-md-6"
+        *ngFor="let journal of dataJournals | filter : search | paginate : {itemsPerPage:4,maxSize:10, currentPage: current,totalItems: total}"
+        align="center" 
+        id="htmlData">
+        <div  class="mx-1">
+
+          <nb-card>
+            <nb-card-body class="pt-2 pb-2">
+             <div align="center" class="thumb-lg"> 
+                <div class="row mt-2">
+                  <div class="col-md-3"><h4>{{journal.name}}</h4>
+                  </div>
+                  <div align="right" class="col-md-9">
+                      <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                        shape="round" status="basic"
+                        aria-label="Example icon-button with a menu" nbButton
+                        mat-icon-button
+                        nbTooltip="Click here to see advanced menu"
+                        nbTooltipStatus="primary"
+                        size="small">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                        <mat-menu #menu="matMenu" class="bg-white">
+
+              <button mat-menu-item>
+                <a
+                  [routerLink]="['/accounting/journaldetail/',journal.id]"
+                  fullWidth nbButton>
+                  <span class="text-info">
+                  <nb-icon icon="eye-outline"></nb-icon></span> Details
+                </a>
+              </button>
+                          <button mat-menu-item>
+                            <a
+                              [routerLink]="['/accounting/editjournal/',journal.id]"
+                              fullWidth nbButton>
+                  <span class="text-info">
+                  <nb-icon icon="eye-outline"></nb-icon></span> Edit
+                            </a>
+                          </button>
+
+                          <button mat-menu-item>
+                            <a (click)="open2(dialog)" nbButton fullWidth >
+                              <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon></span>Archive
+                            </a>
+                          </button>
+
+            </mat-menu>
+                    <ng-template #dialog let-data let-ref="dialogRef">
+                      <nb-card>
+                        <nb-card-header>Confirm Archive Operation</nb-card-header>
+                        <nb-card-body>Are you sure you would like to archive this invoice?</nb-card-body>
+                        <nb-card-footer>
+                          <div class="row">
+                            <button class="col-md-2" status="danger" nbButton (click)="ref.close()">Cancel</button>
+                            <div class="col-md-8"></div>
+                            <a class="col-md-2" status="success" nbButton (click)="onArchiveConfirm(journal,ref)" >Yes</a>
+                          </div>
+                        </nb-card-footer>
+                      </nb-card>
+                    </ng-template>
+                  </div>
+                </div>
+                
+              </div>
+              <div align="center">
+                
+                <div><p class="text-sm-center mt-2" >Code :{{journal.code}}</p></div>
+                
+                <div>
+                  <p class="mt-2">Creation date: {{journal.createdAt| date: 'YYYY MMM dd'}}</p>
+                </div>
+                <div><p class="mt-2">Last update: {{journal.modifiedAt| date: 'YYYY MMM dd'}}</p></div>
+                
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+   
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;padding-top: 5px; padding-right: 40px">
+          <pagination-controls  (pageChange)="current = $event"  ></pagination-controls>
+
+        </nav>
+      </div>
+    
+  </div>
+</div>

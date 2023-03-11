@@ -1,0 +1,223 @@
+<section id="sectionJobList" class="section section-job-list gradient-light--lean-left">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h3>New Training</h3>
+      </div>
+      <div class="col-md-8"></div>
+
+
+      <div style="right: 0; left:auto" align="right" class="col-md-1 mt-1">
+        <a nbButton status="basic" shape="round" [routerLink]="['/hr/trainings/grid']">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="row row-grid mt-4">
+      <div class="col-md-12">
+        <form [formGroup]="formTraining">
+  
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="object"> Object</label>
+                    </div>
+                  </div>
+                  <input fullWidth fieldSize="large"
+                         name="object" [(ngModel)]="training.object"
+                         type="text" nbInput id="object" formControlName="object"/>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label > Category</label>
+                    </div>
+                  </div>
+                  <input fullWidth fieldSize="large"
+                         name="category" [(ngModel)]="training.category"
+                         type="text" nbInput id="category" formControlName="category"/>
+                </div>
+              </div>
+              <div class="row mt-2">
+
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label > Number Of Hours</label>
+                    </div>
+                  </div>
+                  <ngx-slider name="nbHours" [(ngModel)]="training.nbHours"
+                              id="nbHours" formControlName="nbHours" [(value)]="nbHours" [options]="options"></ngx-slider>
+
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label > Start Date</label>
+                    </div>
+                  </div>
+                  <input [nbDatepicker]="dateTimePicker" fieldSize="large" nbInput fullWidth
+                         placeholder="Pick Date"
+                         name="startDate" [(ngModel)]="training.startDate"
+                         id="startDate" formControlName="startDate"/>
+                  <nb-datepicker #dateTimePicker></nb-datepicker>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label > End Date</label>
+                    </div>
+                  </div>
+                  <input placeholder="Pick Date" [nbDatepicker]="dateTimePicker1" fieldSize="large" nbInput fullWidth
+                         name="endDate" [(ngModel)]="training.endDate"
+                         id="endDate" formControlName="endDate"/>
+                  <nb-datepicker #dateTimePicker1></nb-datepicker>
+
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label > Description</label>
+                    </div>
+                  </div>
+                  <ckeditor
+
+                    [config]=""
+
+                    (change)="onChange($event)"
+                    (ready)="onReady($event)"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (contentDom)="onContentDom($event)"
+                    (fileUploadRequest)="onFileUploadRequest($event)"
+                    (fileUploadResponse)="onFileUploadResponse($event)"
+                    (paste)="onPaste($event)"
+                    (drop)="onDrop($event)"
+                    debounce="500"
+                    name="description"
+                    id="description" formControlName="description"
+                    [(ngModel)]="training.description"
+                  >
+                  </ckeditor>
+                </div>
+              </div>
+
+       
+
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  Program
+                </div>
+                <div class="col-md-12 mt-1">
+                  <ckeditor
+                    [config]=""
+                    [readonly]="false"
+                    (change)="onChange1($event)"
+                    (editorChange)="onEditorChange1($event)"
+                    (ready)="onReady1($event)"
+                    (focus)="onFocus1($event)"
+                    (blur)="onBlur1($event)"
+                    (contentDom)="onContentDom1($event)"
+                    (fileUploadRequest)="onFileUploadRequest1($event)"
+                    (fileUploadResponse)="onFileUploadResponse1($event)"
+                    (paste)="onPaste1($event)"
+                    (drop)="onDrop1($event)"
+                    debounce="500"
+                    name="program"
+                    id="program" formControlName="program"
+                    [(ngModel)]="training.program"
+                  >
+                  </ckeditor>
+                </div>
+
+
+
+              </div>
+      
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="score"> Score</label>
+                    </div>
+                  </div>
+                  <ngx-slider name="score" [(ngModel)]="training.score"
+                              id="score" formControlName="score" [(value)]="score" [options]="options"></ngx-slider>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="budget"> Budget</label>
+                    </div>
+                  </div>
+
+                  <input type="text" fieldSize="large" nbInput fullWidth
+                         name="budget" [(ngModel)]="training.budget"
+                         id="budget" formControlName="budget"/>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="cost"> Cost</label>
+                    </div>
+                  </div>
+
+                  <input type="text" fieldSize="large" nbInput fullWidth
+                         name="cost" [(ngModel)]="training.cost"
+                         id="cost" formControlName="cost"/>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="employee"> Employee</label>
+                    </div>
+                  </div>
+                  <nb-select [selected]="selectedItem"
+                             [(ngModel)]="training.employee"
+                             formControlName="employee"
+                             name="employee"
+                             nbTooltip="Select the right Employee" nbTooltipStatus="primary"
+                             id="employee"
+                             fullWidth
+                             size="large"
+                             placeholder="select employee"
+                             (selectedChange)="getEmployeeSelected($event)">
+                    <nb-option *ngFor="let x of employees" value="{{x.id}}">
+                      <nb-user [name]="x.employeeName" [picture]="x.employeeProfileImage"></nb-user>
+                    </nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+              <div class="row mt-3">
+             
+                <div class="col-md-8">
+
+                </div>
+                <div align="right" class="col-md-2">
+                  <button [disabled]="formTraining.invalid" nbButton status="success" (click)="editTraining()">
+                    <nb-icon icon="checkmark-circle-outline"></nb-icon> Submit</button>
+                </div>
+              </div>
+        
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>

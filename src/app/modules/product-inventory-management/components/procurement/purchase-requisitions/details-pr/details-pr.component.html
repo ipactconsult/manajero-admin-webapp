@@ -1,0 +1,114 @@
+<div *ngIf="existedPR" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Purchase Requisition Details </h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Go Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right"></nb-icon>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Purchase Requisition Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Creation Date</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{moment(existedPR.purchaseRequisitionCreationDate).format("DD MMM YYYY hh:mm A")}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Reference</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedPR.purchaseRequisitionNumber}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Status</p>
+              </div>
+              <div class="col-sm-9 text-success font-weight-bold" *ngIf="existedPR.purchaseRequisitionStatus === 'Approved'">
+                {{existedPR.purchaseRequisitionStatus}}
+              </div>
+              <div class="col-sm-9 text-warning font-weight-bold" *ngIf="existedPR.purchaseRequisitionStatus === 'Pending'">
+                {{existedPR.purchaseRequisitionStatus}}
+              </div>
+              <div class="col-sm-9 text-danger font-weight-bold" *ngIf="existedPR.purchaseRequisitionStatus === 'Rejected'">
+                {{existedPR.purchaseRequisitionStatus}}
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Materials ({{existedPR.material?.length}})</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class = "col-md-11">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Barcode</th>
+                    <th>Quantity</th>
+                  </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let material of existedPR.material">
+                  <tr class="col-md-9 col-sm-10">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{material.materialType}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+                    <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+                    <td><p class="fw-normal mb-1">{{material.materialCategory?.categoryName}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">-</p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialBarcode">{{material.materialBarcode}}</p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType !== 'Service'">
+                        {{material.materialQuantity}}
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                        -
+                      </p>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-1">
+                <nb-icon icon="info-outline"
+                         nbTooltip="Materials" nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+    </div>
+  </div>
+</div>

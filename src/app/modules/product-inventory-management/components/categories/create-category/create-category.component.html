@@ -1,0 +1,41 @@
+<div class="row">
+       <div class="col-md-4">
+              <h3>Create New Category</h3>
+       </div>
+       <div  class="col-md-8">
+              <button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </button>
+       </div>
+</div><br/>
+<form [formGroup]="categoryForm">
+        <label class="mt-2">Category Name</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="text" class="form-control"
+               formControlName="categoryName">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the category name" nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+        <label class="mt-2">Category Description</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <textarea nbInput fullWidth type="text" class="form-control"
+                               formControlName="categoryDesc"></textarea>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the category description" nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+  <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="categoryForm.invalid" (click)="createNewCategory()" 
+                      status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+                </button>
+         </div>
+  </div>
+</form>

@@ -1,0 +1,127 @@
+<nb-reveal-card [revealed]="flippedState" [showToggleButton]="false">
+  <nb-card-front>
+    <nb-card accent="basic">
+      <nb-card-body>
+        <nb-alert accent="{{ statusColor }}">
+          <div class="row">
+            <h6
+              class="text-center"
+              style="margin-bottom: 5%"
+              class="col-md-6 offset-md-4"
+            >
+              Project General Informations:
+            </h6>
+            <nb-icon
+            *ngIf="accessControle"
+              icon="edit-outline"
+              status="basic"
+              (click)="flip()"
+            ></nb-icon>
+          </div>
+
+          <div class="container row">
+            <div class="col-md-6">
+              <p>
+                <strong class="text-secondary">
+                  <nb-icon icon="bookmark-outline" status="info"></nb-icon>
+                  Project Name :
+                </strong>
+                {{ project.title }}
+              </p>
+              <p>
+                <strong class="text-secondary">
+                  <nb-icon icon="person-outline" status="info"></nb-icon>
+                  Project Manager :
+                </strong>
+                JMAI Omar
+              </p>
+
+              <p>
+                <strong class="text-secondary"
+                  ><em class="fas fa-building" style="color: dodgerblue"></em>
+                  Organization :
+                </strong>
+                {{ project.organization }}
+              </p>
+              <p>
+                <strong class="text-secondary">
+                  <nb-icon icon="pricetags-outline" status="info"></nb-icon
+                  >Project Category :
+                </strong>
+                <nb-tag
+                  *ngIf="project.type === 'EXTERNAL'; else elseBlock"
+                  status="warning"
+                  appearance="outline"
+                  text="{{ project.type }}"
+                ></nb-tag>
+                <ng-template #elseBlock>
+                  <nb-tag
+                    status="success"
+                    appearance="outline"
+                    text="{{ project.type }}"
+                  ></nb-tag
+                ></ng-template>
+              </p>
+            </div>
+            <div class="col-md-6">
+              <p>
+                <strong class="text-secondary"
+                  ><nb-icon status="success" icon="calendar-outline"></nb-icon>
+                  Start Date :
+                </strong>
+                {{ project.startDate | date: "mediumDate" }}
+              </p>
+              <p>
+                <strong class="text-secondary"
+                  ><nb-icon status="danger" icon="calendar-outline"></nb-icon>
+                  End Date :
+                </strong>
+                {{ project.endDate | date: "mediumDate" }}
+              </p>
+              <p>
+                <strong class="text-secondary"
+                  ><nb-icon
+                    status="info"
+                    icon="checkmark-square-outline"
+                  ></nb-icon
+                  >Current Status :
+                </strong>
+                <nb-select
+                  (selectedChange)="updateStatus($event)"
+                  status="{{ statusColor }}"
+                  selected="{{ project.status }}"
+                  [disabled]="!accessControle"
+                  fullWidth
+                >
+                  <nb-option value="IN_PROGRESS">IN_PROGRESS</nb-option>
+                  <nb-option value="CLOSED">CLOSED</nb-option>
+                  <nb-option value="DONE">DONE</nb-option>
+                </nb-select>
+              </p>
+            </div>
+          </div>
+        </nb-alert>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-front>
+  <nb-card-back>
+    <nb-card accent="{{ statusColor }}">
+      <nb-card-header>
+        <nb-icon
+          icon="chevron-left-outline"
+          pack="nebular-essentials"
+          aria-hidden="true"
+          (click)="flip()"
+        ></nb-icon>
+        Back
+      </nb-card-header>
+      <nb-card-body>
+        <ngx-generale-info-form
+          *ngIf="flippedState"
+          [project]="selected"
+          (dataChanged)="refresh($event)"
+        ></ngx-generale-info-form>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-back>
+</nb-reveal-card>

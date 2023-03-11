@@ -1,0 +1,18 @@
+<div class="mb-10">
+    <label for="subject"
+      ><nb-icon icon="funnel-outline"> </nb-icon>filtre :</label
+    >
+    <nb-select placeholder="Choose" (selectedChange)="filtre($event)">
+      <nb-option value="Active">Active</nb-option>
+      <nb-option value="Archived">Archived</nb-option>
+    </nb-select>
+  </div>
+<div class="row mt-3">
+    
+<div class="col-4" *ngFor="let project of list">
+    
+    <ngx-card [project]="project" (changeData)="refresh($event)"></ngx-card>
+</div>
+
+</div>
+

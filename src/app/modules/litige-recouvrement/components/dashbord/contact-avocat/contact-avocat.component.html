@@ -1,0 +1,16 @@
+<nb-card size="giant">
+    <nb-tabset fullWidth>
+  
+      <nb-tab tabTitle="Contacts">
+        <nb-list>
+          <nb-list-item class="contact" *ngFor="let c of avocats">
+            <nb-user [picture]="c.imageUrl" [name]="c.nom" [title]="c.numtelephone" size="large"></nb-user>
+            <nb-icon icon="phone-outline" pack="eva"></nb-icon>
+          </nb-list-item>
+        </nb-list>
+      </nb-tab>
+  
+  
+    </nb-tabset>
+  </nb-card>
+  

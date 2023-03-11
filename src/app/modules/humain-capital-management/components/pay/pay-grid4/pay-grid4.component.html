@@ -1,0 +1,187 @@
+<div class="row">
+  <div class="col-md-8 col-sm-12">
+    <div class="row">
+      <h3 class="more-vertical">
+       Payroll List  </h3>
+      <input [(ngModel)]="search" class="w-100 mx-2"  nbTooltip="Search item" nbTooltipStatus="primary" type="text"  fieldSize="large" nbInput placeholder="search by fields" >
+    </div>
+
+  </div>
+  <div class="col-md-4 col-sm-8">
+    <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/pay/grid4payroll']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+    &nbsp;
+    <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/pay/grid9payroll']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+    &nbsp;
+    <a [routerLink]="['/hr/pay/tablepayroll']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+    &nbsp;
+    <button (click)="exportAsXLSX()" nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success" ><i class="fas fa-file-excel text-white"></i>  </button>
+    &nbsp;
+
+
+    <br>
+  </div>
+  <div class="page-content container note-has-grid mt-4">
+
+    <div class="row">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+          <nb-select  selected="0" class="w-75 mt-3" (selectedChange)="filterByEmployee($event)">
+            <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Employee</nb-option>
+            <nb-option value="All" (click)="getData()">&nbsp;&nbsp;&nbsp;&nbsp; Default</nb-option>
+            <nb-option value="{{employee.id}}" *ngFor="let employee of employees">&nbsp;&nbsp;&nbsp;&nbsp;
+              <nb-user [name]="employee?.employeeName" size="medium" picture="{{employee?.employeeProfileImage}}"></nb-user>
+            </nb-option>
+
+          </nb-select>
+        </nb-form-field>
+
+       
+        <nb-form-field>
+          <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+          <nb-select  selected="0" class="w-75 mt-3" (selectedChange)="filterByDepartment($event)">
+            <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Department</nb-option>
+            <nb-option value="All" (click)="getData()">&nbsp;&nbsp;&nbsp;&nbsp; Default</nb-option>
+            <nb-option value="{{department.id}}" *ngFor="let department of departments">&nbsp;&nbsp;&nbsp;&nbsp;{{department.departmentName}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+
+        <nb-form-field>
+          <nb-icon nbPrefix class="mt-3" icon="flip-outline"></nb-icon>
+          <nb-select  selected="0" class="w-75 mt-3">
+            <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Monthly Cost Salary</nb-option>
+            <nb-option value="All" (click)="getData()">&nbsp;&nbsp;&nbsp;&nbsp; Default</nb-option>
+            <nb-option (click)="getAscMonthlyCost()" value="Ascending" >&nbsp;&nbsp;&nbsp;&nbsp;Ascending</nb-option>
+            <nb-option (click)="getDescMonthlyCost()" value="Descending" >&nbsp;&nbsp;&nbsp;&nbsp;Descending</nb-option>
+
+          </nb-select>
+        </nb-form-field>
+
+        <nb-form-field>
+          <nb-icon nbPrefix class="mt-3" icon="flip-outline"></nb-icon>
+          <nb-select  selected="0" class="w-75 mt-3">
+            <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Gain</nb-option>
+            <nb-option value="All" (click)="getData()">&nbsp;&nbsp;&nbsp;&nbsp; Default</nb-option>
+            <nb-option (click)="getAscGain()" value="Ascending" >&nbsp;&nbsp;&nbsp;&nbsp;Ascending</nb-option>
+            <nb-option (click)="getDescGain()" value="Descending" >&nbsp;&nbsp;&nbsp;&nbsp;Descending</nb-option>
+
+          </nb-select>
+        </nb-form-field>
+
+        <nb-form-field>
+          <nb-icon nbPrefix class="mt-3" icon="flip-outline"></nb-icon>
+          <nb-select  selected="0" class="w-75 mt-3">
+            <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp;Net Monthly Salary</nb-option>
+            <nb-option value="All" (click)="getData()">&nbsp;&nbsp;&nbsp;&nbsp; Default</nb-option>
+            <nb-option (click)="getAscNet()" value="Ascending" >&nbsp;&nbsp;&nbsp;&nbsp;Ascending</nb-option>
+            <nb-option (click)="getDescNet()" value="Descending" >&nbsp;&nbsp;&nbsp;&nbsp;Descending</nb-option>
+
+          </nb-select>
+        </nb-form-field>
+        <div class="mt-3">
+          <label>Items Per Page</label>
+          <input class="w-75" [disabled]="list.length === 0" type="number" nbInput [(ngModel)]="pageSize" min="11">
+        </div>
+
+      </div>
+      <div class="col-md-9">
+        <div class="tab-content">
+          <div id="note-full-container" class="note-has-grid row">
+            <div class="row w-100" *ngIf="!list || list.length === 0">
+              <nb-alert outline="danger" class="w-100 mt-3"> No Data Found.</nb-alert>
+            </div>
+            <div [hidden]="list.length === 0" class="row w-100" *ngIf="(list | filter : search).length === 0">
+              <nb-alert outline="danger" fullWidth class="col-lg-12 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+            </div>
+            <div *ngFor="let pay of list | filter : search | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: list.length}" class="col-md-6 single-note-item all-category">
+              <nb-card class=" card-body">
+                <span class="side-stick"></span>
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <nb-user [name]="pay?.contract?.employee?.employeeName" size="medium" onlyPicture   picture="{{pay.contract?.employee?.employeeProfileImage}}"></nb-user>
+                      </div>
+                      <div class="col-md-9">
+                        <p class=" mt-2 mb-0">
+                          {{pay?.contract?.employee?.employeeName}} </p>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="col-md-3">
+                    <button class="print-none" shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                      <nb-icon icon="more-horizontal-outline"></nb-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+
+                      <a [routerLink]="['/hr/pay/paysheet/details/',pay.id]" style="text-decoration: dotted;">
+                        <button mat-menu-item>
+                          <span><nb-icon class="text-info" icon="eye-outline"></nb-icon>&nbsp; Details</span>
+                        </button>
+                      </a>
+                      
+                      <a>
+                        <button mat-menu-item>
+                          <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon>&nbsp; Archive</span>
+
+                        </button>
+                      </a>
+
+                    </mat-menu>
+                  </div>
+                </div>
+
+                <div class="note-content">
+                  <p class="note-inner-content" >
+                    <nb-icon class="mt-2" icon="file-text-outline"></nb-icon>&nbsp;
+                    <nb-tag-list>
+                      <nb-tag nbTooltip="Monthly Cost" status="primary" size="small" [text]="pay?.contract?.overallMonthlyCost"></nb-tag>
+                    </nb-tag-list>
+                    {{"DT"}}
+                  </p>
+                  <p class="note-inner-content" >
+                    <nb-icon class="mt-2" icon="file-text-outline"></nb-icon>&nbsp;
+                    <nb-tag-list>
+                      <nb-tag nbTooltip="Monthly Gross Salary" status="primary" size="small" [text]="pay?.gain.toString()"></nb-tag> 
+                    </nb-tag-list>
+                    {{"DT"}}
+                  </p>
+                  <p class="note-inner-content" >
+                    <nb-icon class="mt-2" icon="file-text-outline"></nb-icon>&nbsp;
+                    <nb-tag-list>
+                      <nb-tag nbTooltip="Net Monthly Cost" status="primary" size="small" [text]="pay.netSalary"></nb-tag> 
+                    </nb-tag-list>
+                    {{"DT"}}
+                  </p>
+                  <p class="" >
+                    <nb-icon class="mt-2" icon="person-outline"></nb-icon>&nbsp;
+                    {{pay?.contract?.employee?.roleEmployee}}
+                  </p>
+                  <p class="" >
+                    <nb-icon class="mt-2" icon="home-outline"></nb-icon>&nbsp;
+                    {{pay?.contract?.employee?.department?.departmentName}}
+                  </p>
+
+
+                </div>
+
+              </nb-card>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+      <div class=" ml-auto mr-auto">
+        <nb-card class="card w-100" style="height: 35px;margin-left: 0; border-radius: 25px;">
+          <pagination-controls class="pt-1 text-center" (pageChange)="current = $event"></pagination-controls>
+        </nb-card>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

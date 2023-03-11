@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+      <div class="row">
+        <h3 class="more-vertical">
+          Department History
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-8 col-sm-8" align="right">
+        <input class="w-50 mx-2"  nbTooltip="Fill this field to find department" nbTooltipStatus="primary" [disabled]="list.length === 0" type="text"  fieldSize="large" nbInput placeholder="search by fields" [(ngModel)]="searchbyfields">
+      <button [disabled]="list.length === 0" nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"  (click)="exportAsXLSX()"><i class="fas fa-file-excel text-white"></i>  </button>
+      &nbsp;
+      <button [disabled]="list.length === 0" nbTooltip="Export to pdf file" nbTooltipStatus="primary" nbButton status="danger"  [print]="['departments', config_]"><nb-icon icon="printer-outline"></nb-icon> </button>
+      &nbsp;
+        <br>
+    </div>
+  </div>
+  <br>
+  <div class="row" *ngIf="!list || list.length === 0">
+    <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+  </div>
+  <div [hidden]="list.length === 0" class="row" *ngIf="(list | filter : searchbyfields).length === 0">
+    <nb-alert outline="danger" class="w-100 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+  </div>
+  <div class="col-lg-10 mt-3">
+    <label for="">Items Per Page &nbsp; : &nbsp; </label> 
+    <input class="w-75" [disabled]="list.length === 0" type="number" nbInput [(ngModel)]="pageSize" min="10">
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <nb-card>
+        <table  class="table mb-0" id="departments">
+          <thead class="bg-light">
+          <tr>
+            <th></th>
+            <th>Reference</th>
+            <th>Name</th>
+            <th>Responsable</th>
+            <th>Sub Departments</th>
+            <th class="print-none">Actions</th>
+          </tr>
+          </thead>
+          <tr *ngFor="let department  of list  | filter : searchbyfields | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: total} ; let i =index">
+                <td>
+                    <nb-user [name]="department.departmentName" onlyPicture></nb-user>
+                  </td>
+                  <td> <p>{{department.departmentReference}}</p> </td>
+                  <td><p>{{department.departmentName}}</p></td>
+                  <td>
+                    <p>{{department?.employee?.employeeName}}</p>
+                  </td>
+                  <td>
+                    <div class="row">
+                      <div *ngFor="let sub of subList">
+                        <div *ngIf="sub?.department?.departmentName === department.departmentName">
+                          <button nbButton shape="round" size="small" status="dark">
+                            {{sub?.subDepartmentName}} <nb-icon class="print-none" (click)="open2(dialog)" nbButton shape="round" status="danger" icon="close-outline"></nb-icon>
+                          </button>
+                          <ng-template #dialog let-data let-ref="dialogRef">
+                            <nb-card>
+                              <nb-card-header>Confirm Delete Operation</nb-card-header>
+                              <nb-card-body>Are you sure you want to delete a sub department having name {{sub?.subDepartmentName}}</nb-card-body>
+                              <nb-card-footer>
+                                <div class="row">
+                                  <button class="col-md-2" nbButton (click)="ref.close()">Close</button>
+                                  <div class="col-md-8"></div>
+                                  <a class="col-md-2" status="danger"   nbButton (click)="deleteSubDepartment(sub.id)">Delete</a>
+                                </div>
+        
+                              </nb-card-footer>
+                            </nb-card>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="print-none">
+                    <button shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                      <nb-icon icon="more-horizontal-outline"></nb-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+        
+                
+                       <a nbTooltip="Click here to delete data" nbTooltipStatus="primary" (click)="open2(dialog)">
+                        <button mat-menu-item>
+                          <span><nb-icon class="text-danger" icon="trash-outline"></nb-icon>&nbsp; Delete</span>
+          
+                        </button>
+                      </a> 
+                      <a nbTooltip="Click here to archive data" nbTooltipStatus="primary" (click)="updateIsDepartmentRestored(department, department.id)">
+                        <button mat-menu-item>
+                          <span><nb-icon class="text-secondary" icon="refresh-outline"></nb-icon>&nbsp; Restore</span>
+                        </button>
+                      </a>
+                       <ng-template #dialog let-data let-ref="dialogRef">
+                        <nb-card>
+                          <nb-card-header>Confirm Delete Operation</nb-card-header>
+                          <nb-card-body>Are you sure you want to delete a department having reference {{department.departmentReference}}</nb-card-body>
+                          <nb-card-footer>
+                            <div class="row">
+                              <button class="col-md-2" nbButton (click)="ref.close()">
+                                <nb-icon icon="close-outline"></nb-icon> Close</button>
+                              <div class="col-md-8"></div>
+                              <a class="col-md-2" status="danger"  nbButton (click)="delete_dep(department.id)">
+                                <nb-icon icon="trash-outline"></nb-icon> Delete</a>
+                            </div>
+        
+                          </nb-card-footer>
+                        </nb-card>
+                      </ng-template> 
+        
+                    </mat-menu>
+                  </td>
+          
+          </tr>
+        </table>
+      </nb-card>
+    </div>
+   
+    <nb-card class="bg-light" style="height: 35px; border-radius: 25px;">
+      <pagination-controls class="pt-1" (pageChange)="current = $event"></pagination-controls>
+    </nb-card>
+  
+  </div>
+  

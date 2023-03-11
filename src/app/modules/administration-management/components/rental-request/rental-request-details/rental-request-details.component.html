@@ -1,0 +1,159 @@
+<div *ngIf="selectedRentalRequest">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-10">
+        <h3> Rental Request details</h3>
+      </div>
+      <div class="col-md-2">
+          <nb-select
+                  (selectedChange)="updateStatus($event)"
+                  selected="{{ selectedRentalRequest.status }}"
+                >
+                  <nb-option value="UNDER_VALIDATION">Under Validation</nb-option>
+                  <nb-option value="DENIED">Decline</nb-option>
+                  <nb-option value="APPROVED">Approve</nb-option>
+                </nb-select>
+      </div>
+    </div>
+    
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container-fluid">
+
+      <div class="container">
+
+        <!-- Main content -->
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Details -->
+
+            <nb-alert class="mb-4" outline="primary">
+              <div class="mb-3 d-flex justify-content-between">
+                <div>
+                  <span class="me-3">Fiscal number : {{selectedRentalRequest.matriculateFiscal}}</span>
+                </div>
+                <div *ngIf="selectedRentalRequest.status == 'APPROVED'" class="d-flex">
+                  <nb-tag [text]="selectedRentalRequest.status" status="success"></nb-tag>
+
+                
+                </div>
+              </div>
+              <table class="table table-borderless">
+                <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <h6 class="small mb-0">
+                          {{selectedRentalRequest.company}}</h6>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+                 <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="person-outline"></nb-icon>
+                          {{selectedRentalRequest.firstName}}  {{selectedRentalRequest.lastName}}</p>
+                      </div>
+                     
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="email-outline"></nb-icon>
+                          {{selectedRentalRequest.email}}</p>
+                      </div>
+                      <div *ngIf="selectedRentalRequest.secondEmail != null" class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="email-outline"></nb-icon>
+                          {{selectedRentalRequest.secondEmail}}</p>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+                      <div class="flex-lg-grow-1 ms-1">
+                        <p class="small mb-0">
+                          <nb-icon icon="phone-outline"></nb-icon>
+                          {{selectedRentalRequest.phone}}</p>
+
+                      </div>
+
+                      <div *ngIf="selectedRentalRequest.secondPhone != null" class="flex-lg-grow-1 ms-1">
+                        <p class="small mb-0">
+                          <nb-icon icon="phone-outline"></nb-icon>
+                          {{selectedRentalRequest.phone}}</p>
+
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+              </table>
+            </nb-alert>
+
+         <!--   &lt;!&ndash; Payment &ndash;&gt;
+            <nb-alert class="mb-4" outline="primary">
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="h6">Payment Method</h3>
+                  <p>Visa -1234 <br>
+                    Total: $169,98 <span class="badge bg-success rounded-pill">PAID</span></p>
+                </div>
+                <div class="col-lg-6">
+                  <h3 class="h6">Billing address</h3>
+                  <address>
+                    <strong>John Doe</strong><br>
+                    1355 Market St, Suite 900<br>
+                    San Francisco, CA 94103<br>
+                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                  </address>
+                </div>
+              </div>
+            </nb-alert>-->
+          </div>
+          <div class="col-lg-4">
+            <!-- Customer Notes -->
+            <nb-alert class="mb-4" outline="primary">
+
+              <h3 class="h6">Address</h3>
+              <p>{{selectedRentalRequest.address}}, {{selectedRentalRequest.city}} {{selectedRentalRequest.country}},
+                {{selectedRentalRequest.postalCode}}</p>
+            </nb-alert>
+           
+            <nb-alert class="mb-4" outline="primary">
+
+              <h3 class="h6">Links utils</h3>
+              <address>
+              <a href="{{selectedRentalRequest.linkedinUrl}}"  target="_blank" shape="square" style="background-color: #2b8cf1">  
+                <nb-icon icon="linkedin" ></nb-icon> 
+               
+             </a> <a class="mx-2" href=" {{selectedRentalRequest.webSiteLink}}" target="_blank"> 
+                <nb-icon icon="link-2"></nb-icon><br></a>
+              </address>
+            </nb-alert>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</div>

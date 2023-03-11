@@ -1,0 +1,179 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Categories</h3>
+        </div>
+        <div class="col-md-4">
+            <input [(ngModel)]="search" class="w-75"
+                   nbInput
+                   placeholder="Search Category"
+                   type="text">
+        </div>
+        <div class="col-md-5">
+            <a [routerLink]="['/pim/categories/grid']" nbButton
+               nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+              <nb-icon icon="grid-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/categories']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/categories/list']" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>&nbsp;
+            <button (click)="exportAsXLSX()"
+                    align="right" nbButton 
+                    nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                    status="success">
+              <i class="fas fa-file-excel text-white"></i>
+            </button>&nbsp;
+            <a [routerLink]="['/pim/category/create']" class="btn btn-primary"
+            nbTooltip="Create new Category" nbTooltipStatus="primary">
+              <i class="fas fa-plus text-white"></i>
+            </a>&nbsp;
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!dataCategories || dataCategories.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataCategories | filter : search).length === 0" [hidden]="dataCategories.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">
+        Item Not Found.
+      </nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <input [nbDatepicker]="datepicker"
+                 placeholder="Filter By Creation Date"
+                 style="cursor: pointer"
+                 class="mx-2 mt-3 w-100" nbInput>
+          <nb-datepicker #datepicker
+                         (dateChange)="getCategoriesByDate($event)"></nb-datepicker>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Sort by Category Name"
+                       selected="0" class="mx-2 mt-3 w-100">
+              <nb-option (click)="getAllCategories()" value="All">All</nb-option>
+              <nb-option (click)="getAllCategoriesASC()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getAllCategoriesDESC()" value="2">Names (Z-A)</nb-option>
+            </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Sort by Reference"
+                     selected="0" class="mx-2 mt-3 w-100">
+            <nb-option (click)="getAllCategories()" value="All">All</nb-option>
+            <nb-option (click)="getAllCategoriesASCRef()" value="1">References (A-Z)</nb-option>
+            <nb-option (click)="getAllCategoriesDESCRef()" value="2">References (Z-A)</nb-option>
+          </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+          <label>Categories Per Page : </label>
+          <input [(ngModel)]="pageSize" class="w-100"
+                 min="3" nbInput
+                 nbTooltip="Tap a number to get categories per page" nbTooltipStatus="primary"
+                 placeholder="Number to get categories per page" type="number">
+        </div>
+      </div>
+      <div class="input-group col-md-9">
+      <div
+        *ngFor="let category of dataCategories |filter: search
+           | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: dataCategories.length}"
+        align="center" class="col-md-4">
+          <nb-card>
+            <nb-card-body class="pt-2 pb-2">
+              <div class="">
+                <div class="row mt-2">
+                  <div class="col-lg-12">
+                  <div align="right" class="">
+                    <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                            aria-label="Example icon-button with a menu"
+                            nbButton nbTooltip="Click here to see advanced menu"
+                            nbTooltipStatus="primary"
+                            shape="round"
+                            size="small"
+                            status="basic">
+                      <nb-icon icon="more-horizontal-outline"></nb-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item>
+                        <a [routerLink]="['/pim/category/update',category.categoryId]" nbButton  fullWidth>
+                      <span class="text-warning"><nb-icon icon="edit-outline"></nb-icon></span> Edit
+                    </a>
+                      </button>
+                      <button mat-menu-item >
+                      <a [routerLink]="['/pim/category',category.categoryId]" nbButton fullWidth>
+                        <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                      </a>
+                      </button>
+               <button mat-menu-item>
+                        <a (click)="open2(dialog)" fullWidth nbButton>
+                          <span class="text-secondary"><nb-icon icon="archive-outline"></nb-icon></span>Archive
+                        </a>
+                      </button>
+                    </mat-menu>
+                    <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Confirm archive operation ?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to archive this category?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="primary">
+                        Close
+                      </button>
+                      <button (click)="onArchiveConfirm(category, ref)" class="float-right" nbButton
+                      status="danger">
+                        Archive
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+                  </div></div>
+                </div>
+              </div>
+              <div align="center">
+                <h4>{{category.categoryCode}}</h4>
+                <span class="text-sm-center mt-2">
+                  Created {{moment(category.categoryCreationDate).format('DD MMM YYYY')}}
+                </span>
+              </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Category Name</p>
+                      <span>{{category.categoryName}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Category Description</p>
+                      <span>{{category.categoryDesc}}</span>
+                    </div>
+                  </div>
+                </div><br/>
+            </nb-card-body>
+          </nb-card>
+      </div>
+     </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+  </div>
+</div>

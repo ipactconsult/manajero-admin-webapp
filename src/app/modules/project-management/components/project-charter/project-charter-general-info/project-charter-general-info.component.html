@@ -1,0 +1,178 @@
+<nb-card accent="info" class="row">
+  <nb-card-header style="position: relative">
+    <nb-badge
+      text="{{ data.status }}"
+      status="{{ statusColor }}"
+      position="top right"
+    ></nb-badge>
+    
+    General Info
+     
+
+    <div style="float: right">
+     
+      <ngx-export-pdf [projectCharter]="data"></ngx-export-pdf>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-alert outline="primary">
+      <p>
+        <strong class="text-secondary"> Project Name : </strong>
+        {{ data.title }}
+      </p>
+      <p>
+        <strong class="text-secondary"> Manager : </strong>
+        {{ data.projectManagerInfo.employeeName }}
+      </p>
+
+      <p>
+        <strong class="text-secondary">Create at :</strong>
+        {{ data.dateSubmited }}
+      </p>
+      <p>
+        <strong class="text-secondary">Current state : </strong>
+
+        <nb-select
+          placeholder="choose status"
+          (selectedChange)="updateStatus($event)"
+          status="{{ statusColor }}"
+        >
+          <nb-option value="IN_PROGRESS">IN_PROGRESS</nb-option>
+          <nb-option value="APPROVED">APPROVED</nb-option>
+          <nb-option value="DENIED">DENIED</nb-option>
+        </nb-select>
+      </p>
+      <ngx-create-project  [projectCharter]="data"></ngx-create-project>
+    </nb-alert>
+
+    <nb-flip-card
+      [flipped]="flippedState"
+      [showToggleButton]="false"
+      class="col-md-12"
+    >
+      <nb-card-front>
+        <nb-card accent="info">
+          <nb-card-header>
+            <div class="row">
+              <div class="col-md-10">Statemeent of work</div>
+
+              <div class="col-md-2" *ngIf="data?.statementWork != null">
+                <button
+                  shape="round"
+                  nbButton
+                  status="basic"
+                  size="small"
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <a
+                    style="text-decoration: none"
+                    nbTooltip="Click here to edit data"
+                    nbTooltipStatus="primary"
+                    (click)="updateStatementOfWrok()"
+                  >
+                    <button mat-menu-item>
+                      <span
+                        ><nb-icon
+                          class="text-warning"
+                          icon="edit-outline"
+                        ></nb-icon
+                        >&nbsp; Edit</span
+                      >
+                    </button>
+                  </a>
+                  <a
+                    nbTooltip="Delete data"
+                    nbTooltipStatus="primary"
+                    (click)="confirmation(dialog)"
+                  >
+                    <button mat-menu-item>
+                      <span
+                        ><nb-icon
+                          class="text-danger"
+                          icon="trash-outline"
+                        ></nb-icon
+                        >&nbsp; Delete</span
+                      >
+                    </button>
+                  </a>
+
+                  <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>Confirm Delete Operation</nb-card-header>
+                      <nb-card-body >
+                        Are you sure you want to delete this item ?
+                      </nb-card-body>
+                      <nb-card-footer>
+                        <div class="row">
+                          <div class="col-md-2">
+                            <button
+                              nbButton
+                              status="basic"
+                              (click)="ref.close()"
+                            >
+                              <nb-icon icon="close"></nb-icon>Close
+                            </button>
+                          </div>
+                          <div class="col-md-5"></div>
+                          <div class="col-md-2">
+                            <button nbButton status="danger" (click)="delete()">
+                              <nb-icon icon="trash"></nb-icon>Delete
+                            </button>
+                          </div>
+                        </div>
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>
+                </mat-menu>
+              </div>
+            </div>
+          </nb-card-header>
+
+          <nb-card-body>
+            <nb-alert
+              outline="primary"
+              *ngIf="data?.statementWork != null; else noData"
+            >
+              {{ data.statementWork }}
+            </nb-alert>
+            <ng-template #noData>
+              <div class="col-md-4 offset-md-5">
+                <p>No Data Found</p>
+                <button nbButton status="primary" (click)="flip()">
+                  Add New +
+                </button>
+              </div>
+            </ng-template>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-front>
+      <nb-card-back>
+        <nb-card accent="primary">
+          <nb-card-header>
+            <nb-icon
+              icon="chevron-left-outline"
+              pack="nebular-essentials"
+              aria-hidden="true"
+              (click)="flip()"
+            ></nb-icon>
+            Statemeent of work
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-genrale-info-form
+              [projectChart]="data"
+              [statementWorkSelected]="selectedItem"
+              (refreshData)="refresh($event)"
+            ></ngx-genrale-info-form>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-back>
+    </nb-flip-card>
+    <ngx-upload-file [data]="data"></ngx-upload-file>
+  </nb-card-body>
+</nb-card>

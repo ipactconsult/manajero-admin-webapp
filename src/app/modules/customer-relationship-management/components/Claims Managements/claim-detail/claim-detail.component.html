@@ -1,0 +1,199 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 ">
+      <h2 class="more-vertical">
+        Claim Details </h2>
+    </div>
+
+    <div align="right" class="col-md-3 justify-content-end">
+      <a [routerLink]="['/crm/respond-claim/', claim.id]" class="w-25" fullWidth
+         nbButton nbTooltip="Click here to respond claim data" nbTooltipStatus="primary"
+         shape="round" status="info">
+        <nb-icon icon="corner-up-left-outline"></nb-icon>
+      </a>  
+      <a [routerLink]="['/crm/edit-claim/', claim.id]" class="w-25 mx-2" fullWidth
+         nbButton nbTooltip="Click here to edit claim data" nbTooltipStatus="primary"
+         shape="round" status="warning">
+        <nb-icon icon="edit-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/crm/claims']" class="w-25 mx-2"
+         fullWidth nbButton nbTooltip="Back to claims list" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <nb-card>
+        <div align="center">
+          <h4 class="mt-3">Customer </h4>
+
+          <img class="w-50 mt-3 rounded-circle" src="{{claim?.customer?.image}}">
+        </div>
+        <p class="text-center mt-2">
+          <nb-icon class="mx-2" icon="person-outline"></nb-icon>
+          {{claim?.customer?.name}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="at-outline"></nb-icon>
+          {{claim?.customer?.workEmail}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="globe-outline"></nb-icon>
+          {{claim?.customer?.workWebsite}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="phone-outline"></nb-icon>
+          {{claim?.customer?.phone}}</p>
+      </nb-card>
+      <nb-card>
+        <div align="center">
+          <h4 class="mt-3">Employee </h4>
+          <img class="w-50 mt-3 rounded-circle" src="{{claim?.employee?.employeeProfileImage}}">
+        </div>
+        <p class="text-center mt-2">
+          <nb-icon class="mx-2" icon="person-outline"></nb-icon>
+          {{claim?.employee?.employeeName}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="at-outline"></nb-icon>
+          {{claim?.employee?.employeeEmail}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="globe-outline"></nb-icon>
+          {{claim?.employee?.roleEmployee}}</p>
+        <p class="text-center">
+          <nb-icon class="mx-2" icon="phone-outline"></nb-icon>
+          {{claim?.employee?.employeeCellPhone}}</p>
+      </nb-card>
+    </div>
+
+    <div class="col-md-9">
+      <nb-card>
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header> Claim Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Code</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.claimCode}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Claim </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.claimTitle}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Claim type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.claimType}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Urgency type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <nb-tag-list>
+
+                    <nb-tag [text]="claim.urgencyType" appearance="outline" class="align-self-center"
+                            nbTooltip="Visit Title"
+                            nbTooltipStatus="success" size="small"
+                            status="success"></nb-tag>
+                  </nb-tag-list>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Claim date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.claimDate | date : 'EEEE MMMM dd'}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Claim Motif</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.claimMotif}}
+
+                </div>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Claim description</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.descriptionClaim}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Other infos</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.otherInfos}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Evaluation</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.evaluationClaim}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Response</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.responseClaim}}
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Status</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{claim.status}}
+
+                </div>
+              </div>
+
+
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+
+
+      </nb-card>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,151 @@
+
+    <div class="row">
+      <div class="col-md-2">
+       <h3> Document Category</h3>
+      </div>
+      <div class="col-md-3">
+        <input [(ngModel)]="search"
+        name="search"
+        id="search"
+        nbInput
+       nbTooltip="Tap here to search your category" nbTooltipStatus="primary" placeholder="search category"
+       type="text">
+    </div>
+    <div class="col-md-2"> 
+      <nb-select (selectedChange)="getCategoryByTitle($event,'categoriename')"  selected="0" class="w-100 ">
+       <nb-option value="0" disabled>Category Name</nb-option>
+       <nb-option value="All" (click)="getAll()">All Categories</nb-option>
+       <nb-option value="{{categorie.categoriename}}" *ngFor="let categorie of CategorieList">{{categorie.categoriename}}</nb-option>
+     </nb-select>
+  
+   </div>
+  
+
+      <div class="col-md-3"  align="right">
+        <a [routerLink]="['/litige/listca']" status="primary"  nbButton class="mx-1">
+          <nb-icon icon="grid-outline"  ></nb-icon>
+        </a>
+        <a  [routerLink]="['/litige/grid']"status="warning" nbButton class="mx-1">
+          <nb-icon icon="keypad-outline"></nb-icon>
+        </a>
+        <a  [routerLink]="['/litige/table']"status="basic" nbButton class="mx-1">
+          <nb-icon icon="list-outline"  ></nb-icon>
+        </a>
+        <a href="" status="info" status="danger" nbButton  class="mx-1">
+          <nb-icon icon="printer-outline" ></nb-icon>
+        </a>
+      </div>
+    
+
+      <div class="col-md-2" align="right">
+        <button [routerLink]="['/litige/createcat']" nbButton status="primary">
+          <nb-icon icon="plus-outline"></nb-icon> Create
+        </button>
+        <ng-template #contentTemplate let-data>
+          <ngx-create-categories (addCategoryOutputEvent)=" add_categorie($event)" [routerLink]="['/litige/listca']"></ngx-create-categories>
+        </ng-template>
+
+
+      </div>
+    </div>
+  
+    <div *ngIf="!CategorieList || CategorieList?.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(CategorieList | filter : search)?.length === 0" [hidden]="CategorieList?.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+ 
+
+
+<div class="row mt-2">
+
+
+  <div class="col-lg-12" align="right">
+    <nb-select [disabled]="CategorieList?.length === 0"
+    nbTooltip="Click here to sort by Category Name" nbTooltipStatus="primary"
+    placeholder="Sort by Cateogry Name"
+    selected="0">
+<nb-option (click)="getAll()" value="All">All</nb-option>
+<nb-option (click)="getCategorieAsc()" value="1">Names (A-Z)</nb-option>
+<nb-option (click)="getCategorieDesc()" value="2">Names (Z-A)</nb-option>
+</nb-select>
+  </div>
+
+
+  <div class="col-md-6 mt-3" *ngFor="let cat of CategorieList |filter: search| paginate : {itemsPerPage:4, currentPage: current,totalItems: CategorieList?.length} ">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-10">
+            <a style="text-decoration: none;">
+              <nb-user [name]="cat.categoriename" size="medium"></nb-user>
+            </a>  
+          </div>
+          <div class="col-md-2">
+            <button nbButton status="basic" shape="round" size="small" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <nb-icon icon="more-horizontal-outline"></nb-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <a [routerLink]="['/litige/editcat', cat.id]" style="text-decoration: none;color:black">
+                  <nb-icon class="text-warning" icon="edit-outline"></nb-icon>
+                  <span>Edit</span>
+                </a>
+              </button>
+          
+              <button mat-menu-item (click)="open2(dialog)">
+                <nb-icon class="text-danger" icon="trash-outline"></nb-icon>
+                <span>Archive</span>
+              </button>
+              
+              <ng-template #dialog let-data let-ref="dialogRef">
+                <nb-card>
+                  <nb-card-header>
+                    Confirm delete operation ?
+                  </nb-card-header>
+                  <nb-card-body>
+                    Are you sure you want to delete this category?
+                  </nb-card-body>
+                  <nb-card-footer>
+                   <button nbButton class="float-left" (click)="ref.close()">
+                     Close
+                   </button>
+                    <button class="float-right" (click)="onDeleteConfirm(cat.id)" nbButton>
+                      Delete
+                    </button>
+                  </nb-card-footer>
+                </nb-card>
+            </ng-template>
+
+
+              <button mat-menu-item>
+                <a [routerLink]="['/litige/listloi', cat.id]" style="text-decoration: none;color:black">
+                  <nb-icon class="text-secondary" icon="archive-outline"></nb-icon>
+                  <span>Laws</span>
+                </a>
+              </button>
+
+            </mat-menu>  
+          </div>
+        </div>
+           
+      </nb-card-header>
+      <nb-card-body> 
+        <div> 
+          {{cat.description}}
+        </div>
+        
+      </nb-card-body>
+
+
+    </nb-card>
+
+  </div>
+  <pagination-controls  class="mt-5 col-lg-12  text-white" style="border-radius: 4px;" (pageChange)="current = $event"></pagination-controls>
+
+
+</div>

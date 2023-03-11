@@ -1,0 +1,41 @@
+<form class="form" [formGroup]="createStakeholderForm" (ngSubmit)="save()">
+
+  <div class="form-group">
+    <label for="subject">Name:</label>
+    <input nbInput fullWidth class="form-control" type="text" formControlName="name" />
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Role:</label>
+    <input nbInput fullWidth class="form-control" type="text" formControlName="role"/>
+  </div>
+  <div class="form-group">
+    <label for="subject">Business Unit:</label>
+    <textarea nbInput fullWidth class="form-control" formControlName="businessUnit"></textarea>
+
+  </div>
+  <div>
+    <label for="subject">Engagement Level :</label>
+    <nb-select
+    placeholder="Level"
+    fullWidth
+    formControlName="engagementLevel"
+  >
+    <nb-option style="background-color:green" value="LOW">LOW</nb-option>
+    <nb-option style="background-color:orange" value="MEDIUM">MEDIUM</nb-option>
+    <nb-option style="background-color:red" value="HIGH">HIGH</nb-option>
+
+    
+
+  </nb-select>
+  </div>
+  
+  <div class="form-group">  
+    <label class="text-label" for="text">Notes:</label>
+    <textarea nbInput fullWidth class="form-control"     formControlName="note"
+    ></textarea>
+  </div>
+  <input
+  [ngClass]="selectedItem===null ?'btn btn-success btnCreate':'btn btn-warning btnCreate'"
+  type="submit"
+  [value]="selectedItem===null ? 'Create' : 'Update'"
+/></form>

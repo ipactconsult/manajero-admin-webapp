@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="col-md-6">
+    <h3>Product Inventory Management</h3>
+   </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-green-dark">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-box"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Materials In Stock</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ materialsInStock.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-red">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-praying-hands"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Services</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ services.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-blue-dark">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-list"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Categories</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ categories.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-orange-dark">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-sign-out-alt"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Stock Exits</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ stockExists.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-cherry">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-truck-moving"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Stock Movements</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ stockMovements.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-orange">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-backward"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Purchase Returns</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ purchaseReturns.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-green-dark">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-warehouse"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Warehouses</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ warehouses.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-cyan">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Suppliers</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ suppliers.length }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-green">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-parachute-box"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Finished Products</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ numberOfFinishedProducts }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-blue-dark">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-tools"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Raw Materials</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ numberOfRawMaterials }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-cherry">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-shopping-basket"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Purchase Orders</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ purchaseOrders.length }}
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="col-6 col-sm-3 grow">
+    <div class="card l-bg-red">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-bug"></i></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Stock Alerts</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                    {{ numberOfStockAlerts }} 
+                  </h2>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+        <ngx-materials-echarts-pie></ngx-materials-echarts-pie>
+  </div>
+  <div class="col-lg-6">
+        <ngx-chartjs-pie></ngx-chartjs-pie>
+  </div>
+</div>
+  <ngx-chartjs-line></ngx-chartjs-line>

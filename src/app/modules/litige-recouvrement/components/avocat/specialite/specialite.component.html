@@ -1,0 +1,156 @@
+<div class="row mt-3">
+    <h3>
+
+        Cases We Handle
+    </h3>
+</div>
+<br>
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12">
+    <nb-card-body>
+        <nb-stepper orientation="horizontal">
+
+            <nb-step [label]="labelOne">
+                    <ng-template #labelOne>Speciality</ng-template>
+                    <div class="col">
+                    <nb-card>
+                        <nb-card-body>
+                        </nb-card-body>
+                    </nb-card>
+                   <div></div>
+                    <nb-card>
+                        <nb-card-body>
+                            <button nbButton fullWidth status="primary">Speciality</button>
+
+                        </nb-card-body>
+                    </nb-card>
+                    
+                    <nb-card >
+                        <nb-card-body status="success">
+                            <button nbButton fullWidth status="primary">Speciality</button>
+
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+
+
+
+  <div class="row">
+            <div class="col-md-2">
+              <button nbButton disabled nbStepperNext>prev</button>
+            </div>
+            <div class="col-md-8">
+
+            </div>
+            <div class="col-md-2">
+              <button nbButton nbStepperNext>next</button>
+            </div>
+        </div>
+
+                  
+             
+            </nb-step>
+
+
+
+
+            <nb-step [label]="labelTwo">
+                <div class="col-md-12">
+                    <ng-template #labelTwo>Customer&Lawyer</ng-template>
+                <div class="row">
+              <div class="col-md-6">
+                <h5 align="center"> Customer</h5>
+                <br>
+                <div class="form-group">
+                    <div class="col">
+
+                        <label>Customer Name</label>
+                        <nb-select class="col-md-12" placeholder="Choose your Customer">
+                            <nb-option>Wassim </nb-option>
+                            <nb-option>Ahmed</nb-option>
+                            <nb-option>Salah</nb-option>
+
+                        </nb-select>
+
+
+                    </div>
+                    <br>
+                
+
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <h5 align="center"> Lawyer</h5><br>
+
+                <div class="form-group">
+                    <div class="col">
+
+                        <label>Lawyer </label>
+                        <nb-select class="col-md-12" placeholder="Choose your Lawyer">
+                            <nb-option>Ben Salah </nb-option>
+                            <nb-option>Francesco</nb-option>
+                            <nb-option>Pellegrini</nb-option>
+
+                        </nb-select>
+
+
+                    </div>
+                    <br>
+                
+
+                </div>
+
+              </div>
+            </div>
+              
+                
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                  <button nbButton disabled nbStepperNext>prev</button>
+                </div>
+                <div class="col-md-8">
+    
+                </div>
+                <div class="col-md-2">
+                  <button nbButton nbStepperNext>next</button>
+                </div>
+            </div>
+    
+            </nb-step>
+        
+
+
+            <nb-step [label]="labelThree">
+                <div class="col-md-12">
+                    <ng-template #labelThree>Room</ng-template>
+                   
+                     
+
+                       
+
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                          <button nbButton disabled nbStepperNext>prev</button>
+                        </div>
+                        <div class="col-md-8">
+            
+                        </div>
+                        <div class="col-md-2">
+                          <button nbButton nbStepperNext>next</button>
+                        </div>
+                    </div>
+            
+
+                </div>
+            </nb-step>
+
+
+
+
+            
+        </nb-stepper>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,154 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Invoices</h3>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   nbInput class="w-75" placeholder="Search Invoice"
+                   type="text">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div>
+            <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary"
+               [routerLink]="['/accounting/invoicegrid']"
+               nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon></a>&nbsp;
+            <a [routerLink]="['/accounting/invoicelist']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/accounting/invoicedatalist']" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>&nbsp;
+
+            <a (click)="exportAsXLSX()"
+               align="right" status="success"
+               nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+  </div>
+  <div  class="row" *ngIf="!dataInvoice || dataInvoice.length === 0">
+    <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+  </div>
+  <div [hidden]="dataInvoice.length === 0" class="row" *ngIf="(dataInvoice | filter : search).length === 0">
+    <nb-alert outline="danger" class="w-100 mt-3">
+      Item Not Found
+    </nb-alert>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-3">
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select placeholder="Filter by Material" (selectedChange)="getInvoiceByClient($event)"
+                   selected="0" class="mx-2 mt-3 w-75">
+          <nb-option *ngFor = "let client of clients" [value]="client.name">
+            {{client.name}}
+          </nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select placeholder="Filter by Archived" (selectedChange)="getArchived($event)"
+                   selected="0" class="mx-2 mt-3 w-75">
+          <nb-option [value]=false>
+            Active
+          </nb-option>
+          <nb-option [value]=true>
+            Archived
+          </nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select placeholder="filter by Currency" (selectedChange)="getInvoiceByCurrency($event)"
+                   selected="0" class="mx-2 mt-3 w-75">
+          <nb-option  value="TND">TND</nb-option>
+          <nb-option  value="USD">USD</nb-option>
+          <nb-option  value="EUR">EUR</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <div class="col-lg-10 mt-3">
+        <label>Purchase Returns Per Page</label>
+        <input class="w-75" type="number" nbInput [(ngModel)]="pageSize" min="3">
+      </div>
+    </div>
+    <div class="input-group col-md-9">
+      <div class="col-md-6"
+           *ngFor="let invoice of dataInvoice  | filter : search | paginate : 
+           {itemsPerPage:pageSize, currentPage: current,totalItems: dataInvoice.length} ; let i =index">
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-md-10">
+                Invoice title: <span class="ms-3">{{invoice.title}}</span>
+                <br><br>
+                <span>Client name:
+            <span class = "ms-3">{{invoice.clientName}}</span>
+          </span><br/><br>
+                Client email:
+                <a style="text-decoration: none; cursor: pointer" nbTooltip="Supplier Details" nbTooltipStatus="info">
+                  {{invoice.clientEmail}} </a>
+                <br>
+                <span><br>
+            Due date: <a 
+                         style="text-decoration: none" nbTooltip="Material Details" nbTooltipStatus="info">
+               <button nbButton shape="round" size="small"
+                       status="dark" >
+                  {{invoice.dueDate | date:'yyyy-MM-dd'}}
+               </button>
+            </a>
+          </span>
+              </div>
+              <div class="col-md-2">
+                <button shape="round" nbButton status="basic" size="small"
+                        [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <a [routerLink]="['/accounting/invoicedetail/',invoice.id]" nbButton fullWidth>
+                      <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                    </a>
+                  </button>
+                  <button mat-menu-item>
+                    <a (click)="open2(dialog)" nbButton fullWidth>
+                      <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon></span>Archive
+                    </a>
+                  </button>
+                </mat-menu>
+                <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>Confirm Archive Operation</nb-card-header>
+                    <nb-card-body>Are you sure you would like to archive this purchase return?</nb-card-body>
+                    <nb-card-footer>
+                      <div class="row">
+                        <button class="col-md-2" status="danger" nbButton (click)="ref.close()">No</button>
+                        <div class="col-md-8"></div>
+                        <a class="col-md-2" status="success" nbButton >Yes</a>
+                      </div>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+      <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+    </nav>
+  </div>
+</div>

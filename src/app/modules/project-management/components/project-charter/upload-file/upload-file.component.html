@@ -1,0 +1,92 @@
+<nb-alert outline="primary" class="col-md-12">
+  <p>
+    <nb-icon icon="folder" status="warning"> </nb-icon>
+    <strong class="text-secondary"> Project Charter Document : </strong>
+  </p>
+
+  <div class="row justify-content-start">
+    <div *ngFor="let file of data.file">
+      <a
+        target="_blank"
+        href="https://firebasestorage.googleapis.com/v0/b/upload-file-manazello.appspot.com/o{{
+          file
+        }}?alt=media"
+        style="text-decoration: none"
+      >
+        <nb-icon icon="file-outline" status="info"></nb-icon>
+        {{ file.slice(1, file.indexOf("0.")) }}
+      </a>
+
+      <a nbTooltip="Delete data" nbTooltipStatus="primary" (click)="confirmation(dialog)">
+       
+          <span><nb-icon class="text-danger" icon="trash-outline"></nb-icon>&nbsp; </span>
+       
+      </a>
+  
+ 
+     <ng-template #dialog let-data let-ref="dialogRef">
+      <nb-card >
+        <nb-card-header>Confirm Delete Operation</nb-card-header>
+        <nb-card-body class="alert alert-warning ">
+          Are you sure you want to delete this item ?
+        </nb-card-body>
+        <nb-card-footer>
+          <div class="row">
+            <div class="col-md-2">
+              <button nbButton status="basic"  (click)="ref.close()"><nb-icon icon="close" ></nb-icon>Close</button>
+            </div>
+            <div class="col-md-5"></div>
+            <div class="col-md-2">
+              <button nbButton status="danger"  (click)="onTagRemove(file)"><nb-icon icon="trash"></nb-icon>Delete</button>
+            </div>
+
+          </div>
+        </nb-card-footer>
+      </nb-card>
+    </ng-template> 
+
+
+    </div>
+    <nb-tag
+      status="basic"
+      *ngIf="!uploadEnabled"
+      appearance="outline"
+      text="+new Document"
+      (click)="enableUpload()"
+    ></nb-tag>
+  </div>
+  <div *ngIf="uploadEnabled" class="container">
+    <input
+      type="file"
+      nbInput
+      fullWidth
+      (change)="upload($event)"
+      accept=".*"
+    />
+    <nb-tag
+      status="basic"
+      (click)="uploadImage(dialog)"
+      appearance="outline"
+      text="+new Document"
+    ></nb-tag>
+    <!--Alert info-->
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card class="container"size="tiny">
+    <nb-card-header><nb-icon icon="close"  (click)="ref.close()" status="danger"></nb-icon>Warning</nb-card-header>
+    <nb-card-body class="alert alert-warning">{{ data }}</nb-card-body>
+    <nb-card-footer>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!--end Alert info-->
+    <nb-card
+      *ngIf="loader"
+      [nbSpinner]="loader"
+      nbSpinnerSize="giant"
+      nbSpinnerStatus="warning"
+      nbSpinnerMessage="file uploading ..."
+    >
+      <nb-card-body> </nb-card-body>
+    </nb-card>
+  </div>
+</nb-alert>

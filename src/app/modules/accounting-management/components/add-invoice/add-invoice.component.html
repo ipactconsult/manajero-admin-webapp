@@ -1,0 +1,92 @@
+<div class="row">
+  <div></div>
+  <div class="col-md-12"><a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/accounting/invoicelist']" nbButton>
+    <nb-icon icon="corner-up-right-outline"></nb-icon>
+  </a></div>
+</div>
+<div class="container col-lg-6 col-sm-12 mt-5" align="center">
+  <nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-5"><h3>New Invoice</h3></div>
+
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form *ngIf="invoiceForm"
+            [formGroup]="invoiceForm"
+            (ngSubmit)="submit()">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="title" class="label">Invoice title</label></div>
+              <input size="large" fieldSize="large" type="text" nbInput fullWidth id="title" placeholder="Title" formControlName="title">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="currency" class="label">Currency</label></div>
+              <nb-select placeholder="Select currency" fullWidth size="large" id="currency" formControlName="currency">
+                <nb-option >Select currency</nb-option>
+                <nb-option value="USD">USD</nb-option>
+                <nb-option value="TND">TND</nb-option>
+                <nb-option value="EUR">EUR</nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="clientName" class="label">Select Client</label></div>
+              <nb-select placeholder="Select Client" fullWidth size="large" id="clientName" formControlName="clientName">
+                <nb-option >Select client</nb-option>
+                <nb-option *ngFor="let customers of customer" [value]="customers">{{customers.name}}</nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="code" class="label">Invoice code</label></div>
+              <input size="large" fieldSize="large"  type="number" nbInput fullWidth id="code" placeholder="Invoice code" formControlName="code">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="dueDate" class="label">Due Date</label></div>
+              <input [nbDatepicker]="datepicker" nbInput fullWidth id="dueDate" size="large" fieldSize="large" placeholder="Due Date"
+                      formControlName="dueDate" style="cursor: pointer">
+              <nb-datepicker #datepicker [min]="dateToday"></nb-datepicker>
+<!--              <input size="large" fieldSize="large"  type="date" nbInput fullWidth id="dueDate" placeholder="Due Date" formControlName="dueDate">-->
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="invoiceNumber" class="label">Invoice Reference</label></div>
+              <input size="large" fieldSize="large"  type="number" nbInput fullWidth id="invoiceNumber" placeholder="Invoice Reference" formControlName="invoiceNumber">
+            </div>
+          </div>
+
+        </div>
+
+
+        <div align="right"><button type="submit" nbButton status="success"><nb-icon icon="checkmark-circle-outline"></nb-icon>Create</button></div>
+
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

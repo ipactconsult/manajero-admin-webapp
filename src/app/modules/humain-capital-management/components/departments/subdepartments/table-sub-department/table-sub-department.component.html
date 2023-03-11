@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="row">
+            <h3>Sub Departments</h3>
+            <input class="w-50 mx-2"   placeholder="search"  nbTooltip="Search sub department" nbTooltipStatus="primary"
+            [(ngModel)]="searchbyfields" type="text"  nbInput>
+        </div>
+
+    </div>
+    <div class="col-md-6 col-sm-8">
+        <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/subdepartment/sub/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+        &nbsp;
+        <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/subdepartment/subList']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+        &nbsp;
+        <a [routerLink]="['/hr/subdepartment/sub/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+        &nbsp;
+        <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success" (click)="exportAsXLSX()"><i class="fas fa-file-excel text-white"></i>  </button>
+        &nbsp;
+        <button nbTooltip="Export to pdf file" nbTooltipStatus="primary" nbButton status="danger" [print]="['subdepartments',config_]"><nb-icon icon="printer-outline"></nb-icon> </button>
+        &nbsp;
+        <a style="float: right;" nbTooltip="Create new sub-department" nbTooltipStatus="primary"
+        nbButton status="info" [routerLink]="['/hr/subdepartment/createSub']">                
+          <nb-icon icon="plus-outline"></nb-icon>
+            Create new</a>
+    </div>
+
+
+  
+</div>
+<div class="row mt-2">
+    <div class="row w-100" *ngIf="!subList || subList.length === 0">
+        <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+    </div>
+    <div [hidden]="subList.length === 0" class="row w-100" *ngIf="(subList | filter : searchbyfields).length === 0">
+        <nb-alert outline="danger" fullWidth class="col-lg-12 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+    </div>
+</div>
+<div class="col-lg-10 mt-3">
+    <label for="">Items Per Page &nbsp; : &nbsp; </label> 
+    <input class="w-75" [disabled]="subList.length === 0" type="number" nbInput [(ngModel)]="pageSize" min="10">
+  </div>
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <nb-card>
+                    <table class="table mb-0" id="subdepartments">
+                        <thead class="bg-light">
+                            <th></th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th class="print-none">Actions</th>
+                        </thead>
+                        <tr *ngFor="let subd of subList | filter : searchbyfields | paginate : {itemsPerPage: 11, currentPage: current,totalItems: total} ; let i =index">
+                            <td>
+                                <nb-user [name]="subd.subDepartmentName" onlyPicture></nb-user>
+                            </td>
+                            <td>
+                                <p>{{subd.subDepartmentName}}</p>
+                            </td>
+                            <td>
+                                <nb-tag-list>
+                                    <nb-tag [hidden]="subd?.department?.departmentName === null" status="primary" [text]="subd?.department?.departmentName"></nb-tag>
+                                  </nb-tag-list>
+                            </td>
+                            <td class="print-none">
+                                <button shape="round" nbButton status="basic" size="small" class="btn btn-default " mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                    <nb-icon icon="more-horizontal-outline"></nb-icon>
+                                  </button>
+                                  <mat-menu #menu="matMenu">
+                                   
+                                      <a style="text-decoration: none;" [routerLink]="['/hr/subdepartment/edit/',subd.id]">
+                                        <button mat-menu-item>
+                                            <span><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                                        </button>
+                                      </a>
+                
+                                      <a (click)="deleteSubDepartment(subd.id)">
+                                      <button mat-menu-item>
+                                        <span><nb-icon class="text-danger" icon="trash-outline"></nb-icon>&nbsp; Delete </span>
+                                      </button>
+                                    </a>
+                                     
+                                  </mat-menu>
+                            </td>
+                        </tr>    
+                        </table>
+                   
+        
+        </nb-card>
+        <nb-card  class="bg-light w-25" style="height: 35px; border-radius: 25px;">
+            <pagination-controls class="pt-1" (pageChange)="current = $event"></pagination-controls>
+          </nb-card>
+    </div>
+</div>

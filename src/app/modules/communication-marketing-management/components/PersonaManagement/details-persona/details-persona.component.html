@@ -1,0 +1,451 @@
+<!--<div *ngIf="persona" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Persona Details </h2>
+    </div>
+
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/communicationMarketing/EditPersona',persona.id]" class="w-25"
+         fullWidth nbButton nbTooltip="Click here to edit Partner data" nbTooltipStatus="primary" shape="round" status="info">
+        <nb-icon icon="edit-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/communicationMarketing/Persona']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to Persona list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+
+    </div>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-4 mb-3">
+      <nb-card>
+        <nb-card-body class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <div class="row">
+
+              <img alt="" src="{{persona.image}}" style="width: 150px;height: 150px;border-radius: 100%;">
+            </div>
+
+            <div class="mt-3">
+              <h4>{{persona.nom}}   {{persona.prenom}}</h4>
+              <div class="row">
+                <div class="col-md-2">
+                  <p>Name</p>
+                </div>
+                <div class="col-md-8">
+                  <nb-tag-list>
+                    <nb-tag [text]="persona.nom" status="danger" appearance="filled"></nb-tag>
+                    <nb-tag [text]="persona.prenom" status="danger" appearance="filled"></nb-tag>
+
+                  </nb-tag-list>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-2">
+                  Job
+                </div> &nbsp; &nbsp;
+                <div class="col-md-9">
+                  <nb-tag-list>
+                    <nb-tag [text]="persona.job" status="primary" appearance="filled"></nb-tag>
+                  </nb-tag-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card class="">
+        <div class="col-sm-6">
+
+          <div class="card-body">
+            <h6 class="d-flex align-items-center mb-3">Contact</h6>
+    
+  
+            <div class="row mt-3">
+              <div class="col-md-3">
+                <button nbButton
+                        size="small"
+                        shape="round"
+                        status="danger">
+                  <nb-icon icon="at-outline"></nb-icon>
+                </button>
+              </div>
+             
+              <div class="col-md-7">
+                <p class="mt-1 mx-2">  {{persona.email}} </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </nb-card>
+
+    </div>
+    <div class="col-md-8">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Personal Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Nom</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.nom}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Prenom</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.prenom}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Gender</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.gender}}
+              </div>
+            </div>
+            <hr>
+
+            
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Email</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.email}}
+              </div>
+            </div>
+
+            <hr>
+
+            
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Location</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.localisation}}
+              </div>
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Job</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.job}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">situation</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.situation}}
+              </div>
+            </div>
+            
+
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Interset Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Motivation</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.motivation}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Interset</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.interset }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">technologie</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.technologie }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Goals</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.goals }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">softSkills</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.softSkills}}<br>
+              </div>
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">hardSkills</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{persona.hardSkills}}<br>
+              </div>
+            </div>
+            
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+
+
+      <br>
+    </div>
+  </div>
+</div>
+
+--->
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@icon/entypo@1.0.3/entypo.css" rel="stylesheet">
+
+<div class="container"  *ngIf="persona">
+  <div class="row">
+  <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Persona Details </h2>
+    </div>
+
+    <div class="col-md-9"></div>
+    <div class="btn-toolbar col-md-3 " align="right" role="toolbar">
+
+    <div class="mr-auto mr-md-2 btn-group" role="group">
+      <a [routerLink]="['/communicationMarketing/EditPersona',persona.id]"
+         fullWidth nbButton nbTooltip="Click here to edit Partner data" nbTooltipStatus="primary" shape="round" status="info">
+        <nb-icon icon="edit-outline"></nb-icon>
+      </a>&nbsp;
+      <a [routerLink]="['/communicationMarketing/Persona']"
+         fullWidth nbButton nbTooltip="Back to Persona list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+   
+      </div>
+       </div>
+  </div>
+   <br>
+    <div class="row" id="PersonaData">
+        <div class="col-lg-3 ">
+            <nb-card class="left-profile-card">
+                <nb-card-body>
+                    <div class="text-center">
+                        <img src="{{persona.image}}" alt="" class="user-profile">
+                        <h3>{{persona.nom }}  {{persona.prenom }}</h3>
+                               <p>{{persona.email}}</p>
+                     <!---   <div class="d-flex align-items-center justify-content-center mb-3">
+                            <i class="fas fa-star text-info"></i>
+                            <i class="fas fa-star text-info"></i>
+                            <i class="fas fa-star text-info"></i>
+                            <i class="fas fa-star text-info"></i>
+                            <i class="fas fa-star text-info"></i>
+                        </div>--->
+                    </div>
+                    <br> <br> <br> 
+                    <div class="personal-info">
+                        <h3>Personal Information</h3>
+                        <ul class="personal-list">
+                          <li><i class="fa fa-venus-mars" aria-hidden="true"></i><span>{{persona.gender}}</span></li>
+                            <li><i class="fas fa-briefcase "></i><span>{{persona.job}}</span></li>
+                            <li><i class="fas fa-map-marker-alt "></i><span>  {{persona.adresse}} {{persona.localisation}}</span></li>
+                         <!--- <li><i class="far fa-envelope "></i><span>{{persona.email}}</span></li>--->
+                            <li><i class="fas fa-phone "></i><span> {{persona.phone}}</span></li>
+                            <li><i class="fas fa-heart "></i><span> {{persona.situation}}</span></li>
+                            <li><i class="far fa-calendar-alt "></i><span> {{persona.dateofBirth  | date:"YYYY MMM dd" }}</span></li>
+                            <li><i  class="fa fa-id-card" aria-hidden="true"></i><span> {{persona.nationality}}</span></li>
+                            <li><i  class="fa fa-users" aria-hidden="true"></i><span> {{persona.numberOfChildren}} Children </span></li>
+
+                        </ul>
+                    </div>
+                 
+                   
+                    <div class="technologie">
+                        <h3>Technologie</h3>
+                        <p>{{persona.technologie}}</p>
+                        
+                      
+                        
+                    </div>
+
+
+                    <div class="languages">
+                      <h3>Languages</h3>
+                      <p>{{persona.languages}}</p>
+                      
+                    
+                      
+                  </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-lg-9">
+            <nb-card class="right-profile-card">
+        <!---   <div class="card-header alert-primary">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-selected="true">Work Experience</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-education-tab" data-toggle="pill" href="#pills-education" role="tab" aria-selected="false">Education</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-timeline-tab" data-toggle="pill" href="#pills-timeline" role="tab" aria-selected="false">Timeline</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-document-tab" data-toggle="pill" href="#" role="tab" aria-selected="false">Document</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-event-tab" data-toggle="pill" href="#" role="tab" aria-selected="false">Event</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-tasks-tab" data-toggle="pill" href="#" role="tab" aria-selected="false">Tasks</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" id="pills-tasks-tab" data-toggle="pill" href="#" role="tab" aria-selected="false">Tasks</a>
+                        </li>
+                    </ul>
+                </div>-->
+                <nb-card-body>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div class="work-container">
+                                <h3>Bio :</h3>
+                              <!----  <h4><i class="far fa-calendar-alt"></i>Jan 2017 to <span class="badge badge-info">Current</span></h4>--->
+                                <p>{{persona.bio}}</p>
+                            </div>
+                            <div class="work-container">
+                                <h3>Personality :</h3>
+                                <p>{{persona.personality}}</p>
+                            </div>
+                            <div class="work-container">
+                                <h3> Frustrations : </h3>
+                              <p>{{persona.frustrations}}</p>
+                            </div>
+
+                               <div class="work-container">
+                                      <h3> Gols : </h3>
+                                     <p>{{persona.goals}}</p>
+                                  </div>
+
+                                  <div>
+                                    <h4> SoftSkills : </h4>
+                                   <p>{{persona.softSkills}}</p>
+                                </div>
+                                <div>
+                                  <h4> HardSkills : </h4>
+                                 <p>{{persona.hardSkills}}</p>
+                              </div>
+                              <div>
+                                <h4> Interset : </h4>
+                               <p>{{persona.interset}}</p>
+                            </div>
+                            <div>
+                              <h4> Interset : </h4>
+                             <p>{{persona.interset}}</p>
+                          </div>
+                          <h4> Description : </h4>
+                          <p>{{persona.description}}</p>
+                       </div>
+
+                        </div>
+                       
+                   <!---<div class="tab-pane fade" id="pills-timeline" role="tabpanel">
+                            <div class="row">
+                                <div class="timeline-centered">
+                                    <div class="timeline-entry">
+                                        <div class="timeline-entry-inner">
+                                            <div class="timeline-icon bg-success">
+                                                <i class="entypo-feather"></i>
+                                            </div>
+                                            <div class="timeline-label">
+                                                <h2><a href="#">Art Ramadani</a> <span>posted a status update</span></h2>
+                                                <p>Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-entry">
+                                        <div class="timeline-entry-inner">
+                                            <div class="timeline-icon bg-secondary">
+                                                <i class="entypo-suitcase"></i>
+                                            </div>
+                                            <div class="timeline-label">
+                                                <h2><a href="#">Job Meeting</a></h2>
+                                                <p>You have a meeting at <strong>Laborator Office</strong> Today.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-entry">
+                                        <div class="timeline-entry-inner">
+                                            <div class="timeline-icon bg-info">
+                                                <i class="entypo-location"></i>
+                                            </div>
+                                            <div class="timeline-label">
+                                                <h2><a href="#">Arlind Nushi</a> <span>checked in at</span> <a href="#">Laborator</a></h2>
+                                                <blockquote>Great place, feeling like in home.</blockquote>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-entry">
+                                        <div class="timeline-entry-inner">
+                                            <div class="timeline-icon bg-warning">
+                                                <i class="entypo-camera"></i>
+                                            </div>
+                                            <div class="timeline-label">
+                                                <h2><a href="#">Arber Nushi</a> <span>changed his</span> <a href="#">Profile Picture</a></h2>
+                                                <blockquote>Pianoforte principles our unaffected not for astonished travelling are particular.</blockquote>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-entry begin">
+                                        <div class="timeline-entry-inner">
+                                            <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
+                                                <i class="entypo-flight"></i> +
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,110 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button>
+<button style="float: left" nbTooltip="Cancel" nbTooltipStatus="danger" shape="round" status="danger" 
+                 (click)="cancelProcess(dialogCancel)"nbButton>
+                     <nb-icon icon="close-outline"></nb-icon>
+       </button><br/><h5 align = "center">Select Materials</h5>
+<ng-template #dialogCancel let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Cancel purchase?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to cancel purchase?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="cancelWithToast(ref)" class="float-right" nbButton status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+<ngx-process [selectedIndex]="0" [progressValue]="0" [progressStatus]="progressStatus"></ngx-process>
+<nb-card>
+      <nb-card-header>Select Materials</nb-card-header>
+      <nb-card-body>
+        <label>Materials</label>
+        <div class="row">
+          <div class="col-md-11">
+              <nb-select nbSelect fullWidth (selectedChange)="selectMaterial($event)"
+              nbTooltip="Select one or many Materials" nbTooltipStatus="info">
+                <nb-option [value]="material" *ngFor="let material of materials">
+                  {{material.materialName}}
+                </nb-option>
+              </nb-select>
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Please select one or many materials" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div><br/>
+        <div class = "row" *ngIf="selectedMaterials.length > 0">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Category</th>
+            <th>Barcode</th>
+            <th>Creation Date</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+         <tbody
+          *ngFor="let material of selectedMaterials">
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{material.materialType}}</p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialCategory.categoryName}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">
+                -
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialBarcode">
+                {{material.materialBarcode}}
+              </p>
+            </td>
+            <td><p class="fw-normal mb-1">{{moment(material.materialCreationDate).format('DD MMM YYYY')}}</p></td>
+            <td>
+              <p class="fw-normal mb-1">
+                <button style="float: left" nbTooltip="Cancel Material Selection" 
+                        nbTooltipStatus="danger" shape="round" status="danger" 
+                 nbButton (click)="cancelSelection(material)">
+                     <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+            </div>
+          <div class="col-md-1" *ngIf="selectedMaterials.length > 0">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Selected Materials" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="selectedMaterials.length === 0" 
+                      (click)="goToPurchaseRequisition()"
+            nbTooltip="Proceed or Select another Material" nbTooltipStatus="info" status="primary">
+              Next
+            </button>
+         </div>
+        </div>
+      </nb-card-body>
+    </nb-card>

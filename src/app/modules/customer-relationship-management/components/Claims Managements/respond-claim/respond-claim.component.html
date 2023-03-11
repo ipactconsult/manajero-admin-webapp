@@ -1,0 +1,101 @@
+<nb-card >
+  <nb-card-body>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-10 col-sm-12">
+          <h5 class="more-vertical">
+            Respond a claim </h5>
+        </div>
+        
+        <div align="right" class="col-md-2 justify-content-end">
+          <a [routerLink]="['/crm/claims']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to claims list" nbTooltipStatus="primary"
+             shape="round" status="basic">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+        <form [formGroup]="claimGroup" >
+     
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label">Status</label><br>
+                <nb-select (selectedChange)="onMenuStatusSelected($event)"
+                           [(ngModel)]="claim.status"
+                          fullWidth size="large"
+                           formControlName="status"
+                      
+                               class="w-100"
+                           id="status" name="status"
+                           placeholder="Claim status">
+
+                  <nb-option value="Pending">Pending</nb-option>
+                  <nb-option value="In Progress">In Progress</nb-option>
+                  <nb-option value="Resolved">Resolved</nb-option>
+
+                </nb-select>
+              </div>
+            </div>
+          </div>
+          
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label"> Evaluation Claim </label> <br>
+       
+                 <ngb-rating [max]="5" [(rate)]="currentRate"
+                             formControlName="evaluationClaim"  name="evaluationClaim"
+                             [readonly]="false" [(ngModel)]="claim.evaluationClaim"></ngb-rating>
+                    <p>Evaluation : {{currentRate}}</p>
+                </div>
+              </div>
+            </div>
+
+         <div class="row">
+              <div class="col-lg">
+                <div class="form-group">
+                  <label class="label"> Response</label>
+                  <textarea [(ngModel)]="claim.responseClaim" formControlName="responseClaim"
+                                fullWidth fieldSize="large"
+                            id="responseClaim" name="responseClaim"
+                            nbInput rows="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                <div class="form-group">
+                  <label class="label"> Employee </label> <br>
+                  <nb-select (selectedChange)="onMenuItemSelectedEmployee($event)"
+                             [(ngModel)]="claim.employee"
+                             [selected]="selectedEmployee"
+                             class="w-100"
+                             formControlName="employee"
+                               fullWidth size="large"
+                             id="employee" name="employee"
+                             placeholder="Employee">
+
+                    <nb-option
+
+                      *ngFor="let optionEmployee of list"
+                      value="{{optionEmployee.id}}">{{optionEmployee.employeeName}}</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+            
+            </div>
+            <div align="right">
+            
+              <button (click)="updateClaimFunction()" nbButton 
+                      status="success" type="submit">Respond
+              </button>
+            </div>
+       
+ 
+    </form>
+  </nb-card-body>
+</nb-card>

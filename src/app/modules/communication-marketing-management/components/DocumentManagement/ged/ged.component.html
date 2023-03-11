@@ -1,0 +1,128 @@
+<!---<nb-card *ngIf="GedLength > 0" >
+  <nb-card-header>
+    <h3>Document Management System</h3>
+    <div align="right" class="mt-3">
+      <div>
+        <button (click)="exportParternershipsExcel()"
+                class="btn " style="background-color: #008000" align="right">
+          <i class="fas fa-file-excel text-white"></i></button>
+
+        <button class="btn mx-2" style="background-color:  #EA8903" (click)="exportGedPDF();">
+          <i class="fas fa-file-pdf text-white"></i>
+        </button>
+        <button class="btn btn-primary " (click)="openWindow(contentTemplate)">
+          <i class="fas fa-plus-circle text-white">&nbsp; Add  new Document </i>
+        </button>
+
+      <ng-template #contentTemplate let-data>
+          <ngx-add-ged (addGedOutputEvent)="add_Ged($event)"></ngx-add-ged>
+        </ng-template>
+ 
+      </div>
+    </div>
+
+  </nb-card-header>
+
+ 
+  <nb-card-body>
+    <ng2-smart-table id="GedData"
+                     [settings]="settings" [source]="source"
+                     (createConfirm)="addGed($event)"
+                     (editConfirm)="updateRecord($event)"
+                     (deleteConfirm)="onDeleteGed($event)"
+                       >
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<div align = "left" *ngIf="GedLength === 0">
+  <h6 class="text">There are no Documents .</h6>
+</div>--->
+
+<!----
+<nb-card-header>
+  <h3>Document Management System</h3>
+
+    
+</nb-card-header>
+
+
+<nb-card>
+  <nb-card-body>
+
+    <label class="search-label" for="search">Search:</label>
+    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+          {{customColumn}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+          {{row.data[customColumn]}}
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+</nb-card>
+---->
+
+<nb-card>
+  <nb-card-header>
+    <h3>Document Management System</h3>
+    <div align="right" class="mt-3">
+      <div>
+        <button (click)="exportParternershipsExcel()"
+                class="btn " style="background-color: #008000" align="right">
+          <i class="fas fa-file-excel text-white"></i></button>
+          &nbsp;
+
+      <!---  <button class="btn mx-2" style="background-color:  #EA8903" (click)="exportGedPDF();">
+          <i class="fas fa-file-pdf text-white"></i>
+        </button>--->
+        <button class="btn btn-primary " (click)="openWindow(contentTemplate)">
+          <i class="fas fa-plus-circle text-white">&nbsp; Add  new Document </i>
+        </button> &nbsp;
+
+      <ng-template #contentTemplate let-data>
+          <ngx-add-ged (addGedOutputEvent)="add_Ged($event)"></ngx-add-ged>
+        </ng-template>
+ 
+      </div>
+    </div>
+
+  </nb-card-header>
+
+ 
+  <nb-card-body>
+    <ng2-smart-table id="GedData"
+                     [settings]="settings" [source]="source"
+                     (createConfirm)="addGed($event)"
+                     (editConfirm)="updateRecord($event)"
+                     (deleteConfirm)="onDeleteGed($event)"
+                       >
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+
+
+<div align = "left" *ngIf="GedLength === 0">
+  <h6 class="text">There are no Documents .</h6>
+</div>

@@ -1,0 +1,168 @@
+<div *ngIf="existedCategory" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Category Details </h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Go Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right"></nb-icon>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Category Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Creation Date</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{moment(existedCategory.categoryCreationDate).format("DD MMM YYYY hh:mm A")}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Reference</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedCategory.categoryCode}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Category Name</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedCategory.categoryName}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Category Description</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedCategory.categoryDesc}}
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Materials ({{materialsByCategory.length}})</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row" *ngIf="materialsByCategory.length > 0">
+              <div class = "col-md-11">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>SKU</th>
+                    <th>Barcode</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Warehouse</th>
+                  </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let material of materialsByCategory">
+                  <tr class="col-md-9 col-sm-10">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{material.materialType}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        <a [routerLink]="['/pim/procurement/material', material.materialId]" 
+                          nbTooltip="Material Details" nbTooltipStatus="info">
+                          {{material.materialName}}
+                        </a>
+                      </p>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">-</p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialBarcode">{{material.materialBarcode}}</p>
+                    </td>
+                    <td>
+                    <p class = "fw-normal mb-1" *ngIf="material.materialPrice">
+                      {{material.materialPrice}} {{material.supplier?.supplierCurrency}}
+                    </p>
+                    <p class = "fw-normal mb-1" *ngIf="!material.materialPrice">
+                      -
+                    </p>
+                  </td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="material.quantityStock">
+                      {{material.quantityStock}}
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="!material.quantityStock && material.materialType !== 'Service'">
+                        0
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                        -
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="material.stockAlert > 0">
+                        {{material.stockAlert}}
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                        -
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="material.stockMax > 0">
+                        {{material.stockMax}}
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                        -
+                      </p>
+                    </td>
+                    <td>
+                      <p class = "fw-normal mb-1" *ngIf="material.warehouse">
+                        {{material.warehouse?.warehouseLocation}}
+                      </p>
+                      <p class = "fw-normal mb-1" *ngIf="!material.warehouse">
+                        -
+                      </p>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-1" *ngIf="materialsByCategory.length > 0">
+                <nb-icon icon="info-outline"
+                         nbTooltip="Materials" nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+            <div class="row" *ngIf="materialsByCategory.length === 0">
+              <div class = "col-md-11">
+                <span class="text-danger font-weight-bold">
+                  This category does not contain any material.
+                </span>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+    </div>
+  </div>
+</div>

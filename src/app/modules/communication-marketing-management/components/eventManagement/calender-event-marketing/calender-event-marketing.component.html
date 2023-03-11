@@ -1,0 +1,159 @@
+<div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
+  <div class="col-md-3">
+    <h2>Event  Calendar</h2>
+  </div>
+  <div class="col-md-6"></div>
+  <div class="btn-toolbar col-md-3 " align="right" role="toolbar">
+
+    <div class="mr-auto mr-md-2 btn-group" role="group">
+
+
+      <a [routerLink]="['/communicationMarketing/EventGrid']" nbButton
+      nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+     <nb-icon icon="grid-outline"></nb-icon>
+   </a>&nbsp;
+   <a [routerLink]="['/communicationMarketing/EventMarketing']" nbButton
+      nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+     <nb-icon icon="keypad-outline"></nb-icon>
+   </a>&nbsp;
+   <a [routerLink]="['/communicationMarketing/ListEvent']" nbButton
+      nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+     <nb-icon icon="list-outline"></nb-icon>
+   </a>&nbsp;
+   <a [routerLink]="['/communicationMarketing/CalenderEvent']" nbButton
+   nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+  <nb-icon icon="calendar-outline"></nb-icon>
+</a>&nbsp;
+ <!---  <button (click)="exportAsXLSX()"
+           align="right" class="btn "
+           nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+           style="background-color: #008000">
+     <i class="fas fa-file-excel text-white"></i></button>&nbsp;--->
+     <button [routerLink]="['/communicationMarketing/AddEvent']" class="btn btn-primary">
+       <i class="fas fa-plus-circle text-white"></i>
+     </button>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="row text-center mt-3">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <button
+        nbButton
+        status="basic"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+      >
+         <nb-icon icon="arrow-ios-back-outline"></nb-icon> Prev
+      </button>
+      &nbsp;
+      <button
+        nbButton
+        status="primary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+      >
+        Today 
+      </button>
+      &nbsp;
+      <button
+        nbButton
+        status="basic"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+      >
+        Next <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
+  <div class="col-md-4">
+   <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month"
+      >
+        Month
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week"
+      >
+        Week
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"
+      >
+        Day
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<nb-card>
+  
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+<div class="cal-cell-top">
+  <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
+    >{{ day.badgeTotal }}</span
+  >
+  <span class="cal-day-number"
+    >{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
+  >
+</div>
+<small style="margin: 5px" *ngIf="day.events.length !=0"
+  >There are {{ day.events.length }} Events on this day</small
+>
+</ng-template>
+  <div [ngSwitch]="view" >
+          <mwl-calendar-month-view
+          style="color: black;"
+          *ngSwitchCase="CalendarView.Month"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+           [cellTemplate]="customCellTemplate"
+          [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+
+      
+      
+      <mwl-calendar-week-view
+      style="color: black;"
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+      style="color: black;"
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-day-view>
+  </div>
+</nb-card>

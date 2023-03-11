@@ -1,0 +1,81 @@
+<form
+  class="form"
+  [formGroup]="createResponsibiltyCustomerForm"
+  (ngSubmit)="create()"
+>
+  <div class="form-group">
+    <nb-select
+      placeholder="Choose Category"
+      formControlName="responsibilityCategory"
+    >
+      <nb-option value="TASK">TASK</nb-option>
+      <nb-option value="RESOURCES_STAFFING">Resources/Staffing</nb-option>
+    </nb-select>
+    <div
+      *ngIf="
+        responsibilityCategory?.invalid &&
+        (responsibilityCategory?.dirty || responsibilityCategory?.touched)
+      "
+    >
+      <p class="text-danger" *ngIf="responsibilityCategory?.errors?.required">
+        *Required
+      </p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Item:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="item"
+    >
+    <div *ngIf="item?.invalid && (item?.dirty || item?.touched)">
+      <p class="text-danger" *ngIf="item?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Comment:</label>
+    <textarea
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="comment"
+    ></textarea>
+    <div *ngIf="comment?.invalid && (comment?.dirty || comment?.touched)">
+      <p class="text-danger" *ngIf="comment?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <fieldset>
+    <legend>Contact:</legend>
+  <div formGroupName="contact">
+    <label class="text-label" for="text">Email:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="email"
+    >
+    <label class="text-label" for="text">Phone:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="phone"
+    >
+    <label class="text-label" for="text">Address:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="address"
+    >
+  </div>
+  </fieldset>
+  <input
+  [ngClass]="selectedItem===null ?'btn btn-success btnCreate':'btn btn-warning btnCreate'"
+  type="submit"
+  [value]="selectedItem===null ? 'Create' : 'Update'"
+  [disabled]="createResponsibiltyCustomerForm.invalid"
+/>
+</form>

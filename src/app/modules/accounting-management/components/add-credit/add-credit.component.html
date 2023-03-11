@@ -1,0 +1,115 @@
+<div class="row">
+  <div></div>
+  <div class="col-md-12"><a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/accounting/creditlist']" nbButton>
+    <nb-icon icon="corner-up-right-outline"></nb-icon>
+  </a></div>
+</div>
+<div class="container col-lg-6 col-sm-12 mt-5" align="center">
+  <nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-5"><h3>New Credit</h3></div>
+
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form *ngIf="creditForm"
+            [formGroup]="creditForm"
+            (ngSubmit)="submit()">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="initialCapital" class="label">Initial Capital (principal)</label></div>
+              <input size="large" fieldSize="large" type="number" nbInput fullWidth id="initialCapital" placeholder="Initial Capital" formControlName="initialCapital">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="clientName" class="label">Select Client</label></div>
+              <nb-select placeholder="Select Client" fullWidth size="large" id="clientName" formControlName="clientName">
+                <nb-option >Select client</nb-option>
+                <nb-option *ngFor="let customers of customer" [value]="customers">{{customers.name}}</nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="currency" class="label">Currency</label></div>
+              <nb-select placeholder="Select currency" fullWidth size="large" id="currency" formControlName="currency">
+                <nb-option >Select currency</nb-option>
+                <nb-option value="USD">USD</nb-option>
+                <nb-option value="TND">TND</nb-option>
+                <nb-option value="EUR">EUR</nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="frequency" class="label">Payment frequency</label></div>
+              <nb-select placeholder="Select frequency" fullWidth size="large" id="frequency" formControlName="frequency">
+                <nb-option >Select frequency</nb-option>
+                <nb-option value="Annually">Annually</nb-option>
+                <nb-option value="Semi-Annually">Semi-Annually</nb-option>
+                <nb-option value="Quarterly">Quarterly</nb-option>
+                <nb-option value="Monthly">Monthly</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="periods" class="label">Years to pay out</label></div>
+              <input size="large" fieldSize="large"  type="number" nbInput fullWidth id="periods" placeholder="Years to pay out" formControlName="periods">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="interestRate" class="label">Interest Annual Rate (Percentage)</label></div>
+              <input size="large" fieldSize="large"  type="number" nbInput fullWidth id="interestRate" placeholder="Interest Rate (%)" formControlName="interestRate">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="inflationRate" class="label">Inflation Annual Rate (Percentage)</label></div>
+              <input size="large" fieldSize="large"  type="number" nbInput fullWidth id="inflationRate" placeholder="Inflation Rate (%)" formControlName="inflationRate">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div align="left"><label for="taxRate" class="label">Tax Rate (Percentage)</label></div>
+              <input size="large" fieldSize="large"  type="number" nbInput fullWidth id="taxRate" placeholder="Tax Rate (%)" formControlName="taxRate">
+            </div>
+          </div>
+
+        </div>
+        
+        
+        <div align="right"><button type="submit" nbButton status="success"><nb-icon icon="checkmark-circle-outline"></nb-icon>Create</button></div>
+
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

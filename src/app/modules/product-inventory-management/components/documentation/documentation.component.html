@@ -1,0 +1,861 @@
+<div oncontextmenu="return false" class="noselect">
+  <div class="col-md-3">
+    <h3>Documentation</h3>
+  </div><br/>
+  <nb-accordion multi>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Introduction
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        <u>Product & Stock</u> module is where you can manage your materials (finished product, raw material or service)
+        and purchase them by using the <span class="text-info font-weight-bold">procurement process</span>
+        in order to stock them in different <span class="text-info font-weight-bold">warehouses</span> and managing the stock.
+        <br/><br/>
+        <div align="center">
+          <img src="assets/images/MaterialsList.png" width="1100" height="650"/>
+        </div>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Categories
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view categories, go to Product & Stock -> Categories<br/><br/>
+        <div align="center">
+          <img src="assets/images/Categories.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can view categories in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CategoriesGrid.png" width="900" height="450"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/CategoriesList.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can search a category, export categories to <span class="text-success font-weight-bold">Excel</span>
+        or sort them by name.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CategoriesFilterSearchExport.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can see category details, edit or archive a category.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CategoriesActions.png" width="900" height="450"/>
+        </div><br/><br/>
+        To create a new category, click on <span class="font-weight-bold">+</span>.
+        The category creation page will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CategoriesClickPlusButton.png" width="900" height="450"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/CreateCategoryForm.png" width="900" height="450"/>
+        </div><br/><br/>
+        Fill the category information and click on "Save Data".<br/><br/>
+        <div align="center">
+          <img src="assets/images/CategoryCreationFilledInfo.png" width="900" height="450"/>
+        </div><br/><br/>
+        Note that if the category already exists, you will get an error and the category will not be added.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CategoryAlreadyExists.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Materials
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view materials, go to Product & Stock -> Materials<br/><br/>
+        <div align="center">
+          <img src="assets/images/Materials.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view materials in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridMaterials.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListMaterials.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a material, export materials to <span class="text-success font-weight-bold">Excel</span>,
+        filter by type and category or sort them by name.<br/><br/>
+        <div align="center">
+          <img src="assets/images/MaterialsFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can see material details, edit or archive a material.<br/><br/>
+        <div align="center">
+          <img src="assets/images/MaterialsActions.png" width="900" height="400"/>
+        </div><br/><br/>
+        To create a new material, click on <span class="font-weight-bold">+</span>.
+        The material creation page will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/MaterialsClickPlusButton.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/CreateMaterialForm.png" width="900" height="400"/>
+        </div><br/><br/>
+        Fill the material information and click on "Save Data".<br/><br/>
+        <div align="center">
+          <img src="assets/images/MaterialCreationFilledInfo.png" width="900" height="400"/>
+        </div><br/><br/>
+        Note that if the material already exists, you will get an error and the material will not be added.<br/><br/>
+        <div align="center">
+          <img src="assets/images/MaterialAlreadyExists.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Suppliers
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view suppliers, go to Product & Stock -> Suppliers<br/><br/>
+        <div align="center">
+          <img src="assets/images/Suppliers.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view suppliers in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridSuppliers.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListSuppliers.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a supplier, export suppliers to <span class="text-success font-weight-bold">Excel</span>,
+        filter by date and country or sort them by full name.<br/><br/>
+        <div align="center">
+          <img src="assets/images/SuppliersFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can see supplier details, edit or archive a supplier.<br/><br/>
+        <div align="center">
+          <img src="assets/images/SuppliersActions.png" width="900" height="400"/>
+        </div><br/><br/>
+        To create a new supplier, click on <span class="font-weight-bold">+</span>.
+        The supplier creation page will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/SuppliersClickPlusButton.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/CreateSupplierForm.png" width="900" height="450"/>
+        </div><br/><br/>
+        Fill the supplier information and click on "Save Data".<br/><br/>
+        <div align="center">
+          <img src="assets/images/SupplierCreationFilledInfo.png" width="900" height="450"/>
+        </div><br/><br/>
+        Note that if the supplier already exists, you will get an error and the supplier will not be added.<br/><br/>
+        <div align="center">
+          <img src="assets/images/SupplierAlreadyExists.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Procurement Process
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To create a purchase, go to Product & Stock -> Purchase -> Create Purchase<br/>
+        <u>Note: You can cancel the process or go back to the previous step.</u>
+        <br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementProcess.png" width="900" height="450"/>
+        </div><br/><br/>
+        1) In step 1, identify the enterprise needs by selecting the materials to purchase. then click on "Next".<br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementStepOne.png" width="900" height="450"/>
+        </div><br/><br/>
+        2) a) In step 2, create the purchase requisition. To do so, update the quantity by clicking on
+        <i class = "fa fa-edit"></i>.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementPRCreation.png" width="900" height="450"/>
+        </div><br/><br/>
+        2) b) Edit "Material Quantity" and click on "Save Data". Then, click on "Next".<br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementStepTwoUpdateQuantity.png" width="900" height="450"/>
+        </div><br/><br/>
+        2) c) Purchase requisition is created and reviewed by the Finance Team. Its status is set to
+        <span class="text-warning font-weight-bold">Pending</span>.<br/>
+        <u>Note: Purchase requisition needs to be approved by the Finance Team in order to go to step 3.</u><br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementStepTwoPending.png" width="900" height="450"/>
+        </div><br/><br/>
+        2) d) This is what you get when your purchase requisition is approved. Then, click on "Request For Quotation".<br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementApproved.png" width="900" height="450"/>
+        </div><br/><br/>
+        2) e) This is what you get when your purchase requisition is rejected. Click on "Quit" to terminate the process.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementRejected.png" width="900" height="450"/>
+        </div><br/><br/>
+        3) In step 3, create request for quotations by selecting at least two suppliers and entering the quotation deadline.
+        Then, click on "Next".
+        <br/>
+        <u>Note: It is recommended to select three suppliers.</u><br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementStepThree.png" width="900" height="450"/>
+        </div><br/><br/>
+        4) In step 4, you maintain quotations sent by suppliers.
+        <br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementStepFour.png" width="900" height="450"/>
+        </div><br/><br/>
+        4) a) To do so, select suppliers <span class="text-info font-weight-bold">one by one</span>
+        and update material price by clicking on <i class = "fa fa-edit"></i> under "Maintain Price" in Materials.
+        <br/><br/>
+        <div align="center">
+          <img src="assets/images/HowToMaintainPrice.png" width="900" height="450"/>
+        </div><br/><br/>
+        4) b) Enter "Material Price" Info and click on "Update". Then, click on "Save Data".<br/>
+        <u>Note: You must do that to all suppliers you selected before you proceed to the next step.</u><br/><br/>
+        <div align="center">
+          <img src="assets/images/EnteringPriceInfo.png" width="900" height="450"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/StepFourSaveData.png" width="900" height="450"/>
+        </div><br/><br/>
+        4) c) Once done, click on "Next".<br/><br/>
+        <div align="center">
+          <img src="assets/images/ProcurementStepFourProceed.png" width="900" height="450"/>
+        </div><br/><br/>
+        5) In step 5, you decide who to purchase materials from.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StepFiveDecideVendor.png" width="900" height="450"/>
+        </div><br/><br/>
+        5) a) To do so, select suppliers to see the offers they provide and compare them to each other.<br/>
+        When you decide the vendor, select the one you have chosen and click on "Next.
+        and <span class="text-success font-weight-bold">confirm</span> you would like to choose the vendor.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StepFiveCompareAndChooseSupplier.png" width="900" height="450"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/StepFiveAnotherSupplierOffer.png" width="900" height="450"/>
+        </div><br/><br/>
+        6) In the final step, after choosing the right vendor, create purchase order.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StepSixPO.png" width="900" height="450"/>
+        </div><br/><br/>
+        6) a) To do so, enter "Receipt Date" when materials are set to be received, click on "Finish"
+        and <span class="text-success font-weight-bold">confirm</span> the purchase order creation.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StepSixReceiptDate.png" width="900" height="450"/>
+        </div><br/><br/>
+        6) b) The purchase order is created and sent to the finance team to be reviewed.
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Purchase Requisitions
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view purchase requisitions, go to Product & Stock -> Purchase -> Purchase Requisitions<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseRequisitions.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view purchase requisitions in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridPurchaseRequisitions.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListPurchaseRequisitions.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a purchase requisition, export purchase requisitions to
+        <span class="text-success font-weight-bold">Excel</span>,
+        filter by status or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PRSFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Request For Quotations
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view request for quotations, go to Product & Stock -> Purchase -> Request For Quotations<br/><br/>
+        <div align="center">
+          <img src="assets/images/RequestForQuotations.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view request for quotations in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridRFQs.png" width="900" height="400"/>
+        </div><br/><br/>
+        <div align="center">
+          <img src="assets/images/ListRFQs.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a request for quotation, export request for quotations to
+        <span class="text-success font-weight-bold">Excel</span>, sort them by reference,
+        filter them by creation date or quotation deadline.<br/><br/>
+        <div align="center">
+          <img src="assets/images/RFQSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Quotations
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view quotations, go to Product & Stock -> Purchase -> Quotations<br/><br/>
+        <div align="center">
+          <img src="assets/images/Quotations.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view quotations in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/QuotationsGrid.png" width="900" height="400"/>
+        </div><br/><br/>
+        <div align="center">
+          <img src="assets/images/QuotationsList.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a quotation, export quotations to
+        <span class="text-success font-weight-bold">Excel</span>, filter by request for quotation,
+        filter them by date and supplier or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/QuotationsFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Purchase Orders
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view purchase orders created in <span class="text-info font-weight-bold">procurement process</span>,
+        go to Product & Stock -> Purchase -> Purchase Orders
+        <br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseOrders.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can view purchase orders in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseOrdersGrid.png" width="900" height="450"/>
+        </div><br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseOrdersList.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can search a purchase order, export purchase orders to <span class="text-success font-weight-bold">Excel</span>,
+        filter by creation date, supplier and status (Approved, Pending or Rejected) or sort by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseOrderSearchExportFilter.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can only confirm the reception of materials when the finance team approves the purchase order.<br/>
+        You confirm the material reception by clicking on "Confirm" under "Receipt".<br/>
+        Note that If you click on "Confirm" before the delivery date, you will get an error stating that
+        <span class="text-danger font-weight-bold">receipt must be confirmed the day of delivery</span>.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseOrdersConfirmRejected.png" width="900" height="450"/>
+        </div><br/><br/>
+        After confirming that you received materials, under "Receipt", you will see
+        <span class="text-success font-weight-bold">Materials Received</span>.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseOrdersMaterialsReceived.png" width="900" height="450"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Reception
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view received materials, go to Product & Stock -> Reception<br/><br/>
+        <div align="center">
+          <img src="assets/images/Reception.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view received materials in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridReception.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListReception.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a received material, export received materials to <span class="text-success font-weight-bold">Excel</span>,
+        filter by type and category or sort them by name.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceptionFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can either <span class="text-success font-weight-bold">stock</span>
+        or <span class="text-danger font-weight-bold">return</span> the received material.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceptionStockReturn.png" width="900" height="400"/>
+        </div><br/><br/>
+        If you click on <button nbButton status="success" style="cursor: default; line-height: 0rem;">Stock</button>
+        and the material is not in a warehouse.<br/>
+        <i class="fa fa-arrow-right"></i> You are redirected to a page where you have to fill the infos
+        (Warehouse, is the material going to be for sale and sale price).<br/>
+        <u>Note: If the material exists in a warehouse, a popup will open to confirm or refuse the stock operation.</u><br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceptionStock.png" width="900" height="400"/>
+        </div><br/><br/>
+        Fill the stock information and click on "Stock".<br/>
+        <u>Note: If you choose "No" for "To Sell?", sale price will not be shown.</u><br/><br/>
+        <div align="center">
+          <img src="assets/images/FillStockInformation.png" width="900" height="400"/>
+        </div><br/><br/>
+        If you click on <button nbButton status="danger" style="cursor: default; line-height: 0rem;">Return</button>.<br/>
+        <i class="fa fa-arrow-right"></i> The purchase return creation page for the received material will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseReturnCreation.png" width="900" height="400"/>
+        </div><br/><br/>
+        Enter the reason why you would like to return the received material and click on "Save Data".<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseReturnFilledForm.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Purchase Returns
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view purchase returns, go to Product & Stock -> Purchase -> Purchase Returns
+        <br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseReturns.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can view purchase returns in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseReturnsGrid.png" width="900" height="450"/>
+        </div><br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseReturnsList.png" width="900" height="450"/>
+        </div><br/><br/>
+        You can search a purchase order, export purchase orders to <span class="text-success font-weight-bold">Excel</span>,
+        filter by material and supplier or sort by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/PurchaseReturnsSearchExportFilter.png" width="900" height="450"/>
+        </div><br/>
+        <u>Note: If you would like to know how to create a purchase return, go to the "Reception Section" above.</u>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Receipts
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view receipts, go to Product & Stock -> Purchase -> Receipts<br/><br/>
+        <div align="center">
+          <img src="assets/images/Receipts.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view receipts in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridReceipts.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListReceipts.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a receipt, export receipts to <span class="text-success font-weight-bold">Excel</span>,
+        filter by creation date and receipt date or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceiptsFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can see receipt details or archive a receipt.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceiptsActions.png" width="900" height="400"/>
+        </div><br/><br/>
+        To create a new receipt, click on <span class="font-weight-bold">+</span>.
+        The receipt creation page will open.<br/>
+        <u>Note: you do the receipt creation after confirming the reception of materials.</u><br/>
+        <i class="fa fa-arrow-right"></i> For material reception infos, go to "Reception Section" above.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceiptsClickPlusButton.png" width="900" height="400"/>
+        </div><br/><br/>
+        1) In step 1, select one of the purchase orders and click on "Proceed".<br/>
+        <u>Note: you can cancel the purchase order selection by clicking on
+          <button nbButton shape="round" status="danger" style="cursor: default; line-height: 0rem;">
+            <nb-icon icon="close-outline"></nb-icon>
+          </button></u><br/><br/>
+        <div align="center">
+          <img src="assets/images/ReceiptCreationOne.png" width="900" height="450"/>
+        </div><br/><br/>
+        2) In step 2, enter notes, rate receipt out of 10 and click on "Save Data".<br/>
+        <u>Note: you can also go back to change the purchase order selected.</u>
+        <div align="center">
+          <img src="assets/images/ReceiptCreationTwo.png" width="900" height="450"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Warehouses
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view warehouses, go to Product & Stock -> Stock -> Warehouses<br/><br/>
+        <div align="center">
+          <img src="assets/images/Warehouses.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view warehouses in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridWarehouses.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListWarehouses.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a warehouse, export warehouses to <span class="text-success font-weight-bold">Excel</span>,
+        filter them by date and country or sort them by name.<br/><br/>
+        <div align="center">
+          <img src="assets/images/WarehousesFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can see warehouse details, edit or archive a warehouse.<br/><br/>
+        <div align="center">
+          <img src="assets/images/WarehousesActions.png" width="900" height="400"/>
+        </div><br/><br/>
+        To create a new warehouse, click on <span class="font-weight-bold">+</span>.
+        The warehouse creation page will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/WarehousesClickPlusButton.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/CreateWarehouseForm.png" width="900" height="450"/>
+        </div><br/><br/>
+        Fill the warehouse information and click on "Save Data".<br/><br/>
+        <div align="center">
+          <img src="assets/images/WarehouseCreationFilledInfo.png" width="900" height="450"/>
+        </div><br/><br/>
+        Note that if the warehouse already exists, you will get an error and the warehouse will not be added.<br/><br/>
+        <div align="center">
+          <img src="assets/images/WarehouseAlreadyExists.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        In Stock
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view materials in Stock, go to Product & Stock -> Stock -> In Stock<br/>
+        You are able to see stocked materials, its stock quantity and you get an alert when the stock is below
+        the minimum capacity.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InStock.png" width="900" height="400"/>
+        </div><br/><br/>
+        <div align="center">
+          <img src="assets/images/InStockAlert.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view materials in stock in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InStockGrid.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/InStockList.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a material in stock, export materials in stock to <span class="text-success font-weight-bold">Excel</span>,
+        filter by type and category or sort them by name.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InStockFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can see stocked material details or transfer it from a warehouse to another one.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InStockActions.png" width="900" height="400"/>
+        </div><br/><br/>
+        If you click on <span class="text-primary"><nb-icon icon="swap-outline"></nb-icon></span>
+        <span class="font-weight-bold">TRANSFER</span>, a new popup window will open where you will
+        choose the warehouse the stocked material will be transfered to.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InStockTransfer.png" width="900" height="400"/>
+        </div><br/><br/>
+        If the quantity in stock reaches below the minimum capacity, then you will get an alert.<br/>
+        <i class="fa fa-arrow-right"></i> You need to replenish the material to maintain the stock.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InStockReplenishBtn.png" width="900" height="400"/>
+        </div><br/><br/>
+        Once you click on <span class="text-warning"><nb-icon icon="charging-outline"></nb-icon></span>
+        <span class="font-weight-bold">REPLENISH</span>, you are redirected to a replenishment process page of that material.<br/>
+        1) In Step 1, you submit a purchase request to the finance team and it will be reviewed shortly.<br/>
+        <u>Note: The "Quantity Needed" value is set to the difference between the maximum quantity and quantity stocked.</u><br/>
+        <i class="fa fa-arrow-right"></i> You can <span class="text-danger font-weight-bold">decrement</span>
+        it until the difference between the minimum quantity
+        and the quantity stocked.<br/>
+        You can also <span class="text-success font-weight-bold">increment</span> it until the difference
+        between the maximum quantity and quantity stocked.<br/>
+        Once done, click on "Next" to submit a purchase request to the Finance Team.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReplenishMaterialStepOne.png" width="900" height="400"/>
+        </div><br/><br/>
+        2) In Step 2, you see the purchase request information including its
+        <span class="text-warning font-weight-bold">Pending</span> status.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReplenishMaterialStepTwoPending.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can quit the "Replenishment Process" to do other things and you can check if the purchase request is
+        <span class="text-success font-weight-bold">Approved</span> or
+        <span class="text-danger font-weight-bold">Rejected</span> by going to<br/>
+        <i class="fa fa-arrow-right"></i> Product & Stock -> Stock -> Replenishment<br/>
+        <u>Note: You can abandon the process by clicking on</u>
+        <button nbButton size="small" status="danger" style="cursor: default">ABANDON</button>.<br/>
+        <div align="center">
+          <img alt="Replenishment with a Pending Purchase Request" title="Replenishment with a Pending Purchase Request"
+               src="assets/images/ReplenishmentPending.png" width="900" height="400"/>
+        </div><br/><br/>
+        When the "Purchase Request" is <span class="text-danger font-weight-bold">Rejected</span>, you have nothing else to do
+        except clicking on <button nbButton size="small" status="danger" style="cursor: default">END PROCESS</button>.<br/><br/>
+        <div align="center">
+          <img alt="Replenishment with a Rejected Purchase Request" title="Replenishment with a Rejected Purchase Request"
+               src="assets/images/ReplenishmentRejected.png" width="900" height="400"/>
+        </div><br/><br/>
+        When the "Purchase Request" is <span class="text-success font-weight-bold">Approved</span>, you are then able to click on
+        <button nbButton size="small" status="success" style="cursor: default">CONTINUE</button> to pursue the process.<br/><br/>
+        <div align="center">
+          <img alt="Replenishment with an Approved Purchase Request" title="Replenishment with an Approved Purchase Request"
+               src="assets/images/ReplenishmentApproved.png" width="900" height="400"/>
+        </div><br/><br/>
+        Once done, you can then proceed by clicking on "Next".<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReplenishMaterialStepTwoApproved.png" width="900" height="400"/>
+        </div><br/><br/>
+        3) In the last step, you create a Purchase Order that will be Sent to the following Supplier and Reviewed by the Finance Team.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ReplenishMaterialStepThree.png" width="900" height="400"/>
+        </div><br/><br/>
+        <u>Note:</u> Repeat the Steps in <span class="text-info font-weight-bold">Purchase Orders</span> and
+        <span class="text-info font-weight-bold">Reception</span> to Stock the Quantity Bought.<br/>
+        Once done, go to Product & Stock -> Stock -> In Stock to see the updated Quantity in Stock.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StockAfterReplenishment.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Stock Movements
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view stock movements, go to Product & Stock -> Stock -> Stock Movements<br/>
+        In stock movements, you are able to see stocked materials and materials that exit the stock.
+        <div align="center">
+          <img src="assets/images/StockMovements.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view stock movements in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridStockMovements.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListStockMovements.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a stock movement, export stock movements to <span class="text-success font-weight-bold">Excel</span>,
+        filter by date and material or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StockMovementsFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Stock Entries
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view stock entries, go to Product & Stock -> Stock -> Stock Entries<br/>
+        In stock entries, you are able to see materials entered in stock.
+        <div align="center">
+          <img src="assets/images/StockEntries.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view stock entries in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridStockEntries.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListStockEntries.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a stock entry, filter stock entries by date and material,
+        export them to <span class="text-success font-weight-bold">Excel</span>
+        or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StockEntriesFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Stock Exits
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view stock exits, go to Product & Stock -> Stock -> Stock Exits<br/>
+        In stock exits, you are able to see materials that exited in stock.
+        <div align="center">
+          <img src="assets/images/StockExits.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view stock exits in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridStockExits.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListStockExits.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search a stock exit, export stock exits to <span class="text-success font-weight-bold">Excel</span>
+        or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StockExitsFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        To create a stock exit, click on <span class="font-weight-bold">+</span>.
+        The stock exit creation page will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/StockExitsClickPlusButton.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/CreateStockExitForm.png" width="900" height="400"/>
+        </div><br/><br/>
+        Select materials, the quantity to exit the stock and click on "Confirm".<br/>
+        A popup will open to <span class="text-success font-weight-bold">confirm</span>
+        or <span class="text-danger font-weight-bold">refuse</span> the material selection.<br/>
+        You can cancel the material selection by clicking on
+        <button nbButton shape="round" status="danger" style="line-height: 0rem;">
+          <nb-icon icon="close-outline"></nb-icon>
+        </button><br/>
+        You can update the selected material by clicking on
+        <button nbButton shape="round" status="primary" style="line-height: 0rem;">
+          <nb-icon icon="edit-outline"></nb-icon>
+        </button><br/>
+        Once you select the materials to exit the stock and enter their quantity to be exited, click on "Create".<br/><br/>
+        <div align="center">
+          <img src="assets/images/StockExitCreationFilledInfo.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Inventories
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view inventories, go to Product & Stock -> Stock -> Inventories<br/>
+        In inventories, you are able to see all inventories.
+        <div align="center">
+          <img src="assets/images/Inventory.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view inventories in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridInventory.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListInventory.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search an inventory, filter inventories by creation date and inventory date,
+        export them to <span class="text-success font-weight-bold">Excel</span>
+        or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view Inventory Details or archive it.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryActions.png" width="900" height="400"/>
+        </div><br/><br/>
+        To create an inventory, click on <span class="font-weight-bold">+</span>.
+        The inventory creation process page will open.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryBtn.png" width="900" height="400"/>
+        </div><br/><br/>
+        1) In Step 1, choose an inventory date for the inventory.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryStepOne.png" width="900" height="400"/>
+        </div><br/><br/>
+        2) In Step 2, update Reel Stock values of every material by clicking on
+        <i class = "fa fa-edit"></i> under Reel Stock.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryStepTwo.png" width="900" height="400"/>
+        </div><br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryStepTwoUpdateRS.png" width="900" height="400"/>
+        </div><br/><br/>
+        After updating Reel Stock of shown materials, click on "Next" and you will be asked if you would like to do a second counting.<br/>
+        If you click on <span class="text-success font-weight-bold">Yes</span>,
+        you will go to the third step otherwise, you will go to the last step.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryConfirmSecondCounting.png" width="900" height="400"/>
+        </div><br/><br/>
+        3) In Step 3, in case you confirmed to do a second counting, you will have to do the same thing done in Step 2.<br/>
+        Once done, click on "Next" to go to the last step.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryStepThree.png" width="900" height="400"/>
+        </div><br/><br/>
+        4) In Step 4, you have the following inventory information. Click on "Finish" to confirm the inventory creation or
+        "Back" to get to the previous step.<br/><br/>
+        <div align="center">
+          <img src="assets/images/CreateInventoryStepFour.png" width="900" height="400"/>
+        </div><br/><br/>
+        The inventory is created successfully but it has issues.<br/>
+        <i class="fa fa-arrow-right"></i> You have to click on
+        <button nbButton size="small" status="primary" style="cursor: default">FIX STOCK</button>
+        to fix the difference between quantity in stock and reel quantity and update the quantity in stock to its reel stock value.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryCreatedIssue.png" width="900" height="400"/>
+        </div><br/><br/>
+        You have the following inventory details including inventoried materials.<br/>
+        <i class="fa fa-arrow-right"></i> If there is a difference between quantity in stock and reel stock, you have to click under
+        "Action" on <button nbButton status="danger" size="small">FIX</button> so that quantity in stock and reel stock match.<br/><br/>
+        <div align="center">
+          <img src="assets/images/FixQuantityStock.png" width="900" height="400"/>
+        </div><br/><br/>
+        Now that quantities in stock of materials match with reel stock values,
+        you click on <button nbButton status="success" size="small">FINISH</button>
+        to update the stocked quantity in stock value.<br/><br/>
+        <div align="center">
+          <img src="assets/images/QuantityInStockFixed.png" width="900" height="400"/>
+        </div><br/><br/>
+        The inventory is fixed and an inventory movement is created. You can learn more about inventory movements
+        in "Inventory Movements" section.<br/>
+        As you can see: It shows <span class="text-success font-weight-bold">All Set</span>.<br/>
+        <i class="fa fa-arrow-right"></i> It means that there is no difference between quantities in stock and reel stock values.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryFixed.png" width="900" height="400"/>
+        </div><br/><br/>
+        If you would like to create another inventory, you can't because you have already created one this month<br/>
+        And you can create another one the next month.<br/>
+        <i class="fa fa-arrow-right"></i> You can only create one inventory per month.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryPerMonth.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Inventory Movements
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view inventory movements, go to Product & Stock -> Stock -> Inventory Movements<br/>
+        In inventory movements, you are able to see all inventory movements that are created after fixing
+        and updating stock quantities in inventories.<br/>
+        An inventory movement can be an entry ("Quantities entered in stock") or an exit ("Quantities exited the stock").<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryMovements.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view stock entries in other view modes.<br/><br/>
+        <div align="center">
+          <img src="assets/images/GridInventoryMovements.png" width="900" height="400"/>
+        </div><br/>
+        <div align="center">
+          <img src="assets/images/ListInventoryMovements.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search an inventory movement, filter inventory movements by date and material,
+        export them to <span class="text-success font-weight-bold">Excel</span>
+        or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can view Inventory Movement Details or archive it.<br/><br/>
+        <div align="center">
+          <img src="assets/images/InventoryMovementsActions.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Archive
+      </nb-accordion-item-header>
+      <nb-accordion-item-body style="line-height: 2.5">
+        To view archived elements, go to Product & Stock -> Archive -> Archived Elements<br/>
+        Let us take the example of "Stock Movements".<br/>
+        <div align="center">
+          <img src="assets/images/ArchivedStockMovements.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can search an archived stock movement, filter stock entries by date and material,
+        export them to <span class="text-success font-weight-bold">Excel</span>
+        or sort them by reference.<br/><br/>
+        <div align="center">
+          <img src="assets/images/ArchivedStockMovementsEntriesFilterSearchSortExport.png" width="900" height="400"/>
+        </div><br/><br/>
+        You can restore an archived stock movement.<br/><br/>
+        <div align="center">
+          <img src="assets/images/RestoreStockMovements.png" width="900" height="400"/>
+        </div><br/><br/>
+        The same thing applies to the other elements such as "Materials", "Categories", "Suppliers"...<br/><br/>
+        <div align="center">
+          <img src="assets/images/AllArchivedElements.png" width="900" height="400"/>
+        </div><br/><br/>
+      </nb-accordion-item-body>
+    </nb-accordion-item><br/>
+  </nb-accordion>
+</div>

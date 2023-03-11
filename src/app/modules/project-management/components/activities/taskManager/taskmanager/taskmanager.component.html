@@ -1,0 +1,221 @@
+<div style="max-width: 40%;display:flex;">
+<ngx-member-card></ngx-member-card>
+<em class="fas fa-calendar-alt fa-2x cyan-text pr-3 ml-3 mt-2" style="color: #0096FF" (click)="redirect()" ></em>
+</div>
+<br />
+<div *ngIf="dataLoaded; else loading">
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    class="example-list"
+    (cdkDropListDropped)="dropGlobbal($event)"
+  >
+    <div
+      class="lists-container"
+      *ngIf="tasks?.length > 0; else noTasks"
+      cdkDropListGroup
+    >
+      <div class="list" *ngFor="let task of tasks" cdkDrag>
+        <nb-card>
+          <nb-card-header>
+            <div class="row">
+              <div class="col-md-10">
+                {{ task.title }}
+              </div>
+              <div class="col-md-2">
+                <button
+                  shape="round"
+                  nbButton
+                  status="basic"
+                  size="small"
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <a
+                    style="text-decoration: none"
+                    nbTooltip="Click here to edit data"
+                    nbTooltipStatus="primary"
+                    (click)="updateProblematic()"
+                  >
+                    <button mat-menu-item>
+                      <span
+                        ><nb-icon
+                          class="text-warning"
+                          icon="edit-outline"
+                        ></nb-icon
+                        >&nbsp; Details</span
+                      >
+                    </button>
+                  </a>
+                  <a
+                    nbTooltip="Delete data"
+                    nbTooltipStatus="primary"
+                    (click)="confirmation(dialog)"
+                  >
+                    <button mat-menu-item>
+                      <span
+                        ><nb-icon
+                          class="text-danger"
+                          icon="trash-outline"
+                        ></nb-icon
+                        >&nbsp; Archive</span
+                      >
+                    </button>
+                  </a>
+                </mat-menu>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body
+            class="{{ task.id + 'example-list' }}"
+            cdkDropList
+            [cdkDropListData]="task.activityList"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <nb-card
+              accent="info"
+              status="basic"
+              *ngFor="let item of task.activityList"
+              cdkDrag
+              [cdkDragData]="item"
+            >
+              <nb-card-header>
+                <nb-badge
+                  text="{{ item.priority }}"
+                  status="success"
+                  position="top left"
+                >
+                </nb-badge>
+
+                <div class="row">
+                  <div class="col-md-10">
+                    {{ item.title }}
+                  </div>
+                  <div class="col-md-2">
+                    <button
+                      shape="round"
+                      nbButton
+                      status="basic"
+                      size="small"
+                      mat-icon-button
+                      [matMenuTriggerFor]="menu"
+                      aria-label="Example icon-button with a menu"
+                    >
+                      <nb-icon icon="more-horizontal-outline"></nb-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <a
+                        style="text-decoration: none"
+                        nbTooltip="Click here to edit data"
+                        nbTooltipStatus="primary"
+                        (click)="updateProblematic()"
+                      >
+                        <button
+                          mat-menu-item
+                          [routerLink]="[
+                            '/projectManagement/tasks/details',
+                            item.id
+                          ]"
+                        >
+                          <span
+                            ><nb-icon
+                              class="text-warning"
+                              icon="edit-outline"
+                            ></nb-icon
+                            >&nbsp; Details</span
+                          >
+                        </button>
+                      </a>
+                      <a
+                        nbTooltip="Delete data"
+                        nbTooltipStatus="primary"
+                        (click)="confirmation(dialog)"
+                      >
+                        <button mat-menu-item>
+                          <span
+                            ><nb-icon
+                              class="text-danger"
+                              icon="trash-outline"
+                            ></nb-icon
+                            >&nbsp; Archive</span
+                          >
+                        </button>
+                      </a>
+                    </mat-menu>
+                  </div>
+                </div>
+              </nb-card-header>
+              <nb-card-body>
+                <nb-alert>{{ item.description }} </nb-alert>
+              </nb-card-body>
+              <nb-card-footer>
+                <nb-icon
+                  icon="calendar-outline"
+                  status="warning"
+                  (click)="flip()"
+                ></nb-icon>
+                Due Date :{{ item.dueDate | date: "longDate" }}
+                <br>
+                <nb-tag
+                  *ngIf="item.retard"
+                  status="danger"
+                  appearance="filled"
+                  text="Overdue task"
+                  class="mr-2 mt-2"
+                ></nb-tag>
+                <nb-tag
+                status="info"
+                appearance="filled"
+                text="team:({{item?.team?.length}})"
+                class="mr-2 mt-2"
+
+              ></nb-tag>
+               
+                
+              </nb-card-footer>
+            </nb-card>
+          </nb-card-body>
+          <nb-card-footer> </nb-card-footer>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+  <ng-template #noTasks>
+    <div class="text-center">
+      <img
+        src="../../../../../../../assets/images/noTasks.png"
+        alt="task-img"
+        class="img-fluid"
+        width="507"
+        height="440"
+      />
+      <nb-alert>
+        No tasks added to this project
+        <div class="row">
+          <div class="col-md-12 mt-1" align="center">
+            <button
+              nbButton
+              class="text-center"
+              shape="round"
+              size="small"
+              class="w-25"
+              status="success"
+              (click)="detailsProject()"
+            >
+              Create new Task
+            </button>
+          </div>
+        </div>
+      </nb-alert>
+    </div>
+  </ng-template>
+</div>
+<ng-template #loading>
+  <nb-card [nbSpinner]="true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-body> Loading... </nb-card-body>
+  </nb-card>
+</ng-template>

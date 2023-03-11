@@ -1,0 +1,146 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton 
+        *ngIf="existedPR.purchaseRequisitionStatus !== 'Rejected'">
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button>
+<button style="float: left" nbTooltip="Cancel" nbTooltipStatus="danger" shape="round" status="danger" 
+                 (click)="cancelProcess(dialogCancel)"nbButton
+        *ngIf="existedPR.purchaseRequisitionStatus !== 'Rejected'">
+                     <nb-icon icon="close-outline"></nb-icon>
+       </button>
+<button style="float: left" nbTooltip="Quit" nbTooltipStatus="danger" shape="round" status="danger" 
+                 (click)="cancelWithoutToast()" nbButton
+        *ngIf="existedPR.purchaseRequisitionStatus === 'Rejected'">
+                     <nb-icon icon="log-out-outline"></nb-icon>
+       </button><br/><h5 align = "center">Purchase Requisition Details</h5>
+<ng-template #dialogCancel let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Cancel purchase?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to cancel purchase?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="cancelWithToast(ref)" class="float-right" nbButton status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+<ngx-process [completedState1]="completedState1" [selectedIndex]=1
+             [progressValue]="20" [progressStatus]="progressStatus"></ngx-process>
+<nb-card>
+      <nb-card-header>Purchase Requisition Details</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-6">
+            <b>Created At:</b> {{PRCreationDate}}
+          </div>
+        </div><br/>
+        <div class="row">
+          <div class="col-sm-6">
+            <b>Purchase Requisition Reference:</b> {{existedPR.purchaseRequisitionNumber}}
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-sm-6">
+            <b>Purchase Requisition Status:</b> 
+            <span *ngIf="existedPR.purchaseRequisitionStatus === 'Pending'" 
+                  class="text-warning font-weight-bold">
+              {{existedPR.purchaseRequisitionStatus}}
+            </span>
+            <span *ngIf="existedPR.purchaseRequisitionStatus === 'Approved'" 
+                  class="text-success font-weight-bold">
+              {{existedPR.purchaseRequisitionStatus}}
+            </span>
+            <span *ngIf="existedPR.purchaseRequisitionStatus === 'Rejected'" 
+                  class="text-danger font-weight-bold">
+              {{existedPR.purchaseRequisitionStatus}}
+            </span>
+          </div>
+        </div><br/><br/>
+        <div class = "row" *ngIf="materials.length > 0">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Category</th>
+            <th>Barcode</th>
+            <th>Quantity</th>
+            <th>Creation Date</th>
+          </tr>
+          </thead>
+         <tbody
+          *ngFor="let material of materials">
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{material.materialType}}</p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialCategory.categoryName}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">
+                -
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialBarcode">
+                {{material.materialBarcode}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="material.materialType !== 'Service'">
+                {{material.materialQuantity}}
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                -
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">
+              {{moment(material.materialCreationDate).format('DD MMM YYYY')}}
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+            </div>
+          <div class="col-md-1" *ngIf="materials.length > 0">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Materials to Purchase" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton 
+                      [disabled]="existedPR.purchaseRequisitionStatus === 'Pending'"
+                      (click)="goToRFQ()" [hidden]="existedPR.purchaseRequisitionStatus === 'Rejected'"
+              nbTooltip="Proceed to Request For Quotation" nbTooltipStatus="info" status="primary">
+                Request For Quotation
+              </button>
+              <button style="float: right;" nbButton 
+                      (click)="cancelWithoutToast()" 
+                      [hidden]="existedPR.purchaseRequisitionStatus !== 'Rejected'"
+                      status="danger">
+                Quit
+              </button>
+         </div>
+         <div class="col-md-1" *ngIf="existedPR.purchaseRequisitionStatus === 'Rejected'">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="We are sorry to say that you can't continue because the purchase requisition has been REJECTED!" 
+                      nbTooltipStatus="danger"></nb-icon>
+          </div>
+        </div> 
+      </nb-card-body>
+    </nb-card>

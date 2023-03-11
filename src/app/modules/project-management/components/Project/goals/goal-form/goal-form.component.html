@@ -1,0 +1,100 @@
+<form class="form" [formGroup]="createGoalForm" (ngSubmit)="save()">
+  <div class="form-group">
+    <label for="subject">Goal:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      type="text"
+      formControlName="title"
+    />
+    <div *ngIf="title?.invalid && (title?.dirty || title?.touched)">
+      <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+    </div>
+  </div>
+  
+  <div>
+    <label for="subject">Priorty :</label>
+    <nb-select
+      placeholder="Choose probability"
+      formControlName="priority"
+      fullWidth
+    >
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="success"
+        ></nb-icon>
+        <p class="my-1">LOW</p>
+      </nb-option>
+      <nb-option value="MEDIUM"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="warning"
+        ></nb-icon>
+        <p class="my-1">MEDIUM</p>
+      </nb-option>
+      <nb-option value="HIGH"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="danger"
+        ></nb-icon>
+        <p class="my-1">HIGH</p>
+      </nb-option>
+      
+    </nb-select>
+    <div *ngIf="priority?.invalid && (priority?.dirty || priority?.touched)">
+        <p class="text-danger" *ngIf="priority?.errors?.required">*Required</p>
+      </div>
+  </div>
+  <div>
+    <label for="subject">Due Date :</label>
+    <input
+      nbInput
+      fullWidth
+      placeholder="Pick Date"
+      [nbDatepicker]="dateTimePicker"
+      formControlName="dueDate"
+    />
+    <nb-datepicker #dateTimePicker></nb-datepicker>
+    <div *ngIf="dueDate?.invalid && (dueDate?.dirty || dueDate?.touched)">
+        <p class="text-danger" *ngIf="dueDate?.errors?.required">*Required</p>
+      </div>
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">key performance indicator(KPI):</label>
+    <textarea
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="kpi"
+    ></textarea>
+    <div
+      *ngIf="
+        kpi?.invalid && (kpi?.dirty || kpi?.touched)
+      "
+    >
+      <p class="text-danger" *ngIf="kpi?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Description:</label>
+    <textarea
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="description"
+    ></textarea>
+    <div
+      *ngIf="
+        description?.invalid && (description?.dirty || description?.touched)
+      "
+    >
+      <p class="text-danger" *ngIf="description?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <input class="btn btn-success btnCreate" type="submit" value="Save" />
+</form>

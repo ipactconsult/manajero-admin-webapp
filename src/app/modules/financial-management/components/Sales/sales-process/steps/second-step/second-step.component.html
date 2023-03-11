@@ -1,0 +1,96 @@
+<nb-card>
+ 
+      <h4>Generate Quote</h4>
+      <nb-card  style="align-items: center;">
+
+        <nb-card-header>
+          Fill the form with the quote's information :
+        </nb-card-header>
+        <nb-card-body>
+
+          <form  class="formulaire" >
+
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="name" name="name"
+                   nbInput placeholder="Property Name" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="surface" name="name"
+                   nbInput placeholder="Property's Surface" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="pieces" name="name"
+                   nbInput placeholder="Number of pieces" required
+                   size="30px" type="number">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="rooms" name="name"
+                   nbInput placeholder="Number of rooms" required
+                   size="30px" type="number">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="city" name="name"
+                   nbInput placeholder="Property's City" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="country" name="name"
+                   nbInput placeholder="Property's Country" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="price" name="name"
+                   nbInput placeholder="Property's Price" required
+                   size="30px" type="number">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="cName" name="name"
+                   nbInput placeholder="Customer's Name" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="cEmail" name="name"
+                   nbInput placeholder="Customer's Email" required
+                   size="30px" type="email">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="cAddress" name="name"
+                   nbInput placeholder="Customer's Address" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="cPhone" name="name"
+                   nbInput placeholder="Customer's Phone" required
+                   size="30px" type="text">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="qValue" name="name"
+                   nbInput placeholder="Quote's Value" required
+                   size="30px" type="number">
+            <br>
+            <input name="ngModel"  class="form-control" fullWidth
+                   id="sVs" name="name"
+                   nbInput placeholder="Quote's VsBudget" required
+                   size="30px" type="string">
+            <br>
+
+            <input nbInput placeholder="Quote's Date" [nbDatepicker]="dateTimePicker">
+            <nb-date-timepicker withSeconds #dateTimePicker></nb-date-timepicker>
+
+            <br>
+
+
+          </form>
+        </nb-card-body>
+
+      </nb-card>
+
+
+
+   
+  
+</nb-card>
+
+

@@ -1,0 +1,42 @@
+<nb-card size="medium">
+    <nb-card-body>
+      <div class="progress-info">
+        <div class="subtitle">SMS </div>
+        <div class="h3">{{ numberSMS | ngxNumberWithCommas }}</div>
+        <nb-progress-bar [value]="20"></nb-progress-bar>
+        <div class="caption description">
+          <bdi>number of sms</bdi>
+
+        </div>
+      </div>
+      <div class="progress-info">
+        <div class="subtitle"> Comment</div>
+        <div class="h3">{{ 5| ngxNumberWithCommas }}</div>
+        <nb-progress-bar [value]="50"></nb-progress-bar>
+        <div class="caption description">
+          <bdi>Number of comments</bdi>
+          
+        </div>
+      </div>
+      <div class="progress-info" >
+        <div class="subtitle">Calls</div>
+        <div class="h3">{{ 6 | ngxNumberWithCommas }}</div>
+        <nb-progress-bar [value]="60"></nb-progress-bar>
+        <div class="caption description">
+          <bdi>Number of calls</bdi>
+          
+        </div>
+      </div>
+      <div class="progress-info" >
+        <div class="subtitle">EMAIL</div>
+        <div class="h3">{{ 6 | ngxNumberWithCommas }}</div>
+        <nb-progress-bar [value]="60"></nb-progress-bar>
+        <div class="caption description">
+          <bdi>Number of emails</bdi>
+          
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  
+  

@@ -1,0 +1,37 @@
+<form class="form" [formGroup]="createDescriptionForm" (ngSubmit)="save()">
+    
+  <div class="form-group">
+    <div class="col-md-12 col-md-12">
+      <div class="form-group row">
+        <label class="col-sm-3 label">Content:</label>
+        <textarea
+        formControlName="projectDescription"
+          type="text"
+          nbInput
+          fullWidth
+          class="form-control"
+          status="info"
+          placeholder="Content"
+          
+        ></textarea>
+      </div>
+    </div>
+   
+    <div *ngIf="projectDescription?.invalid && (projectDescription?.dirty || projectDescription?.touched)">
+      <p class="text-danger" *ngIf="projectDescription?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <div class="form-group">
+
+    <input
+   
+    [ngClass]="descriptionSelected===null  ?'btn btn-success btnCreate':'btn btn-warning btnCreate'"
+
+      type="submit"
+      [value]="descriptionSelected===null ? 'create' : 'Update'"
+      [disabled]="createDescriptionForm.invalid"
+
+    />
+   </div>
+  </form>
+  

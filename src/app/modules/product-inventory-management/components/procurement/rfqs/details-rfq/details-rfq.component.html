@@ -1,0 +1,192 @@
+<div *ngIf="existedRFQ" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Request For Quotation Details </h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Go Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right"></nb-icon>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Request For Quotation Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Creation Date</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{moment(existedRFQ.rfqCreationDate).format("DD MMM YYYY hh:mm A")}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Reference</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedRFQ.rfqNumber}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Quotation Deadline</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{moment(existedRFQ.quotationDeadline).format("DD MMM YYYY")}}
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Materials ({{existedRFQ.pr?.material?.length}})</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class = "col-md-11">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Barcode</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let material of existedRFQ?.pr?.material">
+                  <tr class="col-md-9 col-sm-10">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{material.materialType}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+                    <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+                    <td><p class="fw-normal mb-1">{{material.materialCategory?.categoryName}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">-</p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialBarcode">{{material.materialBarcode}}</p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType !== 'Service'">
+                        {{material.materialQuantity}}
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                        -
+                      </p>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/pim/procurement/material', material.materialId]"
+                         style="text-decoration: none;">
+                        <button nbButton status="info" size="small">
+                          See Details
+                        </button>
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-1">
+                <nb-icon icon="info-outline"
+                         nbTooltip="Materials" nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Suppliers ({{existedRFQ.suppliers?.length}})</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class = "col-md-11">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>Company</th>
+                    <th>Currency</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let supplier of existedRFQ?.suppliers">
+                  <tr class="col-md-9 col-sm-10">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">
+                            <nb-user [name]="supplier.supplierFirstName + ' ' + supplier.supplierLastName" 
+                                     picture="{{supplier.supplierImage}}"
+                                     size="medium"></nb-user>
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        <a href="mailto:{{supplier.supplierEmail}}" nbTooltip="Send Email" nbTooltipStatus="info">
+                          {{supplier.supplierEmail}}
+                        </a>
+                      </p>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{supplier.supplierCountry}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        {{supplier.supplierCompany}}
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="supplier.supplierCurrency === '€'">
+                        Euro
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="supplier.supplierCurrency === '$'">
+                        Dollar
+                      </p>
+                      <p class="fw-normal mb-1" *ngIf="supplier.supplierCurrency === 'TD'">
+                        Tunisian Dinar
+                      </p>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/pim/supplier', supplier.supplierId]" 
+                          style="text-decoration: none;">
+                        <button nbButton status="info" size="small">
+                          See Details
+                        </button>
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-1">
+                <nb-icon icon="info-outline"
+                         nbTooltip="Suppliers" nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </div>
+  </div>
+</div>

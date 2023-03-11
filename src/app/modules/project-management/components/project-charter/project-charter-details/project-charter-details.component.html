@@ -1,0 +1,180 @@
+<ngx-process-steps [processStep]="'PlanningEXECUTING'"></ngx-process-steps>
+
+<div *ngIf="projectCharter?.id; else noData">
+  <ngx-statistic
+    [data]="projectCharter"
+    [newValueBudget]="newBudget"
+    [newValueGoals]="newGoals"
+    [newValueDelivery]="newDelivery"
+  ></ngx-statistic>
+  <ngx-project-charter-general-info [data]="projectCharter">
+  </ngx-project-charter-general-info>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="close-circle-outline" status="info"></nb-icon>
+        Background/Project purpose or justification
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-problematic
+          [problematic]="projectCharter"
+          (refreshData)="refresh($event)"
+        ></ngx-problematic>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="award-outline" status="warning"></nb-icon> Goals
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-card size="small">
+          <nb-tabset fullWidth>
+            <nb-tab tabTitle="Goals">
+              <ngx-goal-table
+                [data]="projectCharter"
+                (dataChanged)="refreshfromGoals($event)"
+              ></ngx-goal-table>
+            </nb-tab>
+            <nb-tab tabTitle="Scheduling goals/milestones">
+              <ngx-milestone-table  [data]="projectCharter"
+              (dataChanged)="refreshfromGoals($event)"></ngx-milestone-table>
+            </nb-tab>
+          </nb-tabset>
+        </nb-card>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="file-text-outline" status="info"></nb-icon> Project
+        product description
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-project-product-description
+          [data]="projectCharter"
+          (refreshData)="refresh($event)"
+        ></ngx-project-product-description>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="layers-outline" status="info"></nb-icon> Delivery
+        units/services
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-delivery-units-table
+          [data]="projectCharter"
+          (dataChanged)="refreshFromDeliver($event)"
+        ></ngx-delivery-units-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="checkmark-square-outline" status="success"></nb-icon>
+        Project success criteria
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-success-criteria-table
+          [data]="projectCharter"
+          (refreshData)="refresh($event)"
+        ></ngx-success-criteria-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="alert-triangle-outline" status="danger"></nb-icon> High
+        level risk
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-high-level-risk-table
+          [data]="projectCharter"
+          (refreshData)="refresh($event)"
+        ></ngx-high-level-risk-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="shield-outline" status="warning"></nb-icon> Key
+        stakeholders
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-key-stakeholders-table
+          [data]="projectCharter"
+          (refreshData)="refresh($event)"
+        ></ngx-key-stakeholders-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="list-outline" status="info"></nb-icon>Assumptions,
+        restrictions and external dependencies
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-are-table
+          [data]="projectCharter"
+          (refreshData)="refresh($event)"
+        ></ngx-are-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="layers-outline" status="info"></nb-icon> Responsibility
+        of the customer
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-responsibility-customer-table [data]="projectCharter"
+          (refreshData)="refresh($event)"></ngx-responsibility-customer-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <div class="text-warning">$</div>
+        Project budget (overview)
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ngx-budget-table
+          [data]="projectCharter"
+          (dataChanged)="refreshfromBudget($event)"
+        ></ngx-budget-table>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+</div>
+<ng-template #noData>
+  <nb-card
+    [nbSpinner]="true"
+    nbSpinnerSize="giant"
+    nbSpinnerStatus="warning"
+    nbSpinnerMessage="Data Loading ..."
+  >
+    <nb-card-body> </nb-card-body>
+  </nb-card>
+</ng-template>

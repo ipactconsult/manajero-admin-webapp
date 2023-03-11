@@ -1,0 +1,220 @@
+<div *ngIf="avocat" class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-12">
+        <h2 class="more-vertical">
+          Update Lawyer Details</h2>
+      </div>
+      <div class="col-md-5"></div>
+      <div align="right" class="col-md-2 justify-content-end">
+        <a [routerLink]="['/litige/detailavocat/',avocat.id]" class="w-25"
+           fullWidth nbButton nbTooltip="Click here to see lawyer details" nbTooltipStatus="primary" shape="round"
+           status="warning">
+          <nb-icon icon="eye-outline"></nb-icon>
+        </a>
+        <a [routerLink]="['/litige/listavocats']" class="w-25 mx-3"
+           fullWidth nbButton nbTooltip="Back to Lawyers list" nbTooltipStatus="primary" shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+      </div>
+  
+    </div>
+  
+    <form [formGroup]="avocatGroup">
+  
+      <div class="row mt-3">
+        <div class="col-md-4 mb-3">
+          <nb-card>
+            <nb-card-body class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <div class="row">
+                  <img alt=""
+                       src="{{avocat.imageUrl}}" style="width: 150px;height: 150px;border-radius: 100%;">
+                  <br>
+                </div>
+                <div class="row mt-1 mx-1">
+                  <div class="col-md-5">
+                    <button (click)=" updateAvocatFunction()" nbButton shape="round" size="small" status="success">
+                      <nb-icon icon="checkmark-outline"></nb-icon>
+                    </button>
+                  </div>
+  
+                  <div class="col-md-5">
+                    <div class="button">
+                      <label for="imageUrl" nbButton shape="round" size="small" status="primary">
+                        <nb-icon class="mt-1" icon="upload-outline"></nb-icon>
+                      </label>
+                      <input (change)="onFileSelected($event)"
+                             [(ngModel)]="avocat.imageUrl"
+                             autocomplete="off"
+                             formControlName="imageUrl"
+                             id="imageUrl"
+                             name="imageUrl"
+                             type="file">
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="mt-3">
+                  <h4>{{avocat?.nom}}</h4>
+                  <p class="text-secondary mb-1">Speciality : {{avocat?.specialite}}</p>
+                  <p class="text-muted font-size-sm">Address :{{avocat?.adresse}} </p>
+  
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+  
+  
+        </div>
+  
+        <div class="col-md-8">
+  
+          <nb-accordion>
+            <nb-accordion-item expanded="true">
+              <nb-accordion-item-header>Personal Information</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">First Name</p>
+                  </div>
+                  <div class="col-sm-9 ">
+                    <input [(ngModel)]="avocat.nom" fieldSize="large" formControlName="nom" fullWidth
+                           id="nom" name="nom" nbInput placeholder="Lawyer First Name"
+                           type="text">
+  
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Last Name</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input [(ngModel)]="avocat.prenom"
+                    fieldSize="large"
+                           formControlName="prenom"
+                           fullWidth
+                           id="prenom"
+                           name="prenom"
+                           nbInput
+                           placeholder="LastName"
+                           type="text"
+                    />
+  
+                  </div>
+                </div>
+               
+                <br>
+                <hr>
+  
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Address</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input [(ngModel)]="avocat.adresse"
+                           fieldSize="large" formControlName="adresse" fullWidth id="adresse"
+                           name="adresse" nbInput
+                           placeholder="Address">
+  
+  
+                  </div>
+                </div>
+                <hr>
+               
+                <hr>
+               
+                <div class="row mt-2">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Speciality</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <nb-select [(ngModel)]="avocat.specialite" [selected]="selectedGender" fieldSize="large"
+                               formControlName="specialite" fullWidth
+                               id="specialite" name="specialite" placeholder="Select Speciality">
+                               <nb-option disabled value="0">Speciality</nb-option>
+                               <nb-option value="Real estate law">Real estate law</nb-option>
+                               <nb-option value="Criminal law of business affairs">Criminal law of business affairs</nb-option>
+                               <nb-option value="Right of persons">Right of persons</nb-option>
+                    </nb-select>
+                  </div>
+  
+                </div>
+            
+                <hr>
+                <button (click)=" updateAvocatFunction() " nbButton status="success">Edit</button>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+          <br>
+          <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header>Contact Information</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Email Address</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input [(ngModel)]="avocat.gmail" fieldSize="large" formControlName="gmail" fullWidth
+                           id="gmail" name="gmail"
+                           nbInput placeholder="Work Email" type="text">
+  
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Cell Phone</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input [(ngModel)]="avocat.numtelephone"
+                           formControlName="numtelephone"
+                           fullWidth
+                           id="numtelephone"
+                           name="numtelephone"
+                           nbInput
+                           placeholder="Phone"
+                           type="text">
+                    
+  
+                  </div>
+                </div>
+                <hr>
+             
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Description</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                             <textarea
+                               [(ngModel)]="avocat.description"
+                               formControlName="description"
+                               fullWidth
+                               id="description"
+                               name="description"
+                               nbInput
+                               placeholder="Description">
+                             </textarea>
+                  </div>
+                </div>
+                <hr>
+                <button (click)=" updateAvocatFunction()" nbButton status="success">Edit</button>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+          <br>
+  
+       
+          <br>
+  
+  
+        </div>
+      </div>
+  
+  
+    </form>
+  </div>
+  
+  
+  

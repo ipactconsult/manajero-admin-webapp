@@ -1,0 +1,207 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Purchase Orders</h3>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   nbInput class="w-75"
+                   nbTooltip="Search Purchase Order" nbTooltipStatus="primary" placeholder="Search Purchase Order"
+                   type="text">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div>
+            <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" 
+               [routerLink]="['/pim/procurement/purchase-orders/grid']" 
+               nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon></a>&nbsp;
+            <a [routerLink]="['/pim/procurement/purchase-orders']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/procurement/purchase-orders/list']" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>&nbsp;
+            <a (click)="exportAsXLSX()"
+                    align="right" status="success"
+                    nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+</div>
+<div class="row" *ngIf="!dataPOs || dataPOs.length === 0">
+  <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+</div>
+<div [hidden]="dataPOs.length === 0" class="row" *ngIf="(dataPOs | filter : search).length === 0">
+  <nb-alert outline="danger" class="w-100 mt-3">
+    Item Not Found
+  </nb-alert>
+</div>
+<div class="row mt-3">
+  <div class="col-md-3">
+    <nb-form-field>
+      <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+      <input [nbDatepicker]="datepickerCreated" placeholder="Filter By Creation Date"
+             style="cursor: pointer"
+             class="mx-2 mt-3 w-100" nbInput>
+      <nb-datepicker #datepickerCreated
+                     (dateChange)="getPOsByCreationDate($event)"></nb-datepicker>
+    </nb-form-field>
+    <nb-form-field>
+      <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+      <nb-select placeholder="Filter by Supplier" (selectedChange)="getPOsBySupplier($event)"
+                 selected="0" class="mx-2 mt-3 w-100">
+        <nb-option (click)="getAllPOs()" value="All">All</nb-option>
+        <nb-option *ngFor = "let supplier of suppliers"
+                   [value]="supplier.supplierFirstName + ' ' + supplier.supplierLastName">
+          {{supplier.supplierFirstName}} {{supplier.supplierLastName}}
+        </nb-option>
+      </nb-select>
+    </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getPOsByStatus($event)"
+                       class="mx-2 mt-3 w-100" placeholder="Filter by Status"
+                       selected="0">
+              <nb-option (click)="getAllPOs()" value="All">All</nb-option>
+              <nb-option value="Approved">Approved</nb-option>
+              <nb-option value="Pending">Pending</nb-option>
+              <nb-option value="Rejected">Rejected</nb-option>
+            </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Sort by Reference"
+                       selected="0" class="mx-2 mt-3 w-100">
+              <nb-option (click)="getAllPOs()" value="All">All</nb-option>
+              <nb-option (click)="getAllPOsASCByCode()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getAllPOsDESCByCode()" value="2">Names (Z-A)</nb-option>
+            </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+        <label>Purchase Orders Per Page</label> 
+        <input class="w-100" type="number" nbInput [(ngModel)]="pageSize" min="6">
+      </div>
+      </div>
+   <div class="input-group col-md-9">
+  <div class="col-md-4"
+           *ngFor="let po of dataPOs  | filter : search | paginate : 
+           {itemsPerPage:pageSize, currentPage: current,totalItems: dataPOs.length} ; let i =index">
+  <nb-card>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-md-10">
+          Reference: {{po.poNumber}}
+          <br><br>
+          <span>Created: 
+            {{moment(po.poCreationDate).format('DD MMM YYYY hh:mm A')}}
+          </span><br/><br>
+          <span *ngIf="po.poStatus !== 'Rejected'">Expected: 
+            {{moment(po.receptionDate).format('DD MMM YYYY')}}
+          </span>
+          <span *ngIf="po.poStatus === 'Rejected'" style="color: red; text-decoration: line-through">Expected: 
+            {{moment(po.receptionDate).format('DD MMM YYYY')}}
+          </span><br/><br>
+          Supplier:<br/> <a [routerLink]="['/pim/supplier', po.selectedSupplier.supplierId]"
+                            style="text-decoration: none;" nbTooltip="Supplier Details" nbTooltipStatus="info">
+          <p class="fw-normal mb-1">
+            <nb-user [name]="po.selectedSupplier.supplierFirstName + ' ' + po.selectedSupplier.supplierLastName"
+                     picture="{{po.selectedSupplier.supplierImage}}" size="medium"></nb-user>
+          </p>
+        </a>
+          <br>
+          <span *ngIf="po.poStatus === 'Approved'">
+            Status: <span class="text-success font-weight-bold">{{po.poStatus}}</span>
+          </span>
+          <span *ngIf="po.poStatus === 'Pending'">
+            Status: <span class="text-warning font-weight-bold">{{po.poStatus}}</span>
+          </span> 
+          <span *ngIf="po.poStatus === 'Rejected'">
+            Status: <span class="text-danger font-weight-bold">{{po.poStatus}}</span>
+          </span> 
+          <br><br>
+          <span *ngIf="po.materials.length > 1">{{po.materials.length}} Materials</span>
+          <span *ngIf="po.materials.length === 1">1 Material</span><br/><br/>
+        </div>
+        <div class="col-md-2">
+          <button shape="round" nbButton status="basic" size="small" 
+                  [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <nb-icon icon="more-horizontal-outline"></nb-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="po.poStatus !== 'Rejected'">
+                      <a [routerLink]="['/pim/procurement/purchase-order/detail',po.poId]" nbButton fullWidth>
+                        <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                      </a>
+                  </button>
+            <button mat-menu-item *ngIf="po.poStatus !== 'Rejected' && po.poStatus !== 'Pending'">
+              <a (click)="open2(dialog)" nbButton fullWidth>
+                  <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon></span>Archive
+              </a>
+            </button>
+            <button mat-menu-item *ngIf="po.poStatus === 'Rejected'">
+                    <a (click)="deletePO(po)" fullWidth nbButton>
+                        <span class="text-danger"><nb-icon icon="trash-outline"></nb-icon></span>Delete
+                    </a>
+                  </button>
+            </mat-menu>
+          <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>Confirm Archive Operation</nb-card-header>
+                      <nb-card-body>Are you sure you would like to archive this purchase order?</nb-card-body>
+                      <nb-card-footer>
+                        <div class="row">
+                          <button class="col-md-2" status="danger" nbButton (click)="ref.close()">No</button>
+                          <div class="col-md-8"></div>
+                          <a class="col-md-2" status="success" nbButton (click)="onArchiveConfirm(po, ref)">Yes</a>
+                        </div>
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>
+        </div>
+      </div>
+      <div align="center">
+        <span *ngIf="po.mailSent === true && po.poReceiptState === false">
+        <nobr><button nbButton status="success" size="small"
+          (click)="receiveMaterials(po.poId)" [hidden]="hiddenConfirm">
+              Confirm Receipt
+            </button></nobr></span>
+        <span *ngIf="po.mailSent === false && po.poStatus === 'Approved'">
+          <button nbButton status="primary" [disabled]="disSendBtn" size="small"
+                  (click)="mailSupplier(po)">
+              Send to Supplier
+            </button> <span>
+              &nbsp;<nb-icon icon="info-outline" nbTooltip="Send Purchase Order by Mail to Supplier"
+                             nbTooltipStatus="primary"></nb-icon>
+            </span>
+        </span>
+        <span *ngIf="po.poReceiptState === true" class="text-success font-weight-bold">
+          Materials Received
+        </span>
+        <span [hidden]="hiddenReceipt" class="text-success font-weight-bold" *ngIf="po.poId === selectedPOId">
+          Materials Received
+        </span>
+        <span *ngIf="po.poStatus === 'Rejected'" class="text-danger font-weight-bold">
+          Purchase Order Rejected
+        </span>
+      </div>
+    </nb-card-body>
+  </nb-card>
+ </div>
+</div>
+</div>
+  <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+</div>
+

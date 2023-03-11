@@ -1,0 +1,233 @@
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <div class="row">
+      <h2>
+         Charter List 
+        
+      <nb-icon nbTooltip="Click here to reload data" nbTooltipStatus="primary" nbButton status="info"  shape="round" class="ion-loop ng-star-inserted" (click)="refresh()"></nb-icon>
+    </h2>
+    <input class="w-50 mx-2" size="large" type="text" [disabled]="dataGraphicalCharters.length === 0" nbInput fullWidth [(ngModel)]="searchbyfields"   placeholder="Search Charter">
+
+    </div>
+    
+  </div>
+  
+  <div class="col-md-4">
+  <!--- <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/communicationMarketing/list_']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+    &nbsp;
+    <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/communicationMarketing/list_']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+    &nbsp;              
+      <a [routerLink]="['/communicationMarketing/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+       &nbsp; --->         
+    <button nbTooltip="Export to Excel file" nbTooltipStatus="primary" nbButton status="success"  (click)="exportAsXLSX()"><i class="fas fa-file-excel text-white"></i>  </button>
+    &nbsp;
+   
+
+
+  </div>
+ 
+  <div  class="col-md-2">
+      <a nbTooltip="Click here to create a new  graphical Charter" status="info" nbTooltipStatus="primary" fullWidth  [routerLink]="['/communicationMarketing/AddCharter']"  nbButton class=" mt-1">
+          <nb-icon icon="plus-outline"></nb-icon>
+           New  Charter 
+      </a>
+  <br>
+</div>
+
+<div class="row mt-3">
+   <!--- <div class="col-lg-3">
+            <div class="row">
+           
+                    <div class="col-lg-10 mt-2">
+                        <nb-form-field>
+                          <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                          <nb-select [disabled]="list.length === 0" (selectedChange)="getEmpsByGender($event,'country')"  selected="0" class="w-75 mt-3">
+                            <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Country</nb-option>
+                            <nb-option value="All" (click)="getEmpsAsc()">All</nb-option>
+                            <nb-option value="{{country.country_name}}" *ngFor="let country of countries">{{country.country_name}}</nb-option>
+                          
+                          </nb-select>
+                        </nb-form-field>
+                     
+                     </div>
+                     <br>
+                     <div class="col-lg-10">
+                        
+                      <nb-form-field>
+                        <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                        <nb-select [disabled]="list.length === 0" (selectedChange)="getEmpsByRole($event, 'Role')" selected="0" class="w-75 mt-3">
+                          <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Role</nb-option>
+                          <nb-option value="All" (click)="getEmpsAsc()">All</nb-option>
+                          <nb-option value="Commercial">Commercial</nb-option>
+                          <nb-option value="Manager">Manager</nb-option>
+                          <nb-option value="Employee">Employee</nb-option>
+                          <nb-option value="Project Manager">Project Manager</nb-option>
+                        </nb-select>
+                      </nb-form-field>
+                      
+                     </div>
+                     <br>
+                   
+                     <div class="col-lg-10">
+                        <nb-form-field>
+                          <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+                          <nb-select [disabled]="list.length === 0" (selectedChange)="getEmpsByGender($event, 'Gender')" selected="0" class="w-75 mt-3">
+                            <nb-option value="0" disabled>Gender</nb-option>
+                            <nb-option value="Homme" >Homme</nb-option>
+                            <nb-option value="Femme" >Femme</nb-option>
+                          
+                          </nb-select>
+                        </nb-form-field>
+                      
+                     </div>
+                     <br>
+                     
+                     <div class="col-lg-10">
+                      <nb-form-field>
+                        <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon>
+
+                      </nb-form-field>
+                       
+                     </div>
+                     
+                    <div class="col-lg-10 mt-3">
+                      <nb-form-field>
+                        <nb-icon nbPrefix class="mt-3" icon="flip-outline"></nb-icon>
+                        <nb-select [disabled]="list.length === 0" selected="0" class="w-75 mt-3">
+                          <nb-option value="0" disabled>&nbsp;&nbsp;&nbsp; Name</nb-option>
+                          <nb-option value="1" (click)="getEmpsAsc()">Names (A-Z)</nb-option>
+                          <nb-option value="2" (click)="getEmpsDesc()">Names (Z-A)</nb-option>
+                        </nb-select>
+                      </nb-form-field>
+                       
+                    </div>
+                      <div class="col-lg-10 mt-3">
+                         <label for="">Items Per Page &nbsp; : &nbsp; </label> 
+                         <input class="w-75" [disabled]="list.length === 0" type="number" nbInput [(ngModel)]="pageSize">
+                      </div>
+                         
+            </div>
+
+           
+    </div>
+    ---->
+    <div class="col-lg-9 mt-3"  #pdfTable  >
+        <div class="row">
+            <div class="row w-100" *ngIf="!dataGraphicalCharters || dataGraphicalCharters.length === 0">
+                <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+            </div>
+            <div [hidden]="dataGraphicalCharters.length === 0" class="row w-100" *ngIf="(dataGraphicalCharters | filter : searchbyfields).length === 0">
+                <nb-alert outline="danger" fullWidth class="col-lg-12 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+            </div>
+          
+
+           
+        <nb-card  id="GraphicalCharters"
+        class="col-md-5 col-lg-5 col-sm-12 mx-3" *ngFor="let g of dataGraphicalCharters | filter : searchbyfields | paginate : {itemsPerPage: pageSize, currentPage: current}" >
+            <nb-card-header>
+                <div class="row">
+
+                  <div class="col-md-10 col-sm-10">
+
+                    <h6>{{g.title}}</h6>
+                    <div class="row mt-3">
+                        <span class="col-md-12 w-100">
+                            <nb-icon nbTooltip="Color"  icon="color-palette-outline"></nb-icon> &nbsp; {{g.color}}
+                        </span>
+                      <br>
+                      <span class="mt-2 col-md-12">
+                            <nb-icon  nbTooltip="reference" icon="color-picker-outline"></nb-icon> &nbsp; {{g.reference}}
+                        </span>
+                      <br>
+                     
+                        <span class="mt-2 col-md-12">
+                            <nb-icon  class="fa fa-text-width"   aria-hidden="true"  nbTooltip="FormaText" ></nb-icon> &nbsp; {{g.formaText}}
+                      </span>
+                      <br>
+                    
+                        <span class="mt-2 col-md-12">
+                          <nb-icon  nbTooltip="texType" icon="file-text-outline"></nb-icon> &nbsp; {{g.texType}}
+                       </span>
+                       
+  
+
+                 <!---<span class="mt-2 col-md-12">
+                        <nb-icon icon="edit-outline"></nb-icon> &nbsp; {{persona.job}}
+                     </span>-->
+
+                        <!---  
+                          <span class="mt-2 col-md-12">
+                            <nb-icon icon="home-outline"></nb-icon> &nbsp; 
+                              <nb-tag-list>
+                                <nb-tag *ngIf="emp?.department?.departmentName !== null ; else data" status="basic" size="small" [text]="emp?.department?.departmentName"></nb-tag>
+                                 <ng-template #data>&nbsp; 
+                                <nb-tag  status="warning" size="small" [text]="NotAssignedYet"></nb-tag>
+                                </ng-template>
+                              </nb-tag-list>
+                         
+                        </span>--->
+                      <!---- <span class="mt-2 col-md-12">
+                            <nb-icon icon="person-outline"></nb-icon> &nbsp;  <nb-tag-list>
+                                <nb-tag *ngIf="emp?.roleEmployee !== null ;" status="primary" size="small" [text]="emp?.roleEmployee"></nb-tag>
+                              
+                              </nb-tag-list>
+                        </span>--->
+
+
+                    </div>
+
+                  </div>
+                    <div  class="col-md-2 col-sm-2 mt-2">
+                        <button class="print-none" shape="round" nbButton status="basic" size="small" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <nb-icon icon="more-horizontal-outline"></nb-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+               
+                            <a style="text-decoration: dotted;" [routerLink]="['/communicationMarketing/DetailsCharter/', g.id]">
+                                <button mat-menu-item>
+                                    <span><nb-icon class="text-info" icon="eye-outline"></nb-icon>&nbsp; Details</span>
+                                </button>
+                             </a>
+                            <a style="text-decoration: dotted;" [routerLink]="['/communicationMarketing/EditCharter/', g.id]">
+                              <button mat-menu-item>
+                                  <span><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                              </button>
+                            </a>
+                          
+                            <a>
+                                <button mat-menu-item (click)="updateIsEmployeeArchived(g, g.id)">
+                                    <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon>&nbsp; Archive</span>
+    
+                                </button>
+                            </a>
+                        
+                          </mat-menu>
+                    </div>
+                    
+                </div>
+            </nb-card-header>
+           </nb-card>
+                
+         
+        </div>
+        
+    </div>
+    <nb-card  class="bg-light" style="height: 35px;margin-left: 300px; border-radius: 25px; position: relative">
+      <pagination-controls
+      class="pt-1"
+      (pageChange)="handlePageChange($event)"
+      (pageBoundsCorrection)="handlePageChange($event)"
+      directionLinks="true"
+      autoHide="true"
+      responsive="true"
+      previousLabel="Previous"
+      nextLabel="Next"
+      screenReaderPaginationLabel="Pagination"
+      screenReaderPageLabel="page"
+      screenReaderCurrentLabel="You're on page"
+  ></pagination-controls>
+    </nb-card>       
+  
+            
+</div>
+</div>

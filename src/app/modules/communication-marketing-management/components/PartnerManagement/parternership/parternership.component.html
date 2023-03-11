@@ -1,0 +1,255 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Partners</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   nbInput
+                   nbTooltip="Tap here to search your Partner" nbTooltipStatus="primary" placeholder="search Partner"
+                   type="text">
+                   &nbsp;
+                   <nb-select (selectedChange)="getPartnerbyCountry($event,'country')" [disabled]="dataParternership.length === 0"
+                   nbTooltip="Click here to sort by country"
+                   nbTooltipStatus="primary" placeholder="Filter by country">
+                  <nb-option (click)="getAllParteners()" value="All">All</nb-option>
+                  <nb-option *ngFor="let country of countries"
+                     value="{{country.country_name}}">{{country.country_name}}</nb-option>
+
+                   </nb-select>
+
+        &nbsp;
+
+            <nb-select [disabled]="dataParternership.length === 0"
+                       nbTooltip="Click here to sort by name" nbTooltipStatus="primary"
+                       placeholder="Sort by name"
+                       selected="0">
+              <nb-option (click)="getAllParteners()" value="All">All</nb-option>
+              <nb-option (click)="getPartnerAsc()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getPartnerDesc()" value="2">Names (Z-A)</nb-option>
+            </nb-select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div>
+            <a [routerLink]="['/communicationMarketing/GridPartnership']"
+               nbButton nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+              <nb-icon icon="grid-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/communicationMarketing/Parternership']" class="mx-1" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>
+            <a [routerLink]="['/communicationMarketing/LisPartner']" class="mx-1" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>
+         
+        
+            <button (click)="exportAsXLSX()"
+                    align="right" class="mx-1"
+                    nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                    style="background-color: #008000">
+              <i class="fas fa-file-excel text-white"></i>
+            </button>
+            <button [routerLink]="['/communicationMarketing/AddPartner']" class="mx-1" nbButton
+                    nbTooltip="Click here to create Partner" nbTooltipStatus="primary"
+                    status="primary">
+              <i class="fas fa-plus-circle text-white"></i>
+            </button>
+        
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!dataParternership || dataParternership.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataParternership | filter : search).length === 0" [hidden]="dataParternership.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div
+        *ngFor="let partnership of dataParternership |filter: search
+           | paginate : {itemsPerPage:9, currentPage: current}"
+        align="center" class="col-md-4">
+        <div class="mx-1 row">
+          <nb-card>
+            <nb-card-body class="pt-2 pb-2">
+              <div class="">
+                <div class="row mt-2">
+                  <div class="col-lg-12">
+                    <div align="right" class="">
+                      <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                              aria-label="Example icon-button with a menu"
+                              nbButton nbTooltip="Click here to see advanced menu"
+                              nbTooltipStatus="primary"
+                              shape="round"
+                              size="small"
+                              status="basic">
+                        <nb-icon icon="more-horizontal-outline"></nb-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                          <a [routerLink]="['/communicationMarketing/EditPartner/',partnership.id]"
+                             fullWidth nbButton>
+                      <span class="text-warning">
+                        <nb-icon icon="edit-outline"></nb-icon>
+                      </span> Edit
+                          </a>
+                        </button>
+
+                        <button mat-menu-item>
+                          <a [routerLink]="['/communicationMarketing/DetailsPartnership/',partnership.id]" fullWidth nbButton>
+                            <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                          </a>
+                        </button>
+
+
+                        <button mat-menu-item>
+                          <a (click)="onArchiveConfirm(partnership,partnership.id)" fullWidth nbButton status="basic">
+                            <nb-icon icon="archive-outline"></nb-icon>
+                            Archive
+                          </a>
+                        </button>
+
+
+
+
+                     <!---   <button mat-menu-item>
+                          <button
+                            (click)="open2(dialog)"
+                            fullWidth nbButton
+                          >
+                            <span class="text-danger"><nb-icon icon="trash-outline"></nb-icon></span>
+                            Delete
+                          </button>
+
+                          <ng-template #dialog let-data let-ref="dialogRef">
+                            <nb-card>
+                              <nb-card-header>
+                                Confirm delete operation ?
+                              </nb-card-header>
+                              <nb-card-body>
+                                Are you sure you want to delete this Partner?
+                              </nb-card-body>
+                              <nb-card-footer>
+                                <button (click)="ref.close()" class="float-left" nbButton>
+                                  Close
+                                </button>
+                                <button (click)="onDeleteConfirm(partnership.id)" class="float-right" nbButton>
+                                  Delete
+                                </button>
+                              </nb-card-footer>
+                            </nb-card>
+                          </ng-template>
+                        </button>---->
+                      </mat-menu>
+                    </div></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <nb-user
+                      [name]="partnership.parternershipName"
+                      class="text-dark justify-content-center"
+                      onlyPicture picture="{{partnership.parternershipLogo}}" size="giant"></nb-user>
+                  </div>
+                </div>
+              </div>
+              <div align="center">
+                <h4>{{partnership.parternershipName}}</h4>
+                <span class="text-sm-center mt-2">{{partnership.parternershipEmail}}</span>
+                <br>
+             <span><a target="_blank" class="text-pink"
+                                            href={{partnership.parternershipWebSiteLink}>{{partnership.parternershipWebSiteLink}}</a></span>
+              </div>
+              <br>
+              <ul class="social-links list-inline">
+                <li class="list-inline-item">
+                  <a class="tooltips" data-original-title="Linkedin" data-placement="top"
+                     data-toggle="tooltip" href="{{partnership.parternershipLinkedin}}" target="_blank"
+                     title="{{partnership.parternershipLinkedin}}">
+                    <i class="fa fa-linkedin"></i></a></li>
+              </ul>
+              <div class="mt-4">
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <span>{{partnership.parternershipPhone}}</span>
+                      <p class="mb-0 text-muted">Phone</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div align="center" class="col-lg ">
+                    <div class="mt-3">
+                      <p>{{partnership.parternershipAdresse}}</p>
+                      <p class="mb-0 text-muted">Address</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--  <div align="center" class="mt-3">
+                   <p class=" mb-0 mt-2">
+                     <button
+                       [routerLink]="['/crm/customer-details/',customer.id]" class="btn  btn-sm waves-effect  btn-primary
+                                  text-white mx-1"
+                       type="button">
+                       <nb-icon icon="eye-outline"></nb-icon>
+                     </button>
+                     <button [routerLink]="['/crm/edit-customer/',customer.id]"
+                             class="btn  btn-sm waves-effect text-white btn-success"
+                             type="button">
+                       <nb-icon icon="edit-outline"></nb-icon>
+                     </button>
+                     <button
+                       (click)="open2(dialog)"
+                       
+                       class="btn mx-1 btn-sm waves-effect text-white btn-danger"
+                       type="button">
+                       <nb-icon icon="trash-outline"></nb-icon>
+                     </button>
+   
+                    <ng-template #dialog let-data let-ref="dialogRef">
+                         <nb-card>
+                           <nb-card-header>
+                             Confirm delete operation ?
+                           </nb-card-header>
+                           <nb-card-body>
+                             Are you sure you want to delete this customer?
+                           </nb-card-body>
+                           <nb-card-footer>
+                            <button nbButton class="float-left" (click)="ref.close()">
+                              Close
+                            </button>
+                             <button class="float-right" (click)="onDeleteConfirm(customer.id)" nbButton>
+                               Delete
+                             </button>
+                           </nb-card-footer>
+                         </nb-card>
+                     </ng-template>
+   
+                   </p>
+   
+                 </div>-->
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- container -->
+</div>

@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row"><div class="col-md-5"><h3>Invoice #{{invoice.invoiceNumber}}</h3></div>
+          <div class="col-md-7"><a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/accounting/invoicelist']" nbButton>
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a></div></div>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row show-grid">
+          <div class="col-md-6">
+            <div>Invoice title:</div><br>
+            <div>Client name:</div><br>
+            <div>Client email: </div><br>
+            <div>Creation date: </div><br>
+            <div>Currency:</div>
+          </div>
+          <div class="col-md-6">
+            <div>{{invoice.title}}</div><br>
+            <div>{{invoice.clientName}}</div><br>
+            <div>{{invoice.clientEmail}} </div><br>
+            <div>{{date  | date:'yyyy-MM-dd'}} </div><br>
+            <div>{{invoice.currency}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<nb-card>
+  <nb-card-header><h3>Select Items </h3></nb-card-header>
+  <nb-card-body>
+    <label>Items to select</label>
+    <div class="row">
+      <div class="col-md-11">
+        <nb-select nbSelect fullWidth (selectedChange)="selectInvoiceItems($event)"
+                   nbTooltip="Select one or many items" nbTooltipStatus="info">
+          <nb-option>No items</nb-option>
+          <nb-option [value]="invoiceItem" *ngFor="let invoiceItem of invoiceItems">{{invoiceItem.description}}</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-1">
+        <nb-icon icon="info-outline"
+                 nbTooltip="Please select one or many items" nbTooltipStatus="primary"></nb-icon>
+      </div>
+      <ng-template #dialog let-data let-ref="dialogRef">
+        <nb-card>
+          <nb-card-header>
+            <div class="row show-grid">
+              <div class="col-md-6">
+                <div><h5>Add new item</h5></div>
+              </div>
+              <div class="col-md-6">
+                <div> <button style="float: right" size="small"  nbTooltip="Cancel" nbTooltipStatus="danger" shape="round" status="danger"
+                              (click)="ref.close()" nbButton>
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button></div>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body>
+            <form [formGroup]="invoiceItemsForm" (ngSubmit)="createNewInvoiceItem()">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <nb-select nbSelect fullWidth placeholder="Product" 
+                               formControlName="description">
+                      <nb-option>Select product</nb-option>
+                      <nb-option value="other">Other</nb-option>
+                      <nb-option *ngFor="let productView of productViews" [value]="productView">{{productView.materialName}}</nb-option>
+                    </nb-select>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input nbInput fullWidth type="number" class="form-control"
+                           placeholder="quantity" formControlName="quantity">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <button type="submit" nbButton
+                            [disabled]="invoiceItemsForm.invalid" status="success">Create</button>
+                  </div>
+                </div>
+              </div><br/>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </ng-template>
+    </div><br/>
+    <div class = "row" *ngIf="selectedInvoiceItems.length > 0">
+      <div class = "col-md-11">
+        <table class="table mb-0">
+          <thead class="bg-light">
+          <tr>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody
+            *ngFor="let invoiceItem of selectedInvoiceItems">
+          <tr class="col-md-9 col-sm-10">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class=" mb-1">{{invoiceItem.description}}</p>
+                </div>
+              </div>
+            </td>
+            <td><p class="fw-normal mb-1">{{invoiceItem.quantity}}</p></td>
+            <td><p class="fw-normal mb-1">{{invoiceItem.unitPrice}}</p></td>
+            <td><p class="fw-normal mb-1">{{invoiceItem.unitPrice * invoiceItem.quantity}}</p></td>
+            <td>
+              <p class="fw-normal mb-1">
+                <button style="float: left" nbTooltip="Cancel Material Selection"
+                        nbTooltipStatus="danger" shape="round" status="danger"
+                        nbButton (click)="cancelSelection(invoiceItem)">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-1" >
+        <nb-icon icon="info-outline"
+                 nbTooltip="Selected invoice items" nbTooltipStatus="primary"></nb-icon>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-11">
+        
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="row show-grid">
+      <div class="col-md-4">
+        <div><button nbButton (click)="open2Supp(dialog)" status="primary">Add new item</button></div>
+      </div>
+      <div class="col-md-4">
+        <div><nb-tag appearance="filled"  [text]="tagTotalInvoice" status="primary"></nb-tag></div>
+      </div>
+      <div class="col-md-4">
+        <div><button style="float: right;" nbButton [disabled]="selectedInvoiceItems.length === 0"
+                     (click)="addSelectedInvoiceItems(selectedInvoiceItems)"
+                     nbTooltip="Proceed or Select another Material" nbTooltipStatus="info" status="primary">
+          Done
+        </button></div>
+      </div>
+    </div>
+
+    
+  </nb-card-footer>
+</nb-card>

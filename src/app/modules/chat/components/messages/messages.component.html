@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-3">
+    <nb-card size="large">
+      <nb-card-header>List of Users</nb-card-header>
+      <nb-card-body [nbSpinner]="usersLoaded">
+        <nb-list>
+          <nb-list-item *ngFor="let user of users">
+            <span (click)="selectUser(user.email)" style="cursor: pointer;"
+                  [title]="user.email">
+              {{ user.email.substring(0, user.email.indexOf('@')) }}
+              <span class="indicator online" *ngIf="user.status === 'Online'"></span>
+              <span class="indicator offline" *ngIf="user.status === 'Offline'"></span>
+            </span>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-9" [hidden]="chatHidden" *ngIf="otherUser">
+    <nb-chat [title]="otherUser.substring(0, otherUser.indexOf('@'))" size="large" status="success">
+      <nb-chat-message *ngFor="let message of msgsSent"
+                       [message]="message.text"
+                       [reply]="message.reply"
+                       [sender]="message.me.substring(0, message.me.indexOf('@'))"
+                       [date]="message.date" dateFormat="dd MMMM YYYY h:mm a"></nb-chat-message>
+      <nb-chat-form (send)="sendMessage($event)" [showButton]="false" [dropFiles]="true">
+      </nb-chat-form>
+    </nb-chat>
+  </div>
+</div>
+

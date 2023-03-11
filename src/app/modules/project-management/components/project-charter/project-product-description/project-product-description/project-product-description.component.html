@@ -1,0 +1,83 @@
+<nb-card>
+  <nb-flip-card [flipped]="flippedState" [showToggleButton]="false">
+    <nb-card-front>
+      <nb-card accent="info">
+        <nb-card-header>
+          <div class="row">
+            <div class="col-md-11">
+              
+          Project product description
+            </div>
+            <div class="col-md-1" *ngIf=" data?.projectDescription!=null">
+              <button shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <nb-icon icon="more-horizontal-outline"></nb-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                
+                  <a style="text-decoration:none" nbTooltip="Click here to edit data" nbTooltipStatus="primary"  (click)="updateProductDescription()">
+                    <button mat-menu-item>
+                      <span ><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                    </button>
+                  </a>
+                  <a nbTooltip="Delete data" nbTooltipStatus="primary" (click)="confirmation(dialog)">
+                    <button mat-menu-item>
+                      <span><nb-icon class="text-danger" icon="trash-outline"></nb-icon>&nbsp; Delete</span>
+                    </button>
+                  </a>
+              
+             
+                 <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card >
+                    <nb-card-header>Confirm Delete Operation</nb-card-header>
+                    <nb-card-body class="alert alert-warning ">
+                      Are you sure you want to delete this item ?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <button nbButton status="basic"  (click)="ref.close()"><nb-icon icon="close" ></nb-icon>Close</button>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-2">
+                          <button nbButton status="danger"  (click)="delete()"><nb-icon icon="trash"></nb-icon>Delete</button>
+                        </div>
+
+                      </div>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template> 
+    
+              </mat-menu>
+
+             
+            </div></div></nb-card-header>
+        <nb-card-body>
+          <nb-alert outline="primary" *ngIf="data?.projectDescription != null; else noData"> 
+            {{ data?.projectDescription }}
+          </nb-alert>
+          <ng-template #noData>
+            <div class="col-md-4 offset-md-5">
+              <p >No Data Found</p>
+              <button nbButton status="primary"  (click)="flip()">Add New + </button>
+            </div>
+          </ng-template>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      <nb-card>
+        <nb-card-header>
+          <nb-icon icon="chevron-left-outline" pack="nebular-essentials" aria-hidden="true"   (click)="flip()"></nb-icon>
+          Project product description
+        </nb-card-header>
+    
+        <nb-card-body>
+          <ngx-add-project-product-description
+            [descriptionSelected]="selectedItem"
+            [projectCharter]="data"
+          ></ngx-add-project-product-description>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-back>
+  </nb-flip-card>
+</nb-card>

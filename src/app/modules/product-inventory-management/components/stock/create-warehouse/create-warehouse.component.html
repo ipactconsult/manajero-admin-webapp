@@ -1,0 +1,105 @@
+<div class="row">
+       <div class="col-md-4">
+              <h3>Create New Warehouse</h3>
+       </div>
+       <div  class="col-md-8">
+              <button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </button>
+       </div>
+</div>
+<form [formGroup]="warehouseForm" class="mt-3">
+       <label class="mt-2">Warehouse Name</label>
+       <div class="row">
+              <div class="col-md-11">
+                <input nbInput fullWidth type="text" class="form-control"
+               formControlName="warehouseName">
+              </div>
+              <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the warehouse name" 
+                              nbTooltipStatus="primary"></nb-icon>
+              </div>
+       </div>
+           <label class="mt-2">Warehouse Description</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <textarea nbInput fullWidth class="form-control"
+                               formControlName="warehouseDesc"></textarea>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the warehouse description" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+           <label class="mt-2">Warehouse Country</label>
+
+           <div class="row">
+                  <div class="col-md-11">
+                     <nb-select nbSelect fullWidth
+                         (selectedChange)="selectCountry($event)" formControlName="warehouseCountry"
+                         nbTooltip="Select Country" nbTooltipStatus="info">
+                <nb-option *ngFor = "let country of countries" [value]="country.country_name">
+                  {{country.country_name}}
+                </nb-option>
+              </nb-select>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please select the warehouse country" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+           <label class="mt-2">Warehouse City</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="text" class="form-control"
+               formControlName="warehouseCity">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the warehouse city" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+            <label class="mt-2">Warehouse Postal Code</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="number" class="form-control"
+               formControlName="warehousePostalCode">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the warehouse postal code" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+            <label class="mt-2">Warehouse Address</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <textarea nbInput fullWidth class="form-control"
+                               formControlName="warehouseAddress"></textarea>
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the warehouse address" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+            <label class="mt-2">Warehouse Phone Number</label>
+           <div class="row">
+                  <div class="col-md-11">
+                     <input nbInput fullWidth type="text" class="form-control"
+               formControlName="warehousePhone">
+                  </div>
+                  <div class="col-md-1">
+                     <nb-icon icon="info-outline" nbTooltip="Please enter the warehouse phone" 
+                              nbTooltipStatus="primary"></nb-icon>
+                  </div>
+           </div>
+  <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="warehouseForm.invalid" (click)="createNewWarehouse()" 
+                      status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+                </button>
+         </div>
+  </div>
+</form>
+

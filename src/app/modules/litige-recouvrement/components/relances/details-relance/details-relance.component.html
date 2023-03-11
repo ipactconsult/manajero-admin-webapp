@@ -1,0 +1,193 @@
+<nb-card>
+    <nb-card-header class="mt-3">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Follow-up of the customer : {{relance?.invoice?.clientName}} </h3>
+            </div>
+            
+                <div class="col-md-4" align="right">
+                    <a [routerLink]="['/litige/algorithme']" status="success" nbButton class="mx-1"nbTooltip="click here to know the different customer scenarios"
+                     nbTooltipStatus="primary"
+                    >
+                        <nb-icon icon="question-mark-circle-outline"></nb-icon>
+                    </a>
+                    <a [routerLink]="['/litige/rapport']" status="warning" nbButton class="mx-1"  nbTooltip="click here to know the different reports on the recovery process"  nbTooltipStatus="primary">
+                        <nb-icon icon="pie-chart-outline"></nb-icon>
+                    </a>
+                        <button (click)="AddDossier()"  nbButton status="danger">
+                            <nb-icon icon="alert-triangle-outline"></nb-icon>
+                            start a legal proceeding
+                        </button>
+                
+                </div>
+
+            
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="col-md-12 mt-3">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="container">
+                        <div class="col-25">
+                            
+                            <label for="subject">1st reminder: <a href="date.rabai@gmail.com">{{relance.premierrelance|date:'longDate'}}</a></label>
+
+                        </div>
+                        <div class="col-25">
+                            <label for="subject">Next reminder :
+                                <a href="wassim.rabai@gmail.com">21-08-2022</a>
+
+                            </label>
+                        </div>
+                      
+                        <div class="col-25">
+                            <label for="subject">Create on {{relance?.invoice?.createdAt|date:'longDate' }}</label>
+                        </div>
+                        <div class="col-25">
+                            <label for="subject">Amount to be paid {{relance?.invoice?.total}} Dinars</label>
+                        </div>
+                        <div class="col-25">
+                            <label for="subject">Closed : <a href="wassim.rabai@gmail.com">{{relance.invoice?.paidStatus}}</a></label>
+                            <ng-template #contentTemplate let-data>
+                                <ngx-date-cloture (addCategoryOutputEvent)=" add_categorie($event)"></ngx-date-cloture>
+                            </ng-template>
+                        </div>
+                        <div class="col-25">
+                            <label for="subject">Closed on :{{relance?.datecloture}} </label>
+                        </div>
+                        <div class="col-25"> 
+                            <nb-select   selected="0" class="w-100">
+                             <nb-option value="0" >Public Customer</nb-option>
+                             <nb-option value="All" >Risky Customer</nb-option>
+                           </nb-select>
+                         </div>
+                        <br>
+                    </div>
+
+                </div>
+
+                <div class="col-md-7">
+
+                    <header>
+                        <button style="border-spacing: 5px;" (click)="enableMailComponent()" nbButton status="primary"
+                            class="mx-1">
+                            <nb-icon icon="plus-outline"></nb-icon>
+                            Mail
+                        </button>
+                        <button style="border-spacing: 5px;" (click)="enableSMSComponent()" nbButton status="primary"
+                        class="mx-1">
+                        <nb-icon icon="plus-outline"></nb-icon>
+                        SMS
+                    </button>
+                        <button nbButton status="primary" (click)="enableCallsComponent()" class="mx-1">
+                            <nb-icon icon="plus-outline"></nb-icon>Calls
+                        </button>
+                        <button nbButton status="primary" (click)="enableCommentComponent()" class="mx-1">
+                            <nb-icon icon="plus-outline"></nb-icon>
+                            Comment
+                        </button>
+                        <button nbButton status="primary" (click)="enablePromiseComponent()" class="mx-1">
+                            <nb-icon icon="plus-outline"></nb-icon>
+                            Promise
+                        </button>
+                    </header>
+                    <br>
+                    <nb-card-body>
+                        <ngx-mail [relance]="relance"  *ngIf="enableEmail">
+                        </ngx-mail>
+                        <ngx-sms [relance]="relance"  *ngIf="enableSMS">
+                        </ngx-sms>
+                        <ngx-promise [relance]="relance"  *ngIf="enablePromise">
+                        </ngx-promise>
+                        <ngx-call [relance]="relance"  *ngIf="enableCall">
+                        </ngx-call>
+                        <ngx-comment [relance]="relance" *ngIf="enableComment">
+                        </ngx-comment>
+                    </nb-card-body>
+                    <footer class=mt-3>
+                        <div>
+                            <label for="fname">All activities ({{relance?.email?.length + relance?.comment?.length +relance?.sms?.length 
+                              + relance?.call?.length}})</label>
+                        </div>
+                        <div>
+                            <label for="IN">Mail({{relance?.email?.length}})</label>
+
+                        </div>
+                        <div>
+                            <label for="subject">Calls({{relance?.call?.length}})</label>
+
+                        </div>
+                        <div>
+                            <label for="subject">Comment({{relance?.comment?.length}})</label>
+
+                        </div>
+                        <div>
+                            <label for="subject">SMS({{relance?.sms?.length}})</label>
+
+                        </div>
+                       
+                    </footer>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+        <div class="col mt-3">
+            <div class="col-md-3">
+                <div class="container">
+                    <h5>Contact </h5>
+                    <div class="col-25">
+                        <label for="subject">{{relance?.invoice?.clientName}}</label>
+                        <a href="wassim.rabai@gmail.com"> {{relance?.invoice?.clientEmail}}</a>
+
+
+                    </div>
+                    <br>
+                    <div class="col-25">
+                        <label for="subject">Phone Number:{{relance?.invoice?.clientPhone}}</label>
+                    
+                    </div>
+                    <br>
+
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                    <div class="container">
+
+                        <nb-accordion>
+                            <nb-accordion-item expanded="true">
+                                <nb-accordion-item-header>Invoice Details</nb-accordion-item-header>
+                                <nb-accordion-item-body>
+                                    <div class="col-25">
+                                        <label for="fname">Title : {{relance?.invoice?.title}}</label>
+                                    </div>
+                                    <div class="col-25">
+                                        <label for="IN">Invoice Number : {{relance?.invoice?.code}}</label>
+
+                                    </div>
+                                    <div class="col-25">
+                                        <label for="subject">Due Date : {{relance?.invoice?.dueDate|date:'longDate'}}</label>
+
+                                    </div>
+                       
+                                </nb-accordion-item-body>
+                            </nb-accordion-item>
+                        </nb-accordion>
+
+                    </div>
+            </div>
+           
+        </div>
+        
+      
+       
+
+    </nb-card-body>
+  
+</nb-card>

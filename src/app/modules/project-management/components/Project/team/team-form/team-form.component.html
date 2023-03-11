@@ -1,0 +1,28 @@
+<div >
+    <div >
+<input
+[formControl]="inputFormControl"
+nbInput
+type="text"
+placeholder="Form control"
+[nbAutocomplete]="autoControl" />
+
+<nb-autocomplete #autoControl>
+
+<nb-option *ngFor="let option of filteredControlOptions$ | async" [value]="option">
+  {{ option }}
+</nb-option>
+
+</nb-autocomplete>
+
+<button nbButton shape="round" size="small" status="success" (click)="addToTeam()">Round Small</button>
+</div>
+<div class="mt-5 mb-5" >
+<p><strong>Team membre:</strong></p>
+
+<nb-tag-list >
+    <nb-tag status="info" appearance="outline" text="omar.jmai@esprit.tn"></nb-tag>
+  
+  </nb-tag-list>
+</div>
+</div>

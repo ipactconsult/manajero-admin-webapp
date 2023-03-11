@@ -1,0 +1,41 @@
+
+
+<nb-accordion>
+    <nb-accordion-item>
+     <nb-accordion-item-header><nb-icon icon="alert-circle-outline" status="warning"></nb-icon>Help</nb-accordion-item-header>
+     <nb-accordion-item-body>
+
+        <nb-card>
+            <nb-card-header>
+                project action plan structure
+                </nb-card-header>
+            <nb-card-body>
+        
+              <table [nbTreeGrid]="data" equalColumnsWidth>
+        
+                <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+        
+                <ng-container [nbTreeGridColumnDef]="customColumn">
+                  <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        
+                    <nb-tree-grid-row-toggle
+                      [expanded]="row.expanded"
+                      *ngIf="row?.children?.length>0">
+                    </nb-tree-grid-row-toggle>
+        
+                    {{row.data.name}}
+        
+                  </td>
+                </ng-container>
+        
+                <ng-container *ngFor="let column of defaultColumns" [nbTreeGridColumnDef]="column">
+                  <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column]}}</td>
+                </ng-container>
+        
+              </table>
+        
+            </nb-card-body> 
+        </nb-card>
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+   </nb-accordion>

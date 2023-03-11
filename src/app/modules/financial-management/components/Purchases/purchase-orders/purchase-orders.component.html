@@ -1,0 +1,10 @@
+<nb-card>
+  <nb-card-header>
+    <h3>Purchase Orders</h3>
+
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="tabSettings"  class ="table" (edit)="approvePo($event)" (delete)="rejectPo($event)" [source] ="source" > </ng2-smart-table>
+
+  </nb-card-body>
+</nb-card>

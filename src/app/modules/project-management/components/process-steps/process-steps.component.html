@@ -1,0 +1,25 @@
+<nb-accordion style="margin-bottom:5%">
+  <nb-accordion-item>
+    <nb-accordion-item-header><nb-icon icon="bar-chart-2-outline" status="info" style="margin-right: 1%;"></nb-icon>  PROCESSES FLOW  </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <nb-stepper orientation="horizontal"  [selectedIndex]="1" disableStepNavigation >
+    
+        <nb-step [label]="Initiating" [completed]="currentStep==='Initiating' ? true : false" >
+          <ng-template #Initiating>Initiating</ng-template>
+        </nb-step>
+
+        <nb-step [label]="PlanningEXECUTING" [completed]="currentStep==='PlanningEXECUTING' ? true : false" >
+          <ng-template #PlanningEXECUTING>Planning/EXECUTING </ng-template>
+        </nb-step>
+   
+        <nb-step [label]="MONITORINGCONTROLLING" [completed]="currentStep==='MONITORINGCONTROLLING' ? true : false">
+          <ng-template #MONITORINGCONTROLLING>MONITORING & CONTROLLING</ng-template>
+        </nb-step>
+
+        <nb-step [label]="CLOSING"[completed]="currentStep==='CLOSING' ? true : false">
+            <ng-template #CLOSING> CLOSING</ng-template>
+          </nb-step>
+      </nb-stepper>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>

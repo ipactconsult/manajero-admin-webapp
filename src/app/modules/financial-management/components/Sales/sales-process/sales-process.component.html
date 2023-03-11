@@ -1,0 +1,634 @@
+<nb-card >
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-5 col-sm-3">
+        <h3> Properties Sales Process</h3>
+
+      </div>
+      <div class="col-md-7 col-sm-12 " style="text-align: right;">
+        <button style="margin-left: 10px" nbTooltip="Click here for help" nbTooltipStatus="primary" nbButton status="basic" (click) ="openWindow()"><i class="fas fa-exclamation-circle fa-lg"></i>  </button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper orientation="horizontal" #stepper>
+      <nb-step [label]="labelOne">
+        <ng-template #labelOne>Quote Requests</ng-template>
+        <h4>Check Quote Requests</h4>
+        <ng2-smart-table [settings]="settings" [source] ="source" (custom)="goForward($event)" >
+        </ng2-smart-table>
+        
+        <button nbButton disabled nbStepperNext>prev</button>
+        <button nbButton nbStepperNext style="margin-left:920px " >next</button>
+      </nb-step>
+      
+      <nb-step [label]="labelTwo">
+        <ng-template #labelTwo >Quotes</ng-template>
+       
+
+          <h4 >Generate Quote</h4>
+          <nb-card >
+            <nb-card-body>
+              <h5 style ="color: #3464fb ">
+                Fill the form with the quote's information :
+              </h5>
+              <form  [formGroup]="quoteGroup" >
+                <br>
+                <br>
+                <h5> Property's Information:</h5>
+                <label for= "PropertyName">Property's name:</label>
+                <input [(ngModel)]="quote.propertyName"
+                       formControlName="propertyName" fullWidth
+                       id="PropertyName"
+                       name="PropertyName" nbInput placeholder="Property's Name"
+                       type="text" >
+                <br>
+                <label for="surface">Property's surface:</label>
+                <input [(ngModel)]="quote.propertySurface"  fieldSize="large"  fullWidth
+                       id="surface" formControlName="propertySurface"
+                       nbInput placeholder="Property's Surface"
+                        type="text"  >
+                <br>
+                <label for="pieces">Property's number of pieces :</label>
+
+                <input [(ngModel)]="quote.propertyPieces"  fieldSize="large" fullWidth
+                       id="pieces" formControlName="propertyPieces"
+                       nbInput placeholder="Number of pieces" 
+                        type="number" >
+                <br>
+                <div class="feedback" *ngIf="quoteGroup['controls']['propertyPieces'].errors?.min">This value should be positive.</div>
+
+                <label for="rooms">Property's number of rooms:</label>
+
+                <input [(ngModel)]="quote.propertyRooms"  fieldSize="large" fullWidth
+                       id="rooms" formControlName="propertyRooms"
+                       nbInput placeholder="Number of rooms" 
+                        type="number" >
+                <br>
+                <div class="feedback" *ngIf="quoteGroup['controls']['propertyRooms'].errors?.min">This value should be positive.</div>
+
+                <label for="city">Property's city:</label>
+
+                <input [(ngModel)]="quote.propertyCity"  fieldSize="large"  fullWidth
+                       id="city" formControlName="propertyCity"
+                       nbInput placeholder="Property's City "type="text" >
+                <br>
+                <label for="country">Property's country:</label>
+
+                <input  [(ngModel)]="quote.propertyCountry" formControlName="propertyCountry" fieldSize="large" fullWidth
+                       id="country" 
+                       nbInput placeholder="Property's Country" type="text"  >
+                <br>
+                <label for="price">Property's price:</label>
+
+                <input  [(ngModel)]="quote.propertyPrice" formControlName="propertyPrice" fieldSize="large"  fullWidth
+                       id="price" 
+                       nbInput placeholder="Property's Price" required
+                       size="30px" type="number" >
+                <br>
+                <div class="feedback" *ngIf="quoteGroup['controls']['propertyPrice'].errors?.min">This value should be positive.</div>
+
+                <br>
+                <br>
+                <h5> Customer's Information:</h5>
+
+                <label for="cName">Customer's name:</label>
+
+                <input [(ngModel)]="quote.customerName" fieldSize="large"  fullWidth
+                       id="cName" formControlName="customerName"
+                       nbInput placeholder="Customer's Name"  type="text" >
+                <br>
+                <label for="cEmail">Customer's Email:</label>
+
+                <input  [(ngModel)]="quote.customerEmail" formControlName="customerEmail" fieldSize="large"  fullWidth
+                       id="cEmail" 
+                       nbInput placeholder="Customer's Email" type="text" >
+                <br>
+                <label for="cAddress">Customer's address:</label>
+
+                <input [(ngModel)]="quote.customerAddress" formControlName="customerAddress" fieldSize="large"  fullWidth
+                       id="cAddress" 
+                       nbInput placeholder="Customer's Address" type="text">
+                <br>
+                <label for="cPhone">Customer's Phone:</label>
+
+                <input [(ngModel)]="quote.customerPhone" formControlName="customerPhone" fieldSize="large" fullWidth
+                       id="cPhone"
+                       nbInput placeholder="Customer's Phone"  type="text" >
+                <br>
+                <br>
+                <br>
+
+                <h5> Quote's Information:</h5>
+
+                <label for="qDate">Quote's Date:</label>
+
+                <input  [(ngModel)]="quote.quoteDate" formControlName="quoteDate" nbInput id ="qDate" fieldSize="large" placeholder="Quote's Date" fullWidth [nbDatepicker]="dateTimePicker">
+                <nb-datepicker withSeconds #dateTimePicker></nb-datepicker>
+
+                <br>
+                
+                <label for="tax">Tax Rate:</label>
+                <input [(ngModel)]="quote.taxRate" fieldSize="large" fullWidth
+                       id="tax" formControlName="taxRate"
+                       nbInput placeholder="Tax Rate" type="number">
+                <br>
+                <div class="feedback" *ngIf="quoteGroup['controls']['taxRate'].errors?.min">This value should be positive.</div>
+
+                <br>
+                
+                <label for="services">Services Fees:</label>
+                <input [(ngModel)]="quote.servicesFees" fieldSize="large" fullWidth
+                       id="services" formControlName="servicesFees"
+                       nbInput placeholder="Services Fees" type="number">
+                <br>
+                <div class="feedback" *ngIf="quoteGroup['controls']['servicesFees'].errors?.min">This value should be positive.</div>
+
+                <br>
+                <br>
+                <h5> Entreprise Information:</h5>
+                <label for="logoq">Entreprise logo:</label>
+                <br>
+
+                <input nbInput id="logoq" (change)="CreateBase64String($event)"  type="file" multiple />
+                <br>
+                <label for="name">Enterprise Name:</label>
+                <input [(ngModel)]="quote.enterpriseName" fieldSize="large" fullWidth
+                       id="name" formControlName="enterpriseName"
+                       nbInput placeholder="Enterprise Name" type="text" >
+                <br>
+                <label for="address">Enterprise Address:</label>
+                <input [(ngModel)]="quote.enterpriseAddress" fieldSize="large" fullWidth
+                       id="address" formControlName="enterpriseAddress"
+                       nbInput placeholder="Enterprise Address" type="text">
+                <br>
+                <label for="city">Enterprise City:</label>
+                <input [(ngModel)]="quote.enterpriseCity" fieldSize="large" fullWidth
+                       id="city" formControlName="enterpriseCity"
+                       nbInput placeholder="Enterprise City" type="text">
+                <br>
+                <label for="postal">Enterprise Postal Code:</label>
+                <input [(ngModel)]="quote.enterprisePostalCode" fieldSize="large" fullWidth
+                       id="postal" formControlName="enterpriseCity"
+                       nbInput placeholder="Postal Code" type="number">
+                <br>
+
+                <label for="registration">Enterprise Tax Registration Number:</label>
+                <input [(ngModel)]="quote.enterpriseTaxRegistrationNumber" fieldSize="large" fullWidth
+                       id="registration" formControlName="enterpriseTaxRegistrationNumber"
+                       nbInput placeholder="Tax Registration Number" type="text">
+                <br>
+                <br>                
+                <label for="sig">Electronic Signature:</label>
+                <div  id="sig" class="signature-container">
+                  <canvas #canvas width="255" height="255"  ></canvas>
+                </div>
+                <br>
+                <div style="margin-left: 430px">
+                  <br>
+                  <button nbButton status="primary" (click)="addQuote()" class="ml-5" >Send</button>
+
+                </div>
+
+
+               
+              </form>
+              
+            </nb-card-body>
+
+          </nb-card>
+        <nb-card>
+          <nb-card-header>
+            <h3> Quotes list
+            </h3>
+          </nb-card-header>
+          <ng2-smart-table [settings]="quoSettings" [source] ="quoSource" (edit)="viewQuoteFromTable($event)" (delete)="deleteQuote($event)"  (userRowSelect)="fromSecondtoThird($event)" >
+          </ng2-smart-table>
+        </nb-card>
+        
+
+
+
+
+
+       
+
+        <button nbButton nbStepperPrevious >prev</button>
+        <button nbButton nbStepperNext style="margin-left:920px " >next</button>
+       
+
+      </nb-step>
+
+      <nb-step label="Purchase Orders">
+        <h4>Generate Purchase Order</h4>
+        <nb-card   >
+          <nb-card-body>
+            <h5 style ="color: #3464fb ">
+              Fill the form with the order's information :
+            </h5>
+
+            <form  [formGroup]="poGroup" >
+              <br>
+              <br>
+              <h5> Property's Information:</h5>
+
+              <label for= "PropertyName2">Property's name:</label>
+              <input [(ngModel)]="purchaseOrder.propertyName"
+                     formControlName="propertyName2" fullWidth
+                     id="PropertyName2"
+                      nbInput placeholder="Property's Name"
+                     type="text" >
+              <br>
+              <label for="surface2">Property's surface:</label>
+              <input [(ngModel)]="purchaseOrder.propertySurface"  fieldSize="large"  fullWidth
+                     id="surface2" formControlName="propertySurface2"
+                     nbInput placeholder="Property's Surface"
+                      type="text"  >
+              <br>
+              <label for="pieces2">Property's number of pieces :</label>
+
+              <input [(ngModel)]="purchaseOrder.propertyPieces"  fieldSize="large" fullWidth
+                     id="pieces2" formControlName="propertyPieces2"
+                     nbInput placeholder="Number of pieces" 
+                      type="number" >
+              <br>
+              <div class="feedback" *ngIf="poGroup['controls']['propertyPieces2'].errors?.min">This value should be positive.</div>
+
+              <label for="rooms2">Property's number of rooms:</label>
+
+              <input [(ngModel)]="purchaseOrder.propertyRooms"  fieldSize="large" fullWidth
+                     id="rooms2" formControlName="propertyRooms2"
+                     nbInput placeholder="Number of rooms" 
+                      type="number" >
+              <br>
+              <div class="feedback" *ngIf="poGroup['controls']['propertyRooms2'].errors?.min">This value should be positive.</div>
+
+              <label for="city2">Property's city:</label>
+
+              <input [(ngModel)]="purchaseOrder.propertyCity"  fieldSize="large"  fullWidth
+                     id="city2" formControlName="propertyCity2"
+                     nbInput placeholder="Property's City "type="text">
+              <br>
+              <label for="country2">Property's country:</label>
+
+              <input  [(ngModel)]="purchaseOrder.propertyCountry" formControlName="propertyCountry2" fieldSize="large" fullWidth
+                     id="country2" 
+                     nbInput placeholder="Property's Country" type="text"  >
+              <br>
+              <label for="price2">Property's price:</label>
+
+              <input  [(ngModel)]="purchaseOrder.propertyPrice" formControlName="propertyPrice2" fieldSize="large"  fullWidth
+                     id="price2" 
+                     nbInput placeholder="Property's Price" 
+                     size="30px" type="number" >
+              <br>
+              <div class="feedback" *ngIf="poGroup['controls']['propertyPrice2'].errors?.min">This value should be positive.</div>
+
+              <br>
+              <br>
+              <h5> Customer's Information:</h5>
+
+              <label for="cName2">Customer's name:</label>
+
+              <input [(ngModel)]="purchaseOrder.customerName" fieldSize="large"  fullWidth
+                     id="cName2" formControlName="customerName2"
+                     nbInput placeholder="Customer's Name"  type="text" >
+              <br>
+              <label for="cEmail2">Customer's Email:</label>
+
+              <input  [(ngModel)]="purchaseOrder.customerEmail" formControlName="customerEmail2" fieldSize="large"  fullWidth
+                     id="cEmail2" 
+                     nbInput placeholder="Customer's Email" type="email" >
+              <br>
+              <label for="cAddress">Customer's address:</label>
+
+              <input [(ngModel)]="purchaseOrder.customerAddress" formControlName="customerAddress2" fieldSize="large"  fullWidth
+                     id="cAddress2" 
+                     nbInput placeholder="Customer's Address" type="text">
+              <br>
+              <label for="cPhone2">Customer's Phone:</label>
+
+              <input [(ngModel)]="purchaseOrder.customerPhone" formControlName="customerPhone2" fieldSize="large" fullWidth
+                     id="cPhone2"
+                     nbInput placeholder="Customer's Phone"  type="text" >
+              <br>
+              <br>
+              <br>
+              <h5> Purchase Order's Information:</h5>
+
+
+              <label for="poDate">Purchase Order's Date:</label>
+
+              <input  [(ngModel)]="purchaseOrder.orderDate" formControlName="purchaseOrderDate" nbInput id ="poDate" fieldSize="large" placeholder="Purchase Order's Date" fullWidth [nbDatepicker]="order" >
+              <nb-datepicker withSeconds #order></nb-datepicker>
+              <br>
+              <br>
+              <br>
+              <h5> Payment's Information</h5>
+              <br>
+              <label for="tax2">Tax Rate:</label>
+              <input [(ngModel)]="purchaseOrder.taxRate" fieldSize="large" fullWidth
+                     id="tax2" formControlName="taxRate2"
+                     nbInput placeholder="Tax Rate" type="number">
+              <br>
+              <br>
+
+              <label for="services2">Services Fees:</label>
+              <input [(ngModel)]="purchaseOrder.servicesFees" fieldSize="large" fullWidth
+                     id="services2" formControlName="servicesFees2"
+                     nbInput placeholder="Services Fees" type="number">
+
+
+              <br>
+              <div class="feedback" *ngIf="poGroup['controls']['servicesFees2'].errors?.min">This value should be positive.</div>
+
+              <label for="advance">Advance Payment:</label>
+              <input [(ngModel)]="purchaseOrder.advancePayment" fieldSize="large" fullWidth
+                     id="advance" formControlName="advancePayment"
+                     nbInput placeholder="advance Payment:" type="number">
+              <br>
+              <div class="feedback" *ngIf="poGroup['controls']['advancePayment'].errors?.min">This value should be positive.</div>
+
+              <label for="advance">Payment Mode:</label>
+              <br>
+              <nb-select [(ngModel)]="purchaseOrder.paymentMode" fieldSize="large" 
+                     id="advance" formControlName="paymentMode"
+                     nbInput placeholder="Select payment mode" type="text">
+                     <nb-option  *ngFor="let mode of paymentModes" [value]="mode"> {{mode}}</nb-option>
+              </nb-select>
+              <br>
+              <label for="advance">Payment Method:</label>
+              <br>
+              <nb-select [(ngModel)]="purchaseOrder.paymentMethod" fieldSize="large" fullWidth
+                     id="advance" formControlName="paymentMethod"
+                     nbInput placeholder="Payment method:" type="text" (selectedChange)="selectedMethod($event)">
+                     <nb-option  *ngFor="let method of paymentMethod" [value]="method" > {{method}}</nb-option>
+              </nb-select>
+
+              <br>
+              <label for="months">Number of instalments:</label>
+              <input  [(ngModel)]="purchaseOrder.numberOfMonths" fieldSize="large" fullWidth
+                     id="months" formControlName="numberOfMonths"
+                     nbInput placeholder="Number of months" type="number">
+              <br>
+              <div class="feedback" *ngIf="poGroup['controls']['numberOfMonths'].errors?.min">This value should be positive.</div>
+
+
+              <label for="dueDate">Due Date:</label>
+               
+              <input  [(ngModel)]="purchaseOrder.dueDate" formControlName="dueDate" nbInput id ="dueDate" fieldSize="large" placeholder="Due Date" fullWidth [nbDatepicker]="due" >
+              <nb-datepicker withSeconds #due></nb-datepicker>
+
+              <br>
+              <br>
+              <br>
+              <h5> Entreprise Information:</h5>
+              <label for="logop">Entreprise logo:</label>
+              <br>
+
+              <input nbInput id="logop" formControlName="logop" (change)="CreateBase64String($event)"  type="file" multiple />
+              <br>
+              <label for="namep">Enterprise Name:</label>
+              <input [(ngModel)]="purchaseOrder.enterpriseName" fieldSize="large" fullWidth
+                     id="namep" formControlName="enterpriseName"
+                     nbInput placeholder="Enterprise Name" type="text" >
+              <br>
+              <label for="addressp">Enterprise Address:</label>
+              <input [(ngModel)]="purchaseOrder.enterpriseAddress" fieldSize="large" fullWidth
+                     id="addressp" formControlName="enterpriseAddress"
+                     nbInput placeholder="Enterprise Address" type="text">
+              <br>
+              <label for="cityp">Enterprise City:</label>
+              <input [(ngModel)]="purchaseOrder.enterpriseCity" fieldSize="large" fullWidth
+                     id="cityp" formControlName="enterpriseCity"
+                     nbInput placeholder="Enterprise City" type="text">
+              <br>
+              
+              <label for="postal">Enterprise Postal Code:</label>
+              <input [(ngModel)]="purchaseOrder.enterprisePostalCode" fieldSize="large" fullWidth
+                     id="postal" formControlName="enterprisePostalCode"
+                     nbInput placeholder="Postal Code" type="number">
+              <br>
+              <label for="registration">Enterprise Tax Registration Number:</label>
+              <input [(ngModel)]="purchaseOrder.enterpriseTaxRegistrationNumber" fieldSize="large" fullWidth
+                     id="registration" formControlName="enterpriseTaxRegistrationNumber"
+                     nbInput placeholder="Tax Registration Number" type="text">
+              <br>
+              <label for="sig2">Electronic Signature:</label>
+              <div  id="sig2" class="signature-container">
+                <canvas #canvas2 width="255" height="255"  ></canvas>
+              </div>
+              <br>
+              
+              <div style="margin-left: 445px">
+                <button nbButton status="primary" (click)="addPurchaseOrder()" class="ml-5" >Create</button>
+
+              </div>
+            </form>
+
+          </nb-card-body>
+
+       </nb-card>
+        <nb-card>
+          <nb-card-header>
+            <h3> Purchase Orders List
+            </h3>
+          </nb-card-header>
+          <ng2-smart-table [settings]="poSettings" [source] ="poSource" (edit)="viewOrderFromTable($event)" (delete)="deleteOrder($event)"  (userRowSelect)="fromThirdToFourth($event)" >
+          </ng2-smart-table>
+        </nb-card>
+
+
+        
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton nbStepperNext style="margin-left:920px " >next</button>
+      </nb-step>
+      <nb-step [label]="labelFour">
+        <ng-template #labelFour>Bills of Lading</ng-template>
+        <h4>Generate Bill Of Lading</h4>
+        <nb-card >
+
+       <nb-card-body>
+
+         <h5 style ="color: #3464fb ">
+           Fill the form with the bill's information :
+         </h5>
+          <form [formGroup]="billGroup">
+            <br>
+            <br>
+            <h5> Property's Information:</h5>
+            <label for="bpname">Property Name :</label>
+            <input [(ngModel)]="billOfLading.propertyName"  fieldSize="large" fullWidth
+                   id="bpname" formControlName="propertyName"
+                   nbInput placeholder="Property Name"
+                   type="text" >
+            <br>
+            <label for= "bpprice">Crude Price:</label>
+            <input [(ngModel)]="billOfLading.propertyPrice"
+                   formControlName="propertyPrice" fullWidth
+                   id="bpprice"
+                   name="PropertyName" nbInput placeholder="Crude Price"
+                   type="number" >
+            <br>
+            <div class="feedback" *ngIf="billGroup['controls']['propertyPrice'].errors?.min">This value should be positive.</div>
+
+            <label for="tax2">Tax Rate:</label>
+            <input [(ngModel)]="billOfLading.taxRate" fieldSize="large" fullWidth
+                   id="tax2" formControlName="taxRate"
+                   nbInput placeholder="Tax Rate" type="number">
+            <br>
+            <div class="feedback" *ngIf="billGroup['controls']['taxRate'].errors?.min">This value should be positive.</div>
+
+
+            <label for="services2">Services Fees:</label>
+            <input [(ngModel)]="billOfLading.servicesFees" fieldSize="large" fullWidth
+                   id="services2" formControlName="servicesFees"
+                   nbInput placeholder="Services Fees" type="number">
+
+
+            <br>
+            <div class="feedback" *ngIf="billGroup['controls']['servicesFees'].errors?.min">This value should be positive.</div>
+
+            <label for="advance">Advance Payment:</label>
+            <input [(ngModel)]="billOfLading.advancePayment" fieldSize="large" fullWidth
+                   id="advance" formControlName="advancePayment"
+                   nbInput placeholder="advance Payment:" type="number">
+            <br>
+            <div class="feedback" *ngIf="billGroup['controls']['advancePayment'].errors?.min">This value should be positive.</div>
+
+            <label for="ll">Property's Final Price:</label>
+            <input [(ngModel)]="billOfLading.finalPrice"  fieldSize="large"  fullWidth
+                   id="ll" formControlName="finalPrice"
+                   nbInput placeholder="Final Price"
+                   type="number"  >
+            <br>
+            <div class="feedback" *ngIf="billGroup['controls']['finalPrice'].errors?.min">This value should be positive.</div>
+
+            <br>
+            <br>
+
+
+            <h5> Customer's Information:</h5>
+
+            <label for="cbName">Customer's name:</label>
+
+            <input [(ngModel)]="billOfLading.customerName" fieldSize="large"  fullWidth
+                   id="cbName" formControlName="customerName"
+                   nbInput placeholder="Customer's Name"  type="text" >
+            <br>
+            <label for="cbEmail">Customer's Email:</label>
+
+            <input  [(ngModel)]="billOfLading.customerEmail" formControlName="customerEmail" fieldSize="large"  fullWidth
+                    id="cbEmail"
+                    nbInput placeholder="Customer's Email" type="text" >
+            <br>
+            <label for="cbAddress">Customer's address:</label>
+
+            <input [(ngModel)]="billOfLading.customerAddress" formControlName="customerAddress" fieldSize="large"  fullWidth
+                   id="cbAddress"
+                   nbInput placeholder="Customer's Address" type="text" >
+            <br>
+            <label for="cbPhone">Customer's Phone:</label>
+
+            <input [(ngModel)]="billOfLading.customerPhone" formControlName="customerPhone" fieldSize="large" fullWidth
+                   
+                   id="cbPhone"
+                   nbInput placeholder="Customer's Phone"  type="text" >
+            <br>
+            <br>
+            <br>
+
+            <h5> Delivery's Information:</h5>
+
+            <label for="ddDate">Order's Date:</label>
+
+            <input  [(ngModel)]="billOfLading.orderDate" formControlName="orderDate" nbInput id ="ddDate" fieldSize="large" placeholder="order Date" fullWidth [nbDatepicker]="dateTimePicker">
+            <nb-datepicker withSeconds #dateTimePicker></nb-datepicker>
+            <label for="aaDate">Shipment's Date:</label>
+
+            <input  [(ngModel)]="billOfLading.shipmentDate" formControlName="shipmentDate" nbInput id ="aaDate" fieldSize="large" placeholder="shipment Date" fullWidth [nbDatepicker]="dateTimePicker2">
+            <nb-datepicker withSeconds #dateTimePicker2></nb-datepicker>
+            <label for="dddDate">Delivery's Date:</label>
+
+            <input  [(ngModel)]="billOfLading.deliveryDate" formControlName="deliveryDate" nbInput id ="dddDate" fieldSize="large" placeholder="Delivery's Date" fullWidth [nbDatepicker]="dateTimePicker3">
+            <nb-datepicker withSeconds #dateTimePicker3></nb-datepicker>
+
+            <br>
+            <br>
+            <br>
+
+            <h5> Enterprise Information:</h5>
+            <label for="logopob">Entreprise logo:</label>
+            <br>
+
+
+            <input formControlName="logo" fieldSize="large" fullWidth nbInput id="logopob" (change)="CreateBase64String($event)"  type="file" multiple />
+            <br>
+
+            <label for="nameb">Enterprise Name:</label>
+            <input [(ngModel)]="billOfLading.enterpriseName" fieldSize="large" fullWidth
+                   id="nameb" formControlName="enterpriseName"
+                   nbInput placeholder="Enterprise Name" type="text" >
+            <br>
+            <label for="addressb">Enterprise Address:</label>
+            <input [(ngModel)]="billOfLading.enterpriseAddress" fieldSize="large" fullWidth
+                   id="addressb" formControlName="enterpriseAddress"
+                   nbInput placeholder="Enterprise Address" type="text">
+            <br>
+            <label for="cityb">Enterprise City:</label>
+            <input [(ngModel)]="billOfLading.enterpriseCity" fieldSize="large" fullWidth
+                   id="cityb" formControlName="enterpriseCity"
+                   nbInput placeholder="Enterprise City" type="text">
+            <br>
+            
+            <label for="postal">Enterprise Postal Code:</label>
+            <input [(ngModel)]="billOfLading.enterprisePostalCode" fieldSize="large" fullWidth
+                   id="postal" formControlName="enterprisePostalCode"
+                   nbInput placeholder="Postal Code" type="number">
+            <br>
+            <label for="registration">Enterprise Tax Registration Number:</label>
+            <input [(ngModel)]="billOfLading.enterpriseTaxRegistrationNumber" fieldSize="large" fullWidth
+                   id="registration" formControlName="enterpriseTaxRegistrationNumber"
+                   nbInput placeholder="Tax Registration Number" type="text">
+            <br>
+            <label for="sig3">Electronic Signature:</label>
+            <div  id="sig3" class="signature-container">
+              <canvas #canvas3 width="255" height="255"  ></canvas>
+            </div>
+            <br>
+            <div style="margin-left:440px ">
+              <br>
+              <button nbButton status="primary" (click)="createBill()"  class="ml-5" >Create</button>
+
+            </div>
+
+
+
+          </form>
+
+       </nb-card-body>
+
+
+        </nb-card>
+        <nb-card>
+          <nb-card-header>
+            <h3> Bills List
+            </h3>
+          </nb-card-header>
+          <ng2-smart-table [settings]="billSettings" [source] ="billSource" (edit)="viewBillFromTable($event)" (delete)="deleteBill($event)"  (userRowSelect)="validateBill($event)" >
+          </ng2-smart-table>
+        </nb-card>
+        <button nbButton disabled nbStepperNext>prev</button>
+        <button nbButton nbStepperNext style="margin-left:920px " >next</button>
+      </nb-step>
+
+
+
+
+
+
+
+
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

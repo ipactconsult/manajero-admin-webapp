@@ -1,0 +1,284 @@
+<div class="steppers-container row">
+    <div class="col-md-12 col-lg-12 col-xxxl-12 w-100">
+        <nb-card>
+            <nb-card-header>
+                <div class="row">
+                    <div class="col-md-11">
+                        <h3>Create Contract</h3>
+                    </div>
+                    <div class="col-md-1">
+                        <a nbTooltip="Back to employee list" nbTooltipStatus="primary" shape="round" status="basic"
+                            [routerLink]="['/hr/employee/list_']" nbButton>
+                            <nb-icon icon="corner-up-right-outline"></nb-icon>
+                        </a>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+
+                <form class="step-container" [formGroup]="contract_form">
+                    <nb-stepper #stepper>
+                        <nb-step [stepControl]="contract_form" label="Contract & Period">
+                            <h6>Contract Type and Period</h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Contract Type</label>
+                                    <nb-select
+                                            [(ngModel)]="contract.contractType"
+                                            formControlName="contractType" 
+                                            name="contractType" 
+                                            id="contractType" 
+                                            fullWidth size="large" 
+                                            placeholder="select the contract type">
+                                        <nb-option value="CDD">CDD</nb-option>
+                                        <nb-option value="CDI">CDI</nb-option>
+                                    </nb-select>
+                                    <div *ngIf="contractType.invalid  && contractType.touched">
+                                        <div *ngIf="contractType.errors?.required">
+                                                <p class="text-danger">
+                                                    <nb-icon icon="alert-triangle-outline"></nb-icon> Required Field.
+                                                </p>
+                                        </div>
+                                    
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="">Hiring Date</label>
+                                    <input 
+                                        [nbDatepicker]="dateTimePicker" fieldSize="large" formControlName="hiringDate"
+                                        fullWidth id="hiringDate" name="hiringDate" [(ngModel)]="contract.hiringDate" nbInput placeholder="Pick Date">
+                                    <nb-datepicker #dateTimePicker></nb-datepicker>
+                                    
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">End Date</label>
+                                    <input [nbDatepicker]="dateTimePicker1" fieldSize="large" formControlName="endDate"
+                                        fullWidth id="endDate" name="endDate" [(ngModel)]="contract.endDate" nbInput placeholder="Pick Date">
+                                    <nb-datepicker #dateTimePicker1></nb-datepicker>
+
+                                    <div *ngIf="contract.hiringDate > contract.endDate ">
+                                        <p class="text-danger mt-2">
+                                            <nb-icon icon="alert-triangle-outline"></nb-icon> Hiring Date Should Be Before End Date.
+                                        </p>
+                                    </div>
+
+                                </div>
+                                <div [hidden]="contract.contractType === 'CDD' " class="col-md-4 mt-2">
+                                    <label for="">Notice Period (CDI)</label>
+                                    <input  fieldSize="large" formControlName="noticePeriod" fullWidth id="noticePeriod" name="noticePeriod" nbInput
+                                        placeholder="" [(ngModel)]="contract.noticePeriod">
+                                        <div *ngIf="noticePeriod.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label for="">Status</label>
+                                    <nb-select 
+                                            [(ngModel)]="contract.status"
+                                            formControlName="status" 
+                                            name="status" 
+                                            id="status" 
+                                            fullWidth size="large" placeholder="select status">
+                                        
+                                        <nb-option value="In Trial Period">In Trial Period</nb-option>
+                                        <nb-option value="Validate Trial Period">Validate Trial Period</nb-option>
+                                        <nb-option value="Renewed Trial Period">Renewed Trial Period</nb-option>
+                                        <nb-option value="Failure Trial Period">Failure Trial Period</nb-option>
+
+                                    </nb-select>
+
+                                    <div *ngIf="status.invalid  && status.touched">
+                                        <div *ngIf="status.errors?.required">
+                                                <p class="text-danger">
+                                                    <nb-icon icon="alert-triangle-outline"></nb-icon> Required Field.
+                                                </p>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label for="">Official Signature</label>
+                                    <input [nbDatepicker]="dateTimePicker2" fieldSize="large" formControlName="officialSignature"
+                                      [(ngModel)]="contract.officialSignature"  fullWidth id="officialSignature" name="officialSignature" nbInput placeholder="Pick Date">
+                                    <nb-datepicker #dateTimePicker2></nb-datepicker>
+                                    <div class="mt-2" *ngIf="contract.officialSignature > contract.endDate ">
+                                        <p class="text-danger">
+                                            <nb-icon icon="alert-triangle-outline"></nb-icon> The Date Of Signing A Contract Should Be Before The End Date.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div [hidden]="contract.status !== 'In Trial Period'" class="col-md-4 mt-2">
+                                    <label for="">Duration Trial Period</label>
+                                    <input fieldSize="large"  [(ngModel)]="contract.durationOfTrialPeriod" formControlName="durationOfTrialPeriod" fullWidth id="durationOfTrialPeriod" name="durationOfTrialPeriod" nbInput
+                                        placeholder="">
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label for="">Start Time</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.startTime" formControlName="startTime" fullWidth id="startTime" name="startTime" nbInput
+                                        placeholder="" type="time">
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label for="">Duration</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.duration" formControlName="duration" fullWidth id="duration" name="duration" nbInput
+                                        placeholder="">
+                                        <div *ngIf="duration.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                            </div>
+                        </nb-step>
+
+                        <nb-step [stepControl]="contract_form" label="Hours Plan">
+                            <h6>Hours Plan</h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Nb Hours Worked Per Week</label>
+                                    
+                                        <input fieldSize="large" [(ngModel)]="contract.nbOfWeeklyWorkingHours" formControlName="nbOfWeeklyWorkingHours" fullWidth id="nbOfWeeklyWorkingHours" name="nbOfWeeklyWorkingHours" nbInput
+                                        placeholder="">
+                                        <div *ngIf="nbOfWeeklyWorkingHours.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">Nb Hours Worked Per Day</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.nbOfHoursWorkedPerDay" formControlName="nbOfHoursWorkedPerDay" fullWidth id="nbOfHoursWorkedPerDay" name="nbOfHoursWorkedPerDay" nbInput
+                                    placeholder="">
+                                    <div *ngIf="nbOfHoursWorkedPerDay.errors?.pattern">
+                                        <p class="text-danger">
+                                            <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">Hourly Work Rate</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.hourlyWorkRate" formControlName="hourlyWorkRate" fullWidth id="hourlyWorkRate" name="hourlyWorkRate" nbInput
+                                        placeholder="">
+                                        <div *ngIf="hourlyWorkRate.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-6 mt-2">
+                                    <label for="">Daily Cost</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.dailyCost" formControlName="dailyCost" fullWidth id="dailyCost" name="hourlyWorkRate" nbInput
+                                        placeholder="">
+
+                                        <div *ngIf="dailyCost.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-6 mt-2">
+                                    <label for="">Distribution Horaire</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.hourlyDistribution" formControlName="hourlyDistribution" fullWidth id="hourlyDistribution" name="hourlyWorkRate" nbInput
+                                        placeholder="">
+                                </div>
+                            </div>
+
+                        </nb-step>
+
+                        <nb-step [stepControl]="contract_form" label="Company">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Company Name</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.companyName" formControlName="companyName" fullWidth id="companyName" name="companyName" nbInput
+                                        placeholder="">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">Company Address</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.companyAddress" formControlName="companyAddress" fullWidth id="companyAddress" name="companyAddress" nbInput
+                                        placeholder="">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">Work Address</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.workAddress" formControlName="workAddress" fullWidth id="workAddress" name="workAddress" nbInput
+                                        placeholder="">
+                                </div>
+                                
+                                <div class="col-md-6 mt-2">
+                                    <label for="">Job</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.job" formControlName="job" fullWidth id="job" name="job" nbInput
+                                        placeholder="">
+                                </div>
+                            </div>
+                        </nb-step>
+
+                        <nb-step [stepControl]="contract_form" label="Salary">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Bonus Coef</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.bonusCoef" formControlName="bonusCoef" fullWidth id="bonusCoef" name="bonusCoef" nbInput
+                                        placeholder="">
+                                        <div *ngIf="bonusCoef.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">Gross Hourly Wage </label>
+                                    <input fieldSize="large" [(ngModel)]="contract.grossHourlyWage" formControlName="grossHourlyWage" fullWidth id="grossHourlyWage" name="grossHourlyWage" nbInput
+                                        placeholder="">
+                                        <div *ngIf="grossHourlyWage.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">Minimum Monthly Salary</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.minimumMonthlySalary" formControlName="minimumMonthlySalary" fullWidth id="minimumMonthlySalary" name="minimumMonthlySalary" nbInput
+                                        placeholder="">
+                                        <div *ngIf="minimumMonthlySalary.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-6 mt-2">
+                                    <label for="">Gross Anual Salary</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.grossAnnualSalary" formControlName="grossAnnualSalary" fullWidth id="grossAnnualSalary" name="grossAnnualSalary" nbInput
+                                        placeholder="">
+                                        <div *ngIf="grossAnnualSalary.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                                <div class="col-md-6 mt-2">
+                                    <label for="">Overall Monthly Cost</label>
+                                    <input fieldSize="large" [(ngModel)]="contract.overallMonthlyCost" formControlName="overallMonthlyCost" fullWidth id="overallMonthlyCost" name="overallMonthlyCost" nbInput
+                                        placeholder="">
+                                        <div *ngIf="overallMonthlyCost.errors?.pattern">
+                                            <p class="text-danger">
+                                                <nb-icon icon="alert-triangle-outline"></nb-icon> Only Numbers Can Be Accepted.
+                                            </p>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-10"></div>
+                                <button (click)="storeContract()" class="col-md-2" nbButton nbStepperNext
+                                        type="submit" status="success"> Confirm
+                                </button>
+                            </div>
+                        </nb-step>
+                    </nb-stepper>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

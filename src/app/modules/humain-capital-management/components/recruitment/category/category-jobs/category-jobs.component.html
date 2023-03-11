@@ -1,0 +1,214 @@
+<section id="sectionJobList" class="section section-job-list gradient-light--lean-left">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <h3>New Job</h3>
+          </div>
+          <div class="col-md-5"></div>          
+          <div class="col-md-4" align="right">
+             <div class="row">
+              <form [formGroup]="categoryJobForm" class="">
+                <div class="row">
+                  <div class="col-md-9">
+                   <input [(ngModel)]="categoryJ.categoryName" formControlName="categoryName" name="categoryName" id="categoryName" placeholder="Create New Category" type="text" nbInput fullWidth fieldSize="large"/>
+                  </div>
+                  <div class="col-md-3 mt-1">
+                   <button [disabled]="categoryJobForm.invalid" (click)="callAddJobCategory()" nbButton status="success">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon> Submit
+                   </button>
+                  </div>
+                </div>
+ 
+            
+            </form>
+             </div>
+         
+          </div>
+         
+      <!--   <div style="right: 0; left:auto" align="right" class="col-md-1 mt-1">
+          <a nbButton status="basic" shape="round" [routerLink]="['/hr/recruitment/jobs/grid']">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        </div> -->
+     
+        </div>
+
+      <div class="row row-grid mt-4">
+        <div class="col-md-12">
+          <form [formGroup]="jobForm">
+          <nb-stepper #stepper>
+            <nb-step   label="General Info">
+              
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="jobTitle"> Title</label>
+                      </div>
+                    </div>
+                    <input fullWidth fieldSize="large"
+                    name="jobTitle" [(ngModel)]="job.jobTitle"
+                    type="text" nbInput id="jobTitle" formControlName="jobTitle"/>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for=""> Category</label>
+                      </div>
+                    </div>
+                    <nb-select placeholder="select category" (selectedChange)="getCategorySelected($event)" [(ngModel)]="job.jobsCategory" [selected]="selectedItem"
+                    fieldSize="large" size="large" formControlName="jobsCategory" fullWidth
+                    id="jobsCategory" name="jobsCategory" class="w-100">
+                        <nb-option *ngFor="let cat of jobs_category" value="{{cat.id}}">{{cat.categoryName}}</nb-option>
+                    </nb-select>
+                  </div>
+              </div>
+              <div class="row mt-2">
+               
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for=""> Status</label>
+                    </div>
+                  </div>
+                  <input type="text" fieldSize="large" nbInput fullWidth
+                  name="jobStatus" [(ngModel)]="job.jobStatus"
+                   id="jobStatus" formControlName="jobStatus"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for=""> Office</label>
+                    </div>
+                  </div>
+                  <input type="text" fieldSize="large" nbInput fullWidth
+                  
+                  name="jobOffice" [(ngModel)]="job.jobOffice"
+                  id="jobOffice" formControlName="jobOffice"/>
+
+                </div>
+            </div>
+            <div class="row mt-2">
+             
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="place"> Place</label>
+                  </div>
+                </div>
+                <input type="text" fieldSize="large" nbInput fullWidth
+                name="place" [(ngModel)]="job.place"
+                id="place" formControlName="place"
+                />
+              </div>
+          </div>
+  
+  
+  
+              <div class="row mt-3">
+                <div class="col-md-2">
+                  <button status="info" nbButton disabled nbStepperNext>prev</button>
+                </div>
+                <div class="col-md-8">
+    
+                </div>
+                <div class="col-md-2" align="right">
+                  <button status="info" nbButton nbStepperNext>next</button>
+                </div>
+            </div>
+            </nb-step>
+            <nb-step label="Description">
+              <div class="row">
+                <div class="col-md-12">
+                  Description
+                </div>
+                <div class="col-md-12 mt-1">
+                  <ckeditor
+
+                  class="card"
+                  [config]="{}"
+                  [readonly]="false"
+                  (change)="onChange($event)"
+                  (editorChange)="onEditorChange($event)" 
+                  (ready)="onReady($event)"
+                  (focus)="onFocus($event)"
+                  (blur)="onBlur($event)"
+                  (contentDom)="onContentDom($event)"
+                  (fileUploadRequest)="onFileUploadRequest($event)"
+                  (fileUploadResponse)="onFileUploadResponse($event)"
+                  (paste)="onPaste($event)"
+                  (drop)="onDrop($event)"
+                  debounce="500"
+                  name="jobDescription" [(ngModel)]="job.jobDescription"
+                  id="jobDescription" formControlName="jobDescription"
+                  >
+                </ckeditor>
+                </div>
+              
+
+
+            </div>
+              <div class="row mt-3">
+                <div class="col-md-2">
+                  <button nbButton  nbStepperPrevious>prev</button>
+                </div>
+                <div class="col-md-8">
+    
+                </div>
+                <div class="col-md-2" align="right">
+                  <button status="info" nbButton nbStepperNext>next</button>
+                </div>
+            </div>
+            </nb-step>
+            <nb-step label="Profiles">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="profile_needed"> Profile Needed</label>
+                    </div>
+                  </div>
+                                     <input  type="text" fieldSize="large" nbInput fullWidth
+                      name="profile_needed" (tagAdd)="onTagAdd($event)" [(ngModel)]="job.profile_needed"
+                      id="profile_needed" formControlName="profile_needed"
+                      />
+                   
+                  
+                </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="nb_people_positions"> Number Of Positions</label>
+                  </div>
+                </div>
+               
+                <ngx-slider name="nb_people_positions" [(ngModel)]="job.nb_people_positions"
+                id="nb_people_positions" formControlName="nb_people_positions" [(value)]="nb_people_positions" [options]="options"></ngx-slider>
+
+              </div>
+          </div>
+              <div class="row mt-3">
+                <div class="col-md-2">
+                  <button nbButton  nbStepperPrevious>prev</button>
+                </div>
+                <div class="col-md-8">
+    
+                </div>
+                <div align="right" class="col-md-2">
+                  <button [disabled]="jobForm.invalid" nbButton status="success" (click)="callAddJobOffer()">
+                    <nb-icon icon="checkmark-circle-outline"></nb-icon> Submit</button>
+                </div>
+            </div>
+            </nb-step>
+          
+             
+          </nb-stepper>
+        </form>
+        </div>
+      
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,98 @@
+
+
+      <form class="form"  [formGroup]="risktForm" >
+        <div>
+          <label for="subject">Title :</label>
+          <input
+          nbInput
+          fullWidth
+          class="form-control"
+          type="text"
+          formControlName="title"
+        />
+        </div>
+        <div>
+          <label for="subject">Category :</label>
+          <nb-select
+            placeholder="Choose category"
+            formControlName="category"
+            fullWidth
+
+          >
+            <nb-option  value="INTERNAL">INTERNAL</nb-option>
+            <nb-option value="EXTERNAL">EXTERNAL</nb-option>
+
+          </nb-select>
+        </div>
+        <div>
+          <label for="subject">Probability :</label>
+          <nb-select
+          placeholder="Choose probability"
+          formControlName="probability"
+          fullWidth
+
+        >
+        <nb-option  value="LOW"><nb-icon icon="radio-button-on" class="my-1 mx-1"status="success"></nb-icon>
+          <p class="my-1">LOW</p>
+        </nb-option>
+        <nb-option  value="MEDIUM"><nb-icon icon="radio-button-on" class="my-1 mx-1"status="warning"></nb-icon>
+          <p class="my-1">MEDIUM</p></nb-option>
+          <nb-option  value="HIGH"><nb-icon icon="radio-button-on" class="my-1 mx-1"status="danger"></nb-icon>
+            <p class="my-1">HIGH</p></nb-option>
+
+          
+
+          
+
+        </nb-select>
+        </div>
+        <div>
+            <label for="subject">Impact :</label>
+            <nb-select
+            placeholder="Choose impact"
+            formControlName="impact"
+            fullWidth
+  
+          >
+        
+          <nb-option  value="LOW"><nb-icon icon="radio-button-on" class="my-1 mx-1"status="success"></nb-icon>
+            <p class="my-1">LOW</p>
+          </nb-option>
+          <nb-option  value="MEDIUM"><nb-icon icon="radio-button-on" class="my-1 mx-1"status="warning"></nb-icon>
+            <p class="my-1">MEDIUM</p></nb-option>
+            <nb-option  value="HIGH"><nb-icon icon="radio-button-on" class="my-1 mx-1"status="danger"></nb-icon>
+              <p class="my-1">HIGH</p></nb-option>
+
+            
+  
+          </nb-select>
+          </div>
+        
+        <div>
+          <label for="subject">Description:</label>
+          <textarea nbInput fullWidth  placeholder="description"   formControlName="description"
+          ></textarea>
+        </div>
+        
+        <div>
+            <label for="subject">Response Strategy</label>
+            <textarea nbInput fullWidth placeholder="Response Strategy"             formControlName="responseStrategy"
+            ></textarea>
+          </div>
+          <input
+        [ngClass]="
+          selectedItem === null
+            ? 'btn btn-success btnCreate'
+            : 'btn btn-warning btnCreate'
+        "
+        [value]="selectedItem === null ? 'Create' : 'Update'"
+        type="submit"
+        [disabled]="risktForm.invalid"
+        (click)="selectedItem === null ? save() : update()"
+
+      />
+      </form>
+   
+        
+     
+   

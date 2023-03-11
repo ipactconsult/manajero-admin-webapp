@@ -1,0 +1,14 @@
+<div class="mainContent">
+  <div class="userListWrapper">
+    <app-user-item
+    [user]=user *ngFor="let user of userList">
+    </app-user-item>
+  </div>
+  <div #scroller class="feedWrapper">
+    <app-feed></app-feed>
+  </div>
+</div>
+
+<div class="chatFormWrapper">
+  <app-chat-form></app-chat-form>
+</div>

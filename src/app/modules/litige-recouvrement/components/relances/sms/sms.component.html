@@ -1,0 +1,57 @@
+
+<nb-flip-card  [flipped]="flippedState" [showToggleButton]="false">
+    <nb-card-front>
+      <nb-card>
+        <nb-card-header>  <nb-icon icon="chevron-left-outline" pack="nebular-essentials" aria-hidden="true"   (click)="flippe()"></nb-icon>
+            SMS List    
+           </nb-card-header>
+        <nb-card-body>
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Add SMS </h3>
+            
+                </div>
+            
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <form class="container" [formGroup]="createProjectCharterform" (ngSubmit)="create()">
+                       
+                        <div class="col-lg">
+                            <label class="text-label" for="text">SMS message</label>
+                            <div class="form-group" align="center">
+            
+                                <textarea placeholder ="Add SMS Message"rows="5" fullWidth nbInput formControlName="rapportsms"></textarea>
+                                <div *ngIf="description?.invalid && (descirption?.dirty || description?.touched)">
+                                    <p class="text-danger" *ngIf="description?.errors?.required">*Required</p>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <br>
+            
+            
+                        <div class="col-md-12">
+                            <button nbButton status="success">
+                                <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                                Save SMS
+                            </button>
+            
+                        </div>
+            
+            
+                    </form>
+                </div>
+            </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      <nb-card>
+        <nb-card-body>
+            <ngx-historique-sms [relance]="relance"> </ngx-historique-sms>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-back>
+  </nb-flip-card>

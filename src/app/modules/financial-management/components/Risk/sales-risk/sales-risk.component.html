@@ -1,0 +1,86 @@
+
+<nb-card>
+  <nb-card-header class ="row" >
+
+    <div class ="col-md-10">
+      <h3>Deadlines Study</h3>
+    </div>
+    <div  align="right" class ="col-md-2">
+
+
+
+
+    </div>
+
+  </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-header>
+        <h4>Due Dates </h4>
+      </nb-card-header>
+      <nb-card-body>
+        <h5> Properties Payment Deadlines</h5>
+        <ng2-smart-table [settings]="unpaidPropertiesTab"  class ="table" (edit) ="payOrder($event)" [source] ="unpaidPropertyOrders" >
+        </ng2-smart-table>
+        <br>
+        <h5> Products Payment Deadlines</h5>
+        <ng2-smart-table [settings]="unpaidProductsTab"  class ="table" (edit) ="payProdOrder($event)" [source] ="unpaidProductOrders" >
+        </ng2-smart-table>
+        <br>
+        <div *ngIf="paymentCheck=='Checked'">
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              You have unpaid transactions exceeding the due date. This causes problems to the financial health of the enterprise.
+            </nb-card-body>
+          </nb-card>
+          
+        </div>
+        <div *ngIf="paymentCheck=='Unchecked'">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              You have no  unpaid transactions exceeding the due date.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>
+        <h4>Delivery Dates </h4>
+      </nb-card-header>
+      <nb-card-body>
+        <h5> Properties Delivery Deadlines</h5>
+        <ng2-smart-table [settings]="undeliveredPropertiesTab"  class ="table" (edit) ="deliverBill($event)" [source] ="undeliveredPropertyBills" >
+        </ng2-smart-table>
+        <br>
+        <h5> Products Delivery Deadlines</h5>
+        <ng2-smart-table [settings]="undeliveredProductsTab"  class ="table" (edit) ="deliverProdBill($event)" [source] ="undeliveredProductBills" >
+        </ng2-smart-table>
+        <br>
+        <div *ngIf="deliveryCheck=='Checked'">
+          <nb-card accent="danger">
+
+            <nb-card-body>
+              You have undelivered items. Your delivery process should be reviewed to avoid delays.
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+        <div *ngIf="deliveryCheck=='Unchecked'">
+          <nb-card accent="success">
+
+            <nb-card-body>
+              You have no undelivered items
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,1 @@
+export const  enum ChangeRequestCategory {RESOURCES,SCHEDULE,STAKEHOLDER,COST,RISK,KPI,GOALS}

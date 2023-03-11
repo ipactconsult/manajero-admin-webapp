@@ -1,0 +1,120 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3">
+        <h2>Orders</h2>
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+          <input [(ngModel)]="search"
+                 class="w-100" fieldSize="large" nbInput
+                 nbTooltip="Tap here to search your order" nbTooltipStatus="primary"
+                 placeholder="Search order"
+                 type="text">
+        </div>
+      </div>
+      <div class="col-md-4 pt-1">
+        <div>
+         
+          <button (click)="exportAsXLSX()"
+                  align="right" class="mx-1"
+                  nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary"
+                  status="success">
+            <i class="fas fa-file-excel text-white"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div *ngIf="!dataOrders || dataOrders.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataOrders | filter : search).length === 0" [hidden]="dataOrders.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+        while typing your data
+      </nb-alert>
+    </div>
+    <div class="row">
+    
+      <div class="col-md-12">
+        <table class="mb-0 table table-hover mt-3">
+          <thead>
+          <tr>
+            <th class="align-middle bt-0">Code</th>
+            <th class="align-middle bt-0">Name</th>
+            <th class="align-middle bt-0">Customer</th>
+            <th class="align-middle bt-0">Product</th>
+            <th class="align-middle bt-0">Quantity</th>
+            <th class="align-middle bt-0">Total</th>
+            <th class="align-middle bt-0 text-right">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            *ngFor="let order of dataOrders | filter : search | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: dataOrders.length}">
+            <td class="align-middle">
+              <p>{{order.orderCode}}</p>
+            </td>
+            <td class="align-middle">
+              <div><p>{{order.orderName}}</p></div>
+            <td class="align-middle"><p>{{order?.deals?.visit?.customer?.name}}</p></td>
+            <td class="align-middle">
+
+              <p>{{order?.product?.materialName}}</p>
+            </td>
+            <td class="align-middle">
+              <p> {{order.quantity}}</p>
+            </td>
+            <td class="align-middle">
+              <p> {{order.orderPaid}}</p>
+            </td>
+
+            <td class="align-middle text-right">
+              <div class="btn-group">
+                <button [matMenuTriggerFor]="menu" aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-label="Example icon-button with a menu"
+                        class="float-right"
+                        mat-icon-button nbButton
+                        nbTooltip="Click here to see advanced menu"
+                        nbTooltipStatus="primary"
+                        shape="round"
+                        size="small"
+                        status="basic">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+               <mat-menu #menu="matMenu">
+               <button mat-menu-item>
+                 <a [routerLink]="['/crm/edit-order/',order.id]"
+                    fullWidth nbButton>
+                       <span class="text-warning">
+                         <nb-icon icon="edit-outline"></nb-icon>
+                       </span> Edit
+                 </a>
+               </button>           
+               <button mat-menu-item>
+                 <a (click)="onRestoreConfirm(order,order.id)" fullWidth nbButton status="basic">
+               <nb-icon icon="refresh-outline"></nb-icon>Restore
+                 </a>
+               </button>
+             </mat-menu>
+              </div>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+     <div class="d-flex justify-content-center">
+      <nb-card class="card ml-auto mr-auto text-center" style="height: 30px; width: auto ;">
+        <pagination-controls (pageChange)="current = $event" align="right" nextLabel=""
+                             previousLabel=""></pagination-controls>
+
+      </nb-card>
+    </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card> 

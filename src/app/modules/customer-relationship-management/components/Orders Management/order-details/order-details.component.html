@@ -1,0 +1,155 @@
+<div *ngIf="order">
+  <nb-card-header>
+    
+        <div class="row">
+        <div class="col-md-9  ">
+          <h5 class="more-vertical">
+          Order details </h5>
+        </div>
+          
+        <div  class="col-md-3 " align="right">
+       
+        </div>
+      </div>  
+ 
+    
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container-fluid">
+
+      <div class="container">
+
+        <!-- Main content -->
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Details -->
+
+            <nb-alert class="mb-4" outline="primary">
+              <div class="mb-3 d-flex justify-content-between">
+                <div>
+                  <span class="me-3">Order : {{order.orderCode}}</span>
+                </div>
+                <div *ngIf="order.status == 'Done'" class="d-flex">
+                  <nb-tag [text]="order.status" status="success"></nb-tag>
+                  
+                </div> 
+                <div *ngIf="order.status == 'In Progress'" class="d-flex">
+                  <nb-tag [text]="order.status" status="warning"></nb-tag>
+                </div> 
+                <div *ngIf="order.status == 'Pending'" class="d-flex">
+                  <nb-tag [text]="order.status" status="light"></nb-tag>
+                </div>  
+                <div *ngIf="order.status == 'SALE'" class="d-flex">
+                  <nb-tag [text]="order.status" status="basic"></nb-tag>
+                </div> 
+                <div *ngIf="order.status == 'DISPATCHED'" class="d-flex">
+                  <nb-tag [text]="order.status" status="warning"></nb-tag>
+                </div> 
+                <div *ngIf="order.status == 'DELIVERED'" class="d-flex">
+                  <nb-tag [text]="order.status" status="success"></nb-tag>
+                </div>
+              </div>
+              <table class="table table-borderless">
+                <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <h6 class="small mb-0">
+                          {{order.orderName}}</h6>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+                 <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="calendar-outline"></nb-icon>
+                          {{order.orderDate | date : "EEEE MMMM YYYY"}}</p>
+                      </div>
+                     
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+
+                      <div class="flex-lg-grow-1 ms-3">
+                        <p class="small mb-0">
+                          <nb-icon icon="bookmark-outline"></nb-icon>
+                          {{order.otherInfosOrder}}</p>
+                      </div>
+                     
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex mb-2">
+                      <div class="flex-lg-grow-1 ms-1">
+                        <p class="small mb-0">
+                          <nb-icon icon="shopping-cart-outline"></nb-icon>
+                          {{order?.deals?.dealName}}</p>
+
+                      </div>
+
+                      <div *ngIf="order.product != null" class="flex-lg-grow-1 ms-1">
+                        <p class="small mb-0">
+                          <nb-icon icon="shopping-bag-outline"></nb-icon>
+                          {{order?.product?.materialName}} 
+                     
+                        </p>  
+                        <p class="small mb-0">
+                          <nb-icon icon="shopping-bag-outline"></nb-icon>
+                          {{order.quantity}} 
+                     
+                        </p>
+                  
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+              </table>
+            </nb-alert>
+
+        
+          </div>
+          <div class="col-lg-4">
+            <!-- Customer Notes -->
+            <nb-alert class="mb-4" outline="primary">
+
+              <h3 class="h6"><nb-icon icon="credit-card-outline"></nb-icon> Payment method </h3>
+              <p>{{order.paymentMethod}} 
+               </p> 
+              <h3 class="h6">Total</h3>
+              <p>{{order.orderPaid}} {{order.currency}}</p>
+              <h3 class="h6">Sub Total</h3>
+              <p>{{order.subTotal}} {{order.currency}}</p>
+            </nb-alert>
+           
+            <nb-alert class="mb-4" outline="primary">
+
+              <h3 class="h6">Notes</h3>
+              <address>
+                <p>{{order.notes}}</p>  
+               
+              </address>
+            </nb-alert>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</div>

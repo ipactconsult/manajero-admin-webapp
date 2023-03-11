@@ -1,0 +1,30 @@
+<form class="form" [formGroup]="createAreForm" (ngSubmit)="create()">
+  <div class="form-group">
+    <nb-select placeholder="Choose Category" formControlName="category">
+      <nb-option value="ASSUMPTION">ASSUMPTION</nb-option>
+      <nb-option value="RESTRICTION">RESTRICTION</nb-option>
+      <nb-option value="EXTERNAL_DEPENDENCY">EXTERNAL DEPENDENCY</nb-option>
+    </nb-select>
+    <div *ngIf="category?.invalid && (category?.dirty || category?.touched)">
+      <p class="text-danger" *ngIf="category?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Item:</label>
+    <textarea
+      nbInput
+      fullWidth
+      class="form-control"
+      formControlName="item"
+    ></textarea>
+    <div *ngIf="item?.invalid && (item?.dirty || item?.touched)">
+      <p class="text-danger" *ngIf="item?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <input
+  [ngClass]="selectedItem===null ?'btn btn-success btnCreate':'btn btn-warning btnCreate'"
+  type="submit"
+  [value]="selectedItem===null ? 'Create' : 'Update'"
+  [disabled]="createAreForm.invalid"
+/>
+</form>

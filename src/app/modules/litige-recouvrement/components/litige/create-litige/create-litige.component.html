@@ -1,0 +1,133 @@
+
+<div class="row">
+  
+  <div class="col-md-9">
+    <h3 >Dispute Management </h3>
+  </div>
+  <div class="col-md-3" align="right">
+    <a shape="round" status="basic"  [routerLink]="['/litige/listlitige']" nbButton>
+      <nb-icon icon="corner-down-right-outline"></nb-icon>
+    </a>
+   </div>
+</div>
+<div class="row lg-12">
+  <div class="col-md-12">
+<form class="form" [formGroup]="createLitigeProject" (ngSubmit)="createLitige()"  >
+    <div class="container">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+         <nb-accordion-item-header>Invoice Details</nb-accordion-item-header>
+         <nb-accordion-item-body>
+          <div class="col-25">
+            <label for="fname">First Name : Wassim</label>
+          </div>
+        <div class="col-25">
+          <label for="IN">Invoice Number : facture-0247</label>
+                 
+        </div>
+        <div class="col-25">
+          <label for="subject">Recovery Date : 2022-02-31</label>
+                 
+        </div>
+        <div class="col-25">
+          <label for="subject">Due Date : 2022-07-31</label>
+                 
+        </div>
+         </nb-accordion-item-body>
+        </nb-accordion-item>
+       </nb-accordion>
+
+
+    </div>
+    <br>
+ 
+
+
+
+
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="col-lg-12">
+      <label for="subject">Type of dispute:</label>
+    <div class="form-group">
+      <nb-select   title="Dispute Type"
+                  fullWidth
+                  formControlName="typelitige"
+                  name="typelitige"
+                  placeholder="Select Type"
+                  (change)="getSelectedCategory($event)"
+                   >
+                  
+                   <nb-option *ngFor="let optiondis of optionsdis" [value]="optiondis">
+                    {{ optiondis }}
+                  </nb-option>
+                </nb-select>
+    </div>
+    </div>
+   <br>
+   <div class="col-lg-12">
+    <label class="text-label" for="text">Description</label>
+  <div class="form-group" align="center">
+    
+    <textarea  rows="5" fullWidth nbInput formControlName="description"></textarea>
+    <div *ngIf="description?.invalid && (descirption?.dirty || description?.touched)">
+      <p class="text-danger" *ngIf="description?.errors?.required">*Required</p>
+    </div>
+  </div>
+  </div>
+   <br>
+   <div class="col-lg-12">
+    <label for="subject">Date:</label>
+  <div class="form-group">
+   <input placeholder="pick date" nbInput [nbDatepicker]="dateTimePicker" fullWidth formControlName="date" />
+<nb-datepicker #dateTimePicker></nb-datepicker>
+   <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+     <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+   </div>
+
+  </div>
+  </div>
+  <div class="col-lg-12">
+    <label for="subject">Statut :</label>
+  <div class="form-group">
+    <nb-select   title="Statut"
+                fullWidth
+                formControlName="statut"
+                name="statut"
+                placeholder="Select Statut"
+               
+                 >
+                 <nb-option *ngFor="let option of options" [value]="option">
+                  {{ option }}
+                </nb-option>
+              </nb-select>
+  </div>
+  </div>
+  
+  <div class="col-lg-12">
+    <label for="subject">New due date:</label>
+    <div class="form-group">
+      <input placeholder="pick date" nbInput [nbDatepicker]="dateTimePicker" fullWidth formControlName="nouvelledatechance" />
+   <nb-datepicker #dateTimePicker></nb-datepicker>
+      <div *ngIf="categoriename?.invalid && (categoriename?.dirty || categoriename?.touched)">
+        <p class="text-danger" *ngIf="title?.errors?.required">*Required</p>
+      </div>
+  
+  </div>
+  </div>
+  
+   
+   <div class="col-md-12">
+     <button style="float: right;"nbButton status="success">
+       <nb-icon icon="checkmark-circle-outline"></nb-icon> 
+        Create Dispute
+     </button>
+
+   </div>
+   
+     
+  </div>
+</div>
+</form>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container">
+
+  <div class="row">
+      <div class="col-md-3 col-sm-6" *ngFor="let post of dataPostDatas">
+        <ng-container   *ngIf="post.imageUrl != '' " >    
+
+          <a href="#" class="gallery-popup" title="Open Imagination">
+              <div class="project-item">
+                  <div class="overlay-container">
+                      <img src="{{post.imageUrl}}" alt="img" class="gallery-thumb-img"  width="157"
+                      height="240">
+                      <div class="project-item-overlay">
+                          <h4></h4>
+                          <p>
+                              <img src="{{'https://avatars.dicebear.com/api/identicon/ ' + post.creatorId+'.svg'}}" alt="user" class="thumb-sm rounded-circle">
+                              <span class="ml-2">{{post.name}}</span>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </a>
+          </ng-container>
+      </div>
+
+
+
+
+  </div>
+</div>

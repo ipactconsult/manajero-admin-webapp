@@ -1,0 +1,24 @@
+<div class="col-12 col-sm-12" (click)="enableDetails()">
+     
+    <div class="card l-bg-green-dark">
+      <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><em class="fas fa-award"></em></div>
+          <div class="mb-4">
+              <h5 class="card-title mb-0">Estimated Amount</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                  <h2 class="d-flex align-items-center mb-0">
+                   {{budget}}
+                  </h2>
+              </div>
+              
+          </div>
+        
+      </div>
+  </div>
+  <div class="col-12" *ngIf="enabled">
+    <ngx-budget-estimated-table [budgetList]="projectCharter?.budget"></ngx-budget-estimated-table>
+  </div>
+  </div>
+  

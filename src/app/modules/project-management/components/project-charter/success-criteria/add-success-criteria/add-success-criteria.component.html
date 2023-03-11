@@ -1,0 +1,19 @@
+<form class="form" [formGroup]="createSuccessCriteriaForm" (ngSubmit)="save()">
+    
+  <div class="form-group">
+    <label class="text-label" for="text">Succes Criteria:</label>
+    <textarea nbInput fullWidth  class="form-control" formControlName="succesCriteria"></textarea>
+    <div *ngIf="succesCriteria?.invalid && (succesCriteria?.dirty || succesCriteria?.touched)">
+      <p class="text-danger" *ngIf="succesCriteria?.errors?.required">*Required</p>
+    </div>
+  </div>
+    <input
+    [ngClass]="selectedItem===null ?'btn btn-success btnCreate':'btn btn-warning btnCreate'"
+    [value]="selectedItem===null ? 'Create' : 'Update'"
+    type="submit"
+    [disabled]="createSuccessCriteriaForm.invalid"
+
+    />
+   
+  </form>
+  

@@ -1,0 +1,30 @@
+<div *ngIf="commentData"class="container">
+  
+
+  <form [formGroup]="commentForm">
+
+    <label>Comment </label>
+ <!--- <div class="row">
+      <div class="col-md-11">
+             <input id="comment"
+             name="comment" 
+             [(ngModel)]="commentData.comment" 
+             formControlName="comment" 
+             type="text" 
+             class="form-control" 
+             nbInput
+             fullWidth
+             />
+    
+      </div>
+    
+    </div>--->
+    <input nbInput fullWidth type="text"
+       class="form-control" [value]="existedComment.content">
+    <button (click)="editComment(comment)" status="success" nbButton>Edit</button>
+
+
+
+  </form>
+</div>
+

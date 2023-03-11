@@ -1,0 +1,27 @@
+<nb-card>
+  <nb-card-body>
+    <h3 align = "center">Procurement Process</h3><br/>
+    <nb-stepper orientation="horizontal" disableStepNavigation 
+                [selectedIndex]="selectedIndex">
+      <nb-step [label]="labelOne" [completed]="completedState1">
+        <ng-template #labelOne>Materials</ng-template>
+      </nb-step>
+      <nb-step [label]="labelTwo" [completed]="completedState2">
+        <ng-template #labelTwo>Purchase Requisition</ng-template>
+      </nb-step>
+      <nb-step [label]="labelThree" [completed]="completedState3">
+        <ng-template #labelThree>Request For Quotation(s)</ng-template>
+      </nb-step>
+      <nb-step [label]="labelFour" [completed]="completedState4">
+        <ng-template #labelFour>Maintain Quotation(s)</ng-template>
+      </nb-step><br/>
+      <nb-step [label]="labelFive" [completed]="completedState5">
+        <ng-template #labelFive>Decide Vendor</ng-template>
+      </nb-step>
+      <nb-step [label]="labelSix" [completed]="completedState6">
+        <ng-template #labelSix>Purchase Order</ng-template>
+      </nb-step>
+    </nb-stepper>
+    <nb-progress-bar [value]="progressValue" [status]="progressStatus" [displayValue]="true"></nb-progress-bar>
+  </nb-card-body>
+</nb-card>

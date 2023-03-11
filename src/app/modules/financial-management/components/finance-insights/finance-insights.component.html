@@ -1,0 +1,208 @@
+<nb-card>
+  <nb-card-header class ="row" >
+
+    <div class ="col-md-10">
+      <h3>General Statistics on {{this.dateString}}</h3>
+    </div>
+    
+
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class ="col-md-4">
+        <nb-card accent="primary">
+          <nb-card-body>
+            <div>
+              <h5>Yearly Balance: <span *ngIf="totalBalance>0" class="badge badge-success">{{this.totalBalance}}K </span><span *ngIf="totalBalance<=0" class="badge badge-danger">{{this.totalBalance}}K </span></h5>
+            </div>
+            Month with the highest balance:  <div> <h6> <span class="badge badge-primary">{{this.maxBalMonth}} </span></h6> </div> 
+            <div >
+              <h5>Yearly Income: <span class="badge badge-secondary">{{this.totalIncome}}K </span></h5>
+
+            </div>
+            Month with the highest income:   <div> <h6> <span class="badge badge-primary">{{this.maxIncMonth}} </span></h6> </div>
+
+            <div>
+              <h5>Yearly Expense: <span class="badge badge-secondary">{{this.totalExpense}}K </span></h5>
+
+            </div>
+            Month with the highest expense:   <div> <h6> <span class="badge badge-primary">{{this.maxExMonth}} </span></h6> </div>
+            
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class ="col-md-4">
+        <nb-card accent="primary">
+          <nb-card-body>
+            <div>
+              <h5>Monthly Balance: <span *ngIf="monthBalance>0" class="badge badge-success">{{this.monthBalance}}K </span><span *ngIf="monthBalance<=0" class="badge badge-danger">{{this.monthBalance}}K </span></h5>
+            </div>
+            Contribution in the yearly value:
+            <nb-progress-bar [value]="monthBalancePercentage" status="primary" [displayValue]="true"> </nb-progress-bar>
+             <br>
+            <div >
+              <h5>Monthly Income: <span class="badge badge-secondary">{{this.monthIncome}}K </span></h5>
+
+            </div>
+            Contribution in the yearly value:
+
+            <nb-progress-bar [value]="monthIncomePercentage" status="primary" [displayValue]="true"> </nb-progress-bar>
+             <br>
+            <div >
+              <h5>Monthly Expense: <span class="badge badge-secondary">{{this.monthExpense}}K </span></h5>
+
+            </div>
+            Contribution in the yearly value:
+
+            <nb-progress-bar [value]="monthExpensePercentage" status="primary" [displayValue]="true"> </nb-progress-bar>
+
+          </nb-card-body>
+
+        </nb-card>
+
+      </div>
+      <div class ="col-md-4" >
+        <nb-card accent="primary">
+          <nb-card-body>
+            <div>
+              <h5>Today's Balance: <span *ngIf="todayBalance>0" class="badge badge-success">{{this.todayBalance}}K </span><span *ngIf="todayBalance<=0" class="badge badge-danger">{{this.todayBalance}}K </span></h5>
+            </div>
+            Contribution in the monthly value:
+            <nb-progress-bar [value]="todayBalancePercentage" status="primary" [displayValue]="true"> </nb-progress-bar>
+            <br>
+            <div >
+              <h5>Today's Income: <span class="badge badge-secondary">{{this.todayIncome}}K </span></h5>
+
+            </div>
+            Contribution in the monthly value:
+
+            <nb-progress-bar [value]="todayIncomePercentage" status="primary" [displayValue]="true"> </nb-progress-bar>
+            <br>
+            <div >
+              <h5>Today's Expense: <span class="badge badge-secondary">{{this.todayExpense}}K </span></h5>
+
+            </div>
+            Contribution in the monthly value:
+
+            <nb-progress-bar [value]="todayExpensePercentage" status="primary" [displayValue]="true"> </nb-progress-bar>
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+
+    </div>
+    <nb-card>
+      <nb-card-header> <h4> {{this.year}}'s Cash Flow Curves</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <canvas id="cashFlow" width="400px" ></canvas>
+      </nb-card-body>
+    </nb-card>
+    <div class="row ">
+      <div class="col-md-6" >
+        <nb-card accent="primary">
+          <nb-card-header> <h5> Transactions Directions </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="transactionsDirection" width="400px" ></canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-6" >
+        <nb-card accent="primary">
+          <nb-card-header> <h5> Transactions States </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="transactionsStates" width="400px" ></canvas>
+          </nb-card-body>
+        </nb-card >
+      </div>
+    </div>
+    
+    <div class="row">
+      <div  class ="col-md-6">
+        <nb-card accent="primary">
+          <nb-card-header> <h5> Income Types </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="incomeTypes" width="400px" ></canvas>
+
+          </nb-card-body>
+
+
+        </nb-card>
+
+      </div>
+      <div class ="col-md-6">
+        <nb-card accent="primary">       <nb-card-header> <h5> Expense Types </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="expenseTypes" width="400px" ></canvas>
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+     
+    </div>
+    <div class="row">
+      <div  class ="col-md-6">
+        <nb-card accent="primary">
+          <nb-card-header> <h5> Number Of Deliverable Items </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="delivery" width="400px" ></canvas>
+
+          </nb-card-body>
+
+
+        </nb-card>
+
+      </div>
+      <div class ="col-md-6">
+        <nb-card accent="primary">       <nb-card-header> <h5> Number Of Paid Orders </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="payment" width="400px" ></canvas>
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+
+    </div>
+    <div class="row">
+      <div  class ="col-md-4">
+        <nb-card accent="primary">
+          <nb-card-header> <h5> Annual Budget's Income </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="income" width="400px" height="500px" ></canvas>
+
+          </nb-card-body>
+
+
+        </nb-card>
+
+      </div>
+      <div class ="col-md-4">
+        <nb-card accent="primary">       <nb-card-header> <h5> Annual Budget's Expense </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="expense" width="400px" height="500px" ></canvas>
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+      <div class ="col-md-4">
+        <nb-card accent="primary">       <nb-card-header> <h5> Forecast Budget Opportunity </h5> </nb-card-header>
+          <nb-card-body>
+            <canvas id="forecast" width="400px" height="500px" ></canvas>
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+
+    </div>
+  </nb-card-body>
+  
+ 
+</nb-card>
+
+
+

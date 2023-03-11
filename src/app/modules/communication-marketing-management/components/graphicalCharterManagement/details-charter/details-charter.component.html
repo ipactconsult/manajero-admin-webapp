@@ -1,0 +1,59 @@
+<div *ngIf="graphicalCharter" class="container">
+  <div class="col-md-10 col-sm-12">
+
+ </div>
+ 
+ <div class="row">
+  <div class="col-md-10 col-sm-12">
+   
+  </div>
+ <br>
+  <div align="right" class="col-md-2 justify-content-end">
+    <a [routerLink]="['/communicationMarketing/EditCharter',graphicalCharter.id]" class="w-25"
+       fullWidth nbButton nbTooltip="Click here to edit GraphicalCharter data" nbTooltipStatus="primary" shape="round" status="">
+      <nb-icon icon="edit-outline"></nb-icon>
+    </a>
+    <a [routerLink]="['/communicationMarketing/GraphicalCharter']" class="w-25 mx-3"
+       fullWidth nbButton nbTooltip="Back to GraphicalCharter list" nbTooltipStatus="primary" outline shape="round" status="basic">
+      <nb-icon icon="corner-up-right-outline"></nb-icon>
+    </a>
+
+  </div>
+
+</div>
+&nbsp;
+
+
+
+ <nb-card accent="info">
+   <nb-card-header>   Graphical Charter Details</nb-card-header>
+   <nb-card-body> color  : {{graphicalCharter.color}}
+     <br>
+     <br>
+ 
+     TexType  : {{graphicalCharter.texType}}
+ 
+     <br>
+     <br>
+ 
+     Reference  : {{graphicalCharter.reference}}
+ 
+     <br>
+     <br>
+ 
+     FormaText  : {{graphicalCharter.formaText}}
+     <br>
+    
+     <br>
+ 
+     Description  : {{graphicalCharter.description}}
+     <br>
+ 
+ 
+ 
+   </nb-card-body>
+ </nb-card>
+ </div>
+ 
+ 
+ 

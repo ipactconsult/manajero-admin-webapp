@@ -1,0 +1,51 @@
+<ngx-process-steps [processStep]="'PlanningEXECUTING'"></ngx-process-steps>
+
+<nb-card>
+  <nb-card-header>
+    Projects List
+    <div>
+      <label><nb-icon icon="funnel-outline"> </nb-icon>filtre :</label>
+      <nb-select placeholder="Choose" (selectedChange)="filtre($event)">
+        <nb-option value="Active">Active</nb-option>
+        <nb-option value="Archived">Archived</nb-option>
+      </nb-select>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="list"
+      (delete)="confirmation($event, dialog)"
+      (edit)="displayDeteails($event)"
+      (userRowSelect)="onUserRowSelect($event)"
+    >
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+<!--Delete Confirm -->
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Confirm Archive Operation</nb-card-header>
+    <nb-card-body> Are you sure you want to archive this item ? </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-md-2">
+          <button nbButton status="basic" (click)="ref.close()">
+            <nb-icon icon="close"></nb-icon>Close
+          </button>
+        </div>
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+          <button nbButton status="danger" (click)="onArchive(selectedItem)">
+            <span  *ngIf="!selectedItem.archived ; else elseBlock "><nb-icon class="text-danger" icon="trash-outline"></nb-icon>&nbsp; Archive !</span>
+            <ng-template #elseBlock>
+              <sapn><nb-icon icon="corner-left-up-outline"></nb-icon> Unarchive</sapn>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!--end Delete Confirm-->

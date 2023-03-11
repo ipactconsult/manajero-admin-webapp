@@ -1,0 +1,171 @@
+<div *ngIf="existedW" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Warehouse Details</h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Warehouse Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Created</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{moment(existedW.warehouseCreationDate).format('DD MMM YYYY hh:mm A')}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Reference</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehouseCode}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Name</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehouseLocation}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Country</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehouseCountry}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">City</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehouseCity}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Postal Code</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehousePostalCode}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Address</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehouseAddress}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Phone Number</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedW.warehousePhone}}
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>
+            Materials ({{materialsByWarehouse.length}})
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row" *ngIf="materialsByWarehouse.length > 0">
+              <div class = "col-md-12">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Material Type</th>
+                    <th>Material Name</th>
+                    <th>Material SKU</th>
+                    <th>Material Category</th>
+                    <th>Material Barcode</th>
+                    <th>Quantity</th>
+                    <th>Material Price</th>
+                    <th>Total Price</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="col-md-9 col-sm-10" *ngFor="let material of materialsByWarehouse">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{material?.materialType}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        <a [routerLink]="['/pim/procurement/material', material?.materialId]">
+                          {{material?.materialName}}
+                        </a>
+                      </p>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{material?.materialSKU}}</p></td>
+                    <td><p class="fw-normal mb-1">{{material?.materialCategory.categoryName}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1" *ngIf="!material?.materialBarcode">-</p>
+                      <p class="fw-normal mb-1" *ngIf="material?.materialBarcode">{{material?.materialBarcode}}</p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        {{material?.quantityStock}}
+                      </p>
+                    </td>
+                    <td>
+                      <p class = "fw-normal mb-1">
+                        {{material?.materialPrice}} {{material?.supplier?.supplierCurrency}}
+                      </p>
+                    </td>
+                    <td>
+                      <p class = "fw-normal mb-1">
+                        {{material?.materialPrice * material?.quantityStock 
+                      + material?.materialPrice * material?.quantityStock * (material?.materialVAT / 100)}} 
+                        {{material?.supplier?.supplierCurrency}} 
+                        <small>(Incl. {{material?.materialVAT}}% Taxes)</small>
+                      </p>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row text-danger font-weight-bold col-md-11" *ngIf="materialsByWarehouse.length === 0">
+              This warehouse does not contain any material.
+            </div>
+            <hr *ngIf="materialsByWarehouse.length > 0">
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </div>
+  </div>
+</div>

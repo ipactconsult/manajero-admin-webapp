@@ -1,0 +1,670 @@
+
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Create New Publication </h3>
+        </div>
+        <div  class="col-md-8">
+          <a style="float: right;" nbTooltip="Back to list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/communicationMarketing/Publication']" nbButton>
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        </div>
+      </div>
+      <form [formGroup]="publicationForm" class="mt-3">
+        <label>Title</label>
+        <div class="row">
+          <div class="col-md-11">
+            <input id="title"
+                   name="title"
+                   [(ngModel)]="publication.title"
+                   formControlName="title"
+                   type="text"
+                   class="form-control"
+                   nbInput
+                   fullWidth
+            />
+      
+          </div>
+          <div *ngIf="(title.invalid && title.touched)" class="col-lg-11">
+            <div *ngIf="title.errors?.required">
+              <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Required Field</p>
+            </div>
+            <div *ngIf="title.errors?.pattern" class="mx-3 w-100">
+              <p class="mt-2 alert alert-danger text-dark text-center" role="alert">
+                Only caracters can be
+                        accepted
+</p>
+            </div>
+          </div>
+
+
+        </div>
+      
+      
+   
+      
+      
+      
+        <label>hastag</label>
+      
+        <div class="row">
+          <div class="col-md-11">
+            <input id="hastag"
+                   name="hastag"
+                   [(ngModel)]="publication.hastag"
+                   formControlName="hastag"
+                   type="text"
+                   class="form-control"
+                   nbInput
+                   fullWidth
+            />
+      
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+        </div>
+      
+      
+      
+      
+        <label>Tags</label>
+      
+        <div class="row">
+          <div class="col-md-11">
+            <input id="tags"
+                   name="tags"
+                   [(ngModel)]="publication.tags"
+                   formControlName="tags"
+                   type="tags"
+                   class="form-control"
+                   nbInput
+                   fullWidth
+            />
+      
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+        </div>
+      
+      
+        <label>Social Media</label>
+      
+        <div class="row">
+          <div class="col-md-11">
+
+
+            <nb-select   [(ngModel)]="publication.socialMedia" fieldSize="large" formControlName="socialMedia" 
+            fullWidth id="socialMedia" required
+            name="socialMedia" placeholder="Where you want to post  " selected="0"
+            > 
+            
+                                         <nb-option disabled value="0">Social MEdia</nb-option>
+           
+                                           <nb-option value="Instagram">Instagram</nb-option>
+                                           <nb-option value="FaceBook">FaceBook</nb-option>
+                                           <nb-option value="Twitter">Twitter</nb-option>
+                                           <nb-option value="Autre">Autre</nb-option>
+          
+            
+            </nb-select>
+
+
+
+
+          
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <label>Post Type </label>
+      
+        <div class="row">
+          <div class="col-md-11">
+            <nb-select   [(ngModel)]="publication.briefingType" fieldSize="large" formControlName="briefingType" 
+            fullWidth id="briefingType" required 
+            name="briefingType" placeholder="Select  Post Type  " selected="0"
+            > 
+            
+            <nb-option disabled value="0">Type</nb-option>
+           
+                                           <nb-option value="meme">meme</nb-option>
+                                           <nb-option value="Poster">Poster</nb-option>
+                                           <nb-option value="Infographics">Infographics</nb-option>
+                                           <nb-option value="flyer">flyer</nb-option>
+           
+            </nb-select>
+      
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+      
+      
+      
+        <label>Date Debut</label>
+      
+        <div class="row">
+          <div class="col-md-11">
+            <input id="dateDebut"
+                   name="dateDebut"
+                   [(ngModel)]="publication.dateDebut"
+                   formControlName="dateDebut"
+                   [nbDatepicker]="dateTimePicker" 
+                 
+                   class="form-control"
+                   nbInput
+                   fullWidth
+                   required
+                   
+            />
+            <nb-datepicker #dateTimePicker></nb-datepicker>
+      
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+        </div>
+      
+      
+      
+      
+      
+      
+      
+        <label>Content</label>
+      
+        <div class="form-group row">
+          <label class="label col-sm-3 col-form-label"
+                 for="content">Content</label>
+          <div class="col-sm-9">
+            <input (change)="onFileSelected($event)"
+                   [(ngModel)]="publication.content"
+                   formControlName="content"
+                   id="content"
+                   name="content"
+                   type="file"
+                
+            />
+      
+          </div>
+        </div>
+
+
+
+
+   
+        <label>Description</label>
+      
+        <div class="row">
+          <div class="col-md-11">
+            <textarea
+            [(ngModel)]="publication.description"
+            formControlName="description"
+            fullWidth
+            id="description"
+            name="description"
+            nbInput
+            type="text"
+            placeholder="description">
+            
+          </textarea>
+
+      
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+        </div>
+
+
+
+
+
+
+        <label>graphical Charter</label>
+      
+        <div class="row">
+          <div class="col-md-11">
+          <nb-select [selected]="selectedItem2" name="chart"
+          [(ngModel)]="publication.graphicalCharter"  required
+          id="chart"  placeholder="select GraphicalCharter"
+                                formControlName="chart"  (selectedChange)="getSelectedChart($event)">
+                                <nb-option *ngFor="let x of listChart" value="{{x.id}}">{{x.title}}
+                                </nb-option>
+            </nb-select>
+        
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Select charter" nbTooltipStatus="primary"></nb-icon>
+      
+          </div>
+
+
+       </div>
+
+
+
+<br>
+ 
+    <nb-card>
+      <nb-card-header>Select Personas</nb-card-header>
+      <nb-card-body>
+        <label>Partners</label>
+        <div class="row">
+          <div class="col-md-11">
+              <nb-select nbSelect fullWidth (selectedChange)="selectPersona($event)"
+                  nbTooltip="Select one or many Personas" nbTooltipStatus="info">
+                <nb-option [value]="p" *ngFor="let p of personas">
+                  <div class="d-flex align-items-center">
+                    <nb-user [name]="p.image" onlyPicture picture="{{p.image}}"></nb-user>
+                    <div class="ms-3">
+                      <p class=" mb-1">{{p.nom}} {{p.prenom}}</p>
+                      <p class=" mb-0">{{p.email}}</p>
+                    </div>
+                  </div>
+
+                </nb-option>
+                <nb-option>
+                  <button nbButton (click)="open22Supp(dialog)" status="primary">Create New Persona</button>
+                </nb-option>
+              </nb-select>
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Please select one or many materials" nbTooltipStatus="primary"></nb-icon>
+          </div>
+          <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Create New Persona
+                    </nb-card-header>
+                   
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="primary">
+                        Close Window
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+        </div><br/>
+        <div class = "row" *ngIf="selectedPersonas.length > 0">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Name</th>
+          <th>Domain</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Unselect</th>
+               </tr>
+          </thead>
+         <tbody *ngFor="let p of selectedPersonas">
+          <tr class="col-md-9 col-sm-10">
+          <td>
+        <p class="fw-normal mb-1">
+          
+          <div class="d-flex align-items-center">
+            <nb-user [name]="p.image" onlyPicture picture="{{p.image}}"></nb-user>
+            <div class="ms-3">
+              <p class=" mb-1">{{p.nom}}</p>
+              <p class=" mb-0">{{p.nom}}</p>
+            </div>
+          </div>
+        </td>
+        <td><p class="fw-normal mb-1">{{p.nom}}</p></td>
+        <td><p class="fw-normal mb-1">{{p.nom}}</p></td>
+        <td><p class="fw-normal mb-1">{{p.nom}}  {{p.nom}}    </p></td>
+      
+
+
+            <td>
+              <p class="fw-normal mb-1">
+                <button style="float: left" nbTooltip="Cancel Partner Selection" 
+                        nbTooltipStatus="danger" shape="round" status="danger" 
+                 nbButton (click)="cancelSelectionPersona(p)">
+                     <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+            </div>
+        
+        </div>
+        <div class="row mt-5">
+    
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+
+
+
+
+
+
+
+     
+        <div class="row mt-3">
+          <div class="col-md-11">
+            <button style="float: right;"  nbButton [disabled]="publicationForm.invalid" (click)="storePublication()"  status="success">
+              <nb-icon icon="checkmark-circle-outline"></nb-icon>   Save Data
+            </button>
+          </div>
+      
+        </div>
+      
+      
+      </form>
+      
+
+<!----
+<div class="steppers-container row">
+  <div class="col-md-12 col-lg-12 col-xxxl-12 w-100">
+    <nb-card>
+      <nb-card-header>
+        <h2>Create Publicaion</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <form  [formGroup]="publicationForm">
+          <nb-stepper #stepper>
+            <nb-step  [stepControl]="publicationForm" label="Publication">
+              <label class="small">Title</label>
+              <div class="row">
+                <div class="col-md-11">
+                  <input [(ngModel)]="publication.title" fieldSize="large" formControlName="title"
+                         fullWidth  
+                         id="title" name="title" nbInput placeholder="title" required
+                         type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline"
+                           nbTooltip="This Field should starts with EMZ concatenate with numbers" nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+                <div *ngIf="(title.invalid && title.touched)" class="col-lg-11">
+                  <div *ngIf="title.errors?.required">
+                    <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Required Field</p>
+                  </div>
+                  <div *ngIf="title.errors?.pattern" class="mx-3 w-100">
+                    <p class="mt-2 alert alert-danger text-dark text-center" role="alert">This field should start with
+                      EMZ concat with numbers</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-1">
+                
+                  <div class="col-md-6">
+                    <label class="small">briefingType</label>
+                    <div class="row">
+                     <div class="col-md-10">
+                        <nb-select [(ngModel)]="publication.briefingType" fieldSize="large" formControlName="briefingType"
+                                   fullWidth id="briefingType"  required
+                                   name="briefingType" placeholder="Select Type" selected="0">
+                          <nb-option disabled value="0">briefingType</nb-option>
+                          <nb-option value="intagram">meme</nb-option>
+                          <nb-option value="faceBook">Poster</nb-option>
+                          <nb-option value="Twitter">flyer</nb-option>
+                          <nb-option value="Infographics">Infographics</nb-option>
+                          <nb-option value="autre">autre</nb-option>
+
+                        </nb-select>
+                      </div>
+                      <div class="col-md-1 mt-3">
+                        <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                      </div>
+                      
+                    </div>
+  
+                  </div>
+
+
+                  <div class="col-md-6">
+                    <label class="small">Post on </label>
+                    <div class="row">
+                     <div class="col-md-10">
+                        <nb-select [(ngModel)]="publication.socialMedia" fieldSize="large" formControlName="socialMedia"
+                                   fullWidth id="socialMedia" required
+                                   name="socialMedia" placeholder="Select Type" selected="0">
+                          <nb-option disabled value="0">Social Media</nb-option>
+                          <nb-option value="intagram">Instagram</nb-option>
+                          <nb-option value="faceBook">FaceBook</nb-option>
+                          <nb-option value="Twitter">Twitter</nb-option>
+                      
+                          <nb-option value="Infographics">autre</nb-option>
+
+                        </nb-select>
+                      </div>
+                      <div class="col-md-1 mt-3">
+                        <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                      </div>
+                      
+                    </div>
+  
+                  </div>
+
+
+
+
+              </div>
+             <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="small col-lg-12">Content</label>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input (change)="toggleLoadingAnimation($event)"
+                             autocomplete="off"
+                             formControlName="content"
+                             fullWidth  required
+                             id="content"
+                             name="content"
+                             nbInput
+                             type="file"
+                      />
+                    </div>
+                    <div  class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Upload image" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                    <div *ngIf="content.invalid && content.touched" class="mx-3 w-75">
+                      <div *ngIf="content.errors?.required">
+                      <p class="mt-2 alert alert-danger text-dark text-center" role="alert">You should upload an image
+                        file</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+            
+              </div>
+
+
+
+
+              <div class="row mt-1">
+                
+                <div class="col-md-6">
+                  <label class="small">hastag</label>
+                  <div class="col-md-10">
+                  <div class="row">
+                    <textarea
+                    [(ngModel)]="publication.hastag"  
+                    formControlName="hastag"
+                    fullWidth
+                    id="hastag"
+                    name="hastag"
+                    nbInput
+                    placeholder="hastag">
+                    
+                  </textarea>
+                  </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                    
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+                  <label class="small">tags</label>
+                  <div class="row">
+                   <div class="col-md-10">
+                    <textarea
+                    [(ngModel)]="publication.tags"
+                    formControlName="tags"
+                    fullWidth
+                    id="tags"
+                    name="tags"
+                    nbInput
+                    placeholder="tags">
+                    
+                  </textarea>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                    
+                  </div>
+
+                </div>
+
+
+
+
+                <div class="col-md-6">
+                  <label class="small">Start Date </label>
+                  <div class="row">
+                   <div class="col-md-10">
+                      <input [(ngModel)]="publication.dateDebut" [nbDatepicker]="dateTimePicker"
+                             fieldSize="large" formControlName="dateDebut" fullWidth id="dateDebut"
+                             name="dateDebut" nbInput  required
+
+                             placeholder="Pick Date">
+                      <nb-datepicker #dateTimePicker></nb-datepicker>
+                    </div>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+
+                </div>     
+                
+                <div class="col-md-6">
+                  <label class="small">End Date </label>
+                  <div class="row">
+                   <div class="col-md-10">
+                      <input [(ngModel)]="publication.dateFin" [nbDatepicker]="dateTimePicker"
+                             fieldSize="large" formControlName="dateFin" fullWidth id="dateFin"
+                             name="dateFin" nbInput   
+
+                             placeholder="Pick Date">
+                      <nb-datepicker #dateTimePicker></nb-datepicker>
+                    </div>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+
+                </div>    
+                
+                
+
+                <div  class="col-lg-6">
+                  <label for="subject"> Persona:</label>
+                  <nb-select [selected]="selectedItem" name="per"
+                  [(ngModel)]="publication.persona"  required
+                  id="per"  placeholder="select Persona"
+                                        formControlName="per"  (selectedChange)="getSelectedPersona($event)">
+                                        <nb-option *ngFor="let x of listPersona" value="{{x.id}}">{{x.title}}
+                                        </nb-option>
+                    </nb-select>
+                </div>
+      
+
+                <div  class="col-lg-6">
+                  <label for="subject"> graphicalCharter:</label>
+                  <nb-select [selected]="selectedItem2" name="chart"
+                  [(ngModel)]="publication.graphicalCharter"  required
+                  id="chart"  placeholder="select GraphicalCharter"
+                                        formControlName="chart"  (selectedChange)="getSelectedChart($event)">
+                                        <nb-option *ngFor="let x of listChart" value="{{x.id}}">{{x.title}}
+                                        </nb-option>
+                    </nb-select>
+                </div>
+
+
+                
+
+
+
+
+
+            </div>
+
+
+            <div class="row mt-3">
+              <div class="col-md-11">
+                <button style="float: right;"  nbButton [disabled]="publicationForm.invalid" (click)="storePublication()"  status="success">
+                  <nb-icon icon="checkmark-circle-outline"></nb-icon>   Save Data
+                </button>
+              </div>
+          
+            </div>
+            
+      
+            </nb-step>
+      <nb-step [stepControl]="PersonaForm" label="Persona">
+         
+            </nb-step>
+
+  <nb-step [stepControl]="chartForm" label="GraphicalCharter">
+   
+            </nb-step>
+            <nb-step [hidden]="true" [stepControl]="publicationForm" label="Third step">
+              <div align="center" class="step-container">
+                <nb-alert class="w-50 mt-3" filled="success">
+                  <span class="text-center">Process Completed Successfuly</span></nb-alert>
+                <button (click)="stepper.reset()" nbButton>Restart the process</button>
+                <a [routerLink]="['/hr/employee/list_']" class="mx-2" nbButton>Back to list</a>
+              </div>
+            </nb-step>
+          </nb-stepper>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+--->

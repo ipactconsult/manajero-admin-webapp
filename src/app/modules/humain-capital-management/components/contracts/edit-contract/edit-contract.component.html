@@ -1,0 +1,326 @@
+<div class="container" *ngIf="contract">
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h2 class="more-vertical">
+          Update Contract Details </h2>
+      </div>
+  
+    
+  
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4 mb-3">
+        <nb-card>
+          <nb-card-body class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="row">
+  
+                <img alt="" src="{{contract?.employee?.employeeProfileImage}}" style="width: 150px;height: 150px;border-radius: 100%;">
+              </div>
+  
+              <div class="mt-3">
+                <h4>{{contract?.employee?.employeeName}}</h4>
+                <div class="row">
+                  
+                  <div class="col-md-12">
+                       <nb-tag-list>
+                    <nb-tag [text]="contract.status" status="primary" appearance="filled"></nb-tag>
+                  </nb-tag-list>
+                  </div>
+                </div>
+           
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      
+     
+      </div>
+      <form class="col-md-8" [formGroup]="contract_form">
+      <div class="">
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header>Contract Type & Period</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Contract Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <nb-select
+                    [(ngModel)]="contract.contractType"
+                    formControlName="contractType" 
+                    name="contractType" 
+                    id="contractType" 
+                    fullWidth size="large" 
+                    placeholder="select the contract type">
+                <nb-option value="CDD">CDD</nb-option>
+                <nb-option value="CDI">CDI</nb-option>
+            </nb-select>
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Hiring Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input 
+                    [nbDatepicker]="dateTimePicker" fieldSize="large" formControlName="hiringDate"
+                    fullWidth id="hiringDate" name="hiringDate" [(ngModel)]="contract.hiringDate" nbInput placeholder="Pick Date">
+                <nb-datepicker #dateTimePicker></nb-datepicker>
+                </div>
+              </div>
+              <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">End Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input [nbDatepicker]="dateTimePicker1" fieldSize="large" formControlName="endDate"
+                    fullWidth id="endDate" name="endDate" [(ngModel)]="contract.endDate" nbInput placeholder="Pick Date">
+                <nb-datepicker #dateTimePicker1></nb-datepicker>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Notice Period</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" formControlName="noticePeriod" fullWidth id="noticePeriod" name="noticePeriod" nbInput
+                                        placeholder="" [(ngModel)]="contract.noticePeriod">
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Official Signature</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input [nbDatepicker]="dateTimePicker2" fieldSize="large" formControlName="officialSignature"
+                    [(ngModel)]="contract.officialSignature"  fullWidth id="officialSignature" name="officialSignature" nbInput placeholder="Pick Date">
+                  <nb-datepicker #dateTimePicker2></nb-datepicker>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Status</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <nb-select 
+                  [(ngModel)]="contract.status"
+                  formControlName="status" 
+                  name="status" 
+                  id="status" 
+                  fullWidth size="large" placeholder="select status">
+              
+              <nb-option value="In Trial Period">In Trial Period</nb-option>
+              <nb-option value="Validate Trial Period">Validate Trial Period</nb-option>
+              <nb-option value="Renewed Trial Period">Renewed Trial Period</nb-option>
+              <nb-option value="Failure Trial Period">Failure Trial Period</nb-option>
+
+          </nb-select>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Duration Of Trial Period</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large"  [(ngModel)]="contract.durationOfTrialPeriod" formControlName="durationOfTrialPeriod" fullWidth id="durationOfTrialPeriod" name="durationOfTrialPeriod" nbInput
+                    placeholder="">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Start Time</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.startTime" formControlName="startTime" fullWidth id="startTime" name="startTime" nbInput
+                                        placeholder="" type="time">
+                </div>
+              </div>              
+  
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+          <nb-accordion-item expanded="false">
+            <nb-accordion-item-header>Hours Plan</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Number Of Hours Worked Per Day</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.nbOfHoursWorkedPerDay" formControlName="nbOfHoursWorkedPerDay" fullWidth id="nbOfHoursWorkedPerDay" name="nbOfHoursWorkedPerDay" nbInput
+                                        placeholder="">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Number Of Weekly Working Hours</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.nbOfWeeklyWorkingHours" formControlName="nbOfWeeklyWorkingHours" fullWidth id="nbOfWeeklyWorkingHours" name="nbOfWeeklyWorkingHours" nbInput
+                    placeholder="">
+                   
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Hourly Work Rate</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.hourlyWorkRate" formControlName="hourlyWorkRate" fullWidth id="hourlyWorkRate" name="hourlyWorkRate" nbInput
+                    placeholder="">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Daily Cost</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.dailyCost" formControlName="dailyCost" fullWidth id="dailyCost" name="hourlyWorkRate" nbInput
+                    placeholder="">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Hourly Distribution</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.hourlyDistribution" formControlName="hourlyDistribution" fullWidth id="hourlyDistribution" name="hourlyWorkRate" nbInput
+                    placeholder="">
+                  <br>
+                </div>
+              </div>
+              <hr>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+          <nb-accordion-item expanded="false">
+            <nb-accordion-item-header>Company</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Company Name</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.companyName" formControlName="companyName" fullWidth id="companyName" name="companyName" nbInput
+                    placeholder="">
+                  
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Company Address </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.companyAddress" formControlName="companyAddress" fullWidth id="companyAddress" name="companyAddress" nbInput
+                    placeholder="">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Work Address </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.workAddress" formControlName="workAddress" fullWidth id="workAddress" name="workAddress" nbInput
+                    placeholder="">
+                </div>
+              </div>
+              
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+            <nb-accordion-item expanded="false">
+              <nb-accordion-item-header>Salary</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Bonus Coefficient</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.bonusCoef" formControlName="bonusCoef" fullWidth id="bonusCoef" name="bonusCoef" nbInput
+                    placeholder="">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Gross Hourly Wage </p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.grossHourlyWage" formControlName="grossHourlyWage" fullWidth id="grossHourlyWage" name="grossHourlyWage" nbInput
+                    placeholder="">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Minimum Monthly Salary </p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.minimumMonthlySalary" formControlName="minimumMonthlySalary" fullWidth id="minimumMonthlySalary" name="minimumMonthlySalary" nbInput
+                    placeholder="">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Gross Annual Salary</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input fieldSize="large" [(ngModel)]="contract.grossAnnualSalary" formControlName="grossAnnualSalary" fullWidth id="grossAnnualSalary" name="grossAnnualSalary" nbInput
+                    placeholder="">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Overall Monthly Cost</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input fieldSize="large" [(ngModel)]="contract.overallMonthlyCost" formControlName="overallMonthlyCost" fullWidth id="overallMonthlyCost" name="overallMonthlyCost" nbInput
+                                        placeholder="">
+                   
+                  </div>
+                </div>
+                <hr>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+          <br>
+          <button (click)="updateContract()" class="col-md-3" nbButton 
+          type="submit" status="success"> Edit
+         </button>
+        <br>
+      </div>
+       </form>
+    </div>
+  
+  
+  
+  
+  </div>

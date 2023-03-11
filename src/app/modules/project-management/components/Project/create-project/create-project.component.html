@@ -1,0 +1,95 @@
+<button
+  (click)="openWindow()"
+  shape="round"
+  size="small"
+  status="success"
+  *ngIf="projectCharter?.status === 'APPROVED'"
+  nbButton
+>
+  <nb-icon icon="plus-outline"></nb-icon>Create Project
+  {{ projectCharter.status }}
+</button>
+
+<ng-template #disabledEsc>
+  <nb-card>
+    <nb-card-body class="example-items-col">
+      <form class="form"  [formGroup]="createProjectForm" (ngSubmit)="CreateProject()">
+        <div>
+          <label for="subject">Title :</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            status="basic"
+            placeholder="Title"
+            
+            formControlName="title"
+          />
+        </div>
+        <div>
+          <label for="subject">Organization :</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            status="basic"
+            placeholder="Organization"
+            
+            formControlName="organization"
+          />
+        </div>
+        <div>
+          <label for="subject">Start Sate :</label>
+          <input
+            nbInput
+            fullWidth
+            placeholder="Pick Date"
+            [nbDatepicker]="dateTimePicker"
+            formControlName="startDate"
+          />
+          <nb-datepicker #dateTimePicker></nb-datepicker>
+        </div>
+        <div>
+          <label for="subject">End Date :</label>
+          <input
+            nbInput
+            fullWidth
+            placeholder="Pick Date"
+            [nbDatepicker]="dateTimePicker2"
+            formControlName="endDate"
+          />
+          <nb-datepicker #dateTimePicker2></nb-datepicker>
+        </div>
+        <div>
+          <label for="subject">Type:</label>
+          <nb-select
+            placeholder="Choose Type"
+            formControlName="category"
+            fullWidth
+            formControlName="type"
+
+          >
+            <nb-option value="INTERNAL">INTERNAL</nb-option>
+            <nb-option value="EXTERNAL">EXTERNAL</nb-option>
+          </nb-select>
+        </div>
+        <div>
+          <label for="subject">Description:</label>
+          <textarea nbInput fullWidth placeholder="Description"             formControlName="description"
+          ></textarea>
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+   
+      <input
+    class="btn btn-success btnCreate"
+    (click)="CreateProject()"
+
+    type="submit"
+    value="Create"
+    [disabled]="createProjectForm.invalid"
+  />
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

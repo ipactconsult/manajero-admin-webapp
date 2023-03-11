@@ -1,0 +1,243 @@
+
+
+    <div class="row mt-3">
+      <div class="col-md-8">
+  <h3 align="left">
+    Scenario Management </h3>
+  </div>
+  <div class="col-md-3">
+    <input [(ngModel)]="search"
+    name="search"
+    id="search"
+    nbInput
+   nbTooltip="Tap here to search your scenario" nbTooltipStatus="primary" placeholder="Search scenario"
+   type="text">
+</div>
+</div>
+<br>
+
+<div class="steppers-container row">
+
+  <div class="row">
+
+    <nb-card size="small">
+      <nb-card-body>
+        <nb-stepper orientation="vertical">
+
+          <nb-step label="Mailing">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>Public Customers</h4>
+              </div>
+              <div class="col-md-5" align="right">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="at"></nb-icon>
+                Reminder by e-mail No. 1              </p>
+            </div>
+            <button nbButton disabled nbStepperNext>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </nb-step>
+          <nb-step label="Phone Call">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>Public Customers</h4>
+              </div>
+              <div class="col-md-5">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="phone-call"></nb-icon>
+                Reminder by Phone call
+              </p>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </nb-step>
+          <nb-step label="Mailing">
+
+           <div class="row">
+              <div class="col-md-7">
+                <h4>Public Customers</h4>
+              </div>
+              <div class="col-md-5">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="at"></nb-icon>
+                Reminder by e-mail No. 2                </p>
+            </div>
+         
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </nb-step>
+          <nb-step label="Mailing">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>Public Customers</h4>
+              </div>
+              <div class="col-md-5">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="email"></nb-icon>
+                Formal notice               </p>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton disabled nbStepperNext>next</button>
+          </nb-step>
+        </nb-stepper>
+      </nb-card-body>
+    </nb-card>
+    <nb-card size="small">
+      <nb-card-body>
+        <nb-stepper orientation="vertical">
+
+          <nb-step label="Mailling">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>Risky Customers</h4>
+              </div>
+              <div class="col-md-5" align="right">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="at"></nb-icon>
+                Reminder by e-mail No. 1              </p>
+            </div>
+            <button nbButton disabled nbStepperNext>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </nb-step>
+          <nb-step label="Phone Call">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>Risky Customers</h4>
+              </div>
+              <div class="col-md-5">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="phone-call"></nb-icon>
+                Reminder by Phone call
+              </p>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </nb-step>
+          <nb-step label="Mailing">
+
+           <div class="row">
+              <div class="col-md-7">
+                <h4>Risky Customers</h4>
+              </div>
+              <div class="col-md-5">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="alert-triangle"></nb-icon>
+                Mail with acknowledgment of receipt              </p>
+            </div>
+         
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </nb-step>
+          <nb-step label="Mailing">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>Risky Customers</h4>
+              </div>
+              <div class="col-md-5">
+                <a [routerLink]="['/litige/listca']" status="primary" nbButton class="mx-1">
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </a>
+                <a [routerLink]="['/litige/grid']" status="warning" nbButton class="mx-1">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </a>
+                <a href="" status="info" status="danger" nbButton class="mx-1">
+                  <nb-icon icon="archive-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="lorem">
+                <nb-icon icon="email"></nb-icon>
+                Formal notice               </p>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton disabled nbStepperNext>next</button>
+          </nb-step>
+          
+        </nb-stepper>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

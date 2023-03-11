@@ -1,0 +1,162 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Request For Quotations</h3>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <input [(ngModel)]="searchRFQ"
+                   class="w-75 mx-2" nbInput placeholder="Search Request For Quotation"
+                   type="text">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div>
+            <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary"
+               [routerLink]="['/pim/procurement/rfqs/grid']"
+               nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon></a>&nbsp;
+            <a [routerLink]="['/pim/procurement/rfqs']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/procurement/rfqs/list']"
+               nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic">
+              <nb-icon icon="list-outline">
+              </nb-icon>
+            </a>&nbsp;
+            <a (click)="exportAsXLSX()"
+               align="right" status="success"
+               nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!dataRFQs || dataRFQs.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataRFQs | filter : searchRFQ).length === 0" [hidden]="dataRFQs.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">
+        Item Not Found.
+      </nb-alert>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <input [nbDatepicker]="datepickerCreated" placeholder="Filter By Creation Date"
+                 style="cursor: pointer"
+                 class="mx-2 mt-3 w-100" nbInput>
+          <nb-datepicker #datepickerCreated
+                         (dateChange)="getRFQsByCreationDate($event)"></nb-datepicker>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <input [nbDatepicker]="datepickerQD" placeholder="Filter By Quotation Deadline"
+                 style="cursor: pointer"
+                 class="mx-2 mt-3 w-100" nbInput>
+          <nb-datepicker #datepickerQD
+                         (dateChange)="getRFQsByQuotationDeadline($event)"></nb-datepicker>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select class="mx-2 mt-3 w-100"placeholder="Sort by Reference"
+                     selected="0">
+            <nb-option (click)="getAllRFQs()" value="All">All</nb-option>
+            <nb-option (click)="getAllRFQsASC()" value="1">Reference (A-Z)</nb-option>
+            <nb-option (click)="getAllRFQsDESC()" value="2">Reference (Z-A)</nb-option>
+          </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+          <label>Items Per Page</label>
+          <input [(ngModel)]="pageSize" class="w-100" min="6"
+                 nbInput type="number">
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="row mt-3">
+          <nb-card
+            *ngFor="let rfq of dataRFQs  | filter : searchRFQ 
+          | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: dataRFQs.length}"
+            class="col-lg-6">
+            <nb-card-header>
+              <div class=" row">
+                <p class="col-md-8 pt-2">
+                  {{rfq.rfqNumber}}
+                </p>
+                <div class="align-self-center col-md-1 mb-2">
+                  <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                          aria-label="Example icon-button with a menu"
+                          nbButton nbTooltip="Click here to see advanced menu"
+                          nbTooltipStatus="primary"
+                          shape="round"
+                          size="small"
+                          status="basic">
+                    <nb-icon icon="more-horizontal-outline"></nb-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <a [routerLink]="['/pim/procurement/rfq/details', rfq.rfqId]" fullWidth nbButton>
+                    <span class="text-info">  
+                      <nb-icon icon="eye-outline"></nb-icon></span>
+                        Details
+                      </a>
+                    </button>
+                    <button mat-menu-item>
+                    <a (click)="open2(dialog)" nbButton fullWidth>
+                      <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon></span>Archive
+                    </a>
+                    </button>
+                  </mat-menu>
+                  <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>Confirm Archive Operation</nb-card-header>
+                      <nb-card-body>Are you sure you would like to archive this request for quotation?</nb-card-body>
+                      <nb-card-footer>
+                        <div class="row">
+                          <button class="col-md-2" status="danger" nbButton (click)="ref.close()">No</button>
+                          <div class="col-md-8"></div>
+                          <a class="col-md-2" status="success" nbButton (click)="onArchiveConfirm(rfq, ref)">Yes</a>
+                        </div>
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>
+                </div>
+              </div>
+            </nb-card-header>
+            <nb-card-body>
+            <span>
+              <p class="mt-2">Created: {{rfq.rfqCreationDate | date: 'dd MMM YYYY'}}</p></span>
+              <span>
+              <p class="mt-2">Expires: {{rfq.quotationDeadline | date: 'dd MMM YYYY'}}</p></span>
+            </nb-card-body>
+            <nb-card-footer>
+              <div class="mt-3" *ngIf="rfq.pr.material.length > 1">
+                {{rfq.pr.material.length}} Materials
+              </div>
+              <div class="mt-3" *ngIf="rfq.pr.material.length === 1">
+                1 Material
+              </div>
+              <div class="mt-3" *ngIf="rfq.suppliers.length > 1">
+                {{rfq.suppliers.length}} Suppliers
+              </div>
+              <div class="mt-3" *ngIf="rfq.suppliers.length === 1">
+                1 Supplier
+              </div>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+  </div>
+</div>

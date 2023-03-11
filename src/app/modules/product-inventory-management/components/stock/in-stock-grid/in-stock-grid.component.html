@@ -1,0 +1,228 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>In Stock</h3>
+        </div>
+        <div class="col-md-4">
+          <input [(ngModel)]="search"
+                 class="w-75" nbInput
+                 placeholder="Search Material in Stock"
+                 type="text">
+          </div>
+        <div class="col-md-5">
+            <a [routerLink]="['/pim/stock/in-stock/grid']" nbButton
+               nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+              <nb-icon icon="grid-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/stock/in-stock']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/stock/in-stock/list']" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>&nbsp;
+            <a (click)="exportAsXLSX()" status="success"
+                    nbButton nbTooltip="Export data to Excel" nbTooltipStatus="primary">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>&nbsp;
+            <span class="blinking" *ngIf="alertNumber > 0">
+              ALERT!!!
+            </span>
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!dataMaterials || dataMaterials.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataMaterials | filter : search).length === 0" [hidden]="dataMaterials.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">
+        Item Not Found.
+      </nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getMaterialsByMaterialType($event)"
+                   class="mx-2 mt-3 w-75" placeholder="Filter by Type"
+                   selected="0">
+              <nb-option (click)="getAllStockedMaterials()" value="All">All</nb-option>
+              <nb-option value="Raw Material">Raw Material</nb-option>
+              <nb-option value="Finished Product">Finished Product</nb-option>
+        </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select [disabled]="dataMaterials.length === 0"
+                   class="mx-2 mt-3 w-75" placeholder="Sort by Name"
+                   selected="0">
+          <nb-option (click)="getAllStockedMaterials()" value="All">All</nb-option>
+          <nb-option (click)="getAllStockedMaterialsASC()" value="1">Names (A-Z)</nb-option>
+          <nb-option (click)="getAllStockedMaterialsDESC()" value="2">Names (Z-A)</nb-option>
+        </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+          <label>Materials Per Page : </label>
+          <input [(ngModel)]="pageSize" [disabled]="dataMaterials.length === 0"
+                 class="w-100"
+                 min="3" nbInput
+                 nbTooltip="Tap a number to get materials per page" nbTooltipStatus="primary"
+                 placeholder="Number to get materials per page" type="number">
+        </div>
+      </div>
+      <div class="input-group col-md-9">
+      <div
+          *ngFor="let material of dataMaterials |filter: search
+           | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: dataMaterials.length}"
+          align="center" class="col-md-6" id="htmlData">
+         <nb-card>
+            <nb-card-body class="pt-2 pb-2">
+              <div align="center" class="thumb-lg"> 
+                <div class="row mt-4">
+                  <div align="right" class="col-md-12">
+                    <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                        shape="round" status="basic"
+                        aria-label="Example icon-button with a menu" nbButton
+                        nbTooltip="Click here to see advanced menu"
+                        nbTooltipStatus="primary"
+                        size="small">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item *ngIf="material.quantityStock < material.stockAlert && 
+                                material.replenished === false">
+                    <a (click)="replenishMaterial(material)" nbButton fullWidth>
+                      <span class="text-warning"><nb-icon icon="charging-outline"></nb-icon></span>Replenish
+                    </a>
+                    </button>
+                  <button mat-menu-item>
+                      <a (click)="open2(dialog, material.warehouse)" nbButton fullWidth>
+                        <span class="text-primary"><nb-icon icon="swap-outline"></nb-icon></span>Transfer
+                      </a>
+                      </button>
+                  <button mat-menu-item>
+                      <a [routerLink]="['/pim/procurement/material',material.materialId]" nbButton fullWidth>
+                        <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                      </a>
+                  </button>
+                </mat-menu>
+                    <ng-template #dialog let-data let-ref="dialogRef">
+                      <nb-card>
+                        <nb-card-header>
+                          Transfer Material
+                        </nb-card-header>
+                        <nb-card-body>
+                          <div class="row">
+                            <div class="col-md-10">
+                              Transfer From: <u>{{material.warehouse.warehouseLocation}}</u>
+                            </div>
+                            <div class="col-md-1">
+                                <nb-icon icon="info-outline" 
+                                    nbTooltip="Current Warehouse" nbTooltipStatus="primary"></nb-icon>
+                            </div>
+                          </div><br/><br/>
+                          <div class="row">
+                            <div class="col-md-10">
+                              Transfer To: <br/><br/><nb-select nbSelect fullWidth placeholder="Select Warehouse" 
+                         (selectedChange)="selectWarehouse($event)">
+                              <nb-option *ngFor="let warehouse of dataWarehouses" [value]="warehouse">
+                                {{warehouse.warehouseLocation}}
+                              </nb-option>
+                            </nb-select>
+                            </div>
+                            <div class="col-md-1">
+                                <nb-icon icon="info-outline" 
+                                    nbTooltip="Warehouse Where Material is Transfered" nbTooltipStatus="primary"></nb-icon>
+                            </div>
+                          </div><br/><br/>
+                          <div class="row">
+                            <div class="col-md-10">
+                              <button nbButton (click)="transferMaterialToW(material.materialId, ref)" status="success"
+                              [disabled]="!warehouse">TRANSFER</button>
+                            </div>
+                          </div>
+                        </nb-card-body>
+                      </nb-card>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div align="center">
+                <h4>{{material.materialSKU}}</h4>
+                <span class="text-sm-center mt-2">{{material.materialType}}</span><br/>
+              </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Name</p>
+                      <span>{{material.materialName}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Category</p>
+                      <span>{{material.materialCategory.categoryName}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-muted">Material Barcode</p>
+                      <span *ngIf="!material.materialBarcode">-</span>
+                      <span *ngIf="material.materialBarcode">{{material.materialBarcode}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-success font-weight-bold" *ngIf="material.quantityStock >= material.stockAlert">
+                        In Stock
+                      </p>
+                      <p class="mb-0 text-danger font-weight-bold" *ngIf="material.quantityStock < material.stockAlert">
+                        In Stock
+                      </p>
+                      <span>
+                        <span *ngIf="material.quantityStock >= material.stockAlert">{{material.quantityStock}}</span>
+                        <span *ngIf="material.quantityStock < material.stockAlert" class="text-danger font-weight-bold">
+                          {{material.quantityStock}}
+                        </span><br/>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-danger font-weight-bold" 
+                      nbTooltip="You will get an alert when quantity in stock reaches the minimum capacity." 
+                               nbTooltipStatus="danger" style="cursor: help">Minimum Capacity</p>
+                      <span>{{material.stockAlert}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="mt-3">
+                      <p class="mb-0 text-primary font-weight-bold">Maximum Capacity</p>
+                      <span>{{material.stockMax}}</span>
+                    </div>
+                  </div>
+                </div><br/>
+            </nb-card-body>
+          </nb-card>
+      </div>
+     </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+          <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+
+        </nav>
+      </div>

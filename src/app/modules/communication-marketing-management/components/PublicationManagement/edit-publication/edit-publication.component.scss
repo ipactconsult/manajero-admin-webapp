@@ -1,0 +1,23 @@
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  top: 15px;
+  left: 20px;
+  font-size: 17px;
+  color: #b8b8b8;
+}
+
+.button-wrap {
+  position: relative;
+}
+
+.button {
+  background-color: #214997;
+  border: 1px solid transparent;
+  width: 32px;
+  height: 32px;
+  outline-style: initial;
+  border-radius: 100px;
+  cursor: pointer;
+}
+

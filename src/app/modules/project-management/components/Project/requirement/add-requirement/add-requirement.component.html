@@ -1,0 +1,87 @@
+<nb-card>
+  <nb-card-body class="example-items-col">
+    <form
+      class="form"
+      [formGroup]="addRequirementForm"
+    >
+      <div>
+        <label for="subject"> Requested By:1</label>
+        <nb-select
+          placeholder="Choose Status"
+          fullWidth
+          formControlName="requestedBy"
+          
+        >
+          <nb-option
+            *ngFor="let stakeholder of stakeholderList"
+            value="{{ stakeholder.id }}"
+            ><nb-icon
+              icon="flag-outline"
+              class="my-1 mx-1"
+              status="success"
+            ></nb-icon>
+            <p class="my-1">{{ stakeholder.name }}</p></nb-option
+          >
+        </nb-select>
+      </div>
+      <div>
+        <label for="subject">Prority :</label>
+        <nb-select
+          placeholder="Choose Prority"
+          formControlName="priority"
+          fullWidth
+        >
+          <nb-option value="P1">P1</nb-option>
+          <nb-option value="P2">P2</nb-option>
+          <nb-option value="P3">P3</nb-option>
+        </nb-select>
+      </div>
+      <div>
+        <label for="subject">Category :</label>
+        <nb-select
+          placeholder="Choose Category"
+          formControlName="category"
+          fullWidth
+        >
+          <nb-option value="TECHNICAL">TECHNICAL</nb-option>
+          <nb-option value="OPERATIONAL">OPERATIONAL</nb-option>
+          <nb-option value="KPI">KPI</nb-option>
+          <nb-option value="TRANSITIONAL">TRANSITIONAL</nb-option>
+        </nb-select>
+      </div>
+
+      <div>
+        <label for="subject">Accepted Criteria:</label>
+        <textarea
+          nbInput
+          fullWidth
+          placeholder="Accepted Criteria"
+          formControlName="acceptedCriteria"
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="subject">Requirement Description:</label>
+        <textarea
+          nbInput
+          fullWidth
+          placeholder="Accepted Criteria"
+          formControlName="description"
+        ></textarea>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <input
+      [ngClass]="
+        selectedItem === null
+          ? 'btn btn-success btnCreate'
+          : 'btn btn-warning btnCreate'
+      "
+      [value]="selectedItem === null ? 'Create' : 'Update'"
+      type="submit"
+      [disabled]="addRequirementForm.invalid"
+      (click)="selectedItem === null ? save() : update()"
+    />
+  </nb-card-footer>
+</nb-card>

@@ -1,0 +1,338 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button><br/><br/><br/>
+<nb-card>
+    <nb-card-body>
+        <h5 align = "center">Material Replenishment Process</h5><br/>
+        <nb-stepper orientation="horizontal" disableStepNavigation [selectedIndex]="this.existedRP.step">
+            <nb-step label="Purchase Request" class="col-md-11" 
+              [completed]="stepOneDone">
+                <h5 align = "center">Create Purchase Request</h5><br/>
+                <div class = "row">
+                    <div class = "col-md-12">
+                   <table class="table mb-0">
+                    <thead class="bg-light">
+                     <tr>
+                      <th>Type</th>
+                      <th>Name</th>
+                      <th>SKU</th>
+                      <th>Category</th>
+                      <th>Purchase Price</th>
+                      <th>Quantity Needed</th>
+                      <th>Total Price</th>
+                    </tr>
+                    </thead>
+                   <tbody>
+                    <tr class="col-md-9 col-sm-10">
+                     <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{existedMaterial.materialType}}</p>
+                        </div>
+                      </div>
+                     </td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialName}}</p></td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialSKU}}</p></td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialCategory?.categoryName}}</p></td>
+                      <td>
+                        <p class="fw-normal mb-1">
+                            {{existedMaterial.materialPrice}} {{existedMaterial.supplier?.supplierCurrency}}
+                        </p>
+                      </td>
+                      <td>
+                        <p class="fw-normal mb-1 text-success font-weight-bold">
+                          {{existedMaterial.materialQuantity}} 
+                          <nb-icon icon="arrow-downward-outline" status="danger" 
+                                   nbTooltip="Decrement" nbTooltipStatus="danger" 
+                                   style="cursor: pointer" (click)="decrementQuantity()" 
+                                   [hidden]="existedMaterial.materialQuantity 
+                                   === existedMaterial.stockAlert - existedMaterial.quantityStock"></nb-icon>&nbsp;&nbsp;
+                          <nb-icon icon="arrow-upward-outline" status="success"
+                                   nbTooltip="Increment" nbTooltipStatus="success"
+                                   style="cursor: pointer" (click)="incrementQuantity()"
+                                   [hidden]="existedMaterial.materialQuantity 
+                                   === existedMaterial.stockMax - existedMaterial.quantityStock"></nb-icon>
+                        </p>
+                      </td>
+                      <td>
+                        <p class="fw-normal mb-1">
+                          {{existedMaterial.materialPrice * existedMaterial.materialQuantity 
+                            + existedMaterial.materialPrice * existedMaterial.materialQuantity * (existedMaterial.materialVAT/100)}} 
+                            {{existedMaterial.supplier?.supplierCurrency}} 
+                            <small>(Incl. {{existedMaterial.materialVAT}}% Taxes)</small>
+                        </p>
+                      </td>
+                     </tr>
+                    </tbody>
+                   </table>
+                      </div>
+                  </div>
+              <div class="row mt-5">
+                <div class="col-md-11">
+                  <button style="float: right;" nbButton (click)="createPR()"
+                          status="primary" nbStepperNext>
+                    Next
+                  </button>
+                  <button style="float: left;" nbButton nbStepperPrevious disabled>
+                    Back
+                  </button>
+                </div>
+              </div>
+            </nb-step>
+          <nb-step label="Details" class="col-md-11" 
+            [completed]="stepTwoDone">
+            <h5 align = "center">Purchase Request Details</h5><br/>
+            <div class="row">
+              <div class="col-sm-6">
+                <b>Created At:</b> {{moment(existedPR.purchaseRequisitionCreationDate).format("DD MMM YYYY")}}
+              </div>
+            </div><br/>
+            <div class="row">
+              <div class="col-sm-6">
+                <b>Purchase Request Reference:</b> {{existedPR.purchaseRequisitionNumber}}
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-sm-6">
+                <b>Purchase Request Status:</b>
+                <span *ngIf="existedPR.purchaseRequisitionStatus === 'Pending'"
+                      class="text-warning font-weight-bold">
+              {{existedPR.purchaseRequisitionStatus}}
+            </span>
+                <span *ngIf="existedPR.purchaseRequisitionStatus === 'Approved'"
+                      class="text-success font-weight-bold">
+              {{existedPR.purchaseRequisitionStatus}}
+            </span>
+                <span *ngIf="existedPR.purchaseRequisitionStatus === 'Rejected'"
+                      class="text-danger font-weight-bold">
+              {{existedPR.purchaseRequisitionStatus}}
+            </span>
+              </div>
+            </div><br/><br/>
+            <div class = "row">
+              <div class = "col-md-12">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Unit</th>
+                    <th>Purchase Price</th>
+                    <th>Quantity Needed</th>
+                    <th>Total Price</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="col-md-9 col-sm-10">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{existedMaterial.materialType}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{existedMaterial.materialName}}</p></td>
+                    <td><p class="fw-normal mb-1">{{existedMaterial.materialSKU}}</p></td>
+                    <td><p class="fw-normal mb-1">{{existedMaterial.materialCategory?.categoryName}}</p></td>
+                    <td><p class="fw-normal mb-1">{{existedMaterial.materialUnit}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        {{existedMaterial.materialPrice}} {{existedMaterial.supplier?.supplierCurrency}}
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1 text-success font-weight-bold">
+                        {{existedMaterial.materialQuantity}}
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        {{existedMaterial.materialPrice * existedMaterial.materialQuantity
+                      + existedMaterial.materialPrice * existedMaterial.materialQuantity * (existedMaterial.materialVAT/100)}}
+                        {{existedMaterial.supplier?.supplierCurrency}}
+                        <small>(Incl. {{existedMaterial.materialVAT}}% Taxes)</small>
+                      </p>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-md-11">
+                <button style="float: right;" nbButton (click)="goToNextStep()"
+                        status="primary" nbStepperNext
+                        [disabled]="existedPRMongo.purchaseRequisitionStatus !== 'Approved'" 
+                        [hidden]="existedPRMongo.purchaseRequisitionStatus === 'Rejected'">
+                  Next
+                </button>
+                <button style="float: right;" nbButton (click)="abandonRP()"
+                        nbTooltip="Abandon" nbTooltipStatus="danger" status="danger"
+                        *ngIf="existedPRMongo.purchaseRequisitionStatus === 'Rejected'">
+                  Abandon
+                </button>
+                <button style="float: left;" nbButton nbStepperPrevious (click)="deletePR()">
+                  Back
+                </button>
+              </div>
+            </div>
+          </nb-step>
+          <nb-step label="Purchase Order" class="col-md-11"
+                   [completed]="stepThreeDone">
+            <h5 align = "center">Create Purchase Order</h5><br/>
+            <h6>Supplier</h6><br/>
+            <div class="row">
+              <div class="col-md-4">
+
+              </div>
+              <div class="col-md-4">
+                <img alt="Supplier Image" [src]="existedMaterial.supplier?.supplierImage"/>
+              </div>
+              <div class="col-md-4">
+
+              </div>
+            </div><br/>
+            <div class="row">
+              <div class="col-sm-6">
+                <b>First Name:</b> {{existedMaterial.supplier?.supplierFirstName}}
+              </div>
+              <div class="col-sm-6">
+                <b>Last Name:</b> {{existedMaterial.supplier?.supplierLastName}}
+              </div>
+            </div><br/>
+            <div class="row">
+              <div class="col-sm-6">
+                <b>Email:</b> {{existedMaterial.supplier?.supplierEmail}}
+              </div>
+              <div class="col-sm-6">
+                <b>Company:</b> {{existedMaterial.supplier?.supplierCompany}}
+              </div>
+            </div><br/>
+            <div class="row">
+              <div class="col-sm-6">
+                <b>Country:</b> {{existedMaterial.supplier?.supplierCountry}}
+              </div>
+              <div class="col-sm-6">
+                <b>Currency:</b>
+                <span *ngIf="existedMaterial.supplier?.supplierCurrency === 'TD'">
+                  Tunisian Dinar
+              </span>
+                <span *ngIf="existedMaterial.supplier?.supplierCurrency === '$'">
+                Dollar
+              </span>
+                <span *ngIf="existedMaterial.supplier?.supplierCurrency === '€'">
+                Euro
+              </span>
+              </div>
+            </div><br/><br/>
+            <form [formGroup]="poForm">
+              <label class="mt-2">Receipt Date</label>
+              <div class = "row">
+                <div class = "col-md-11">
+                  <div class = "form-group">
+                    <input [nbDatepicker]="datepicker" nbInput fullWidth
+                           class = "form-control" formControlName="receptionDate" style="cursor: pointer">
+                    <nb-datepicker #datepicker [min]="dateToday"></nb-datepicker>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <nb-icon icon="info-outline"
+                           nbTooltip="The Date this Material will be received." nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div><br/>
+              <h6>Material</h6>
+              <div class = "row">
+                <div class = "col-md-11">
+                  <table class="table mb-0">
+                    <thead class="bg-light">
+                    <tr>
+                      <th>Type</th>
+                      <th>Name</th>
+                      <th>SKU</th>
+                      <th>Category</th>
+                      <th>Unit</th>
+                      <th>Purchase Price</th>
+                      <th>Quantity Needed</th>
+                      <th>Total Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="col-md-9 col-sm-10">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="ms-3">
+                            <p class=" mb-1">{{existedMaterial.materialType}}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialName}}</p></td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialSKU}}</p></td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialCategory?.categoryName}}</p></td>
+                      <td><p class="fw-normal mb-1">{{existedMaterial.materialUnit}}</p></td>
+                      <td>
+                        <p class="fw-normal mb-1">
+                          {{existedMaterial.materialPrice}} {{existedMaterial.supplier?.supplierCurrency}}
+                        </p>
+                      </td>
+                      <td>
+                        <p class="fw-normal mb-1 text-success font-weight-bold">
+                          {{existedMaterial.materialQuantity}}
+                        </p>
+                      </td>
+                      <td>
+                        <p class="fw-normal mb-1">
+                          {{existedMaterial.materialPrice * existedMaterial.materialQuantity
+                        + existedMaterial.materialPrice * existedMaterial.materialQuantity * (existedMaterial.materialVAT/100)}}
+                          {{existedMaterial.supplier?.supplierCurrency}}
+                          <small>(Incl. {{existedMaterial.materialVAT}}% Taxes)</small>
+                        </p>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-1" *ngIf="materials.length > 0">
+                  <nb-icon icon="info-outline"
+                           nbTooltip="Material to Purchase" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+              <div class="row mt-5">
+                <div class="col-md-11">
+                  <button style="float: left;" nbButton nbStepperPrevious 
+                  (click)="goToPreviousPR()">
+                    Back
+                  </button>
+                  <button type="submit" style="float: right;" nbButton
+                          (click)="open2(dialog)" [disabled]="poForm.invalid"
+                          nbTooltip="Proceed to Purchase Order" nbTooltipStatus="success" status="success">
+                    Finish
+                  </button>
+                </div>
+              </div>
+            </form>
+            <ng-template #dialog let-data let-ref="dialogRef">
+              <nb-card>
+                <nb-card-header>
+                  Confirm Purchase Order?
+                </nb-card-header>
+                <nb-card-body>
+                  Are you sure you would like to purchase this material ({{existedMaterial.materialName}})?
+                </nb-card-body>
+                <nb-card-footer>
+                  <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                    No
+                  </button>
+                  <button (click)="addNewPO(ref)" class="float-right" nbButton status="success">
+                    Yes
+                  </button>
+                </nb-card-footer>
+              </nb-card>
+            </ng-template>
+          </nb-step>
+        </nb-stepper>
+    </nb-card-body>
+</nb-card>

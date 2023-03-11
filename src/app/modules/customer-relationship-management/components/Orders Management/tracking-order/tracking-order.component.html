@@ -1,0 +1,99 @@
+
+<div *ngIf="order" class="container pb-5 mb-sm-4">
+  <!-- Details-->
+    <div class="row">
+    <div class="col-md-6">
+      <h2 >
+        Tracking order</h2>
+    </div>
+    <div align="right" class="col-md-6 ">
+       <button  *ngIf="order.status === 'Pending'"  shape="round" nbButton>
+                 <a  fullWidth  (click)="inProgressOrder(order.id,order)" >
+                   <span class="text-info"><nb-icon icon="trending-up-outline"></nb-icon></span>In progress
+                 </a>
+               </button>      
+                <button  *ngIf="order.status === 'InProgress'"  shape="round" nbButton>
+                 <a  fullWidth  (click)="validateOrder(order.id,order)">
+                   <span class="text-info"><nb-icon icon="trending-up-outline"></nb-icon></span>Validate
+                 </a>
+               </button>   
+               <button  *ngIf="order.status ==='Done'" shape="round" nbButton>
+                 <a  fullWidth  (click)="saleOrder(order.id,order)" >
+                   <span class="text-info"><nb-icon icon="trending-up-outline"></nb-icon></span>Rent
+                 </a>
+               </button>       
+               
+               <button  *ngIf="order.status ==='SALE'"  shape="round" nbButton>
+                 <a  fullWidth  [routerLink]="['/crm/add-contract/', order.id]">
+                   <span class="text-info"><nb-icon icon="file-text-outline"></nb-icon></span>Assign Contract
+                 </a>
+               </button> 
+      <a [routerLink]="['/crm/orders']" class="mx-1"  
+          nbButton nbTooltip="Back to orders list" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col-sm-4 mb-2">
+      <div class="bg-secondary p-4 text-dark text-center"><span
+        class="font-weight-semibold mr-2">Shipped via:</span>{{order.orderCode}}</div>
+    </div>
+    <div class="col-sm-4 mb-2">
+      <div class="bg-secondary p-4 text-dark text-center"><span
+        class="font-weight-semibold mr-2">Status:</span>{{order.status}}</div>
+    </div>
+    <div class="col-sm-4 mb-2">
+      <div class="bg-secondary p-4 text-dark text-center"><span
+        class="font-weight-semibold mr-2">Date:</span>{{order.orderDate | date : "EEEE, MMMM YYYY"}}</div>
+    </div>
+  </div>
+  <!-- Progress-->
+  <div class="steps">
+    <div class="steps-header">
+    <!--  <div class="progress">
+        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" class="progress-bar" role="progressbar"
+             style="width: 10%"></div>
+      </div>-->
+          <nb-progress-bar [value]="value" size="tiny" status="primary"></nb-progress-bar>
+    </div>
+    <div class="steps-body">
+        <div class="step" >
+             
+              <span class="step-icon">
+                <nb-icon icon="loader-outline"></nb-icon></span>
+        Pending Order
+      </div>
+      <div  class="step step-completed">
+       
+        <span class="step-icon">
+               <nb-icon icon="checkmark-circle-outline" size="large"></nb-icon></span>
+        Order confirmed
+      </div>
+     
+      <div class="step step-completed">
+        <span class="step-icon">
+               <nb-icon icon="settings-outline" ></nb-icon>
+              </span>
+        Processing order
+      </div>
+      <div class="step "><span class="step-icon">
+        <nb-icon icon="award-outline"></nb-icon></span>Quality check
+      </div>
+      <div class="step">
+              <span class="step-icon">
+                <nb-icon icon="car-outline"></nb-icon>
+              </span>Product dispatched
+      </div>
+      <div class="step">
+              <span class="step-icon">
+                <nb-icon icon="home-outline"></nb-icon></span>
+        Product delivered
+      </div>
+    </div>
+  </div>
+  <ngx-order-details></ngx-order-details>
+  <ngx-contracts-details  ></ngx-contracts-details>
+
+</div>

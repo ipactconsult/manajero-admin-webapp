@@ -1,0 +1,241 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h5 class="more-vertical">
+          Create Lawyer </h5>
+      </div>
+
+      <div align="right" class="col-md-2 justify-content-end">
+
+        <a [routerLink]="['/litige/listavocats']" class="w-25 mx-3" fullWidth nbButton nbTooltip="Back to lawyer list"
+          nbTooltipStatus="primary" shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+
+
+    <form [formGroup]="avocatGroup">
+      <nb-stepper #stepper>
+        <nb-step [stepControl]="avocatGroup" label="Personal">
+          <label class="small">First Name</label>
+          <div class="row">
+            <div class="col-md-11">
+              <input [(ngModel)]="avocat.nom" fieldSize="large" formControlName="nom" fullWidth id="nom" name="nom"
+                nbInput placeholder="Name" type="text">
+            </div>
+            <div class="col-md-1 mt-3">
+              <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary">
+              </nb-icon>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label class="small">Last Name</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="avocat.prenom" fieldSize="large" formControlName="prenom" fullWidth id="prenom"
+                    name="prenom" nbInput placeholder="Lawyer Last Name" type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary">
+                  </nb-icon>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="small col-lg-12">Profile Image</label>
+              <br>
+              <div class="row">
+                <div class="col-md-10">
+                  <input (change)="onFileSelected($event)" autocomplete="off" formControlName="imageUrl" fullWidth
+                    id="imageUrl" name="imageUrl" nbInput type="file" />
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Upload image" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <img alt="" class="w-25" src="{{avocat.imageUrl}}" style="border-radius: 5px;">
+            </div>
+
+
+
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Speciality</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <nb-select [(ngModel)]="avocat.specialite" size="large" [selected]="selectedGender" 
+                    formControlName="specialite" fullWidth id="specialite" name="specialite"
+                    placeholder="Select Speciality">
+                    <nb-option disabled value="0">Speciality</nb-option>
+                    <nb-option value="Real estate law">Real estate law</nb-option>
+                    <nb-option value="Criminal law of business affairs">Criminal law of business affairs</nb-option>
+                    <nb-option value="Right of persons">Right of persons</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select Speciality" nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="small">Date Of Birth</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="avocat.dateofBirth" [nbDatepicker]="dateTimePicker" fieldSize="large"
+                    formControlName="dateofBirth" fullWidth id="dateofBirth" name="dateofBirth" nbInput
+                    placeholder="Pick Date">
+                  <nb-datepicker #dateTimePicker></nb-datepicker>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select Lawyer birthdate" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Adress</label>
+              <div class="row">
+                <div class="col-md-10">
+
+
+                  <input [(ngModel)]="avocat.adresse" fieldSize="large" formControlName="adresse" fullWidth id="adresse"
+                    name="adresse" nbInput type="text" placeholder="Country">
+
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Tap lawyer active" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="small">Description</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <textarea [(ngModel)]="avocat.description" formControlName="description" fullWidth id="description"
+                    name="description" nbInput placeholder="Description">
+                 </textarea>
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Tap description" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+          <div class="row mt-1">
+
+            <div class="col-md-6">
+              <label class="small">Availablity</label>
+              <div class="row">
+                <div class="col-md-10">
+
+
+                  <input [(ngModel)]="avocat.disponabilite" [nbDatepicker]="dis" fieldSize="large"
+                    formControlName="disponabilite" fullWidth id="disponabilite" name="disponabilite" nbInput
+                    placeholder="Pick Date">
+                  <nb-datepicker #dis></nb-datepicker>
+
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Tap lawyer active" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="row mt-2">
+            <div class="col-md-9"></div>
+            <div class="col-md-2 mt-2">
+              <button (click)=" onContactFormSubmit()" class="w-100" nbButton nbStepperNext status="info"
+                type="submit">next
+              </button>
+            </div>
+          </div>
+        </nb-step>
+
+        <nb-step [stepControl]="contact_form" label="Contact ">
+          <form formGroupName="contact_form" class="contact_form">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="mt-2 small">Email</label> <br>
+
+
+                <input [(ngModel)]="avocat.gmail" formControlName="gmail" fullWidth id="gmail" name="gmail" nbInput
+                  placeholder="Work Email" type="email">
+
+              </div>
+              <div class="col-md-1 mt-2">
+                <nb-icon icon="info-outline" nbTooltip="Tap email" nbTooltipStatus="primary"></nb-icon>
+              </div>
+              <div class="col-md-6">
+                <label class="mt-2 small">Second Email</label> <br>
+
+
+                <input [(ngModel)]="avocat.secondEmail" formControlName="secondEmail" fullWidth id="secondEmail"
+                  name="secondEmail" nbInput placeholder="Work Email" type="email">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="mt-2 small">Phone</label> <br>
+                <input [(ngModel)]="avocat.numtelephone" placeholder="Phone Number" class="w-100 col-lg-12"
+                  fieldSize="large" formControlName="numtelephone" fullWidth id="numtelephone" name="numtelephone"
+                  nbInput ng2TelInput type="text">
+
+              </div>
+              <div class="col-md-1 mt-2">
+                <nb-icon icon="info-outline" nbTooltip="Tap Phone Number" nbTooltipStatus="primary"></nb-icon>
+              </div>
+              <div class="col-md-6">
+                <label class="mt-2 small">Second Phone</label> <br>
+                <input [(ngModel)]="avocat.secondPhone" placeholder="Phone Number" class="w-100 col-lg-12"
+                  fieldSize="large" formControlName="secondPhone" fullWidth id="secondPhone" name="secondPhone" nbInput
+                  ng2TelInput type="text">
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="addAvocatFunction()" class="col-md-2" nbButton nbStepperNext status="info"
+                type="submit">Next
+              </button>
+            </div>
+
+          </form>
+        </nb-step>
+
+      </nb-stepper>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,208 @@
+<div *ngIf="existedReceipt" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Receipt Details </h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Go Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right"></nb-icon>
+      </a>
+    </div>
+  </div>
+  
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Receipt Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Receipt Reference</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                {{existedReceipt.receiptRef}}
+              </div>
+            </div>
+            <hr>
+                <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Receipt Created</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                {{moment(existedReceipt.receiptCreationDate).format('DD MMM YYYY')}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Purchase Order Delivered</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                {{moment(existedReceipt.purchaseOrder?.reelRD).format('DD MMM YYYY hh:mm A')}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Notes</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                {{existedReceipt.notes}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Rating</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                <ngb-rating [max]="10" [(rate)]="existedReceipt.receiptRate" [readonly]="true"
+                    style="font-size: 2rem; color: red;" *ngIf="existedReceipt.receiptRate <= 2"
+                    nbTooltip="Rated {{existedReceipt.receiptRate}} out of 10" nbTooltipStatus="danger">
+            </ngb-rating>
+            <ngb-rating [max]="10" [(rate)]="existedReceipt.receiptRate" [readonly]="true"
+                    style="font-size: 2rem; color: orange;" *ngIf="existedReceipt.receiptRate >= 3 
+                    && existedReceipt.receiptRate <= 4"
+            nbTooltip="Rated {{existedReceipt.receiptRate}} out of 10" nbTooltipStatus="warning">
+            </ngb-rating>
+            <ngb-rating [max]="10" [(rate)]="existedReceipt.receiptRate" [readonly]="true"
+                    style="font-size: 2rem; color: yellow;" *ngIf="existedReceipt.receiptRate >= 5 
+                    && existedReceipt.receiptRate <= 6"
+            nbTooltip="Rated {{existedReceipt.receiptRate}} out of 10" nbTooltipStatus="warning">
+            </ngb-rating>
+            <ngb-rating [max]="10" [(rate)]="existedReceipt.receiptRate" [readonly]="true"
+                    style="font-size: 2rem; color: #a2ff00;" *ngIf="existedReceipt.receiptRate >= 7 
+                    && existedReceipt.receiptRate <= 8"
+            nbTooltip="Rated {{existedReceipt.receiptRate}} out of 10" nbTooltipStatus="success">
+            </ngb-rating>
+            <ngb-rating [max]="10" [(rate)]="existedReceipt.receiptRate" [readonly]="true"
+                    style="font-size: 2rem; color: green;" *ngIf="existedReceipt.receiptRate >= 9"
+            nbTooltip="Rated {{existedReceipt.receiptRate}} out of 10" nbTooltipStatus="success">
+            </ngb-rating>
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Supplier Details</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+            <div class = "col-md-11">
+            <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Country</th>
+            <th>Company</th>
+            <th>Currency</th>
+          </tr>
+          </thead>
+         <tbody>
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">
+                  {{existedReceipt.purchaseOrder?.selectedSupplier?.supplierFirstName}} 
+                  {{existedReceipt.purchaseOrder?.selectedSupplier?.supplierLastName}}
+                </p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{existedReceipt.purchaseOrder?.selectedSupplier?.supplierEmail}}</p></td>
+            <td><p class="fw-normal mb-1">{{existedReceipt.purchaseOrder?.selectedSupplier?.supplierPhone}}</p></td>
+            <td><p class="fw-normal mb-1">{{existedReceipt.purchaseOrder?.selectedSupplier?.supplierCountry}}</p></td>
+            <td><p class="fw-normal mb-1">{{existedReceipt.purchaseOrder?.selectedSupplier?.supplierCompany}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="existedReceipt.purchaseOrder?.selectedSupplier?.supplierCurrency === '€'">
+                Euro
+              </p>
+              <p class="fw-normal mb-1" *ngIf="existedReceipt.purchaseOrder?.selectedSupplier?.supplierCurrency === '$'">
+                Dollar
+              </p>
+              <p class="fw-normal mb-1" *ngIf="existedReceipt.purchaseOrder?.selectedSupplier?.supplierCurrency === 'TD'">
+                Tunisian Dinar
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+         <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Supplier" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Purchase Order Details</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+            <div class = "col-md-11">
+            <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Reference</th>
+            <th>Materials</th>
+            <th>Status</th>
+            <th>Created</th>
+          </tr>
+          </thead>
+         <tbody>
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">
+                  {{existedReceipt.purchaseOrder?.poNumber}}
+                </p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1" *ngFor="let poSM of existedReceipt.purchaseOrder?.materials">
+            <a [routerLink]="['/pim/procurement/material', poSM.materialId]"
+                    style="text-decoration: none">
+               <button nbButton shape="round" size="small" 
+                       status="dark" class="materialNames">
+                  {{poSM.materialName}}
+               </button>
+            </a><br/>
+            </p></td>
+            <td>
+              <p class="fw-normal mb-1 text-success font-weight-bold">
+                {{existedReceipt.purchaseOrder?.poStatus}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">
+                {{moment(existedReceipt.purchaseOrder?.poCreationDate).format('DD MMM YYYY')}}
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+         <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Purchase Order" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion><br/>
+    </div>
+  </div>
+</div>

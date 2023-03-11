@@ -1,0 +1,167 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button>
+<button style="float: left" nbTooltip="Cancel" nbTooltipStatus="danger" shape="round" status="danger" 
+                 (click)="cancelProcess(dialogCancel)"nbButton>
+                     <nb-icon icon="close-outline"></nb-icon>
+       </button><br/><h5 align = "center">Request For Quotation Details</h5>
+<ng-template #dialogCancel let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Cancel purchase?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to cancel purchase?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="cancelWithToast(ref)" class="float-right" nbButton status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+<ngx-process [completedState1]="completedState2" [completedState2]="completedState2" [selectedIndex]=2
+             [progressValue]=40 [progressStatus]="progressStatus"></ngx-process>
+<nb-card>
+      <nb-card-header>Request For Quotation Details</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-6">
+            <b>Request For Quotation Code:</b> {{existedRFQ.rfqNumber}}
+          </div>
+        </div><br/>
+        <div class="row">
+          <div class="col-sm-6">
+            <b>Created At:</b> {{rfqCreationDate}}
+          </div>
+        </div><br/>
+        <div class="row">
+          <div class="col-sm-6">
+            <b>Quotation Deadline:</b> {{quotationDeadline}}
+          </div>
+        </div><br/><br/>
+        <h6 *ngIf="suppliers.length > 0">Suppliers</h6>
+        <div class = "row" *ngIf="suppliers.length > 0">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>Company</th>
+            <th>Currency</th>
+            <th>Created At</th>
+          </tr>
+          </thead>
+         <tbody
+          *ngFor="let supplier of suppliers">
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{supplier.supplierFirstName}}</p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{supplier.supplierLastName}}</p></td>
+            <td><p class="fw-normal mb-1">{{supplier.supplierEmail}}</p></td>
+            <td><p class="fw-normal mb-1">{{supplier.supplierCountry}}</p></td>
+            <td>
+              <p class="fw-normal mb-1">
+                {{supplier.supplierCompany}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="supplier.supplierCurrency === 'TD'">
+                Tunisian Dinar
+              </p>
+              <p class="fw-normal mb-1" *ngIf="supplier.supplierCurrency === '$'">
+                Dollar
+              </p>
+              <p class="fw-normal mb-1" *ngIf="supplier.supplierCurrency === '€'">
+                Euro
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">
+              {{moment(supplier.supplierCreationDate).format('DD MMM YYYY')}}
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         </div>
+          <div class="col-md-1" *ngIf="materials.length > 0">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Selected Suppliers" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div><br/>
+        <h6 *ngIf="materials.length > 0">Materials</h6>
+        <div class = "row">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Category</th>
+            <th>Barcode</th>
+            <th>Quantity</th>
+          </tr>
+          </thead>
+         <tbody
+          *ngFor="let material of materials">
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{material.materialType}}</p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialCategory.categoryName}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">
+                -
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialBarcode">
+                {{material.materialBarcode}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="material.materialType !== 'Service'">
+                {{material.materialQuantity}}
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                -
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+          </div>
+          <div class="col-md-1" *ngIf="materials.length > 0">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Materials to Purchase" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>  
+        <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="this.differenceDates <= 0" 
+                      (click)="goToQuotation()"
+              nbTooltip="Proceed to Maintain Quotations" nbTooltipStatus="info" status="primary">
+                Next
+              </button>
+         </div>
+        </div>
+      </nb-card-body>
+    </nb-card>

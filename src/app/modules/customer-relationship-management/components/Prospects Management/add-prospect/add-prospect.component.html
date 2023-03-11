@@ -1,0 +1,484 @@
+<nb-card>
+
+  <nb-card-body>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <h5 class="more-vertical">
+            Create prospect </h5>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div align="right" class="col-md-2 justify-content-end">
+
+          <a [routerLink]="['/crm/prospects']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to prospects list" nbTooltipStatus="primary" shape="round"
+             status="basic">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+
+        </div>
+      </div>
+    </nb-card-header>
+    <form [formGroup]="customerGroup">
+      <nb-stepper #stepper>
+        <nb-step [stepControl]="customerGroup" label="Personal">
+          <label class="small">Matriculate Fiscal</label>
+          <div class="row">
+            <div class="col-md-11">
+              <input [(ngModel)]="customer.matriculateFiscal" fieldSize="large" formControlName="matriculateFiscal"
+                     fullWidth
+                     id="matriculateFiscal" name="matriculateFiscal" nbInput placeholder="Prospect fiscal matriculate"
+                     type="text">
+            </div>
+            <div class="col-md-1 mt-3">
+              <nb-icon icon="info-outline"
+                       nbTooltip="This Field is an unique number for Prospect matriculate fiscal"
+                       nbTooltipStatus="primary"></nb-icon>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Title</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="customer.title" fieldSize="large" formControlName="title"
+                         fullWidth id="title" name="title" nbInput placeholder="Prospect title"
+                         type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="small">Name</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="customer.name" fieldSize="large" formControlName="name" fullWidth
+                         id="name"
+                         name="name" nbInput placeholder="Prospect Name"
+                         type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label class="small">Profile Image</label>
+              <br>
+              <div class="row">
+                <div class="col-md-10">
+                  <input (change)="onFileSelected($event)"
+                         autocomplete="off"
+                         formControlName="image"
+                         fullWidth
+                         id="image"
+                         name="image"
+                         nbInput
+                         type="file"
+                  />
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Upload image" nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+                  <span *ngIf="customer.image == null; else erreur" [nbSpinner]="loading" nbSpinnerStatus="danger">
+                    <p class="text-warning mt-5">
+                     <nb-icon icon="loader-outline"></nb-icon> This Space Is Reserved For Loading Image
+                    </p>                  
+                  </span>
+              <ng-template #erreur>
+                <img alt="" class="w-25" src="{{customer.image}}" style="border-radius: 5px;">
+              </ng-template>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Gender</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <nb-select [(ngModel)]="customer.gender" [selected]="selectedGender" fieldSize="large"
+                             formControlName="gender" fullWidth
+                             id="gender" name="gender" placeholder="Select Gender">
+                    <nb-option disabled value="0">Gender</nb-option>
+                    <nb-option value="Man">Man</nb-option>
+                    <nb-option value="Women">Women</nb-option>
+                    <nb-option value="Other">Other</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+              </div>
+
+            </div>
+            <div [hidden]="customer.gender !== 'Other'" class="col-md-6">
+              <label class="small">Other Gender</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="customer.otherGender" fieldSize="large" formControlName="otherGender"
+                         fullWidth id="otherGender" name="otherGender" nbInput placeholder="Tap other gender"
+                         type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Specify the gender(Pro, particular, entreprise...)"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Date Of Birth</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input [(ngModel)]="customer.dateOfBirth" [nbDatepicker]="dateTimePicker"
+                         fieldSize="large" formControlName="dateOfBirth" fullWidth id="dateOfBirth"
+                         name="dateOfBirth" nbInput
+                         placeholder="Pick Date">
+                  <nb-datepicker #dateTimePicker></nb-datepicker>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select Prospect birthdate"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="small">Status</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <nb-select
+                    (selectedChange)="onMenuItemSelected($event)"
+                    [(ngModel)]="customer.status"
+                    size="large"
+                    formControlName="status"
+                    fullWidth
+                    id="status"
+                    name="status"
+                    placeholder="Select status">
+
+                    <nb-option
+                      *ngFor="let option of options" value="{{option.value}}">{{option.value}}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Select customer status"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <label class="small">Description</label>
+              <div class="row">
+                <div class="col-md-10">
+                 <textarea
+                   [(ngModel)]="customer.description"
+                   formControlName="description"
+                   fullWidth
+                   id="description"
+                   name="description"
+                   nbInput
+                   placeholder="Description">
+                 </textarea>
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Tap description"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+              <label class="small">Active</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input
+                    [(ngModel)]="customer.active" fieldSize="large" formControlName="active"
+                    fullWidth id="active"
+                    name="active" nbInput type="text">
+
+
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline" nbTooltip="Tap customer active"
+                           nbTooltipStatus="primary"></nb-icon>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="row mt-2">
+            <div class="col-md-9"></div>
+            <div class="col-md-2 mt-2">
+              <button (click)="onCustomerFormSubmit()" class="w-100" nbButton nbStepperNext status="info"
+                      type="submit">next
+              </button>
+            </div>
+          </div>
+        </nb-step>
+        <nb-step [stepControl]="addressForm" label="Addresses">
+          <form class="step-container" formGroupName="addressForm">
+            <div class="row">
+              <div class="col-lg-12">
+                <label class="mt-2 small">City</label> <br>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-11">
+                <input
+                  [(ngModel)]="customer.city" fieldSize="large" formControlName="city"
+                  fullWidth id="city"
+                  name="city" nbInput type="text">
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="This Field should typed correctly"
+                         nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col-lg-12">
+                <label class="mt-2 small col-lg-12">Country</label>
+              </div>
+
+              <div class="col-lg-11">
+                <nb-select [(ngModel)]="customer.country" class="mt-1"
+                           formControlName="country" fullWidth
+                           id="country" name="country"
+                           placeholder="Select Country" selected="0" size="large">
+                  <nb-option disabled value="0">Country</nb-option>
+                  <nb-option *ngFor="let country of countries" value="{{country.country_name}}">
+                    {{country.country_name}}</nb-option>
+                </nb-select>
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="Select the country" nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-lg-12"><label class="mt-2 small col-lg-12">Address</label></div>
+              <div class="col-md-11">
+                <input
+                  [(ngModel)]="customer.address" fieldSize="large" formControlName="address"
+                  fullWidth id="address"
+                  name="address" nbInput type="text">
+              </div>
+              <div class="col-md-1 mt-3">
+                <nb-icon icon="info-outline" nbTooltip="This Field should typed correctly"
+                         nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+            <br>
+
+            <div class="row">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onContactFormSubmit()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="contact_form" label="Contact ">
+          <form class="contact_form" formGroupName="contact_form">
+            <div class="row">
+              <div class="col-lg-12">
+                <label class="mt-2 small">Email</label></div>
+              <div class="col-md-11">
+
+                <input [(ngModel)]="customer.workEmail" formControlName="workEmail" fullWidth
+                       id="workEmail"
+                       name="workEmail"
+                       nbInput fieldSize="large"
+                       placeholder="Work Email" type="email">
+
+              </div>
+              <div class="col-md-1 mt-2">
+                <nb-icon icon="info-outline" nbTooltip="Tap email" nbTooltipStatus="primary"></nb-icon>
+              </div>
+
+            </div>
+            <div class="row">
+
+              <div class="col-lg-12">
+                <label class="mt-2 small">Second Email</label></div>
+              <div class="col-md-11">
+
+                <input [(ngModel)]="customer.secondEmail" formControlName="secondEmail" fullWidth
+                       id="secondEmail"
+                       name="secondEmail"
+                       nbInput fieldSize="large"
+                       placeholder="Work Email" type="email">
+
+              </div>
+              <div class="col-md-1 mt-2">
+                <nb-icon icon="info-outline" nbTooltip="Tap if exists a second email"
+                         nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                 <div class="">
+                <label class="mt-2 small">Phone</label>
+              </div>
+              <div class="">
+                <input
+                  (countryChange)="onCountryChange($event)"
+                  (hasError)="onError($event)" [(ngModel)]="customer.phone" [ng2TelInputOptions]="cell1TelInput"
+                  fieldSize="large"
+                  formControlName="phone" fullWidth id="phone" name="phone" nbInput
+                  ng2TelInput type="text">
+
+              </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="">
+                <label class="mt-2 small">Second Phone</label></div>
+              <div class="">
+                <input
+                  (countryChange)="onCountryChange($event)"
+                  (hasError)="onError($event)" [(ngModel)]="customer.secondPhone" [ng2TelInputOptions]="cell1TelInput"
+                  fieldSize="large"
+                  formControlName="secondPhone" fullWidth id="secondPhone" name="secondPhone" nbInput
+                  ng2TelInput type="text">
+              </div>
+              </div>
+             
+
+            </div>
+
+           
+
+            <div class="row mt-2">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onContactFormSubmit()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="employeeGroup" label="Employee ">
+          <form class="employeeGroup" formGroupName="employeeGroup">
+            <div class="row">
+              <div class="col-lg-12">
+                <label class="mt-2 small">Employee</label> <br>
+
+                <nb-select (selectedChange)="onMenuItemSelectedEmployee($event)"
+                           [(ngModel)]="customer.assignee"
+                           [selected]="selectedEmployee"
+                           size="large" class="w-100"
+                           formControlName="assignee"
+                           fullWidth
+                           id="assignee" name="assignee"
+                           placeholder="Assignee">
+
+                  <nb-option
+
+                    *ngFor="let optionEmployee of list"
+                    value="{{optionEmployee.id}}">
+                                          <nb-user size="medium" [picture]="optionEmployee.employeeProfileImage" [name]="optionEmployee.employeeName"></nb-user>
+
+                    </nb-option>
+
+                </nb-select>
+
+
+              </div>
+
+            </div>
+
+
+            <div class="row mt-3">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="onEmployeeFormSubmit()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="links_form" label="Links utils ">
+          <form class="links_  form" formGroupName="links_form">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="mt-2 small">Linkedin Url</label> <br>
+                <input [(ngModel)]="customer.linkedinUrl"
+                       formControlName="linkedinUrl"
+                       fullWidth
+                       fieldSize="large"
+                       id="linkedinUrl"
+                       name="linkedinUrl"
+                       nbInput
+                       placeholder="linkedin Prospect url"
+                       type="url"/>
+              </div>
+              <div class="col-md-6">
+                <label class="mt-2 small">Linkedin Url</label> <br>
+                <input [(ngModel)]="customer.workWebsite"
+                       formControlName="workWebsite"
+                       fullWidth
+                       fieldSize="large"
+                       id="workWebsite"
+                       name="workWebsite"
+                       nbInput
+                       placeholder="Work Website "
+                       type="url"/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label class="mt-2 small">Contact type</label> <br>
+                <input [(ngModel)]="customer.contactType"
+                       formControlName="contactType"
+                       fullWidth
+                       fieldSize="large"
+                       id="contactType"
+                       name="contactType"
+                       nbInput
+                       placeholder="Contact Type "
+                       type="url"/>
+              </div>
+
+            </div>
+            <div class="row mt-2">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+              <button (click)="addCustomerFunction()" class="col-md-2" nbButton nbStepperNext
+                      status="info" type="submit">next
+              </button>
+            </div>
+          </form>
+        </nb-step>
+
+
+      </nb-stepper>
+    </form>
+  </nb-card-body>
+</nb-card>

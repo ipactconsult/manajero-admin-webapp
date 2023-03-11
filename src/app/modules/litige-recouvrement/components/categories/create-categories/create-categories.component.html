@@ -1,0 +1,55 @@
+
+
+ <div class="row">
+   <div class="col-md-9">
+     <h3>Create  Category</h3>
+     
+   </div>
+   <div class="col-md-3" align="right">
+    <a shape="round"  status="basic"  [routerLink]="['/litige/listca']" nbButton>
+      <nb-icon icon="corner-down-right-outline"></nb-icon>
+    </a>
+   </div>
+ </div>
+
+ <div class="row mt-3">
+   <div class="col-md-12">
+    <form class="container" [formGroup]="createProjectCharterform" (ngSubmit)="create()">
+      <div class="col-lg-12">
+        <label for="subject">Category Name:</label>
+      <div class="form-group">
+        <nb-select 
+                    fullWidth
+                    formControlName="categoriename"
+                    name="categoriename"
+                     >
+                    <nb-option *ngFor="let optiondis of optionsdis" [value]="optiondis">
+                      {{ optiondis }}
+                    </nb-option>
+                  </nb-select>
+      </div>
+      </div>
+    <br>
+    <div class="col-lg">
+      <label class="text-label" for="text">Description</label>
+    <div class="form-group" align="center">
+      
+      <textarea  rows="5" fullWidth nbInput formControlName="description"></textarea>
+      <div *ngIf="description?.invalid && (descirption?.dirty || description?.touched)">
+        <p class="text-danger" *ngIf="description?.errors?.required">*Required</p>
+      </div>
+    </div>
+    </div>
+    <br>
+    
+    <div class="col-md-12">
+      <button nbButton status="success">
+        <nb-icon icon="checkmark-circle-outline"></nb-icon> 
+        Create 
+      </button>
+
+    </div>
+      
+    </form>
+   </div>
+ </div>

@@ -1,0 +1,140 @@
+<div *ngIf="existedIM" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Inventory Movement Details </h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Go Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right"></nb-icon>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Inventory Movement Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Created</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                {{moment(existedIM.imCreationDate).format("DD MMM YYYY hh:mm A")}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Reference</p>
+              </div>
+              <div class="col-sm-9 font-weight-bold">
+                {{existedIM.imRef}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Type</p>
+              </div>
+              <div class="col-sm-9 text-success font-weight-bold" 
+                   *ngIf="existedIM.material?.quantityReel > existedIM.material?.quantityStock">
+                Entry
+              </div>
+              <div class="col-sm-9 text-danger font-weight-bold"
+                   *ngIf="existedIM.material?.quantityReel < existedIM.material?.quantityStock">
+                Exit
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Material</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class = "col-md-11">
+                <table class="table mb-0">
+                  <thead class="bg-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Purchase Price</th>
+                    <th>Quantity Moved</th>
+                    <th>New Stock</th>
+                    <th>New Stock Value</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="col-md-9 col-sm-10">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <p class=" mb-1">{{existedIM.material?.materialType}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        <a [routerLink]="['/pim/procurement/material/', existedIM.material?.materialId]">
+                          {{existedIM.material?.materialName}}
+                        </a>
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        {{existedIM.material?.materialPrice}} {{existedIM.material?.supplier?.supplierCurrency}}
+                      </p>
+                    </td>
+                    <td>
+                      <p class="fw-normal mb-1 text-danger font-weight-bold"
+                         *ngIf="existedIM.material?.quantityReel < existedIM.material?.quantityStock 
+                 && existedIM.material?.quantityStock - existedIM.material?.quantityReel === 1" style="cursor: help"
+                         nbTooltip="Loss: {{existedIM.material?.quantityStock - existedIM.material?.quantityReel}} Quantity" 
+                         nbTooltipStatus="danger">
+                        {{existedIM.material?.quantityReel - existedIM.material?.quantityStock}}
+                      </p>
+                      <p class="fw-normal mb-1 text-danger font-weight-bold"
+                         *ngIf="existedIM.material?.quantityReel < existedIM.material?.quantityStock 
+                 && existedIM.material?.quantityStock - existedIM.material?.quantityReel > 1" style="cursor: help"
+                         nbTooltip="Loss: {{existedIM.material?.quantityStock - existedIM.material?.quantityReel}} Quantities" 
+                         nbTooltipStatus="danger">
+                        {{existedIM.material?.quantityReel - existedIM.material?.quantityStock}}
+                      </p>
+                      <p class="fw-normal mb-1 text-success font-weight-bold"
+                         *ngIf="existedIM.material?.quantityReel > existedIM.material?.quantityStock" style="cursor: help"
+                         nbTooltip="Entry in Stock: {{existedIM.material?.quantityStock - existedIM.material?.quantityReel}}" 
+                         nbTooltipStatus="success">
+                        +{{existedIM.material?.quantityReel - existedIM.material?.quantityStock}}
+                      </p>
+                    </td>
+                    <td><p class="fw-normal mb-1">{{existedIM.material?.quantityReel}}</p></td>
+                    <td>
+                      <p class="fw-normal mb-1">
+                        {{existedIM.material?.materialPrice * existedIM.material?.quantityReel
+                      + existedIM.material?.materialPrice * existedIM.material?.quantityReel * (existedIM.material?.materialVAT/100)}}
+                        {{existedIM.material?.supplier?.supplierCurrency}}
+                        <small>(Incl. {{existedIM.material?.materialVAT}}% Taxes)</small>
+                      </p>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-1">
+                <nb-icon icon="info-outline"
+                         nbTooltip="Material Details" nbTooltipStatus="primary"></nb-icon>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+    </div>
+  </div>
+</div>

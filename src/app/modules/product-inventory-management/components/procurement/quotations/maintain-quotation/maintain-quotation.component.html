@@ -1,0 +1,192 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button>
+<button style="float: left" nbTooltip="Cancel" nbTooltipStatus="danger" shape="round" status="danger" 
+                 (click)="cancelProcess(dialogCancel)"nbButton>
+                     <nb-icon icon="close-outline"></nb-icon>
+       </button><br/><h5 align = "center">Maintain Quotation</h5>
+<ng-template #dialogCancel let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Cancel purchase?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to cancel purchase?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="cancelWithToast(ref)" class="float-right" nbButton status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+<ngx-process [completedState3]="completedState3" [completedState2]="completedState2" 
+             [completedState1]="completedState1" [selectedIndex]=3
+             [progressValue]=50 [progressStatus]="progressStatus"></ngx-process>
+<nb-card>
+      <nb-card-header>Maintain Quotation</nb-card-header>
+      <nb-card-body>
+        <label>Select Supplier</label>
+        <div class="row">
+          <div class="col-md-11">
+              <nb-select nbSelect fullWidth
+                         (selectedChange)="selectSupplier($event)" [disabled]="disableSelect 
+                         || suppNbSelection >= existedRFQ.suppliers.length"
+                         nbTooltip="You need to maintain quotations for all suppliers before you proceed." nbTooltipStatus="info">
+                <nb-option *ngFor = "let supplier of suppliers" [value]="supplier">
+                  {{supplier.supplierFirstName}} {{supplier.supplierLastName}}
+                </nb-option>
+              </nb-select>
+          </div>
+          <div class="col-md-1">
+            <nb-icon icon="info-outline" nbTooltip="Please select a specific supplier to maintain his quotation" 
+                     nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div><br/><br/>
+        <h6>Materials</h6>
+        <div class = "row" *ngIf="existedRFQ.pr.material.length > 0">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Category</th>
+            <th>Barcode</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>VAT</th>
+            <th [hidden]="selectedSupplier.supplierId === undefined 
+            || suppNbSelection >= existedRFQ.suppliers.length">Maintain Price</th>
+          </tr>
+          </thead>
+         <tbody
+          *ngFor="let material of existedRFQ.pr.material">
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{material.materialType}}</p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialCategory.categoryName}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">
+                -
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialBarcode">
+                {{material.materialBarcode}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="material.materialType !== 'Service'">
+                {{material.materialQuantity}}
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                -
+              </p>
+            </td>
+            <td *ngIf = "material.materialPrice !== null && suppNbSelection < existedRFQ.suppliers.length">
+              <p class = "fw-normal mb-1" *ngIf="material.materialPrice">
+                {{material.materialPrice}} {{selectedSupplier.supplierCurrency}}
+              </p>
+            </td>
+            <td *ngIf = "material.materialPrice === null && suppNbSelection < existedRFQ.suppliers.length">
+              <p class = "fw-normal mb-1">
+                0
+              </p>
+            </td>
+            <td *ngIf = "material.materialVAT !== null && suppNbSelection < existedRFQ.suppliers.length">
+              <p class = "fw-normal mb-1" *ngIf="material.materialVAT">
+                {{material.materialVAT}}%
+              </p>
+            </td>
+            <td *ngIf = "material.materialVAT === null && suppNbSelection < existedRFQ.suppliers.length">
+              <p class = "fw-normal mb-1">
+                0%
+              </p>
+            </td>
+            <td [hidden]="selectedSupplier.supplierId === undefined || disabledEdit === true">
+              <p class="fw-normal mb-1">
+                <i class = "fa fa-edit" style="cursor: pointer" (click)="open2(dialogMat, material.materialId)"
+                nbTooltip="Maintain material price for the selected supplier to proceed." nbTooltipStatus="info"></i>
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+            </div>
+          <div class="col-md-1" *ngIf="existedRFQ.pr.material.length > 0">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Selected Materials" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div><br/>
+        <ng-template #dialogMat let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Material View
+                    </nb-card-header>
+                    <nb-card-body>
+        <div class="row">
+              Material Name: <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialName">
+        </div><br/>
+        <div class="row">
+              Material Type: <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialType">
+        </div><br/>
+        <div class="row">
+              Material Category: <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialCategory?.categoryName">
+        </div><br/>
+        <div class="row">
+              Material Quantity: <input nbInput fullWidth type="number" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialQuantity">
+        </div><br/>
+        <div class="row">
+            Material Price <span *ngIf="selectedSupplier.supplierCurrency === 'TD'">(In Tunisian Dinar): </span>
+            <span *ngIf="selectedSupplier.supplierCurrency === '$'">(In Dollar): </span>
+            <span *ngIf="selectedSupplier.supplierCurrency === '€'">(In Euro): </span>
+            <input nbInput fullWidth type="number"
+                                   class="form-control" [value]="existedMaterial.materialPrice" [(ngModel)]="priceMat">
+        </div><br/>
+        <div class="row">
+              Material VAT: <input nbInput fullWidth type="number"
+                                   class="form-control" [value]="existedMaterial.materialVAT" [(ngModel)]="vatMat">
+        </div><br/>
+        <div class="row">
+              <button nbButton (click)="updatePrice(ref)" status="success"
+                      [disabled]="priceMat <= 0 || vatMat > 100 || vatMat <= 0">Update</button>
+        </div><br/>
+                    </nb-card-body>
+                  </nb-card>
+                </ng-template>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <button style="float: left;" type="submit" nbButton (click)="createNewQuotation()"
+              [disabled]="p < existedPR.material.length" status="success">
+                <nb-icon icon="checkmark-circle-outline"></nb-icon> Save Data
+              </button>
+            </div>
+          </div>
+          <div class="col-md-11">
+            <div class="form-group">
+              <button style="float: right;" type="submit" nbButton (click)="goToVendorSelection()"
+              [disabled]="this.suppNbSelection < this.existedRFQ.suppliers.length"
+              status="primary">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>

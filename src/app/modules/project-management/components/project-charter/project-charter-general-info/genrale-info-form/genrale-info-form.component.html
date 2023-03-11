@@ -1,0 +1,24 @@
+<form class="container" [formGroup]="generalInfoForm" (ngSubmit)="create()">
+  <div class="form-group">
+    <label class="text-label" for="text">Statement of Work:</label>
+    <textarea class="form-control" nbInput fullWidth formControlName="statementWork"></textarea>
+    <div
+      *ngIf="
+        statementWork?.invalid &&
+        (statementWork?.dirty || statementWork?.touched)
+      "
+    >
+      <p class="text-danger" *ngIf="statementWork?.errors?.required">
+        *Required
+      </p>
+    </div>
+  </div>
+  
+  <input
+
+    [ngClass]="projectChart?.statementWork===null ? 'btn btn-success btnCreate' : 'btn btn-warning btnCreate'"  
+    type="submit"
+    [value]="projectChart?.statementWork===null ? 'Create' : 'Update'"
+    [disabled]="generalInfoForm.invalid"
+  />
+</form>

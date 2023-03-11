@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-3 col-sm-12">
+            <h3>
+                Evaluation Data     
+            </h3>      
+    </div>
+    <div class="col-md-4">
+        <input class="" fullWidth [(ngModel)]="searchbyfields"  nbTooltip="Search Training" nbTooltipStatus="primary"  type="text"  fieldSize="large" nbInput placeholder="Search Evaluation">   
+    </div>
+    <div class="col-md-5 col-sm-8 mt-1">
+        <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/evaluation/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+        &nbsp;
+        <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/evaluation/keypad']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+        &nbsp;
+        <a [routerLink]="['/hr/evaluation/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+        &nbsp;
+        <button nbTooltip="Export to pdf file" nbTooltipStatus="primary" nbButton status="danger"><nb-icon icon="printer-outline"></nb-icon> </button>
+        &nbsp;
+        <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"><i class="fas fa-file-excel text-white"></i>  </button>
+        &nbsp;
+
+        <a [routerLink]="['/hr/evaluation/create']" nbTooltip="Create Evaluation" nbTooltipStatus="primary" nbButton status="info">
+            <nb-icon icon="plus-outline"></nb-icon>
+            Create new
+        </a>
+     
+          <br>
+    </div>
+
+
+
+</div>
+<br>

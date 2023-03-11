@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-sm-3">
+     
+        <div class="card  text-white bg-primary">
+            <nb-card-header>
+                <p class="card-text">Follow-up In Progress : </p>
+  
+            </nb-card-header>
+  
+            <nb-card-body>
+          <p class="card-text">{{numberrelance}}</p>
+        </nb-card-body>
+        </div>
+     
+    </div>
+    <div class="col-sm-3">
+      <div class="card text-white bg-success">
+        <nb-card-header>
+            <p class="card-text">Follow-up Resolved </p>
+  
+        </nb-card-header>
+  
+        <nb-card-body>
+      <p class="card-text">{{numberrelancecloture}}</p>
+    </nb-card-body>
+        </div>
+      
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-white bg-danger">
+          
+            <nb-card-header>
+                <p class="card-text">Documents </p>
+  
+            </nb-card-header>
+  
+            <nb-card-body>
+          <p class="card-text">{{numberlaws}}</p>
+        </nb-card-body>      
+        </div>
+        
+      </div>
+      <div class="col-sm-3">
+        <div class="card text-white bg-warning">
+          
+            <nb-card-header>
+                <p class="card-text">Disputes : </p>
+  
+            </nb-card-header>
+  
+            <nb-card-body>
+          <p class="card-text">{{numdispute}}</p>
+        </nb-card-body>
+          </div>
+        
+      </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-6">
+     
+        <div class="card  text-white bg-success">
+            <nb-card-header>
+                <p class="card-text">Lawyers : </p>
+  
+            </nb-card-header>
+  
+            <nb-card-body>
+          <p class="card-text">{{numberavocat}}</p>
+        </nb-card-body>
+        </div>
+     
+    </div>
+  
+    
+      
+  </div>
+  <div class="row mt-3">
+      <div class="col-lg-6">
+        <nb-card size="medium">
+          <nb-card-header>Disputes</nb-card-header>
+          <nb-card-body >
+            <ngx-echarts-pie></ngx-echarts-pie>
+          </nb-card-body>
+        </nb-card>
+      </div>
+       
+      <div class="col-lg-6">
+        <nb-card size="medium">
+          <nb-card-header>Follow-up</nb-card-header>
+          <nb-card-body >
+            <ngx-progress-relance></ngx-progress-relance>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    
+      </div>
+      <div class="row">
+  
+        <div class="col-lg-6">
+          <nb-card size="medium">
+            <nb-card-header>Contacts</nb-card-header>
+            <nb-card-body >
+              <ngx-contact-avocat></ngx-contact-avocat>
+            </nb-card-body>
+          </nb-card>
+        </div>
+     
+        <div class="col-lg-6">
+          <nb-card size="medium">
+            <nb-card-header>Type of Disputes</nb-card-header>
+            <nb-card-body >
+              <ngx-echartstype-pie></ngx-echartstype-pie>
+            </nb-card-body>
+          </nb-card>
+        </div>
+  
+    </div>
+   
+    

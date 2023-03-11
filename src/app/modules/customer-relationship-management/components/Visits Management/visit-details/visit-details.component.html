@@ -1,0 +1,519 @@
+<div *ngIf="visit" class="container mt-3">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+
+      <div class="panel panel-default">
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-10 col-sm-12">
+              <h2 class="more-vertical">
+                <div class="profile__avatar mx-3">
+                  <nb-user onlyPicture picture="{{visit?.customer?.image}}" size="giant"></nb-user>
+                </div>
+                <div class="profile__header">
+                  <h6>{{visit?.customer?.name}}</h6>
+                  <p class="text-muted">
+                    {{visit?.customer?.workEmail}}
+                  </p>
+
+                </div>
+
+              </h2>
+            </div>
+            <div align="right" class="justify-content-end col-md-2">
+              <a [routerLink]="['/crm/edit-visit/',visit.id]" class="mx-2" nbButton
+                 nbTooltip="Click here to edit visit" nbTooltipStatus="primary"
+                  shape="round"
+                 status="warning">
+                <nb-icon icon="edit-outline"></nb-icon>
+              </a>
+
+              <a [routerLink]="['/crm/visits']" nbButton
+                 nbTooltip="Back to visits list" nbTooltipStatus="danger"
+                 shape="round" status="basic">
+                <nb-icon icon="corner-up-right-outline"></nb-icon>
+              </a>
+
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <!-- User info -->
+
+      <div class="panel panel-default mt-3">
+        <div class="panel-heading">
+
+          <nb-accordion>
+            <nb-accordion-item expanded="true">
+              <nb-accordion-item-header><h6>Detail Visit </h6></nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="panel-body">
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      Reference
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit.refVisit}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Title
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit.title}}
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Country
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertyCountry}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Country
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertyCity}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Hour
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit.hourVisit}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Date
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit.dateVisit}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Availability
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                   <span *ngIf="visit.availability === 'Yes'">
+                     <nb-tag [text]="visit.availability" status="success"></nb-tag>
+                   </span>
+                      <span *ngIf="visit.availability === 'No'">
+                     <nb-tag [text]="visit.availability" status="danger"></nb-tag>
+                   </span>
+
+
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Description
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit.description}}
+                    </div>
+                  </div>
+
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+      </div>
+    <div class="panel panel-default mt-3">
+        <div class="panel-heading">
+
+          <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header><h6>Detail Property </h6></nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="panel-body">
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      Reference
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                     {{visit?.property?.propertyReference}}
+               
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Name
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertyName}}
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Price
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertyPrice}} {{visit?.property?.propertyCurrency}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Surface
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertySurface}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Pieces
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertyPieces}}
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Rooms
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.property?.propertyRooms}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Tax
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                 {{visit?.property?.propertyTax}}
+
+                    </div>
+                  </div>  
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Features
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                 {{visit?.property?.otherPropFeatures}}
+
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      State
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                 {{visit?.property?.saleOrRental}}
+
+                    </div>
+                  </div>
+
+
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+      </div>
+      <div class="panel panel-default mt-3">
+        <div class="panel-heading">
+
+          <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header><h6>Detail Customer </h6></nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="panel-body">
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      Name
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                        <nb-user [name]="visit?.customer?.name"
+                               [picture]="visit?.customer?.image"
+                               size="medium"></nb-user>
+               
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Email
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.workEmail}}
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Address
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.address}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      City
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.city}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Country
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.country}}
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Phone
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.phone}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Status
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                   <span *ngIf="visit?.customer?.status === 'Client'">
+                     <nb-tag [text]="visit?.customer?.status" status="success"></nb-tag>
+                   </span>
+                      <span *ngIf="visit?.customer?.status=== 'prospect'">
+                     <nb-tag [text]="visit?.customer?.status" status="warning"></nb-tag>
+                   </span>
+                      <span *ngIf="visit?.customer?.status=== 'Lead'">
+                     <nb-tag [text]="visit?.customer?.status" status="danger"></nb-tag>
+                   </span>
+
+                    </div>
+                  </div>
+
+
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+      </div>
+      <br>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+
+          <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header><h6>Detail Employee</h6></nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="panel-body">
+
+                  <div class="row ">
+                    <div class="col-md-3">
+                      Name
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      <nb-user [name]="visit?.customer?.assignee?.employeeName"
+                               [picture]="visit?.customer?.assignee?.employeeProfileImage"
+                               size="medium"></nb-user>
+
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Nationality
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.assignee?.employeeNationality}}
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Email
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.assignee?.employeeEmail}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Phone
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.assignee?.employeeCellPhone}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Country
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.assignee?.employeeCountry}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      City
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      {{visit?.customer?.assignee?.employeeCity}}
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Department
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      <nb-tag-list>
+                        <nb-tag *ngIf="visit?.customer?.assignee?.department?.departmentName !== null ; else data" [text]="visit?.customer?.assignee?.department?.departmentName"
+                                size="small" status="basic"></nb-tag>
+                        <ng-template #data>&nbsp;
+                          <nb-tag [text]="NotAssignedYet" size="small" status="warning"></nb-tag>
+                        </ng-template>
+                      </nb-tag-list>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3">
+                      Role
+                    </div>
+                    <div class="col-md-2">
+                      |
+                    </div>
+                    <div class="col-md-7">
+                      <nb-tag [text]="visit?.customer?.assignee?.roleEmployee" status="success"></nb-tag>
+
+                    </div>
+                  </div>
+
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+      </div>
+      <br>
+
+      <!-- Latest posts -->
+
+
+    </div>
+
+  </div>
+</div>

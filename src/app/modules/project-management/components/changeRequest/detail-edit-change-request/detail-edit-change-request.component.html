@@ -1,0 +1,59 @@
+<nb-card accent="warning">
+  <nb-card-header class="row">
+    <h6 class="col-md-6">
+      <nb-icon icon="file-text-outline" status="info"></nb-icon>Request by :
+      {{ selectedItem?.requestor?.name }}
+    </h6>
+    <h6 class="col-md-6">
+      <nb-icon icon="calendar-outline" status="success"></nb-icon>Submitted Date
+      :
+      {{ selectedItem?.submittedDate }}
+    </h6>
+  </nb-card-header>
+  <nb-card-body class="example-items-col">
+    <form class="form" [formGroup]="changeRquestForm" (ngSubmit)="save()">
+      <div class="row ml-0 ">
+        <p class="mt-1"><strong>Change Type :</strong></p>
+        <nb-tag
+        
+          status="info"
+          appearance="outline"
+          text="{{ selectedItem?.changeType }}"
+        ></nb-tag>
+      </div>
+      <p><strong>Description :</strong></p>
+        <nb-alert outline="info">{{ selectedItem?.description }}</nb-alert>
+
+      
+      <div>
+        <label for="subject">Status :</label>
+        <nb-select
+          placeholder="Change status"
+          formControlName="status"
+          fullWidth
+        >
+          <nb-option value="APPROVED">APPROVED</nb-option>
+          <nb-option value="DENIED">DENIED</nb-option>
+        </nb-select>
+      </div>
+      <div>
+        <label for="subject">Comment:</label>
+        <textarea
+          nbInput
+          fullWidth
+          placeholder="description"
+          formControlName="comment"
+        ></textarea>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <input
+      class="btn btn-success btnCreate"
+      value="save Changes"
+      type="submit"
+      [disabled]="changeRquestForm.invalid"
+      (click)="update()"
+    />
+  </nb-card-footer>
+</nb-card>

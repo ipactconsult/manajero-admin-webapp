@@ -1,0 +1,124 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+    <div class="container">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3">
+        <h3>Request For Quotations</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+            <input [(ngModel)]="searchRFQ"
+             class="w-100 mx-2" nbInput placeholder="Search Archived Request For Quotation"
+             type="text">
+        </div>
+      </div>
+      <div class="col-md-5">
+          <div>
+            <a (click)="exportAsXLSX()" [disabled]="dataRFQs.length === 0"
+                    align="right" status="success"
+                    nbButton [nbTooltip]="exportExcelMsg" [nbTooltipStatus]="exportExcelStatus">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>
+          </div>
+      </div>
+    </div>
+  </nb-card-header>
+      <div *ngIf="!dataRFQs || dataRFQs.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataRFQs | filter : searchRFQ).length === 0" [hidden]="dataRFQs.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">Item Not Found.</nb-alert>
+    </div>
+  <div class="row">
+    <div class="col-md-3">
+       <nb-form-field>
+          <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select [disabled]="dataRFQs.length === 0"
+                     class="mx-2 mt-3 w-75"placeholder="Sort by Reference"
+                     selected="0">
+            <nb-option (click)="getAllArchivedRFQs()" value="All">All</nb-option>
+            <nb-option (click)="getAllArchivedRFQsASC()" value="1">Names (A-Z)</nb-option>
+            <nb-option (click)="getAllArchivedRFQsDESC()" value="2">Names (Z-A)</nb-option>
+          </nb-select>
+        </nb-form-field>
+      <div class="col-lg-10 mt-3">
+        <label>Items Per Page</label> 
+      <input [(ngModel)]="pageSize" [disabled]="dataRFQs.length === 0"
+             class="w-75" min="3"
+             nbInput type="number">
+      </div>
+    </div>
+  <div class="col-lg-9">
+    <table class="mb-0 table table-hover mt-3" *ngIf="dataRFQs.length > 0">
+        <thead>
+        <tr>
+          <th class="align-middle bt-0">Reference</th>
+          <th class="align-middle bt-0">Quotation Deadline</th>
+          <th class="align-middle bt-0">Created</th>
+          <th class="align-middle bt-0">Materials</th>
+          <th class="align-middle bt-0">Suppliers</th>
+          <th class="align-middle bt-0 text-right">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let rfq of dataRFQs | filter : searchRFQ 
+          | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: dataRFQs.length}">
+          <td class="align-middle">
+            <p>{{rfq.rfqNumber}}</p>
+          </td>
+          <td class="align-middle">
+            <p>{{rfq.quotationDeadline | date: 'dd MMMM YYYY'}}</p>
+          </td>
+          <td class="align-middle">
+            <p>{{rfq.rfqCreationDate | date: 'dd MMMM YYYY'}}</p>
+          </td>
+          <td class="align-middle">
+            <p *ngFor="let material of rfq.pr.material">{{material.materialName}}<br/></p>
+          </td>
+          <td class="align-middle">
+            <p *ngFor="let supplier of rfq.suppliers">{{supplier.supplierFirstName}} {{supplier.supplierLastName}}<br/></p>
+          </td>
+          <td class="align-middle text-right">
+            <div class="btn-group">
+              <button shape="round" nbButton status="basic" size="small" [matMenuTriggerFor]="menu" 
+                    aria-label="Example icon-button with a menu">
+              <nb-icon icon="more-horizontal-outline"></nb-icon>
+            </button>
+              <mat-menu #menu="matMenu" class="bg-white">
+                    <a (click)="open2(dialog)">
+                <button mat-menu-item>
+                  <span><nb-icon class="text-secondary" icon="refresh-outline"></nb-icon> Restore</span>
+                </button>
+              </a>
+              </mat-menu>
+              <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>Confirm Restore Operation</nb-card-header>
+                      <nb-card-body>Are you sure you would like to restore this request for quotation?</nb-card-body>
+                      <nb-card-footer>
+                        <div class="row">
+                          <button class="col-md-2" status="danger" nbButton (click)="ref.close()">No</button>
+                          <div class="col-md-8"></div>
+                          <a class="col-md-2" status="success" nbButton (click)="onRestoreConfirm(rfq, ref)">Yes</a>
+                        </div>
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+      <div class="d-flex justify-content-center mt-2" *ngIf="dataRFQs.length > 0">
+        <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+          <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+        </nav>
+      </div>
+ </div>
+</div>
+

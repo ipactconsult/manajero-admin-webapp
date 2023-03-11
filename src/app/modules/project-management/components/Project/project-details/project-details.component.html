@@ -1,0 +1,80 @@
+<div *ngIf="project?.title">
+  <ngx-process-steps [processStep]="'PlanningEXECUTING'"></ngx-process-steps>
+  <div>
+    <ngx-member-card></ngx-member-card>
+  </div>
+  <br>
+  
+  <ngx-project-generale-info [project]="project"> </ngx-project-generale-info>
+  <nb-card>
+    <nb-card-body>
+      <nb-tabset (changeTab)="changeTab($event)">
+        <nb-tab
+        tabIcon="list-outline"
+        tabTitle="Project Requirements"
+        responsive
+      >
+        <ngx-requirement-table
+        [project]="project"
+
+          *ngIf="currentWindow === 'Project Requirements'"
+        ></ngx-requirement-table>
+      </nb-tab>
+        <nb-tab tabTitle="Action Plan" tabIcon="award-outline" responsive>
+          <ngx-goals-table
+            *ngIf="currentWindow === 'Action Plan'"
+          ></ngx-goals-table>
+        </nb-tab>
+        <nb-tab
+          tabTitle="Project Risks"
+          tabIcon="alert-triangle-outline"
+          responsive
+        >
+          <ngx-risk-table
+            *ngIf="currentWindow === 'Project Risks'"
+          ></ngx-risk-table>
+        </nb-tab>
+       
+        <nb-tab
+          tabIcon="people-outline"
+          tabTitle="Project Stakeholders"
+          responsive
+        >
+          <ngx-stakeholder-table
+            [project]="project"
+            (dataChanged)="refresh($event)"
+            *ngIf="currentWindow === 'Project Stakeholders'"
+          ></ngx-stakeholder-table>
+        </nb-tab>
+        <nb-tab
+          tabIcon="file-text-outline"
+          tabTitle="Change requests"
+          responsive
+        >
+          <ngx-change-request-table
+            *ngIf="currentWindow === 'Change requests'"
+          ></ngx-change-request-table>
+        </nb-tab>
+        <nb-tab
+          *ngIf="accessControle"
+          tabIcon="shield-outline"
+          tabTitle="Project Budget"
+          responsive
+        >
+          <ngx-budget-list
+            *ngIf="currentWindow === 'Project Budget'"
+          ></ngx-budget-list>
+        </nb-tab>
+        <nb-tab
+        *ngIf="accessControle"
+        tabIcon="shield-outline"
+        tabTitle="Resource Request"
+        responsive
+      >
+      <ngx-resource-request-table *ngIf="currentWindow === 'Resource Request'"></ngx-resource-request-table>
+      
+      </nb-tab>
+      </nb-tabset>
+    </nb-card-body>
+  </nb-card>
+</div>

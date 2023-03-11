@@ -1,0 +1,78 @@
+
+
+  <ngx-project-generale-info [project]="project" *ngIf="project?.id"> </ngx-project-generale-info>
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="options-2-outline" status="info"></nb-icon> Action Plan
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-card size="small">
+         
+            <ngx-goals-table [disabled]="disabled"></ngx-goals-table>
+        </nb-card>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="alert-triangle-outline" status="danger"></nb-icon> Project Risks
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-card size="small">
+         
+            <ngx-risk-table [disabled]="disabled"></ngx-risk-table>
+        </nb-card>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="layers-outline" status="info"></nb-icon> Project Requirement
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-card size="small">
+         
+            <ngx-requirement-table
+            [project]="project"
+            [disabled]="disabled"
+            ></ngx-requirement-table>        </nb-card>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+  
+
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="shield-outline" status="warning"></nb-icon> Project Stakeholders
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-card size="small">
+            <ngx-stakeholder-table
+            [project]="project"
+            [disabled]="disabled"
+          ></ngx-stakeholder-table>
+             </nb-card>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+  
+  <nb-accordion>
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        <nb-icon icon="file-text-outline" status="info"></nb-icon> Change Request
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-card size="small">
+            <ngx-change-request-table [disabled]="disabled"
+          ></ngx-change-request-table>
+             </nb-card>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>

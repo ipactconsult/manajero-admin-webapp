@@ -1,0 +1,24 @@
+
+  
+  div a .btn-primary {
+    background-color: #6895ff;
+    border: none;
+  }
+  
+  div .btn-success {
+    border: none;
+    margin-right: 88px;
+  }
+  
+  ::ng-deep {
+    ng2-st-tbody-edit-delete {
+      display: none;
+      height: 0 !important;
+    }
+  
+    ng2-st-tbody-custom {
+      display: flex;
+      text-align: center;
+    }
+  }
+  

@@ -1,0 +1,566 @@
+<div class="steppers-container row">
+  <div class="col-md-12 col-lg-12 col-xxxl-12 w-100">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-11">
+            <h3>Create Employee</h3>
+          </div>
+          <div class="col-md-1">
+            <a nbTooltip="Back to employee list" nbTooltipStatus="primary" shape="round" status="basic" [routerLink]="['/hr/employee/list_']" nbButton>
+              <nb-icon icon="corner-up-right-outline"></nb-icon>
+            </a>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <form  [formGroup]="personal_form">
+          <nb-stepper #stepper>
+            <nb-step  [stepControl]="personal_form" label="Personal">
+              <label class="small">Reference</label>
+              <div class="row">
+                <div class="col-md-11">
+                  <input [(ngModel)]="employee.employeeReference" fieldSize="large" formControlName="employeeReference"
+                         fullWidth
+                         id="employeeReference" name="employeeReference" nbInput placeholder="Employee Reference" 
+                         type="text">
+                </div>
+                <div class="col-md-1 mt-3">
+                  <nb-icon icon="info-outline"
+                           nbTooltip="This Field should starts with EMZ concatenate with numbers" nbTooltipStatus="primary"></nb-icon>
+                </div>
+
+                <!-- <div *ngIf="(employeeReference.invalid && employeeReference.touched)" class="col-lg-11">
+                  <div *ngIf="employeeReference.errors?.required">
+                    <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Required Field</p>
+                  </div>
+                  <div *ngIf="employeeReference.errors?.pattern" class="mx-3 w-100">
+                    <p class="mt-2 alert alert-danger text-dark text-center" role="alert">This field should start with
+                      EMZ concat with numbers</p>
+                  </div>
+                </div> -->
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <label class="small">Name</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="employee.employeeName" fieldSize="large" formControlName="employeeName" fullWidth
+                             id="employeeName"
+                             name="employeeName" nbInput placeholder="Employee Name" 
+                             type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted"
+                               nbTooltipStatus="primary"></nb-icon>
+                    </div>
+
+                  <!--   <div *ngIf="(employeeName.invalid && employeeName.touched)" class="col-lg-10">
+                      <div *ngIf="employeeName.errors?.required">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Required Field</p>
+                      </div>
+                      <div *ngIf="employeeName.errors?.pattern" class=" ">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only caracters can be
+                          accepted</p>
+                      </div>
+                    
+                    </div> -->
+
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="small">Passeport</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="employee.employeePasseport" fieldSize="large" formControlName="employeePasseport"
+                             fullWidth id="employeePasseport" name="employeePasseport" nbInput placeholder="Employee Passeport"
+                             type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only numbers can be accepted"
+                               nbTooltipStatus="primary"></nb-icon>
+                    </div>
+
+                <!--     <div *ngIf="(employeePasseport.invalid && employeePasseport.touched)" class="col-lg-10">
+                     
+                      <div *ngIf="employeePasseport.errors?.pattern">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only numbers can be
+                          accepted</p>
+                      </div>
+                    </div> -->
+
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label for="file" class="label-file small">Profile Image</label>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input (change)="toggleLoadingAnimation($event)"
+                             autocomplete="off"
+                             formControlName="employeeProfileImage"
+                             fullWidth
+                             id="employeeProfileImage"
+                             name="employeeProfileImage"
+                             nbInput
+                             type="file"
+                             
+                      />
+                    </div>
+                    <div  class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Upload image" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+               <!--      <div *ngIf="employeeProfileImage.invalid && employeeProfileImage.touched" class="mx-3 w-75">
+                      <div *ngIf="employeeProfileImage.errors?.required">
+                      <p class="mt-2 alert alert-danger text-dark text-center" role="alert">You should upload an image
+                        file</p>
+                      </div>
+                    </div> -->
+                  </div>
+
+                </div>
+                <div  class="col-md-6">
+                  <span [nbSpinner]="loading" nbSpinnerStatus="danger" *ngIf="employee.employeeProfileImage == null; else erreur">
+                    <p class="text-warning mt-5">
+                     <nb-icon icon="loader-outline"></nb-icon> This Space Is Reserved For Loading Image
+                    </p>                  
+                  </span>
+                  <ng-template #erreur >
+                    <img alt="" class="w-25" src="{{employee.employeeProfileImage}}" style="border-radius: 5px;"> 
+                  </ng-template> 
+                </div>
+            
+              
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <label class="small">Gender</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <nb-select [(ngModel)]="employee.employeeGender" size="large" formControlName="employeeGender"
+                                 fullWidth id="employeeGender"
+                                 name="employeeGender" placeholder="Select Gender" selected="0">
+                        <nb-option disabled value="0">Gender</nb-option>
+                        <nb-option value="Homme">Homme</nb-option>
+                        <nb-option value="Femme">Femme</nb-option>
+                      </nb-select>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select the gender" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                    
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <label class="small">Education Level</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="employee.employeeEducation" fieldSize="large" formControlName="employeeEducation"
+                             fullWidth id="employeeEducation" name="employeeEducation" nbInput placeholder="Employee Education"
+                             type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Specify the education level" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <label class="small">Date Of Birth</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="employee.employeeDateOfBirth" [nbDatepicker]="dateTimePicker"
+                             fieldSize="large" formControlName="employeeDateOfBirth" fullWidth id="employeeDateOfBirth"
+                             name="employeeDateOfBirth" nbInput
+                             placeholder="Pick Date">
+                      <nb-datepicker #dateTimePicker></nb-datepicker>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select employee birthdate" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <label class="small">Nationality</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                    
+                    <nb-select placeholder="Select Nationality" [(ngModel)]="employee.employeeNationality" class="mt-1" formControlName="employeeNationality" fullWidth
+                         size="large"    id="employeeNationality" name="employeeNationality" selected="0">
+                        <nb-option disabled value="0">Nationality</nb-option>
+                        <nb-option *ngFor="let nationality of nationalities" value="{{nationality.Nationality}}">
+                          {{nationality.Nationality}}
+                        </nb-option>
+                  </nb-select>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted"
+                               nbTooltipStatus="primary"></nb-icon>
+                    </div>
+
+                   <!--  <div *ngIf="(employeeNationality.invalid && employeeNationality.touched)" class="col-lg-10">
+                      <div *ngIf="employeeNationality.errors?.pattern" class="mx-3 w-75">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only caracters can be
+                          accepted</p>
+                      </div>
+                    </div> -->
+
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <label class="small">City</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="employee.employeeCity" fieldSize="large" formControlName="employeeCity" fullWidth
+                             id="employeeCity" name="employeeCity" nbInput placeholder="City" type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted"
+                               nbTooltipStatus="primary"></nb-icon>
+                    </div>
+
+
+                 <!--    <div *ngIf="(employeeCity.invalid && employeeCity.touched)" class="col-lg-10">
+                      <div *ngIf="employeeCity.errors?.pattern" class="mx-3 w-75">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only caracters can be
+                          accepted</p>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="small">Country</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <nb-select size="large" placeholder="Select Country" 
+                                 [(ngModel)]="employee.employeeCountry" class="mt-1" 
+                                 formControlName="employeeCountry" fullWidth
+                                 id="employeeCountry" name="employeeCountry" selected="0">
+                        <nb-option disabled value="0">Country</nb-option>
+                        <nb-option *ngFor="let country of countries" value="{{country.country_name}}">
+                          {{country.country_name}}</nb-option>
+                      </nb-select>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select country" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                    
+                  </div>
+
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <label class="small">Role</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <nb-select size="large" [(ngModel)]="employee.roleEmployee" class="mt-1" formControlName="roleEmployee" fullWidth
+                                 id="roleEmployee"
+                                 name="roleEmployee" placeholder="Select role" selected="0">
+                        <nb-option disabled value="0">Role</nb-option>
+                        <nb-option value="{{role.name}}" *ngFor="let role of roles">{{role.name}}</nb-option>
+                      
+                      </nb-select>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Select position" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="small">Driving licence</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="employee.employeeDrivingLicence" fieldSize="large"
+                             formControlName="employeeDrivingLicence" fullWidth id="employeeDrivingLicence" name="employeeDrivingLicence"
+                             nbInput
+                             placeholder="Driving Licence" type="text">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-10"></div>
+                <div class="col-md-2 mt-2">
+                  <button status="info" (click)="onPersonalFormSubmit()" nbButton nbStepperNext
+                          type="submit">next  
+                  </button>
+                </div>
+              </div>
+            </nb-step>
+            <nb-step [stepControl]="contact_form" label="Contact">
+              <form class="step-container" formGroupName="contact_form">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <label class="mt-2 small">Email Address</label> <br>
+                    </div>
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-3">
+                      <label class="small text-left">Phone number</label> <br>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-7">
+                      <input
+                        [(ngModel)]="employee.employeeEmail" fieldSize="large" formControlName="employeeEmail" 
+                        fullWidth id="employeeEmail"
+                        name="employeeEmail" nbInput type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="This Field should typed correctly"
+                               nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                    <div class="col-md-3">
+
+                      <input
+                        (countryChange)="onCountryChange($event)"
+                        (hasError)="onError($event)" [(ngModel)]="employee.employeeCellPhone" [ng2TelInputOptions]="cell1TelInput"
+                        fieldSize="large"
+                        formControlName="employeeCellPhone" id="employeeCellPhone" name="employeeCellPhone" nbInput
+                        ng2TelInput type="text">
+
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Put the phone number" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  <!--   <div *ngIf="(employeeEmail.invalid && employeeEmail.touched)" class="col-lg-10">
+                      <div *ngIf="employeeEmail.errors?.pattern" class=" w-100">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Please provide a valid
+                          email address ( Example : employee123@domain_name.com , employee.123@domaine_name.com)</p>
+                      </div>
+                    </div> -->
+
+                  </div>
+                  <br>
+                  <div class="row">
+                   
+                    
+                  </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-2">
+                    <button nbButton nbStepperPrevious>prev</button>
+                  </div>
+                  <div class="col-md-8"></div>
+                  <div class="col-md-2" align="right">
+                    <button (click)="onContactFormSubmit()" class="" nbButton nbStepperNext
+                    type="submit" status="info">next
+                   </button>
+                  </div>
+                  
+                </div>
+              </form>
+            </nb-step>
+            <nb-step [stepControl]="department_form" label="Department">
+              <form [formGroup]="department_form" class="step-container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label class="mt-2 small">Select Department &nbsp; &nbsp;</label> <br>
+                  </div>
+                  <div class="row w-100">
+                    <div class="col-lg-11">
+                      <nb-select placeholder="select department" (selectedChange)="getDepartmentSelected($event)" [(ngModel)]="employee.department" [selected]="selectedItem"
+                                 fieldSize="large" size="large" formControlName="department" fullWidth
+                                 id="department" name="department" class="w-100">
+                        <nb-option *ngFor="let de of listDepts" value="{{de.id}}">{{de.departmentName}}</nb-option>
+                      </nb-select>
+                    </div>
+                    <div class="col-md-1 mt-2">
+                      <nb-icon icon="info-outline" nbTooltip="Select department" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-2">
+                    <button nbButton nbStepperPrevious>prev</button>
+                  </div>
+                  <div class="col-md-8"></div>
+                  <div class="col-md-2">
+                    <button (click)="onDepartmentFormSubmit()" nbButton nbStepperNext
+                      type="submit" status="info">next
+                    </button>
+                  </div>
+              
+                </div>
+              </form>
+            </nb-step>
+            <nb-step [stepControl]="social_security_form" label="Social">
+              <form class="step-container" formGroupName="social_security_form">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label class="small">Social Security &nbsp; &nbsp;</label> <br>
+                  </div>
+                </div>
+                  <div class="row w-100">
+                    <div class="col-lg-11 ">
+                      <input [(ngModel)]="employee.employeeSocialSecurity" fieldSize="large" 
+                             formControlName="employeeSocialSecurity" fullWidth
+                             id="employeeSocialSecurity"
+                             name="employeeSocialSecurity" nbInput
+                             type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  <!--   <div *ngIf="(employeeSocialSecurity.invalid && employeeSocialSecurity.touched)" class="col-lg-10">
+                      <div *ngIf="employeeSocialSecurity.errors?.pattern" class=" w-100">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only caracters can
+                          accepted</p>
+                      </div>
+                    </div> -->
+                  </div>
+                
+                
+                  <div class="row mt-2">
+                    <div class="col-lg-12">
+                      <label class="small">Marital Status &nbsp; &nbsp;</label> <br>
+                    </div>
+                  </div>
+                  <div class="row w-100">
+                    <div class="col-lg-11">
+                      <input [(ngModel)]="employee.employeeMaritalStatus" fieldSize="large" formControlName="employeeMaritalStatus" fullWidth
+                             id="employeeMaritalStatus"
+                             class="w-100"
+                             name="employeeMaritalStatus" nbInput
+                             type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Only caracters can be accepted" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  <!--   <div *ngIf="(employeeMaritalStatus.invalid && employeeMaritalStatus.touched)" class="col-lg-10">
+                      <div *ngIf="employeeMaritalStatus.errors?.pattern" class=" w-100">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only caracters can
+                          accepted</p>
+                      </div>
+                    </div> -->
+                  </div>
+                
+                  <div class="row mt-2">
+                    <div class="col-lg-12">
+                      <label class="mt-2 small">Number Of Kids &nbsp; &nbsp;</label> <br>
+                    </div>
+                  </div>
+                  <div class="row w-100">
+                    <div class="col-lg-11">
+                      <input [(ngModel)]="employee.employeeNbKids" fieldSize="large" class="w-100" formControlName="employeeNbKids" fullWidth id="employeeNbKids"
+                             name="employeeNbKids" nbInput type="number">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="This field should contain the number of kids" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  <!--   <div *ngIf="(employeeNbKids.invalid && employeeNbKids.touched)" class="col-lg-10">
+                      <div *ngIf="employeeNbKids.errors?.pattern" class=" w-100">
+                        <p class="mt-2 alert alert-danger text-dark text-center" role="alert">Only numbers can
+                          accepted</p>
+                      </div>
+                    </div> -->
+                  </div>
+                
+                <div class="row mt-2">
+                  <div class="col-md-2">
+                    <button  nbButton nbStepperPrevious>prev</button>
+                  </div>
+                  <div class="col-md-8"></div>
+                  <div class="col-md-2">
+                    <button status="info" (click)="onSocialFormSubmit()"  nbButton nbStepperNext
+                      type="submit">Next
+                    </button>
+                  </div>
+                 
+                </div>
+              </form>
+            </nb-step>
+            <nb-step [stepControl]="health_problem_form" label="Health">
+              <form class="step-container" formGroupName="health_problem_form">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label class="mt-2 small">Blood Type</label>
+                  </div>
+                </div>
+                  <div class="row">
+                    <div class="col-md-11">
+                      <nb-select placeholder="Select Blood Type" [(ngModel)]="employee.employeeBloodType" class="mt-1" formControlName="employeeBloodType" fullWidth
+                                 id="employeeBloodType" size="large" name="employeeBloodType" selected="0">
+                        <nb-option disabled value="0">Blood Type</nb-option>
+                        <nb-option value="A+">A+</nb-option>
+                        <nb-option value="A-">A-</nb-option>
+                        <nb-option value="B+">B+</nb-option>
+                        <nb-option value="B-">B-</nb-option>
+                        <nb-option value="O+">O+</nb-option>
+                        <nb-option value="O-">O-</nb-option>
+                        <nb-option value="AB+">AB+</nb-option>
+                        <nb-option value="AB-">AB-</nb-option>
+                      </nb-select>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Choose the blood type" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-lg-12">
+                      <label class=" small">Health problem</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-11">
+                      <input [(ngModel)]="employee.employeeHealthProblem" fieldSize="large" formControlName="employeeHealthProblem" fullWidth
+                             id="employeeHealthProblem"
+                             name="employeeHealthProblem" nbInput
+                             type="text">
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <nb-icon icon="info-outline" nbTooltip="Specify the health problem" nbTooltipStatus="primary"></nb-icon>
+                    </div>
+                  </div>
+                
+                <div class="row mt-2">
+                  <div class="col-md-2">
+                    <button nbButton nbStepperPrevious>prev</button>
+                  </div>
+                  <div class="col-md-5"></div>
+                  <div class="col-md-4" align="right">
+                    <button (click)="inviteEmployee()" nbButton nbStepperNext
+
+                    type="submit" status="primary"> <nb-icon icon="person-add-outline"></nb-icon> Invite
+                  </button>
+                    <button class="mx-1" (click)="storeEmployee()" nbButton nbStepperNext
+                      type="submit" status="success"> Confirm
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </nb-step>
+           <!--  <nb-step [stepControl]="contract_form" label="Contract">
+              
+            </nb-step> -->
+            <nb-step [hidden]="true" [stepControl]="contract_form" label="Completed">
+              
+              <br>
+              <div align="center" class="step-container">
+                <nb-alert class="w-50 mt-3" filled="success">
+                  <span class="text-center">
+                    Operation Completed Successfuly, You Can Assign A Contract This Employee
+                    <a [routerLink]="['/hr/contracts/assign', __id]">Assign</a>
+                  </span></nb-alert>
+                <button (click)="stepper.reset()" nbButton>Restart the process</button>
+              </div>
+            </nb-step>
+          </nb-stepper>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

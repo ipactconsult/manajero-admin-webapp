@@ -1,0 +1,83 @@
+<nb-card style="align-items: center;"> 
+ 
+
+  <nb-card-body>
+
+    <p class="text-center">Choose Transaction Year</p>
+    <nb-select [(selected)]="selectedItem" (selectedChange)="yearChange($event)" [(ngModel)]="selectedItemNgModel"
+                name="year" placeholder ="Please choose the transaction's year">
+      <nb-option *ngFor="let label of array" [value]="label"   >{{label}}</nb-option>
+    </nb-select>
+
+  </nb-card-body>
+</nb-card>
+     
+    
+
+<nb-card>
+  
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-5 col-sm-3">    <h3>Cash Flow Statement of {{this.param}} </h3>
+        
+      </div>
+    <div class="col-md-7 col-sm-12 " style="text-align: right;">
+      <button  nbTooltip="Export to excel file" nbTooltipStatus="primary" (click)="exportAsXLSX()"  nbButton status="success"  ><i class="fas fa-file-excel text-white"></i>  </button>
+
+      <button style="margin-left: 10px" nbTooltip="Click here for help" nbTooltipStatus="primary" nbButton status="basic" (click) ="openWindow()"><i class="fas fa-exclamation-circle fa-lg"></i>  </button>
+
+    </div>
+    </div>
+
+  </nb-card-header>
+  
+  <nb-card-body>
+    
+    <br>
+    
+    <style>
+      table,
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+    
+
+    <div  class ="row" >
+      
+
+      <ng2-smart-table [settings]="tabSettings"  class ="table" (custom) = "onCustom($event)" [source] ="tabSource" >
+      </ng2-smart-table>
+
+      
+      
+    </div>
+    
+
+
+
+
+   
+    
+
+
+  </nb-card-body>
+  
+  <nb-card-footer>
+
+   
+    
+  </nb-card-footer>
+ 
+</nb-card>
+<nb-card>
+  <nb-card-header>
+    <h3>Balance's Evolution Chart </h3>
+  </nb-card-header>
+  <canvas id="balance" width="400px" ></canvas>
+</nb-card>
+ 
+

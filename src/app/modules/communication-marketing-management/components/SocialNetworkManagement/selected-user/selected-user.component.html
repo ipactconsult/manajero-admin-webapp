@@ -1,0 +1,307 @@
+<div class="container">
+  <div class="profile-page tx-13">
+    <div class="row">
+      <div class="col-12 grid-margin">
+        <div class="profile-header">
+          <div class="cover"  >
+            <div class="gray-shade"></div>
+            <!---  <figure>
+                    <img src="https://bootdey.com/img/Content/bg1.jpg" class="img-fluid" alt="profile cover">
+                </figure>-->
+            <br> <br> <br>
+            <div class="cover-body d-flex justify-content-between align-items-center">
+              <div>
+                <img class="profile-pic" src="{{'https://avatars.dicebear.com/api/identicon/ ' + Auth.email +'.svg'}}" alt="profile" >
+                <span class="profile-name">{{Auth.email?.substring(0, Auth.email.indexOf('@'))}}</span>
+              </div>
+              <!----  <div class="d-none d-md-block">
+                       <button class="btn btn-primary btn-icon-text btn-edit-profile">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit btn-icon-prepend">
+                               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                           </svg> Edit profile
+                       </button>
+                   </div>--->
+            </div>
+          </div>
+          <div class="header-links">
+            <ul class="links d-flex align-items-center mt-3 mt-md-0">
+              <li class="header-link-item d-flex align-items-center active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns mr-1 icon-md">
+                  <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
+                </svg>
+                <a class="pt-1px d-none d-md-block" [routerLink]="['/communicationMarketing/SocialNetwork']">Feed</a>
+              </li>
+              <!----  <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-1 icon-md">
+                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                         <circle cx="12" cy="7" r="4"></circle>
+                     </svg>
+                     <a class="pt-1px d-none d-md-block" [routerLink]="['/communicationMarketing/About/' , Auth.id]">About</a>
+                 </li>---->
+              <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-1 icon-md">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <a class="pt-1px d-none d-md-block" [routerLink]="['/communicationMarketing/CurrentUser']">Profile</a>
+              </li>
+              <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users mr-1 icon-md">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <a  [routerLink]="['/communicationMarketing/UserList']" class="pt-1px d-none d-md-block" >Friends <span class="text-muted tx-12"  >{{userList?.length}}</span></a>
+              </li>
+                 <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video mr-1 icon-md">
+                         <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                         <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                     </svg>
+                     <a class="pt-1px d-none d-md-block" href="#">Meet</a>
+                 </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row profile-body">
+      <!-- left wrapper start -->
+      <div class="d-none d-md-block col-md-4 col-xl-3 left-wrapper">
+        <nb-card class="rounded">
+          <nb-card-body [routerLink]="['/communicationMarketing/About/' , Auth.id]">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <h6 class="card-title mb-0">NAME</h6>
+
+            </div>
+            <!--<p>{{Auth.lastName}}   {{Auth.firstName}}</p>-->
+            <div class="mt-3">
+              <label class="tx-11 font-weight-bold mb-0 text-uppercase">UserName:</label>
+              <p class="text-muted">{{Auth.username}} </p>
+            </div>
+            <div class="mt-3">
+              <label class="tx-11 font-weight-bold mb-0 text-uppercase">Lives:</label>
+              <!--<p class="text-muted">{{Auth.address}} , {{Auth.city}} </p>-->
+            </div>
+            <div class="mt-3">
+              <label class="tx-11 font-weight-bold mb-0 text-uppercase">Email:</label>
+              <p class="text-muted">{{Auth.email}}</p>
+            </div>
+            <div class="mt-3">
+              <label class="tx-11 font-weight-bold mb-0 text-uppercase">Phone:</label>
+              <!--<p class="text-muted">{{Auth.phone}}</p>-->
+            </div>
+
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+
+
+      <div class="col-md-8 col-xl-6 middle-wrapper">
+        <br>
+        <div class="row">
+          <div class="col-md-12 grid-margin" *ngFor="let post of myPostsData">
+            <nb-card class="rounded">
+              <nb-card-header>
+
+
+
+                <div class="d-flex align-items-center justify-content-between">
+
+
+                  <div class="d-flex align-items-center">
+                    <img class="img-xs rounded-circle" src="{{'https://avatars.dicebear.com/api/identicon/ ' + post.name+'.svg'}}" alt="">
+                    <div class="ml-2">
+                      <p>{{post.name?.substring(0, post.name.indexOf('@'))}}</p>
+                      <p class="tx-11 text-muted">{{post.createdAt   | date:"YYYY MMM dd" }}</p>
+                    </div>
+                  </div>
+
+
+                  <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                          aria-label="Example icon-button with a menu"
+                          nbButton nbTooltip="Click here to see advanced menu"
+                          nbTooltipStatus="primary"
+                          shape="round"
+                          size="small"
+                          status="basic" *ngIf="post.name === connectedUser.email">
+                    <nb-icon icon="more-horizontal-outline"></nb-icon>
+                  </button>
+
+
+
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <a [routerLink]="['/communicationMarketing/EditEvent/',post.id]"
+                         fullWidth nbButton>
+                                  <span class="text-warning">
+                                    <nb-icon icon="edit-outline"></nb-icon>
+                                  </span> Edit
+                      </a>
+                    </button>
+
+                    <button mat-menu-item>
+                      <a [routerLink]="['/communicationMarketing/PostDetails',post.id]" fullWidth nbButton>
+                        <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                      </a>
+                    </button>
+                    <button mat-menu-item>
+                      <button
+                        (click)="open2(dialog)"
+                        fullWidth nbButton
+                      >
+                        <span class="text-danger"><nb-icon icon="trash-outline"></nb-icon></span>
+                        Delete
+                      </button>
+
+                      <ng-template #dialog let-data let-ref="dialogRef">
+                        <nb-card>
+                          <nb-card-header>
+                            Confirm delete operation ?
+                          </nb-card-header>
+                          <nb-card-body>
+                            Are you sure you want to delete this Event?
+                          </nb-card-body>
+                          <nb-card-footer>
+                            <button (click)="ref.close()" class="float-left" nbButton>
+                              Close
+                            </button>
+                            <button (click)="onDeleteConfirm(post.id)" class="float-right" nbButton>
+                              Delete
+                            </button>
+                          </nb-card-footer>
+                        </nb-card>
+                      </ng-template>
+                    </button>
+                  </mat-menu>
+
+
+                </div>
+              </nb-card-header>
+              <div class="card-body">
+                <p class="mb-3 tx-14">{{post.description}}</p>
+                <img class="img-fluid" src="{{post.imageUrl}}" alt="">
+              </div>
+              <div class="card-footer">
+                <div class="d-flex post-actions">
+                  <div *ngIf="post.likes?.length === 0">
+                    <ng-container>
+                            <span> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart icon-md">
+                               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                             </svg>
+                            <button  (click)="createLike(post)"  class="btn default">
+                                <p  class="d-none d-md-block ml-2 ">Like <span *ngIf="post.likes?.length > 0">
+                                  {{post.likes?.length}}</span>
+                                <span *ngIf="post.likes?.length === 0">
+                                  0</span></p> 
+                           </button>
+                             </span>
+                    </ng-container>
+                  </div>
+                <div *ngIf="post.likes?.length > 0">
+                  <div *ngFor="let l of post.likes; let index = index">
+                    <ng-container *ngIf="l.creatorId === connectedUser.id && disliked === 0">    
+                        <span> 
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart icon-md">
+                               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                              </svg>
+                              <button  (click)="dislike(l, post)"  class="btn default">
+                                <p  class="d-none d-md-block ml-2 ">Dislike {{post.likes?.length}}</p> 
+                           </button>
+                         </span>
+                    </ng-container>
+                    <ng-container *ngIf="l.creatorId !== connectedUser.id && post.likes?.length === 1">    
+                        <span> 
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart icon-md">
+                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                           </svg>
+                          <button (click)="createLike(post)"  class="btn default">
+                              <p  class="d-none d-md-block ml-2 ">Like {{post.likes?.length}}</p> 
+                         </button>
+                           </span>
+                    </ng-container>
+                  </div>
+                  <ng-container *ngIf="fillColor === 0 && post.likes?.length >= 2">
+                          <span> 
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart icon-md">
+                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                           </svg>
+                          <button (click)="createLike(post)"  class="btn default">
+                              <p  class="d-none d-md-block ml-2 ">Like {{post.likes?.length}}</p> 
+                         </button>
+                           </span>
+                  </ng-container>
+                </div>
+                  <a href="#" class="d-flex align-items-center text-muted mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon-md">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <p class="d-none d-md-block ml-2">Comment {{post.comments?.length}}</p>
+                  </a>
+
+                </div>
+              </div>
+
+              <div class="container bootstrap snippets bootdey">
+                <div class="row">
+                  <div class="col-md-12 grid-margin" >
+
+                    <div>
+                      <form [formGroup]="commentForm" (ngSubmit)="create(post)">
+                        <div class="form-group">
+                                      <textarea  value="Create"
+                                                 class="form-control" placeholder="Leave a comment" formControlName="comment" [ngClass]="{ 'is-invalid': submitted && commentForm.controls['comment'].errors }"></textarea>
+                          <div class="invalid-feedback" *ngIf="submitted && commentForm.controls['comment'].errors">
+                            <div *ngIf="commentForm.controls['comment'].errors.required">Comment is required</div>
+                            <div *ngIf="commentForm.controls['comment'].errors.minlength">Comment must be at least 6 characters</div>
+                            <div *ngIf="commentForm.controls['comment'].errors.maxlength">Comment must be at most 100 characters</div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button  nbButton  shape="round" size="small" status="success">Post Comment</button>
+                        </div>
+                      </form>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-card>
+
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="d-none d-xl-block col-xl-3 right-wrapper">
+        <div class="row">
+
+          <div class="col-md-12 grid-margin">
+              <div class="card rounded">
+                  <div class="card-body">
+                      <h6 class="card-title">suggestions for you</h6>
+                      <div class="d-flex justify-content-between mb-2 pb-2 border-bottom"  *ngFor="let user of userList">
+                          <div class="d-flex align-items-center hover-pointer">
+                              <img class="img-xs rounded-circle" src="{{'https://avatars.dicebear.com/api/identicon/ ' +  user.email +'.svg'}}" alt="">
+                              <div class="ml-2">
+                                  <p>{{user?.lastName}} {{user?.firstName}}</p>
+                                  <p class="tx-11 text-secondary">{{user?.email?.substring(0, user?.email.indexOf('@'))}}</p>
+                              </div>
+                          </div>
+                    
+                      </div>
+                    </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!-- right wrapper end -->
+    </div>
+  </div>
+</div>

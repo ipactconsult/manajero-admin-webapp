@@ -1,0 +1,1 @@
+export const  enum Type {INTERNAL,EXTERNAL}

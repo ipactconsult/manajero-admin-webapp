@@ -1,0 +1,151 @@
+<section id="sectionJobList" class="section section-job-list gradient-light--lean-left">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h3>Edit Expense</h3>
+      </div>
+      <div class="col-md-8"></div>
+
+
+      <div style="right: 0; left:auto" align="right" class="col-md-1 mt-1">
+        <a nbButton status="basic" shape="round" [routerLink]="['/hr/expenses/grid']">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="row row-grid mt-4">
+      <div class="col-md-12">
+        <form [formGroup]="formExpense">
+    
+
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  Fiscal Power
+                </div>
+                <div class="col-md-12 mt-1">
+                  <input nbInput fullWidth fieldSize="large"
+                         placeholder="fiscal Power"
+                         id="fiscalPower" name="fiscalPower" formControlName="fiscalPower" [(ngModel)]="expense.fiscalPower" >
+                </div>
+
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label > Starting city</label>
+                    </div>
+                  </div>
+                  <input fieldSize="large" nbInput fullWidth
+                         placeholder="Starting city"
+                         name="startingCity" [(ngModel)]="expense.startingCity"
+                         id="startingCity" formControlName="startingCity"/>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label >Ending City </label>
+                    </div>
+                  </div>
+                  <input placeholder="Ending City" fieldSize="large" nbInput fullWidth
+                         name="endingCity" [(ngModel)]="expense.endingCity"
+                         id="endingCity" formControlName="endingCity"/>
+
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label>Distance Driven </label>
+                  </div>
+                </div>
+                <input placeholder="Distance Driven" fieldSize="large" nbInput fullWidth
+                       name="distanceDriven" [(ngModel)]="expense.distanceDriven"
+                       id="distanceDriven" formControlName="distanceDriven"/>
+
+
+              </div>
+
+
+       
+           
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="tvaAmount"> TVA Amount</label>
+                    </div>
+                  </div>
+                  <input name="tvaAmount" [(ngModel)]="expense.tvaAmount" type="number"
+                         id="tvaAmount" formControlName="tvaAmount" nbInput fullWidth fieldSize="large">
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="htAmount"> Tax Amount</label>
+                    </div>
+                  </div>
+
+                  <input type="number" fieldSize="large" nbInput fullWidth
+                         name="htAmount" [(ngModel)]="expense.htAmount"
+                         id="htAmount" formControlName="htAmount"/>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="totalTTCAmount"> Total</label>
+                    </div>
+                  </div>
+
+                  <input type="number" fieldSize="large" nbInput fullWidth
+                         name="totalTTCAmount" [(ngModel)]="expense.totalTTCAmount"
+                         id="totalTTCAmount" formControlName="totalTTCAmount"/>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="employee"> Employee</label>
+                    </div>
+                  </div>
+                  <nb-select
+                    [(ngModel)]="expense.employee"
+                    formControlName="employee"
+                    name="employee"
+                    nbTooltip="Select the right Employee" nbTooltipStatus="primary"
+                    id="employee"
+                    fullWidth
+                    size="large"
+                    placeholder="select employee"
+                    (selectedChange)="getEmployeeSelected($event)">
+                    <nb-option *ngFor="let x of employees" value="{{x.id}}">
+                      <nb-user [name]="x.employeeName" [picture]="x.employeeProfileImage"></nb-user>
+                    </nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+              <div class="row mt-3">
+             
+                <div align="right" class="col-md-2">
+                  <button [disabled]="formExpense.invalid" nbButton status="success" (click)="updateExpense()">
+                    <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                    Update
+                  </button>
+                </div>
+              </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>

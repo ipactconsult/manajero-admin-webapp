@@ -1,0 +1,137 @@
+<nb-card>
+  <nb-card>
+    <nb-card-header class ="row" >
+
+      <div class ="col-md-10">
+        <h3>Reconciliation</h3>
+      </div>
+      <div  align="right">
+        <button  nbTooltip="Export to excel file" (click)="exportExcel()" nbTooltipStatus="primary" nbButton status="success"   ><i class="fas fa-file-excel text-white"></i>  </button>
+
+
+        
+
+        <button style="margin-left: 10px" nbTooltip="Click here for help" nbTooltipStatus="primary" nbButton status="basic" (click) ="openWindow()"><i class="fas fa-exclamation-circle fa-lg"></i>  </button>
+
+
+
+      </div>
+
+  </nb-card-header>
+  <nb-card-body >
+    <div class="row" >
+      <div class="col-md-6">
+        <div class="card l-bg-red">
+          <div class="card-statistic-3 p-4">
+            <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+            <div class="mb-4">
+              <h2 class="card-title mb-0">Global Account</h2>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h5 class="d-flex align-items-center mb-0">
+                 Manazelo Balance:  {{ globalBalance}}
+                </h5>
+                <br>
+                <h5 class="d-flex align-items-center mb-0">
+                  Number of Non Reconciled Transactions:  {{ numberNonReconT}}
+                </h5>
+                <br>
+                <h5 class="d-flex align-items-center mb-0">
+                  Number of Non Reconciled Files:  {{ numberNonReconF}}
+                </h5>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card l-bg-green-dark">
+          <div class="card-statistic-3 p-4">
+            <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+            <div class="mb-4">
+              <h2 class="card-title mb-0">Statement Account</h2>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h5 class="d-flex align-items-center mb-0">
+                  Statement Balance:  {{ statementBalance}}
+                </h5>
+                <br>
+                <h5 class="d-flex align-items-center mb-0">
+                  Number of Reconciled Transactions:  {{ numberReconT}}
+                </h5>
+                <br>
+                <h5 class="d-flex align-items-center mb-0">
+                  Number of  Reconciled Files:  {{ numberReconF}}
+                </h5>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </nb-card-body>
+  <div *ngIf = "numberNonReconF>0 || numberNonReconT>0">
+    <nb-alert outline="danger">Your system balance and statement balance aren't equal ! You have unreconciled items !</nb-alert>
+
+  </div>
+  <div *ngIf = "numberNonReconF==0 && numberNonReconT==0">
+    <nb-alert outline="success">Your global balance and statement balance are equal ! you have no unreconciled transactions !</nb-alert>
+
+  </div>
+  <hr class="solid">
+
+  
+
+</nb-card>
+<nb-card>
+  <nb-card-header>
+    <h5>
+      Saved Transactions
+    </h5>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Unreconciled transactions"
+              badgeText= "{{numberNonReconT}}"
+              badgeStatus="danger">
+        <ng2-smart-table [settings]="tabSettings"  class ="table" (edit) ="openFilesWindow($event)" (delete) = "reconcileTransaction($event)" [source] ="nonReconciledTransactions" >
+        </ng2-smart-table>
+      </nb-tab>
+      <nb-tab tabTitle="Reconciled transactions"
+              badgeText="{{numberReconT}}"
+              badgeStatus="success">
+        <ng2-smart-table [settings]="tabSettings2"  class ="table" [source] ="reconciledTransactions" >
+        </ng2-smart-table>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
+<nb-card>
+  <nb-card-header>
+    <h5>
+      Saved Files
+    </h5>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Unreconciled Files"
+              badgeText= "{{numberNonReconF}}"
+              badgeStatus="danger">
+        <ng2-smart-table [settings]="tabSettings3"  class ="table" (edit) = "onDownload($event)" (delete)="reconcileFile($event)" [source] ="nonReconciledFiles" >
+        </ng2-smart-table>
+      </nb-tab>
+      <nb-tab tabTitle="Reconciled Files"
+              badgeText="{{numberReconF}}"
+              badgeStatus="success">
+        <ng2-smart-table [settings]="tabSettings4"  class ="table"  [source] ="reconciledFiles" >
+        </ng2-smart-table>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
+</nb-card>

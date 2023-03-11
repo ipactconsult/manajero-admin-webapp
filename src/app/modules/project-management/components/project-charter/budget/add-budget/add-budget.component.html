@@ -1,0 +1,38 @@
+<form class="form" [formGroup]="BudgetForm" (ngSubmit)="create()">
+  <div class="form-group">
+    <label for="subject">Area:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      type="text"
+      formControlName="area"
+    />
+    <div *ngIf="area?.invalid && (area?.dirty || area?.touched)">
+      <p class="text-danger" *ngIf="area?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Amount:</label>
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      type="number"
+      formControlName="amount"
+    />
+    <div *ngIf="amount?.invalid && (amount?.dirty || amount?.touched)">
+      <p class="text-danger" *ngIf="amount?.errors?.required">*Required</p>
+    </div>
+  </div>
+  <input
+    [ngClass]="
+      selectedItem === null
+        ? 'btn btn-success btnCreate'
+        : 'btn btn-warning btnCreate'
+    "
+    [value]="selectedItem === null ? 'Create' : 'Update'"
+    type="submit"
+    [disabled]="BudgetForm.invalid"
+  />
+</form>

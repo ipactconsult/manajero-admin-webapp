@@ -1,0 +1,214 @@
+<div class="row">
+    <div class="col-md-3 col-sm-12">
+            <h3>
+                Training Data     
+            </h3>      
+    </div>
+    <div class="col-md-5">
+        <input class="" fullWidth [(ngModel)]="searchbyfields"  nbTooltip="Search Training" nbTooltipStatus="primary" [disabled]="trainings.length === 0" type="text"  fieldSize="large" nbInput placeholder="Search Training">   
+    </div>
+    <div class="col-md-4 col-sm-8 mt-1">
+        <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/trainings/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+        &nbsp;
+        <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/trainings/keypad']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+        &nbsp;
+        <a [routerLink]="['/hr/trainings/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+        &nbsp;
+        <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"><i class="fas fa-file-excel text-white"></i>  </button>
+        &nbsp;
+
+        <a [routerLink]="['/hr/trainings/training/create']" nbTooltip="Create Training" nbTooltipStatus="primary" nbButton status="info">
+            <nb-icon icon="plus-outline"></nb-icon>
+            Create new
+        </a>
+     
+          <br>
+    </div>
+
+
+
+</div>
+<br>
+
+<div class="row" *ngIf="!trainings || trainings.length === 0">
+    <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+</div>
+<div [hidden]="trainings.length === 0" class="row" *ngIf="(trainings | filter : searchbyfields).length === 0">
+    <nb-alert outline="danger" class="w-100 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+</div>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="row ">
+            <div class="col-lg-9">
+                <nb-form-field>
+                    <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <nb-select selected="0" (selectedChange)="filterByEmployee($event)"  fullWidth>
+                        <nb-option disabled value="0"> &nbsp;&nbsp;&nbsp;Employee</nb-option>
+                        <nb-option value="All" (click)="getTrainingsClick()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                        <nb-option *ngFor="let employee of employees" value="{{employee.id}}"> 
+                            &nbsp;&nbsp;&nbsp; <nb-user [name]="employee.employeeName" [picture]="employee.employeeProfileImage"></nb-user>
+                        </nb-option>
+                     
+                    </nb-select>
+                </nb-form-field>
+           
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-lg-9">
+                <nb-form-field>
+                    <nb-icon nbPrefix class="mt-3" icon="funnel-outline"></nb-icon> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <nb-select selected="0" (selectedChange)="filterByObjects($event)"  fullWidth>
+                        <nb-option disabled value="0"> &nbsp;&nbsp;&nbsp;Object</nb-option>
+                        <nb-option value="All" (click)="getTrainingsClick()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                        <nb-option *ngFor="let tr of trainings" value="{{tr.object}}"> 
+                            &nbsp;&nbsp;&nbsp; {{tr.object}}
+                        </nb-option>
+                     
+                    </nb-select>
+                </nb-form-field>
+           
+            </div>
+        </div>
+       
+       
+        <div class="row mt-3">
+            <div class="col-lg-9">
+                <nb-form-field>
+                    <nb-icon nbPrefix class="mt-1" icon="funnel-outline"></nb-icon>
+                    <nb-select selected="0" placeholder="Cost" fullWidth>
+                        <nb-option value="0"> &nbsp;&nbsp;&nbsp;Cost</nb-option>
+                        <nb-option value="All" (click)="getTrainingsClick()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                        <nb-option (click)="filterByCostLess200()" value="Less 200 Then 200 DT"> Less Then 200 DT </nb-option>
+                        <nb-option (click)="filterByCostBetwwen200AND400()" value="Between 200 And 400 DT"> Between 200 And 400 DT </nb-option>
+                        <nb-option (click)="filterByCostBetwwen400AND800()" value="Between 400 And 800 DT"> Between 400 And 800 DT </nb-option>
+                        <nb-option (click)="filterByCostMoreThen800()" value="More Then 800 DT"> More Then 800 DT </nb-option>
+
+                    </nb-select>
+                </nb-form-field>
+              
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-9">
+                <nb-form-field>
+                    <nb-icon nbPrefix class="mt-1" icon="flip-outline"></nb-icon>
+                    <nb-select selected="0" fullWidth>
+                        <nb-option value="0"> &nbsp;&nbsp;&nbsp;Object</nb-option>
+                        <nb-option value="All" (click)="getTrainingsClick()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                        <nb-option (click)="getAscObject()" value="Ascending"> Ascending </nb-option>
+                        <nb-option (click)="getDescObject()" value="Descending"> Descending </nb-option>
+                    </nb-select>
+                </nb-form-field>
+              
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-9">
+                <nb-form-field>
+                    <nb-icon nbPrefix class="mt-1" icon="flip-outline"></nb-icon>
+                    <nb-select selected="0" fullWidth>
+                        <nb-option value="0"> &nbsp;&nbsp;&nbsp;Hours</nb-option>
+                        <nb-option value="All" (click)="getTrainingsClick()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                        <nb-option (click)="getAscHours()" value="Ascending"> Ascending </nb-option>
+                        <nb-option (click)="getDescHours()" value="Descending"> Descending </nb-option>
+                    </nb-select>
+                </nb-form-field>
+              
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-9">
+                <nb-form-field>
+                    <nb-icon nbPrefix class="mt-1" icon="flip-outline"></nb-icon>
+                    <nb-select selected="0" placeholder="Cost" fullWidth>
+                        <nb-option value="0"> &nbsp;&nbsp;&nbsp;Cost</nb-option>
+                        <nb-option value="All" (click)="getTrainingsClick()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                        <nb-option (click)="getAscCost()" value="Ascending"> Ascending </nb-option>
+                        <nb-option (click)="getDescCost()" value="Descending"> Descending </nb-option>
+                    </nb-select>
+                </nb-form-field>
+              
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row mx-1">
+            <nb-card class="col-md-6" *ngFor="let training of trainings | filter : searchbyfields | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: trainings.length}">
+                <nb-card-header class="">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h5 class="">{{training.startDate | date : "MMM YYYY"}}</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <nb-icon icon="more-horizontal-outline"></nb-icon>
+                              </button>
+                              <mat-menu #menu="matMenu">
+                               
+                                <a style="text-decoration:none" nbTooltip="Click here to edit data" nbTooltipStatus="primary">
+                                    <button mat-menu-item [routerLink]="['/hr/trainings/edit/',training.id]">
+                                      <span ><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                                    </button>
+                                  </a>
+                            
+                                  <a nbTooltip="Click here to archive data" nbTooltipStatus="primary">
+                                    <button mat-menu-item>
+                                      <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon>&nbsp; Archive</span>
+                                    </button>
+                                  </a>
+                             
+                                 
+                              </mat-menu>
+                        </div>
+                    </div>
+                </nb-card-header>
+                <div class="card-body pt-2">
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+                            <div class="widget-49-date-primary">
+                                <span class="widget-49-date-day">{{training.startDate | date : "dd"}}</span>
+                                <span class="widget-49-date-month">{{training.startDate | date : "MMM"}}</span>
+                            </div>
+                            <div class="widget-49-meeting-info">
+                                <span class="">{{training.object}} - {{training.category}}</span>
+                                <span class="widget-49-meeting-time mt-2">
+                                    <nb-icon nbTooltip="Number Of Hours" icon="clock-outline"></nb-icon> {{training.nbHours}} {{"Hr"}}
+                                </span>
+                                
+                            </div>
+                           
+                        </div>                      
+                    </div>
+                   
+                </div>
+                <div class="row mx-2 mt-2" >
+                       <p class="col-lg-12 mx-4"> Cost : 
+                        <button size="small" nbButton shape="round" status="warning">
+                            {{training.cost}} {{"DT"}}
+                       </button>  
+                       </p>
+                       <p class="col-lg-12 mx-4"> Estimated Budget : 
+                           <button size="small" nbButton shape="round" status="primary">
+                                {{training.budget}} {{"DT"}}
+                           </button>
+                        </p>
+
+                </div>
+            </nb-card>
+           
+        </div>
+         <nb-card class="col-md-5" align="center" style="height: 35px; border-radius: 25px;">
+            <pagination-controls class="pt-1 text-center" (pageChange)="current = $event"></pagination-controls>
+        </nb-card> 
+            
+    </div>
+    <!-- <nb-card class=" ml-auto mr-auto" style="height: 30px; width: auto ;">
+        <pagination-controls class="text-left" (pageChange)="current = $event"  nextLabel=""
+                             previousLabel=""></pagination-controls>
+
+      </nb-card> -->
+</div>

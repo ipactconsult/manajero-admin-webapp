@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-md-3 col-sm-12">
+            <h3>
+                Applications    
+            </h3>      
+    </div>
+    <div class="col-md-5">
+        <input class="" fullWidth [(ngModel)]="searchbyfields"  nbTooltip="Search Application" nbTooltipStatus="primary" [disabled]="applications.length === 0" type="text"  fieldSize="large" nbInput placeholder="Search Application">   
+    </div>
+    <div class="col-md-4 col-sm-8 mt-1">
+        <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/recruitment/applications/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+        &nbsp;
+        <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/recruitment/applications/keypad']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+        &nbsp;
+        <a [routerLink]="['/hr/recruitment/applications/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+        &nbsp;
+        <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"><i class="fas fa-file-excel text-white"></i>  </button>
+        &nbsp;
+
+          <br>
+    </div>
+
+
+
+</div>
+<br>
+
+<div class="row">
+
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-lg-9">
+                    <nb-form-field>
+                        <nb-icon nbPrefix class="mt-1" icon="funnel-outline"></nb-icon> 
+                        <nb-select (selectedChange)="getStatusSelected($event)" selected="0"   fullWidth>
+                            <nb-option disabled value="0"> &nbsp;&nbsp;&nbsp;Status</nb-option>
+                            <nb-option value="All" (click)="getApplications()"> &nbsp;&nbsp;&nbsp;All</nb-option>
+                            <nb-option value="PENDING"> &nbsp;&nbsp;&nbsp;PENDING</nb-option>
+                            <nb-option value="SCREENING"> &nbsp;&nbsp;&nbsp;SCREENING</nb-option>
+                            <nb-option value="APPROVED"> &nbsp;&nbsp;&nbsp;APPROVED</nb-option>
+                            <nb-option value="REJECTED"> &nbsp;&nbsp;&nbsp;REJECTED</nb-option>
+                        </nb-select>
+                    </nb-form-field>
+               
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="row" *ngIf="!applications || applications.length === 0">
+                <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+            </div>
+            <div [hidden]="applications.length === 0" class="row" *ngIf="(applications | filter : searchbyfields).length === 0">
+                <nb-alert outline="danger" class="w-100 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+            </div>
+
+            <div class="row">
+
+                <nb-card class="col-md-5 mx-3" *ngFor="let application of applications | filter : searchbyfields | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: applications.length} ; let i =index">
+
+                    <div class="row mx-2 mt-2">
+                        <div class="col-md-3">
+                            <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" width="35px" height="35px" alt="">
+                        </div>
+                        <div class="col-md-7 mt-1">
+                            <p>  <nb-icon nbTooltipStatus="primary" nbTooltip="Application Name" icon="person-outline" class="text-info "></nb-icon> {{application.firstName}}{{" "}}{{application.lastName}}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <button shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <nb-icon icon="more-horizontal-outline"></nb-icon>
+                              </button>
+                              <mat-menu #menu="matMenu">
+                               
+                                <a [routerLink]="['/hr/recruitment/application/app/', application.id]" style="text-decoration:none" nbTooltip="Click here to screen profile" nbTooltipStatus="primary">
+                                    <button mat-menu-item>
+                                      <span ><nb-icon class="text-info" icon="activity-outline"></nb-icon>&nbsp; Screen Profile</span>
+                                    </button>
+                                  </a>
+                            
+                                  <a nbTooltip="Click here to archive data" nbTooltipStatus="primary">
+                                    <button mat-menu-item>
+                                      <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon>&nbsp; Archive</span>
+                                    </button>
+                                  </a>
+                             
+                                 
+                              </mat-menu>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                            <div class="col-md-12 mx-5">
+                                <p class="mx-5"> <nb-icon nbTooltipStatus="primary" nbTooltip="Quality" icon="person-outline" class="text-info mx-2"></nb-icon> {{application.quality}}</p>
+                            </div>
+
+                            <div class="col-md-12 mx-5">
+                                <p class="mx-5"> <nb-icon nbTooltipStatus="primary" nbTooltip="Date Of Birth" icon="gift-outline" class="text-info mx-2"></nb-icon> {{application.date | date : "EEEE MMM YYYY"}}</p>
+                            </div>
+
+                            
+                            <div class="col-md-12 mx-5">
+                                <p class="mx-5"> <nb-icon nbTooltipStatus="primary" nbTooltip="Email" icon="at-outline" class="text-info mx-2"></nb-icon> {{application.email}}</p>
+                            </div>
+
+                            <div class="col-md-12 mx-5">
+                                <p class="mx-5"> <nb-icon nbTooltipStatus="primary" nbTooltip="Phone Number" icon="phone-outline" class="text-info mx-2"></nb-icon> {{application.phoneNumber}}</p>
+                            </div>
+
+                      
+                            <div class="col-md-12 mx-5">
+                              <p class="mx-5"> <nb-icon nbTooltipStatus="primary" nbTooltip="Status" icon="checkmark-square-outline" class="text-info mx-2"></nb-icon>  <nb-tag size="small" [text]="application.status"></nb-tag> </p>
+                            </div>
+                        
+                            <div class="col-md-12 mx-5">
+                                <p class="mx-5"><nb-icon nbTooltipStatus="primary" nbTooltip="Diploma" icon="award-outline" class="text-info mx-2"></nb-icon> {{application.diploma}}</p>
+                            </div>
+
+                            <div class="col-md-12 mx-5">
+                                <p class="mx-5"><nb-icon nbTooltipStatus="primary" nbTooltip="Curriculum Vitae" icon="file-outline" class="text-info mx-2"></nb-icon> 
+                                        <a href="{{application.curriculumVitae}}" status="danger" target="_blank" nbButton size="small" shape="round">CV.PDF</a>
+                                </p>
+                            </div>
+                      
+                    </div>
+                    
+                </nb-card>
+                
+            
+    
+            </div>
+                <nb-card [hidden]="applications.length === 0" class="card w-50" align="center" style=" height: 35px; border-radius: 25px;">
+                    <pagination-controls class="pt-1 text-center" (pageChange)="current = $event"></pagination-controls>
+                </nb-card>
+
+          
+        </div>
+
+
+
+</div>

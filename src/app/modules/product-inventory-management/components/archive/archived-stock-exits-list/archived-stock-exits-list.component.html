@@ -1,0 +1,152 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Stock Exits</h3>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <input [(ngModel)]="searchSE"
+                   class="w-75 mx-2" nbInput placeholder="Search For Archived Stock Exit"
+                   type="text">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div>
+            <a (click)="exportAsXLSX()" [disabled]="stockExits.length === 0"
+               align="right" status="success"
+               nbButton nbTooltip="Click here to export data to Excel" nbTooltipStatus="primary">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>&nbsp;
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!stockExits || stockExits.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(stockExits | filter : searchSE).length === 0" [hidden]="stockExits.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">
+        Item Not Found.
+      </nb-alert>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <input [nbDatepicker]="datepicker" placeholder="Filter By Date"
+                 style="cursor: pointer"
+                 class="mx-2 mt-3 w-75" nbInput>
+          <nb-datepicker #datepicker
+                         (dateChange)="getArchivedSExitsByCreationDate($event)"></nb-datepicker>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Filter by Material" class="mx-2 mt-3 w-75"
+                     selected="0" (selectedChange)="getArchivedSExitsByMaterial($event)">
+            <nb-option (click)="getAllArchivedStockExits()" value="All">All</nb-option>
+            <nb-option *ngFor="let material of materials" [value]="material.materialName">
+              {{material.materialName}}
+            </nb-option>
+          </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select class="mx-2 mt-3 w-75"placeholder="Sort by Reference"
+                     selected="0">
+            <nb-option (click)="getAllArchivedStockExits()" value="All">All</nb-option>
+            <nb-option (click)="getAllArchivedStockExitsASC()" value="1">Names (A-Z)</nb-option>
+            <nb-option (click)="getAllArchivedStockExitsDESC()" value="2">Names (Z-A)</nb-option>
+          </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+          <label>Items Per Page :</label>
+          <input [(ngModel)]="pageSize" placeholder="Number to get archived stock exits per page"
+                 nbTooltip="Tap a number to get archived stock exits per page" nbTooltipStatus="primary"
+                 class="w-100" min="6" nbInput type="number">
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <table class="table mb-0">
+          <thead class="bg-light" *ngIf="stockExits.length > 0">
+          <tr>
+            <th class="align-middle bt-0">Reference</th>
+            <th class="align-middle bt-0">Created</th>
+            <th class="align-middle bt-0">Quantity Out</th>
+            <th class="align-middle bt-0">Remaining Quantity</th>
+            <th class="align-middle bt-0">Material</th>
+            <th class="align-middle bt-0 text-right">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            *ngFor="let stockExit of stockExits  | filter : searchSE 
+          | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: stockExits.length}">
+            <td class="align-middle">
+              <p>{{stockExit.stockExitRef}}</p>
+            </td>
+            <td class="align-middle">
+              <p>{{stockExit.stockExitDate | date: 'dd MMM YYYY'}}</p>
+            </td>
+            <td class="align-middle">
+              <p>{{stockExit.quantityOut}}</p>
+            </td>
+            <td class="align-middle">
+              <p>{{stockExit.material.quantityStock - stockExit.quantityOut}}</p>
+            </td>
+            <td class="align-middle">
+              <a [routerLink]="['/pim/procurement/material', stockExit.material.materialId]"
+                 style="text-decoration: none">
+                <button nbButton shape="round" size="small" status="dark" class="materialNames">
+                  {{stockExit.material.materialName}}
+                </button>
+              </a>
+            </td>
+            <td class="align-middle text-right">
+              <div class="btn-group">
+                <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                        aria-label="Example icon-button with a menu"
+                        nbButton nbTooltip="Click here to see advanced menu"
+                        nbTooltipStatus="primary"
+                        shape="round"
+                        size="small"
+                        status="basic">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <a (click)="open2(dialog)" fullWidth nbButton>
+                      <span class="text-secondary"><nb-icon icon="refresh-outline"></nb-icon></span>Restore
+                    </a>
+                  </button>
+                </mat-menu>
+                <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>Confirm Restore Operation</nb-card-header>
+                    <nb-card-body>Are you sure you would like to restore this stock exit?</nb-card-body>
+                    <nb-card-footer>
+                      <div class="row">
+                        <button class="col-md-2" status="danger" nbButton (click)="ref.close()">No</button>
+                        <div class="col-md-8"></div>
+                        <a class="col-md-2" status="success" nbButton (click)="onRestoreConfirm(stockExit, ref)">Yes</a>
+                      </div>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+  </div>
+</div>

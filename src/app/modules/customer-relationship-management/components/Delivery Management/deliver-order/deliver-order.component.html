@@ -1,0 +1,172 @@
+<nb-card>
+  <nb-card-body>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-10 col-sm-12">
+          <h5 class="more-vertical">
+            Deliver the order </h5>
+        </div>
+
+        <div align="right" class="col-md-2 justify-content-end">
+          <a [routerLink]="['/crm/orders']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to orders list" nbTooltipStatus="primary"
+             shape="round" status="basic">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <form [formGroup]="deliveryGroup" class="col-lg-12">
+      <nb-stepper #stepper>
+        <nb-step [stepControl]="deliveryGroup" label="Delivery information">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label" for="billingAddress">Billing Address</label>
+                <input [(ngModel)]="delivery.billingAddress" fieldSize="large"
+                       formControlName="billingAddress" fullWidth
+                       id="billingAddress"
+                       name="billingAddress" nbInput placeholder="Billing Address" type="text">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="label">phone</label>
+                <input [(ngModel)]="delivery.phone" [nbDatepicker]="dateTimePicker1"
+                       fieldSize="large" formControlName="phone"
+                       fullWidth id="phone"
+                       name="phone" nbInput placeholder="Phone">
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="label">Ship date</label>
+                <input [(ngModel)]="delivery.shipDate" [nbDatepicker]="dateTimePicker1"
+                       fieldSize="large" formControlName="shipDate"
+                       fullWidth id="shipDate"
+                       name="shipDate" nbInput placeholder="Date ship">
+                <nb-datepicker #dateTimePicker1></nb-datepicker>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label"> Notes shipping</label> <br>
+                <input [(ngModel)]="delivery.notesShipping"
+                       fieldSize="large" formControlName="notesShipping"
+                       fullWidth id="notesShipping" type="text"
+                       name="notesShipping" nbInput placeholder="Notes shipping">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-10"></div>
+            <div align="right" class="col-md-2 mt-2">
+              <button (click)="onOrderFormSubmit()" class="w-100" nbButton nbStepperNext status="info"
+                      type="submit">next
+              </button>
+            </div>
+          </div>
+        </nb-step>
+
+
+        <nb-step [stepControl]="extra_form" label="Pricing ">
+          <form class="step-container" formGroupName="extra_form">
+
+            <div class="row ">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label>Ship Mode</label>
+                  <nb-select (selectedChange)="onMenuItemSelectedPaymentMethod($event)"
+                             [(ngModel)]="delivery.shipMode"
+                             class="w-100"
+                             fieldSize="large"
+                             formControlName="shipMode"
+                             fullWidth id="shipMode"
+                             name="shipMode" placeholder="ship Mode"
+                             size="large">
+
+                    <nb-option value="Cash">Cash</nb-option>
+                    <nb-option value="Checks">Checks</nb-option>
+                    <nb-option value="Debit cards">Debit cards</nb-option>
+                    <nb-option value="Credit cards">Credit cards</nb-option>
+                    <nb-option value="Mobile payments">Mobile payments</nb-option>
+                    <nb-option value="Electronic bank transfers">Electronic bank transfers</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label">Ship Infos</label>
+                  <input [(ngModel)]="delivery.shipInfos" fieldSize="large"
+                         formControlName="shipInfos" fullWidth id="shipInfos"
+                         name="shipInfos" nbInput
+                         placeholder="shipInfos" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label">Total</label>
+                  <input [(ngModel)]="delivery.shippingPrice"
+                         fieldSize="large" formControlName="shippingPrice" fullWidth
+                         id="shippingPrice"
+                         name="shippingPrice" nbInput
+                         placeholder="Total" type="number">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label">Currency</label>
+                  <nb-select (selectedChange)="onMenuItemSelectedCurrency($event)"
+                             [(ngModel)]="delivery.currency"
+                             class="w-100"
+                             formControlName="currency"
+                             fullWidth id="currency"
+                             name="currency" placeholder="currency"
+                             size="large">
+                    <nb-option
+                      *ngFor="let cu of currencies"
+                      value="{{cu.cc}}">{{cu.symbol}}</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+
+            <div align="right">
+              <button (click)="addDeliveryFunction()" nbButton status="success"
+                      type="submit">Deliver
+              </button>
+            </div>
+
+
+          </form>
+        </nb-step>
+
+      </nb-stepper>
+    </form>
+  </nb-card-body>
+</nb-card>

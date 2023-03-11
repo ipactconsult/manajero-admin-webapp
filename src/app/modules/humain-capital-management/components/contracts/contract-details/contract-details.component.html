@@ -1,0 +1,275 @@
+<div *ngIf="contract" class="container">
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h2 class="more-vertical">
+          Contract Details </h2>
+      </div>
+  
+      <div align="right" class="col-md-2 justify-content-end">
+        <a [routerLink]="['/hr/contracts/contract/edit-contract',contract.id]" class="w-25"
+           fullWidth nbButton nbTooltip="Click here to edit contract data" status="warning" nbTooltipStatus="primary" shape="round">
+          <nb-icon icon="edit-outline"></nb-icon>
+        </a>
+        <a [routerLink]="['/hr/contracts/keypad']" class="w-25 mx-3"
+           fullWidth nbButton nbTooltip="Back to contracts list" nbTooltipStatus="primary"  shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+  
+      </div>
+  
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4 mb-3">
+        <nb-card>
+          <nb-card-body class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="row">
+  
+                <img alt="" src="{{contract?.employee?.employeeProfileImage}}" style="width: 150px;height: 150px;border-radius: 100%;">
+              </div>
+  
+              <div class="mt-3">
+                <h4>{{contract?.employee?.employeeName}}</h4>
+                <div class="row">
+                  
+                  <div class="col-md-12">
+                       <nb-tag-list>
+                    <nb-tag [text]="contract.status" status="primary" appearance="filled"></nb-tag>
+                  </nb-tag-list>
+                  </div>
+                </div>
+           
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      
+     
+      </div>
+      <div class="col-md-8">
+        <nb-accordion>
+          <nb-accordion-item expanded="true">
+            <nb-accordion-item-header>Contract Type & Period</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Contract Type</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.contractType}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Hiring Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.hiringDate | date : 'YYYY MMM dd'}}
+                </div>
+              </div>
+              <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">End Date</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.endDate | date : 'YYYY MMM dd'}}
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Notice Period</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.noticePeriod}}
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Official Signature</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.officialSignature | date : 'YYYY MMM dd'}}
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Duration Of Trial Period</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.durationOfTrialPeriod}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Start Time</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.startTime}}
+                </div>
+              </div>              
+  
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+          <nb-accordion-item expanded="false">
+            <nb-accordion-item-header>Hours Plan</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Number Of Hours Worked Per Day</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.nbOfHoursWorkedPerDay}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Number Of Weekly Working Hours</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.nbOfWeeklyWorkingHours }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Hourly Work Rate</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.hourlyWorkRate }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Daily Cost</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.dailyCost }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Hourly Distribution</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.hourlyDistribution}}<br>
+                </div>
+              </div>
+              <hr>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+          <nb-accordion-item expanded="false">
+            <nb-accordion-item-header>Company</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Company Name</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{contract.companyName}}
+                  <span *ngIf="contract.companyName === null">
+                        This field is not fill it yet.
+                      </span>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Company Address </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.companyAddress}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Work Address </p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{contract.workAddress}}
+                </div>
+              </div>
+              
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+            <nb-accordion-item expanded="false">
+              <nb-accordion-item-header>Salary</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Bonus Coefficient</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{contract.bonusCoef}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Gross Hourly Wage </p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                     {{contract.grossHourlyWage}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Minimum Monthly Salary </p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{contract.minimumMonthlySalary}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Gross Annual Salary</p>
+                  </div>
+                  <div class="col-sm-9">
+                      {{contract.grossAnnualSalary}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0 text-sm">Overall Monthly Cost</p>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{contract.overallMonthlyCost}}
+                   
+                  </div>
+                </div>
+                <hr>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+        <br>
+      </div>
+    </div>
+  
+  
+  
+  
+  </div>

@@ -1,0 +1,64 @@
+<form class="form" [formGroup]="resourceRequestForm">
+  <h6 class="text-primary"><nb-icon icon="file-text-outline"></nb-icon>Request for unavailable resource:</h6>
+  <div class="form-group">
+    <label for="subject">Resource:</label>
+    <input nbInput fullWidth class="form-control" type="text" formControlName="resourceName" />
+  </div>
+  <div class="form-group">
+    <label class="text-label" for="text">Description:</label>
+    <input nbInput fullWidth class="form-control" type="text" formControlName="description" />
+  </div>
+  <div>
+    <label for="subject">Degree of importance:</label>
+    <nb-select placeholder="Choose Priorty" formControlName="importance" fullWidth>
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="success"
+        ></nb-icon>
+        <p class="my-1">LOW</p>
+      </nb-option>
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="warning"
+        ></nb-icon>
+        <p class="my-1">MEDIUM</p></nb-option
+      >
+      <nb-option value="LOW"
+        ><nb-icon
+          icon="radio-button-on"
+          class="my-1 mx-1"
+          status="danger"
+        ></nb-icon>
+        <p class="my-1">HIGH</p></nb-option
+      >
+    </nb-select>
+  </div>
+  <div>
+    <label for="subject">Prefered Date :</label>
+    <input
+      nbInput
+      fullWidth
+      placeholder="Pick Date"
+      [nbDatepicker]="dateTimePicker"
+      formControlName="preferredDate"
+    />
+    <nb-datepicker #dateTimePicker></nb-datepicker>
+    
+  </div>
+  <input
+  [ngClass]="
+    (selectedItem === null|| selectedItem===undefined)
+      ? 'btn btn-success btnCreate'
+      : 'btn btn-warning btnCreate'
+  "
+  [value]="(selectedItem === null|| selectedItem===undefined)? 'Send Request' : 'Update  Request'"
+  type="submit"
+  [disabled]="resourceRequestForm.invalid"
+  (click)="(selectedItem === null|| selectedItem===undefined)? save() : update()"
+/>
+</form>
+

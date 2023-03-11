@@ -1,0 +1,231 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content" [nbSpinner]="loading"
+     nbSpinnerStatus="primary"
+     nbSpinnerSize="large">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Suppliers</h3>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <input [(ngModel)]="search"
+                   class="w-75" nbInput
+                   placeholder="Search Supplier"
+                   type="text">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div>
+            <a [routerLink]="['/pim/suppliers/grid']" nbButton
+               nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" status="primary">
+              <nb-icon icon="grid-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/suppliers']" nbButton
+               nbTooltip="Visualize data on keypad " nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/suppliers/list']" nbButton
+               nbTooltip="Visualize data on list " nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline"></nb-icon>
+            </a>&nbsp;
+            <a (click)="exportAsXLSX()" status="success"
+                    nbButton nbTooltip="Export data to Excel" nbTooltipStatus="primary">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>&nbsp;
+            <a [routerLink]="['/pim/create/supplier/new']" class="btn btn-primary"
+            nbTooltip="Create new Supplier" nbTooltipStatus="primary">
+              <i class="fas fa-plus text-white"></i>
+            </a>&nbsp;
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!dataSuppliers || dataSuppliers.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(dataSuppliers | filter : search).length === 0" [hidden]="dataSuppliers.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">
+        Item Not Found.
+      </nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <input [nbDatepicker]="datepicker" placeholder="Filter By Date"
+                 style="cursor: pointer"
+               class="mx-2 mt-3 w-75" nbInput>
+              <nb-datepicker #datepicker
+                             (dateChange)="getSuppliersByDate($event)"></nb-datepicker>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+            <nb-select (selectedChange)="getSuppliersByCountry($event)"
+                       class="mx-2 mt-3 w-75" placeholder="Filter by Country"
+                       selected="0">
+              <nb-option (click)="getAllSuppliers()" value="All">All</nb-option>
+              <nb-option [value]="country.country_name" *ngFor="let country of countries">
+                {{country.country_name}}
+              </nb-option>
+            </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select placeholder="Sort by Full Name"
+                       selected="0" class="mx-2 mt-3 w-75">
+              <nb-option (click)="getAllSuppliers()" value="All">All</nb-option>
+              <nb-option (click)="getAllSuppliersASC()" value="1">Full Names (A-Z)</nb-option>
+              <nb-option (click)="getAllSuppliersDESC()" value="2">Full Names (Z-A)</nb-option>
+            </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+          <label>Suppliers Per Page : </label>
+          <input [(ngModel)]="pageSize" class="w-100"
+                 min="3" nbInput
+                 nbTooltip="Tap a number to get suppliers per page" nbTooltipStatus="primary"
+                 placeholder="Number to get suppliers per page" type="number">
+        </div>
+      </div>
+      <div class="input-group col-md-9">
+        <div
+          *ngFor="let supplier of dataSuppliers |filter: search
+           | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: dataSuppliers.length}"
+          align="center" class="col-lg-4 input-group">
+          <div class="mx-1 row">
+            <nb-card>
+              <nb-card-body class="pt-2 pb-2">
+                <div class="">
+                  <div class="row mt-2">
+                    <div class="col-lg-12">
+                      <div align="right" class="">
+                        <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                                aria-label="Example icon-button with a menu"
+                                nbButton nbTooltip="Click here to see advanced menu"
+                                nbTooltipStatus="primary"
+                                shape="round"
+                                size="small"
+                                status="basic">
+                          <nb-icon icon="more-horizontal-outline"></nb-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <a [routerLink]="['/pim/supplier/update', supplier.supplierId]" nbButton  fullWidth>
+                      <span class="text-warning"><nb-icon icon="edit-outline"></nb-icon></span>Edit
+                    </a>  
+                  </button>
+
+                  <button mat-menu-item>
+                      <a [routerLink]="['/pim/supplier', supplier.supplierId]" nbButton fullWidth>
+                        <span class="text-info"><nb-icon icon="eye-outline"></nb-icon></span>Details
+                      </a>
+                  </button>
+                               <button mat-menu-item>
+                        <a (click)="open2(dialog)" fullWidth nbButton>
+                          <span class="text-secondary"><nb-icon icon="archive-outline"></nb-icon></span>Archive
+                        </a>
+                      </button>
+                </mat-menu>
+                        <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Confirm archive operation ?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to archive this supplier?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="primary">
+                        Close
+                      </button>
+                      <button (click)="onArchiveConfirm(supplier, ref)" class="float-right" nbButton
+                      status="danger">
+                        Archive
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div align="center">
+                  <h4>Supplier Created</h4>
+                <h6>{{moment(supplier.supplierCreationDate).format('DD MMM YYYY')}}</h6>
+                <nb-user
+                      [name]="supplier.supplierFirstName"
+                      class="text-dark justify-content-center"
+                      onlyPicture picture="{{supplier.supplierImage}}" size="giant"></nb-user>
+                <span class="text-sm-center mt-2">{{supplier.supplierFirstName}} {{supplier.supplierLastName}}</span>
+                </div>
+                <div class="mt-4">
+                  <div class="row">
+                    <div class="col-lg">
+                      <div class="mt-3">
+                        <p class="mb-0 text-muted">Email</p>
+                        <span>{{supplier.supplierEmail}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg">
+                      <div class="mt-3">
+                        <p class="mb-0 text-muted">Phone Number</p>
+                        <span>{{supplier.supplierPhone}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div align="center" class="col-lg ">
+                      <div class="mt-3">
+                        <p class="mb-0 text-muted">Company</p>
+                        <span>{{supplier.supplierCompany}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div align="center" class="col-lg ">
+                      <div class="mt-3">
+                        <p class="mb-0 text-muted">Country</p>
+                        <span>{{supplier.supplierCountry}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div align="center" class="col-lg ">
+                      <div class="mt-3">
+                        <p class="mb-0 text-muted">Currency</p>
+                        <span *ngIf="supplier.supplierCurrency === 'TD'">Tunisian Dinar</span>
+                        <span *ngIf="supplier.supplierCurrency === '$'">Dollar</span>
+                        <span *ngIf="supplier.supplierCurrency === '€'">Euro</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div align="center" class="col-lg">
+                      <div class="mt-3">
+                        <button nbButton status="success" size="small" 
+                                (click)="inviteToChat(supplier)">
+                          Invite to Meet
+                        </button><span style="pointer-events: none;">&nbsp;&nbsp;</span>
+                        <nb-icon icon="info-outline" nbTooltip="Supplier will receive an email in which he/she is invited 
+                        to chat." nbTooltipStatus="primary"></nb-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </div>
+    </div><br/>
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+  </div>
+</div>

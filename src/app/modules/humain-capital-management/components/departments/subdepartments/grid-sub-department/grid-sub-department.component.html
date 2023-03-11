@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="row">
+            <h3>Sub Departments</h3>
+            <input class="w-50 mx-2"   placeholder="search"  nbTooltip="Search sub department" nbTooltipStatus="primary"
+            [(ngModel)]="searchbyfields" type="text"  nbInput>
+        </div>
+
+    </div>
+    <div class="col-md-6 col-sm-8">
+        <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/subdepartment/sub/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+        &nbsp;
+        <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/subdepartment/subList']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+        &nbsp;
+        <a [routerLink]="['/hr/subdepartment/sub/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+        &nbsp;
+        <button (click)="exportAsXLSX()" nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"><i class="fas fa-file-excel text-white"></i>  </button>
+        &nbsp;
+        <a style="float: right;" nbTooltip="Create new sub-department" nbTooltipStatus="primary"
+        nbButton status="info" [routerLink]="['/hr/subdepartment/createSub']">                
+          <nb-icon icon="plus-outline"></nb-icon>
+            Create new</a>
+    </div>
+
+
+  
+</div>
+<div class="row mt-2">
+    <div class="row w-100" *ngIf="!subList || subList.length === 0">
+        <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+    </div>
+    <div [hidden]="subList.length === 0" class="row w-100" *ngIf="(subList | filter : searchbyfields).length === 0">
+        <nb-alert outline="danger" fullWidth class="col-lg-12 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+    </div>
+    <div class="col-lg-10 mt-3">
+      <label for="">Items Per Page &nbsp; : &nbsp; </label> 
+      <input class="w-75" [disabled]="subList.length === 0" type="number" nbInput [(ngModel)]="pageSize" min="10">
+    </div>
+    <nb-card class="col-md-6 mt-3" *ngFor="let subd of subList | filter : searchbyfields | paginate : {itemsPerPage: 4, currentPage: current,totalItems: total} ; let i =index">
+
+        <nb-card-header>
+            <div class="row">
+                <div class="col-md-10">
+                    <nb-user [name]="subd.subDepartmentName"></nb-user>
+                     
+                    <label class="mt-3"> Part of : &nbsp;</label>
+                     <nb-tag-list>
+                        <nb-tag [hidden]="subd?.department?.departmentName === null" status="primary" [text]="subd?.department?.departmentName"></nb-tag>
+                      </nb-tag-list>
+              
+                    
+                    <br>      
+                </div>
+                <div class="col-md-2">
+                    <button shape="round" nbButton status="basic" size="small" class="btn btn-default " mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <nb-icon icon="more-horizontal-outline"></nb-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                                   
+                        <a style="text-decoration: none;" [routerLink]="['/hr/subdepartment/edit/',subd.id]">
+                          <button mat-menu-item>
+                              <span><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                          </button>
+                        </a>
+  
+                        <a (click)="deleteSubDepartment(subd.id)">
+                        <button mat-menu-item>
+                          <span><nb-icon class="text-danger" icon="trash-outline"></nb-icon>&nbsp; Delete </span>
+                        </button>
+                      </a>
+                       
+                    </mat-menu>
+                </div>
+            </div>
+        </nb-card-header>
+    </nb-card>
+    <nb-card class="bg-light" style="height: 35px; border-radius: 25px;">
+        <pagination-controls class="pt-1" (pageChange)="current = $event"></pagination-controls>
+      </nb-card>
+</div>

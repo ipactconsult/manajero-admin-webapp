@@ -1,0 +1,33 @@
+<nb-card>
+    <nb-card-header>{{activity?.title}}</nb-card-header>
+    <nb-card-body>
+        <strong class="text-secondary"
+        ><nb-icon status="info" icon="file-text-outline"></nb-icon>
+        Description :
+      </strong>
+        <nb-alert>
+          <p *ngIf="activity?.description , else noData"> {{activity?.description}}</p> 
+          <ng-template #noData>
+            <div class="text-center">
+                No Description
+                <em class="fas fa-empty-set red-text" ></em>             </div>
+          </ng-template>
+        </nb-alert>
+            <p>
+              <strong class="text-secondary"
+                ><nb-icon status="success" icon="calendar-outline"></nb-icon>
+                Start Date :
+              </strong>
+              {{ activity?.startDate | date: "mediumDate" }}
+            </p>
+            <p>
+              <strong class="text-secondary"
+                ><nb-icon status="danger" icon="calendar-outline"></nb-icon>
+                End Date :
+              </strong>
+              {{ activity?.dueDate | date: "mediumDate" }}
+            </p>
+      
+    </nb-card-body>
+    
+</nb-card>

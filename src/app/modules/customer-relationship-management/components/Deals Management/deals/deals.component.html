@@ -1,0 +1,276 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+<div class="container">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3">
+        <h3>Deals</h3>
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+            <input [(ngModel)]="search"
+             class="w-100 mx-2" nbInput fieldSize="large"  
+             nbTooltip="Tap here to search a deal" nbTooltipStatus="primary" placeholder="Search deal ..."
+             type="text">
+        </div>
+      </div>
+      <div class="col-md-4 pt-1">
+         
+          <div>
+              <a [routerLink]="['/crm/grid-deals']" aria-current="page"
+             
+                nbButton status="primary" class="mx-1"
+               id="tooltipShowSimpleGrid" nbTooltip="Visualize data on grid 2 x 2 "
+               nbTooltipStatus="primary" >
+              <nb-icon icon="grid-outline"></nb-icon>
+            </a> 
+            <a [routerLink]="['/crm/deals']" aria-current="page"
+             
+                nbButton status="warning" class="mx-1"
+               id="tooltipShowGrid" nbTooltip="Visualize data on keypad "
+               nbTooltipStatus="primary" status="warning">
+              <nb-icon icon="keypad-outline"></nb-icon>
+            </a>
+            <a [routerLink]="['/crm/list-deals']"
+               nbButton status="primary"
+               id="tooltipShowList" class="mx-1"
+               nbTooltip="Visualize data on list "
+               nbTooltipStatus="primary" status="basic">
+              <nb-icon icon="list-outline">
+              </nb-icon>
+            </a>
+
+          
+            <a (click)="exportAsXLSX()" aria-current="page"
+               nbButton
+               class="mx-1"
+               id="tooltipExport" nbTooltip="Click here to export data in excel"
+               nbTooltipStatus="primary"
+               status="success">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>
+            <a [routerLink]="['/crm/addDeal']" 
+               aria-current="page" 
+               nbButton status="primary"
+               class="mx-1 "
+               id="tooltipAddDeal" nbTooltip="Click here to create a new deal"
+               nbTooltipStatus="primary"> 
+              <nb-icon icon="plus-outline"></nb-icon> Add
+            </a>
+          </div>
+      
+      </div>
+    </div>
+  </nb-card-header>
+  
+   
+  <div *ngIf="!dataDeals || dataDeals.length === 0" align="center">
+    <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+  </div>
+  <div *ngIf="(dataDeals | filter : search).length === 0" [hidden]="dataDeals.length === 0"
+       class="">
+    <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">The item searched is not found. Please make sure
+      while typing your data
+    </nb-alert>
+  </div>
+
+
+  <div class="row">
+       <div class="col-md-3 ">
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="getDealsByStatus($event)"
+                   class="mx-2 mt-3 w-75" nbTooltip="Click here to filter by status"
+                   nbTooltipStatus="primary"
+                   placeholder="&nbsp;  Status">
+          <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+
+          <nb-option value="In Progress">In progress</nb-option>
+          <nb-option value="paused">Paused</nb-option>
+          <nb-option value="Done">Done</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+        <nb-select (selectedChange)="getDealsByDealType($event)"
+                   class="mx-2 mt-3 w-75" nbTooltip="Click here to filter by deal type"
+                   nbTooltipStatus="primary"
+                   placeholder="&nbsp; Deal type">
+          <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+          <nb-option *ngFor="let optionType of optionsType"
+                     value="{{optionType.value}}">{{optionType.value}}</nb-option>
+        </nb-select>
+      </nb-form-field>
+
+   <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="filterByEmployee($event)" 
+                     class="mt-3 mx-2 w-75" placeholder="&nbsp; Employee"
+          nbTooltip="Click here to filter deal by employee" nbTooltipStatus="primary">
+            <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+            <nb-option
+                *ngFor="let optionEmployee of list"
+                value="{{optionEmployee.id}}">{{optionEmployee.employeeName}}</nb-option>
+          </nb-select>
+        </nb-form-field>   
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="filterByProperty($event)" 
+                     class="mt-3 mx-2 w-75" placeholder="&nbsp; Property"
+          nbTooltip="Click here to filter deal by property" nbTooltipStatus="primary">
+            <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+             <nb-option
+                *ngFor="let optionProperty of properties"
+                value="{{optionProperty.propertyId}}">{{optionProperty.propertyName}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      
+            <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getVisitsByCustomer($event)" 
+                     class="mt-3 mx-2 w-75" placeholder="&nbsp; Customer"
+          nbTooltip="Click here to filter deal by customer" nbTooltipStatus="primary">
+            <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+             <nb-option
+                *ngFor="let customer of dataCustomers"
+                value="{{customer.id}}">{{customer.name}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+    <!--   <nb-form-field>
+          <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select [disabled]="dataVisits.length === 0"
+                     class="mx-2 mt-3 w-75" nbTooltip="Tap to sort by title "
+                     nbTooltipStatus="primary" placeholder="Sort by title"
+                     selected="0">
+            <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+            <nb-option (click)="getVisitsTitleAsc()" value="1">Names (A-Z)</nb-option>
+            <nb-option (click)="getVisitsTitleDesc()" value="2">Names (Z-A)</nb-option>
+          </nb-select>
+        </nb-form-field>
+          <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select [disabled]="dataVisits.length === 0"
+                     class=" mx-2 mt-3 w-75" nbTooltip="Tap to sort by date creation"
+                     nbTooltipStatus="primary" placeholder="Sort by date creation"
+                     selected="0">
+            <nb-option (click)="getAllDeals()" value="All">All</nb-option>
+            <nb-option (click)="getVisitsCreatedDesc()" value="1">Recently added</nb-option>
+            <nb-option (click)="getVisitsCreatedAsc()" value="2">Old</nb-option>
+          </nb-select>
+        </nb-form-field>-->
+      <input [(ngModel)]="pageSize" [disabled]="dataCustomers.length === 0"
+             class="mt-3" min="6" nbInput
+             nbInput nbTooltip="Tap here to get deals per page" nbTooltipStatus="primary" type="number">
+
+    </div>
+
+    <div class="col-lg-9">
+    
+      <div class="row mt-3">
+        <nb-card
+          *ngFor="let deal of dataDeals  | filter : search | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: total}"
+          class="col-lg-4">
+          <nb-card-header>
+            <span *ngIf="deal.dealStatus === 'paused'"
+                  class="mb-2 badge badge-warning badge-pill">{{deal.dealStatus}}</span>
+            <span *ngIf="deal.dealStatus === 'Done'"
+                  class="mb-2 badge badge-success badge-pill">{{deal.dealStatus}}</span>
+            <span *ngIf="deal.dealStatus === 'In Progress'"
+                  class="mb-2 badge badge-light badge-pill">{{deal.dealStatus}}</span>
+            <span *ngIf="deal.dealStatus === 'Canceled'"
+                  class="mb-2 badge badge-danger badge-pill">{{deal.dealStatus}}</span>
+            <div class=" row">
+              <p class="col-md-10 pt-2">
+                <i class="fa fa-fw fa-star-o"></i>
+                {{deal.dealName}}
+              </p>
+
+              <div class="align-self-center col-md-1 mb-2">
+                <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                        aria-label="Example icon-button with a menu" mat-icon-button
+                        nbButton nbTooltip="Click here to see advanced menu"
+                        nbTooltipStatus="primary"
+                        shape="round"
+                        size="small"
+                        status="basic">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="bg-white">
+                  <li class="text-dark list-unstyled mx-2 mt-2">
+                    <a [routerLink]="['/crm/update-deal/', deal.id]" fullWidth nbButton>
+                                          <span class="text-warning">
+                        <nb-icon icon="edit-outline"></nb-icon>
+                      </span> Edit
+                    </a>
+                  </li>
+
+                  <li class="list-unstyled text-dark mx-2 mt-2 mb-2">
+
+                    <a [routerLink]="['/crm/deal-detail/',deal.id]" fullWidth nbButton>
+                      <span class="text-info">  <nb-icon icon="eye-outline"></nb-icon> </span>Details
+                    </a>
+                  </li>
+                  <li class="list-unstyled text-dark mx-2 mt-2 mb-2">
+
+                    <a (click)="onArchiveConfirm(deal,deal.id)" fullWidth nbButton status="basic">
+                      <nb-icon icon="archive-outline"></nb-icon>
+                      Archive
+                    </a>
+                  </li>
+                </mat-menu>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body>
+            <span>Last Edited by: {{deal?.visit?.employee?.employeeName}}
+              <br><p class="mt-2">At {{deal.modifiedAt | date: 'YYYY MMM dd'}}</p></span>
+          </nb-card-body>
+          <nb-card-footer>
+            <div class="mt-3">Deal Value : <span class="text-inverse">{{deal.dealValue}}</span></div>
+            <div class="mt-3">Win chance : <span class="text-inverse">{{deal.winChance}}</span></div>
+
+            <div class="mt-3 avatar-image avatar-image--loaded mr-1">
+
+              <nb-user [name]="deal?.visit?.customer?.name" picture="{{deal?.visit?.customer?.image}}"
+                       size="medium">
+              </nb-user>
+
+            </div>
+            <div class="avatar-image avatar-image--loaded mr-2 mt-2">
+
+              <nb-user [name]="deal?.visit?.customer?.assignee?.employeeName"
+                       [picture]="deal?.visit?.customer?.assignee?.employeeProfileImage"
+                       size="medium"></nb-user>
+
+            </div>
+
+          </nb-card-footer>
+          <nb-card-footer class="d-flex">
+
+            <nb-tag-list>
+              <nb-tag [text]="deal.dealType" appearance="outline" class="align-self-center"
+                      nbTooltip="Deal Type" nbTooltipStatus="primary"
+                      size="small"
+                      status="info"></nb-tag>
+              <nb-tag [text]="deal?.visit?.title" appearance="outline" class="align-self-center"
+                      nbTooltip="Visit Title"
+                      nbTooltipStatus="success" size="small"
+                      status="success"></nb-tag>
+            </nb-tag-list>
+
+          </nb-card-footer>
+        </nb-card>
+
+      </div>
+ <div class="d-flex justify-content-center">
+      <nb-card class="card ml-auto mr-auto text-center" style="height: 30px; width: auto ;">
+        <pagination-controls (pageChange)="current = $event" align="right" nextLabel=""
+                             previousLabel=""></pagination-controls>
+
+      </nb-card>
+    </div>
+
+    </div>
+  </div>
+</div>
+</div>

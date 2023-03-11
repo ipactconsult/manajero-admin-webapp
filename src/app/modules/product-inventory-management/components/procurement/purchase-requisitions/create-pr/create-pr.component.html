@@ -1,0 +1,186 @@
+<button style="float: right;" nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic" 
+                 (click)="goToPreviousRoute()" nbButton>
+                     <nb-icon icon="corner-up-right-outline"></nb-icon>
+       </button>
+<button style="float: left" nbTooltip="Cancel" nbTooltipStatus="danger" shape="round" status="danger" 
+                 (click)="cancelProcess(dialogCancel)"nbButton>
+                     <nb-icon icon="close-outline"></nb-icon>
+       </button><br/><h5 align = "center">Create New Purchase Requisition</h5>
+<ng-template #dialogCancel let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Cancel purchase?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to cancel purchase?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="cancelWithToast(ref)" class="float-right" nbButton status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+<ngx-process [completedState1]="completedState1" [selectedIndex]=1
+             [progressValue]=10 [progressStatus]="progressStatus"></ngx-process>
+<nb-card>
+      <nb-card-header>Create New Purchase Requisition</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <ng-template #dialogMat let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Material View
+                    </nb-card-header>
+                    <nb-card-body>
+        <label class="mt-2">Material Name</label>
+        <div class="row">
+          <div class="col-md-10">
+              <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialName">
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <label class="mt-2">Material Type</label>
+        <div class="row">
+          <div class="col-md-10">
+              <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialType">
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <label class="mt-2">Material Category</label>
+        <div class="row">
+          <div class="col-md-10">
+              <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.materialCategory?.categoryName">
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <label class="mt-2">Maximum Capacity</label>
+        <div class="row">
+          <div class="col-md-10">
+              <input nbInput fullWidth type="text" disabled style="cursor: not-allowed"
+                                   class="form-control" [value]="existedMaterial.stockMax">
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Cannot be updated" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <label class="mt-2" [hidden]="materialTypeToGet === 'Service'">Material Quantity</label>
+        <div class="row" [hidden]="materialTypeToGet === 'Service'">
+          <div class="col-md-10">
+              <input nbInput fullWidth type="number" [(ngModel)]="quantityMat" (change)="changeMaterialQuantity($event)"
+                                   class="form-control" [value]="existedMaterial.materialQuantity"
+                                   nbTooltip="Update Material Quantity" nbTooltipStatus="info">
+          </div>
+          <div class="col-md-1">
+             <nb-icon icon="info-outline" 
+             nbTooltip="Enter the quantity to be ordered. Note that it should be less or equal than Maximum Capacity." 
+             nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>                      
+        <div class="row mt-5">
+         <div class="col-md-10">
+              <button style="float: right;" nbButton [disabled]="!quantityMat && materialTypeToGet !== 'Service' 
+                || quantityMat > existedMaterial.stockMax" 
+                      status="success" (click)="updateQuantity(ref)">
+                     <nb-icon icon="checkmark-circle-outline"></nb-icon>Save Data
+                </button>
+         </div>
+  </div>
+                    </nb-card-body>
+                  </nb-card>
+                </ng-template>
+        </div><br/>
+        <div class = "row" *ngIf="materials.length > 0">
+          <div class = "col-md-11">
+         <table class="table mb-0">
+          <thead class="bg-light">
+           <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Category</th>
+            <th>Barcode</th>
+            <th>Quantity</th>
+            <th>Creation Date</th>
+            <th>Edit</th>
+          </tr>
+          </thead>
+         <tbody
+          *ngFor="let material of materials">
+          <tr class="col-md-9 col-sm-10">
+           <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{material.materialType}}</p>
+              </div>
+            </div>
+           </td>
+            <td><p class="fw-normal mb-1">{{material.materialName}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialSKU}}</p></td>
+            <td><p class="fw-normal mb-1">{{material.materialCategory?.categoryName}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="!material.materialBarcode">
+                -
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialBarcode">
+                {{material.materialBarcode}}
+              </p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1" *ngIf="material.materialQuantity && material.materialType !== 'Service'">
+                {{material.materialQuantity}}
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                -
+              </p>
+              <p class="fw-normal mb-1" *ngIf="!material.materialQuantity && material.materialType !== 'Service'">
+                0
+              </p>
+            </td>
+            <td><p class="fw-normal mb-1">{{moment(material.materialCreationDate).format('DD MMM YYYY')}}</p></td>
+            <td>
+              <p class="fw-normal mb-1" [hidden]="material.materialType === 'Service'">
+                <i class = "fa fa-edit" style="cursor: pointer" (click)="open2(dialogMat, material.materialId)"
+                nbTooltip="Edit material quantity to proceed." nbTooltipStatus="info"></i>
+              </p>
+              <p class="fw-normal mb-1" *ngIf="material.materialType === 'Service'">
+                <i class = "fa fa-info" style="cursor: help"
+                nbTooltip="Can't Edit Service Quantity." nbTooltipStatus="info"></i>
+              </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+            </div>
+          <div class="col-md-1" *ngIf="materials.length > 0">
+             <nb-icon icon="info-outline" 
+                      nbTooltip="Selected Materials" nbTooltipStatus="primary"></nb-icon>
+          </div>
+        </div>
+        <div class="row mt-5">
+         <div class="col-md-11">
+              <button style="float: right;" nbButton [disabled]="saveBtnDisabled" 
+                      (click)="createNewPR()"
+            nbTooltip="Next" nbTooltipStatus="info" status="primary">
+              Next
+            </button>
+         </div>
+        </div>
+      </nb-card-body>
+    </nb-card>

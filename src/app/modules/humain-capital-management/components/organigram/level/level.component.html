@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-6">
+    <h3>Create New Level</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="levelForm">
+      <label>Level Reference</label><br>
+      <input class="form-control" fullWidth
+             fieldSize="large"
+             formControlName="levelReference"
+             name="levelReference"
+             [(ngModel)]="lvl.levelReference"
+             id="subDepartmentName" type="number" nbInput/>  <br>
+      <div style="float: right;">
+        <button  nbButton [disabled]="levelForm.invalid" (click)="storeLevel()" status="success"  class=" mt-2">
+          <nb-icon icon="checkmark-circle-outline"></nb-icon> Save new data
+        </button>
+      </div>
+
+
+    </form>
+  </div>
+</div>
+<div class="row">
+  <h3 class="col-lg-12">View Levels</h3>
+  <div class="col-md-4 mt-2" *ngFor="let lvl of listLvls">
+      <nb-card>
+          <p class="mx-3 mt-2">
+            <button nbButton status="basic" size="small">
+              Level : {{lvl.levelReference}}
+            </button> </p>
+          
+          <div class="row">
+            <p class="mx-4">Departments</p>
+            <div class="col-lg-12" *ngFor="let department of listDepartment">
+          
+              <p class="mx-4" *ngIf="department?.level?.levelReference === lvl.levelReference">
+                <nb-icon icon="flag-outline"></nb-icon> {{department.departmentName}}
+                <span>
+                  <div class="row">
+                    <div class="col-lg-12" *ngFor="let sub of listSub">
+                        <span class="mx-4 mt-3" [hidden]="sub?.department?.departmentName !== department.departmentName">
+                           <nb-icon icon="copy-outline"></nb-icon> {{sub.subDepartmentName}}
+                        </span>
+                    </div>
+                  </div>
+                
+                </span>
+              </p> 
+              
+            </div>
+            
+          </div>
+      </nb-card>
+  </div>
+</div>
+

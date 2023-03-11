@@ -1,0 +1,166 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h5 class="more-vertical">
+          Update visit </h5>
+      </div>
+
+      <div align="right" class="col-md-2 justify-content-end">
+        <a [routerLink]="['/crm/details-visit/',visit.id]" class="w-25" fullWidth nbButton status="info"
+           nbTooltip="Click here to show visit detail" nbTooltipStatus="primary" shape="round">
+          <nb-icon icon="eye-outline"></nb-icon>
+        </a>
+        <a [routerLink]="['/crm/visits']" class="w-25 mx-3"
+           fullWidth nbButton nbTooltip="Back to visits list" nbTooltipStatus="primary"  shape="round" status="basic">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+
+      </div>
+
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="visitGroup">
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label" for="refVisit">Visit Reference</label>
+            <input [(ngModel)]="visit.refVisit" formControlName="refVisit"
+                   fullWidth fieldSize="large"
+                   id="refVisit"
+                   name="refVisit" nbInput placeholder="Visit reference" type="text">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label" for="title">Title</label>
+            <input [(ngModel)]="visit.title" formControlName="title"
+                   fullWidth fieldSize="large"
+                   id="title"
+                   name="title" nbInput placeholder="Title" type="text">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label">Hour visit</label>
+            <input [(ngModel)]="visit.hourVisit" formControlName="hourVisit"
+                   fullWidth fieldSize="large"
+                   id="hourVisit"
+                   name="hourVisit" nbInput placeholder="Hour visit" type="time">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label">Date visit</label>
+          <input [(ngModel)]="visit.dateVisit" [nbDatepicker]="dateTimePicker1"
+                       formControlName="dateVisit" fullWidth
+                       id="dateVisit" fieldSize="large"
+                       name="dateVisit" nbInput placeholder="Date visit">
+                <nb-datepicker #dateTimePicker1></nb-datepicker>
+          </div>
+        </div>
+
+      </div>
+
+  
+
+      <div class="row">
+      
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label"> Availability</label>
+            <input [(ngModel)]="visit.availability" formControlName="availability"
+                   fullWidth fieldSize="large"
+                   id="availability"
+                   name="availability" nbInput placeholder="Availability" type="text">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label"> Property </label> <br>
+            <nb-select (selectedChange)="onMenuItemSelectedProperty($event)"
+                       [(ngModel)]="visit.property"
+                       [selected]="selectedProperty"
+                       class="w-100"
+                       formControlName="property"
+                        fullWidth size="large"
+                       id="property" name="property"
+                       placeholder="Property">
+              <nb-option
+                *ngFor="let optionProperty of properties"
+                value="{{optionProperty.propertyId}}">{{optionProperty.propertyName}}</nb-option>
+
+            </nb-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label"> Visit Status</label> <br>
+            <nb-select (selectedChange)="onMenuStatusSelected($event)"
+                       [(ngModel)]="visit.status"
+                       [selected]="selectedStatus"
+                       class="w-100"
+                       formControlName="status"
+                        fullWidth size="large" id="status"
+                       name="status">
+
+              <nb-option
+
+                *ngFor="let option of options" value="{{option.value}}">{{option.value}}</nb-option>
+
+            </nb-select>
+
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="label"> Customer </label> <br>
+            <nb-select (selectedChange)="onMenuItemSelectedCustomer($event)"
+                       [(ngModel)]="visit.customer"
+                       [selected]="selectedCustomer"
+                       class="w-100"
+                       formControlName="customer"
+                       fullWidth size="large"
+                       id="customer" name="customer"
+                       placeholder="Customer">
+
+              <nb-option
+
+                *ngFor="let optionCustomer of dataCustomers"
+                value="{{optionCustomer.id}}">                      <nb-user size="medium" [picture]="optionCustomer.image" [name]="optionCustomer.name"></nb-user>
+</nb-option>
+
+            </nb-select>
+          </div>
+        </div>
+
+
+      </div>
+     
+      <div class="row">
+        <div class="col-lg">
+          <div class="form-group">
+            <label class="label"> Description</label>
+            <textarea [(ngModel)]="visit.description" formControlName="description"
+                      fullWidth fieldSize="large"
+                      id="description" name="description"
+                      nbInput rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+    <div align="right">
+       <button (click)="UpdateVisitFunction()"  nbButton status="success" >Update </button>
+    </div>
+     
+    </form>
+  </nb-card-body>
+</nb-card>

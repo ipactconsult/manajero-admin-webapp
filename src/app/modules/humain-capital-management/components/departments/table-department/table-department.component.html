@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <div class="row">
+      <h3 class="more-vertical">
+        Department List</h3>
+      
+        <input class="w-50 mx-2"  nbTooltip="Fill this field to find department" nbTooltipStatus="primary" [disabled]="list.length === 0" type="text"  fieldSize="large" nbInput placeholder="search by fields" [(ngModel)]="searchbyfields">
+    </div>
+
+  </div>
+  <div class="col-md-6 col-sm-8">
+    <a nbTooltip="Visualize data on dimensions grid 2x2" nbTooltipStatus="primary" [routerLink]="['/hr/department/grid']" nbButton status="primary"> <nb-icon icon="grid-outline"></nb-icon>   </a>
+    &nbsp;
+    <a nbTooltip="Visualize data on dimensions grid 3x3" nbTooltipStatus="primary" [routerLink]="['/hr/department/list']" nbButton status="warning"> <nb-icon icon="keypad-outline"></nb-icon>   </a>
+    &nbsp;
+    <a [routerLink]="['/hr/department/table']" nbTooltip="Visualize data in table" nbTooltipStatus="primary" nbButton status="basic"> <nb-icon icon="list-outline"></nb-icon>   </a>
+    &nbsp;
+    <button nbTooltip="Export to excel file" nbTooltipStatus="primary" nbButton status="success"  (click)="exportAsXLSX()"><i class="fas fa-file-excel text-white"></i>  </button>
+    &nbsp;
+    <button nbTooltip="Export to pdf file" nbTooltipStatus="primary" nbButton status="danger"  [print]="['departments', config_]"><nb-icon icon="printer-outline"></nb-icon> </button>
+    &nbsp;
+    <a [routerLink]="['/hr/department/create']" nbTooltip="Click here to create a new department" nbTooltipStatus="primary" nbButton status="info">
+      <nb-icon icon="plus-outline"></nb-icon>
+      Create new
+    </a>  &nbsp;
+    <a nbTooltip="Click here to create a new sub department" nbTooltipStatus="primary" [routerLink]="['/hr/subdepartment/createSub']" status="basic"  nbButton class="mt-1 mx-1">
+      <nb-icon icon="plus-outline"></nb-icon> New Sub 
+    </a>
+      <br>
+</div>
+
+
+
+</div>
+<div class="col-md-2 col-sm-4">
+
+
+
+</div>
+<br>
+<div class="row" *ngIf="!list || list.length === 0">
+  <nb-alert outline="danger" class="w-100 mt-3">No Data Found.</nb-alert>
+</div>
+<div [hidden]="list.length === 0" class="row" *ngIf="(list | filter : searchbyfields).length === 0">
+  <nb-alert outline="danger" class="w-100 mt-3">The item searched is not found. Please make sure while typing your data</nb-alert>
+</div>
+<div class="col-lg-10 mt-3">
+  <label for="">Items Per Page &nbsp; : &nbsp; </label> 
+  <input class="w-75" [disabled]="list.length === 0" type="number" nbInput [(ngModel)]="pageSize" min="10">
+</div>
+<div class="row mt-5">
+  <div class="col-md-12">
+    <nb-card>
+      <table  class="table mb-0" id="departments">
+        <thead class="bg-light">
+        <tr>
+          <th></th>
+          <th>Reference</th>
+          <th>Name</th>
+          <th>Responsable</th>
+          <th>Sub Departments</th>
+          <th class="print-none">Actions</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let department  of list  | filter : searchbyfields | paginate : {itemsPerPage: pageSize, currentPage: current,totalItems: total} ; let i =index">
+          <td>
+            <nb-user [name]="department.departmentName" onlyPicture></nb-user>
+          </td>
+          <td> <p>{{department.departmentReference}}</p> </td>
+          <td><p>{{department.departmentName}}</p></td>
+          <td>
+            <div *ngIf="department?.employee?.employeeName === null; else data">
+                <nb-tag status="warning" appearance="filled" [text]="NoData"></nb-tag>
+               
+            </div>
+            <ng-template #data>
+              <p>{{department?.employee?.employeeName}}</p>
+            </ng-template>
+          </td>
+          <td>
+            <div class="row">
+             
+              <div *ngFor="let sub of subList">
+               
+                <div  *ngIf="sub?.department?.departmentName === department.departmentName">
+
+                
+                    <button nbButton shape="round" size="small" status="dark">
+                      {{sub?.subDepartmentName}} <nb-icon class="print-none" (click)="open2(dialog)" nbButton shape="round" status="danger" icon="close-outline"></nb-icon>
+                    </button>
+                 
+                  <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>Confirm Delete Operation</nb-card-header>
+                      <nb-card-body>Are you sure you want to delete a sub department having name {{sub?.subDepartmentName}}</nb-card-body>
+                      <nb-card-footer>
+                        <div class="row">
+                          <button class="col-md-2" nbButton (click)="ref.close()">Close</button>
+                          <div class="col-md-8"></div>
+                          <a class="col-md-2" status="danger"   nbButton (click)="deleteSubDepartment(sub.id)">Delete</a>
+                        </div>
+
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>
+               
+                </div>
+
+            </div>
+
+            </div>
+          </td>
+          <td class="print-none">
+            <button shape="round" nbButton status="basic" size="small" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <nb-icon icon="more-horizontal-outline"></nb-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+
+              <a style="text-decoration:none" nbTooltip="Click here to edit data" nbTooltipStatus="primary" [routerLink]="['/hr/department/update/', department.id]">
+                <button mat-menu-item>
+                  <span ><nb-icon class="text-warning" icon="edit-outline"></nb-icon>&nbsp; Edit</span>
+                </button>
+              </a>
+         
+              <a nbTooltip="Click here to archive data" nbTooltipStatus="primary" (click)="updateIsDepartmentArchived(department, department.id)">
+                <button mat-menu-item>
+                  <span><nb-icon class="text-secondary" icon="archive-outline"></nb-icon>&nbsp; Archive</span>
+                </button>
+              </a>
+         
+            </mat-menu>
+          </td>
+        </tr>
+      </table>
+    </nb-card>
+  </div>
+ 
+  <nb-card class="card ml-auto mr-auto" style="height: 35px; border-radius: 25px;">
+    <pagination-controls class="pt-1" (pageChange)="current = $event"></pagination-controls>
+  </nb-card>
+</div>

@@ -1,0 +1,33 @@
+
+<div class="container">
+  <div class="content">
+    <nb-card>
+      <nb-card-header>
+        <h3>Contract</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <small>* You can create your contract in customizable mode and you can export it to PDF  </small>
+        <ckeditor
+                  class="card mt-2"
+                  [config]="{}"
+                  [readonly]="false"
+                  (change)="onChange($event)"
+                  (editorChange)="onEditorChange($event)" 
+                  (ready)="onReady($event)"
+                  (focus)="onFocus($event)"
+                  (blur)="onBlur($event)"
+                  (contentDom)="onContentDom($event)"
+                  (fileUploadRequest)="onFileUploadRequest($event)"
+                  (fileUploadResponse)="onFileUploadResponse($event)"
+                  (paste)="onPaste($event)"
+                  (drop)="onDrop($event)"
+                  debounce="500">
+                </ckeditor> 
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="success">Create </button>
+      </nb-card-footer>
+    </nb-card>
+    
+  </div>
+</div>

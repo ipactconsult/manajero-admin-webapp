@@ -1,0 +1,34 @@
+:host ::ng-deep nb-stepper .step-content {
+    text-align: center;
+  
+    button {
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+  }
+  .nb-icon {
+    font-size: 2rem;
+  }
+  .label {
+    display: block;
+    width: 300px;
+  }
+
+  
+  .full-name-inputs,
+  .validation-checkboxes {
+    display: flex;
+    margin: 0 -0.5rem;
+  
+    > * {
+      margin: 0 0.5rem;
+    }
+  }
+  
+  .checkbox-radio {
+    display: flex;
+  }
+  
+  .demo-items {
+    flex: 1 0 33%;
+  }

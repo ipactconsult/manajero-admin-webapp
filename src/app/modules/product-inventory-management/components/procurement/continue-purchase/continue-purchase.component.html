@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-md-3">
+    <h3>Purchase Process</h3>
+  </div>
+</div><br/>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table mb-0">
+      <thead class="bg-light">
+        <tr>
+          <th>Selected Materials</th>
+          <th>Purchase Requisition</th>
+          <th>Request For Quotation</th>
+          <th>Quotations</th>
+          <th>Selected Supplier</th>
+          <th>Purchase Order</th>
+          <th>Step</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td *ngIf="purchaseProcess.materials">
+            <div *ngFor="let material of purchaseProcess.materials">
+              <a [routerLink]="['/pim/procurement/material', material.materialId]"
+                    style="text-decoration: none">
+               <button nbButton shape="round" size="small" 
+                       status="dark" class="materialNames">
+                  {{material.materialName}}
+               </button>
+            </a><br/>
+            </div>
+          </td>
+          <td *ngIf="purchaseProcess.pr">
+            <a [routerLink]="['/pim/procurement/purchase-requisition', purchaseProcess.pr.purchaseRequisitionId]"
+              style="text-decoration: none">
+              <button nbButton shape="round" size="small" 
+                       status="dark" class="purchaseRequisition">
+                  {{purchaseProcess.pr.purchaseRequisitionNumber}}
+               </button>
+            </a>
+          </td>
+          <td *ngIf="!purchaseProcess.pr" class="text-white">
+            -
+          </td>
+          <td *ngIf="purchaseProcess.rfq">
+            <a [routerLink]="['/pim/procurement/rfq', purchaseProcess.rfq.rfqId]"
+              style="text-decoration: none">
+              <button nbButton shape="round" size="small" 
+                       status="dark" class="rfq">
+                  {{purchaseProcess.rfq.rfqNumber}}
+               </button>
+            </a>
+          </td>
+          <td *ngIf="!purchaseProcess.rfq" class="text-white">
+            -
+          </td>
+          <td *ngIf="purchaseProcess.quotations">
+            <div *ngFor="let quotation of purchaseProcess.quotations">
+              <a style="text-decoration: none">
+               <button nbButton shape="round" size="small" 
+                       status="dark" class="quotations">
+                  {{quotation.quotationNumber}}
+               </button>
+              </a><br/>
+            </div>
+          </td>
+          <td *ngIf="!purchaseProcess.quotations" class="text-white">
+            -
+          </td>
+          <td *ngIf="purchaseProcess.supplier">
+            <a [routerLink]="['/pim/supplier', purchaseProcess.supplier.supplierId]"
+              style="text-decoration: none">
+              <nb-user [name]="purchaseProcess.supplier.supplierFirstName + ' ' + purchaseProcess.supplier.supplierLastName" 
+                     picture="{{purchaseProcess.supplier.supplierImage}}" size="medium"></nb-user>
+            </a>
+          </td>
+          <td *ngIf="!purchaseProcess.supplier" class="text-white">
+            -
+          </td>
+          <td *ngIf="purchaseProcess.po">
+            <a [routerLink]="['/pim/procurement/purchase-order/detail', purchaseProcess.po.poId]"
+              style="text-decoration: none">
+              <button nbButton shape="round" size="small" 
+                       status="dark" class="po">
+                  {{purchaseProcess.po.poNumber}}
+               </button>
+            </a>
+          </td>
+          <td *ngIf="!purchaseProcess.po" class="text-white">
+            -
+          </td>
+          <td class="text-white">
+            {{purchaseProcess.step}}
+          </td>
+          <td>
+            <button nbButton status="success" size="small" 
+                    (click)="continuePurchase()" [hidden]="hiddenContinueProcessBtn">
+              Continue Purchase
+            </button>
+            <button nbButton status="danger" size="small" 
+                    (click)="endProcessPR()" [hidden]="hiddenEndProcessBtn"
+                    nbTooltip="Purchase Process must end because purchase requisition is REJECTED by the Finance Team."
+                    nbTooltipStatus="danger">
+              End Process
+            </button>
+            <button nbButton status="success" size="small" *ngIf="stocked === purchaseProcess.materials?.length"
+                    (click)="endProcessDone()"
+                    nbTooltip="Purchase Process is DONE! Click on Finish to confirm the end of the purchase."
+                    nbTooltipStatus="success">
+              Finish
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

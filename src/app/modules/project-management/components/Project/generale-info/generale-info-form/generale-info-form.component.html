@@ -1,0 +1,86 @@
+  <form class="form" [formGroup]="generalInfoForm" (ngSubmit)="save()">
+    <div class="row">
+
+    <div class="col-md-6">
+      <div>
+        <label for="subject">Project Name:</label>
+        <input
+          nbInput
+          fullWidth
+          class="form-control"
+          type="text"
+          formControlName="title"
+        />
+      </div>
+
+      <div>
+        <label for="subject">Organization :</label>
+        <input
+          nbInput
+          fullWidth
+          class="form-control"
+          type="text"
+          formControlName="organization"
+        />
+      </div>
+      <div>
+        <label for="subject">Project Category :</label>
+        <nb-select
+          placeholder="Choose category"
+          formControlName="type"
+          fullWidth
+        >
+          <nb-option value="INTERNAL">INTERNAL</nb-option>
+          <nb-option value="EXTERNAL">EXTERNAL</nb-option>
+        </nb-select>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div>
+        <label for="subject">Start Date :</label>
+        <input
+          nbInput
+          fullWidth
+          placeholder="Pick Date"
+          [nbDatepicker]="dateTimePicker"
+          formControlName="startDate"
+        />
+        <nb-datepicker #dateTimePicker></nb-datepicker>
+        <div *ngIf="startDate?.invalid && (startDate?.dirty || startDate?.touched)">
+          <p class="text-danger" *ngIf="startDate?.errors?.required">*Required</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="subject">End Date :</label>
+        <input
+          nbInput
+          fullWidth
+          placeholder="Pick Date"
+          [nbDatepicker]="dateTimePicker2"
+          formControlName="endDate"
+        />
+        <nb-datepicker #dateTimePicker2></nb-datepicker>
+        <div *ngIf="endDate?.invalid && (endDate?.dirty || endDate?.touched)">
+          <p class="text-danger" *ngIf="endDate?.errors?.required">*Required</p>
+        </div>
+      </div>
+      <div>
+        <label for="subject">Status :</label>
+        <nb-select
+          placeholder="Choose category"
+          formControlName="status"
+          fullWidth
+        >
+          <nb-option value="IN_PROGRESS">IN_PROGRESS</nb-option>
+          <nb-option value="CLOSED">CLOSED</nb-option>
+          <nb-option value="DONE">DONE</nb-option>
+        </nb-select>
+      </div>
+      <input class="btn btn-success btnCreate mt-2" type="submit" value="Save" />
+
+    </div>
+</div>
+
+  </form>

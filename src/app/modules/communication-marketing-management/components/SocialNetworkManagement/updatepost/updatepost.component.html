@@ -1,0 +1,104 @@
+<div *ngIf="postData" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Update Post </h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/communicationMarketing/PostDetails/',postData.id]" class="w-25"
+         fullWidth nbButton  status="info" shape="round">
+        <nb-icon icon="eye-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/communicationMarketing/SocialNetwork']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to events list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="PostGroup">
+    <div >
+      <div >
+        <nb-card>
+          <nb-card-body class="card-body">
+            <img class="img-xs rounded-circle" src="{{'https://avatars.dicebear.com/api/identicon/ ' + postData.creatorId+'.svg'}}"
+
+                 width="57"
+                 height="40"
+                 alt="">
+            <div class="ml-2">
+
+              <h4 class="media-heading">{{postData.name?.substring(0, postData?.name.indexOf('@'))}}</h4>
+
+              <ul class="list-unstyled list-inline media-detail pull-left">
+                <li><i class="fa fa-calendar"></i>{{postData.createdAt   | date:"YYYY MMM dd"}}</li>
+
+              </ul>
+            </div>
+            <textarea [(ngModel)]="postData.description"
+                      formControlName="description"
+                      fullWidth
+                      id="description"
+                      name="description"
+                      nbInput
+                      placeholder="description"
+                      type="String"
+            >
+        </textarea>
+
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="row">
+                <img alt=""
+                     src="{{postData.imageUrl}}" style="width: 350px;height: 350px;">
+                <br>
+              </div>
+              <div class="row mt-1 mx-1">
+                <div class="col-md-5">
+                  <button (click)="updatePostFunction()" nbButton shape="round" size="small" status="success">
+                    <nb-icon icon="checkmark-outline"></nb-icon>
+                  </button>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="button">
+                    <label for="imageUrl" nbButton shape="round" size="small" status="primary">
+                      <nb-icon class="mt-1" icon="upload-outline"></nb-icon>
+                    </label>
+                    <input (change)="onFileSelected($event)"
+                           autocomplete="off"
+                           formControlName="imageUrl"
+                           id="imageUrl"
+                           name="imageUrl"
+                           type="file">
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+
+
+              <button (click)="updatePostFunction()" status="success" nbButton>Edit</button>
+
+
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+
+      </div>
+
+      <div class="col-md-8">
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+  </form>
+</div>

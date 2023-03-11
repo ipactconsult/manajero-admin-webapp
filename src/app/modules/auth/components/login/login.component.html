@@ -1,0 +1,47 @@
+<nb-layout>
+
+  <nb-layout-column>
+
+  <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form     [formGroup]="loginform"  id="div5" >
+        <h3>Login Here</h3>
+
+        <label >Email</label>
+        <input type="text" placeholder="Email" formControlName="email" >
+        <div *ngIf="email.invalid && email.touched" class="mt-2">
+          <p class="caption status-danger" *ngIf="email.errors?.required">
+           Email is required! 
+          </p>
+        
+        </div>
+        <label >Password</label>
+        <input type="password" placeholder="Password"  formControlName="password">
+ <div *ngIf="password.invalid && password.touched " class="mt-2">
+          <p class="caption status-danger" *ngIf="password.errors?.required">
+        
+             Password is required!
+         
+          </p>
+        
+        </div>
+        <button
+                  (click)="login()"
+                  nbButton
+                  status="primary"
+                  [disabled]="loginform.invalid || btnDis">
+                  Sign In
+                </button>
+                
+     <div class="mt-2"><a  status="info" fullWidth nbButton [routerLink]="['/forget']">Forget password?</a></div> 
+      
+    </form>
+    
+
+  </nb-layout-column>
+
+</nb-layout>
+
+

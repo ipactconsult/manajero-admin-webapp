@@ -1,0 +1,243 @@
+<nb-card>
+
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-10 col-sm-12">
+          <h5 class="more-vertical">
+            Update an order </h5>
+        </div>
+
+        <div align="right" class="col-md-2 justify-content-end">
+          <a [routerLink]="['/crm/orders']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to orders list" nbTooltipStatus="primary"
+             shape="round" status="basic">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+    <form [formGroup]="orderGroup" class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label" for="orderName">Order name</label>
+                <input [(ngModel)]="order.orderName" formControlName="orderName"
+                       fullWidth fieldSize="large"
+                       id="orderName"
+                       name="orderName" nbInput placeholder="Order Name" type="text">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+          
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="label">Order date</label>
+                <input [(ngModel)]="order.orderDate" [nbDatepicker]="dateTimePicker1"
+                       formControlName="orderDate" fullWidth
+                       id="orderDate" fieldSize="large"
+                       name="orderDate" nbInput placeholder="Date order">
+                <nb-datepicker #dateTimePicker1></nb-datepicker>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label"> Other informations</label> <br>
+                <input [(ngModel)]="order.otherInfosOrder"
+                       formControlName="otherInfosOrder" fullWidth
+                       id="otherInfosOrder" fieldSize="large"
+                       name="otherInfosOrder" nbInput placeholder="Other informations">
+
+              </div>
+            </div>
+          </div>
+
+ 
+
+            <div class="row mx-2">
+              <div class="col-sm-6">
+                <nb-radio-group [(ngModel)]="order.orderType" formControlName="orderType" name="orderType">
+                  <nb-radio value="Company">Company</nb-radio>
+                  <nb-radio value="Particular">Particular</nb-radio>
+                </nb-radio-group>
+              </div>
+              <div class="col-sm-6">
+                <div [hidden]="order.orderType !== 'Company'">
+                  <label class="small">Purchase order</label>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input [(ngModel)]="order.purchaseOrder" fieldSize="large" formControlName="purchaseOrder"
+                             fullWidth  id="purchaseOrder" name="purchaseOrder" nbInput placeholder="Tap purchaseOrder"
+                             type="text">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label">Quantity</label>
+                  <input [(ngModel)]="order.quantity" formControlName="quantity" 
+                         fullWidth id="quantity" name="quantity"
+                         nbInput fieldSize="large"
+                         placeholder="Quantity" type="number">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label">Total</label>
+                  <input [(ngModel)]="order.orderPaid" formControlName="orderPaid" fullWidth id="orderPaid"
+                         name="orderPaid"
+                         nbInput fieldSize="large"
+                         placeholder="Total" type="number">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="label">Currency</label>
+                  <nb-select (selectedChange)="onMenuItemSelectedDeal($event)"
+                             [(ngModel)]="order.currency"
+                             class="w-100"
+                             formControlName="currency"
+                             fullWidth size="large"
+                             id="currency" name="currency"
+                             placeholder="currency">
+                    <nb-option
+                      *ngFor="let cu of currencies"
+                      value="{{cu.cc}}">{{cu.symbol}}</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="label"> Deals</label><br>
+                  <nb-select (selectedChange)="onMenuItemSelectedDeal($event)"
+                             [(ngModel)]="order.deals"
+                             class="w-100" 
+                             formControlName="deals"
+                             fullWidth size="large"
+                             id="deals" name="deals"
+                             placeholder="Deals">
+                    <nb-option
+                      *ngFor="let optionDeal of dataDeals"
+                      value="{{optionDeal.id}}">{{optionDeal.dealName}}</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="label"> Product</label><br>
+                  <nb-select (selectedChange)="onMenuItemSelectedProduct($event)"
+                             [(ngModel)]="order.product"
+                             class="w-100"
+                             formControlName="product"
+                             fullWidth size="large"
+                             id="product" name="product"
+                             placeholder="Product">
+
+                    <nb-option
+
+                      *ngFor="let optionProduct of dataProducts"
+                      value="{{optionProduct.materialId}}">{{optionProduct.materialName}}</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+     
+
+
+
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label">Payment method</label>
+                <nb-select (selectedChange)="onMenuItemSelectedPaymentMethod($event)"
+                           [(ngModel)]="order.paymentMethod"
+                           class="w-100"
+                           fieldSize="large"
+                           formControlName="paymentMethod"
+                           fullWidth  size="large"
+                           id="paymentMethod" name="paymentMethod"
+                           placeholder="Payment Method">
+
+                  <nb-option value="Cash">Cash</nb-option>
+                  <nb-option value="Checks">Checks</nb-option>
+                  <nb-option value="Debit cards">Debit cards</nb-option>
+                  <nb-option value="Credit cards">Credit cards</nb-option>
+                  <nb-option value="Mobile payments">Mobile payments</nb-option>
+                  <nb-option value="Electronic bank transfers">Electronic bank transfers</nb-option>
+                </nb-select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+           
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="label">Order sub Total</label>
+                <input [(ngModel)]="order.subTotal"
+                       formControlName="subTotal" fullWidth
+                       id="subTotal" fieldSize="large"
+                       name="subTotal" nbInput placeholder="Order sub Total">
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label"> Notes</label> <br>
+                <textarea [(ngModel)]="order.notes" cols="30" formControlName="notes" fullWidth
+                          id="notes" nbInput fieldSize="large"
+                          name="notes" rows="10"
+                ></textarea>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="label"> Invoice</label> <br>
+                <input [(ngModel)]="order.invoice" formControlName="invoice"
+                       fullWidth nbInput fieldSize="large"
+                       id="invoice" name="invoice"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row" align="right">
+            <button (click)="updateOrderFunction()"  nbButton 
+                    status="success" type="submit">Create
+            </button>
+          </div>
+
+    </form>
+  </nb-card-body>
+</nb-card>

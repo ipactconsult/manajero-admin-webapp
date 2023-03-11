@@ -1,0 +1,269 @@
+<div *ngIf="parternership" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Update Partner Details</h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/communicationMarketing/DetailsPartnership/',parternership.id]" class="w-25"
+         fullWidth nbButton shape="round" status="info">
+        <nb-icon icon="eye-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/communicationMarketing/Parternership']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to parternerships list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="parternershipGroup">
+
+    <div class="row mt-3">
+      <div class="col-md-4 mb-3">
+        <nb-card>
+          <nb-card-body class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="row">
+                <img alt=""
+                     src="{{parternership.parternershipLogo}}" style="width: 150px;height: 150px;border-radius: 100%;">
+                <br>
+              </div>
+              <div class="row mt-1 mx-1">
+                <div class="col-md-5">
+                  <button (click)="updatePartnerFunction()" nbButton shape="round" size="small" status="success">
+                    <nb-icon icon="checkmark-outline"></nb-icon>
+                  </button>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="button">
+                    <label for="parternershipLogo" nbButton shape="round" size="small" status="primary">
+                      <nb-icon class="mt-1" icon="upload-outline"></nb-icon>
+                    </label>
+                    <input (change)="onFileSelected($event)"
+                           autocomplete="off"
+                           formControlName="parternershipLogo"
+                           id="parternershipLogo"
+                           name="parternershipLogo"
+                           type="file">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+
+      </div>
+
+      <div class="col-md-8">
+
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Personal Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+       <div class="form-group row">
+                <div class="col-sm-3">
+               <p class="mb-0 text-sm">Name</p>
+             </div>
+             <div class="col-sm-9">
+               <input [(ngModel)]="parternership.parternershipName"
+                      formControlName="parternershipName"
+                      fullWidth
+                      id="parternershipName"
+                      name="parternershipName"
+                      nbInput
+                      placeholder="parternershipName"
+                      type="text"
+               />
+
+             </div>
+           </div>
+           <hr>
+              <div class="form-group row">
+                   <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Domain</p>
+                </div>
+                <div class="col-sm-9">
+                  <input [(ngModel)]="parternership.parternershipDomain"
+                         formControlName="parternershipDomain"
+                         fullWidth
+                         id="parternershipDomain"
+                         name="parternershipDomain"
+                         nbInput
+                         placeholder="parternershipDomain"
+                         type="text"
+                  />
+
+                </div>
+              </div>
+              <hr>
+
+              
+    
+
+        <div class="form-group row">
+                 <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Adress</p>
+        </div>
+             <div class="col-sm-9">
+               <input [(ngModel)]="parternership.parternershipAdresse"
+                      formControlName="parternershipAdresse"
+                      fullWidth
+                      id="parternershipAdresse"
+                      name="parternershipAdresse"
+                      nbInput
+                      placeholder="parternershipAdresse"
+                      type="text"
+               />
+
+             </div>
+         </div>
+     <hr>
+
+     <div class="form-group row">
+      <div class="col-sm-3">
+       <p class="mb-0 text-sm">Adress</p>
+</div>
+  <div class="col-sm-9">
+
+    <nb-select size="large" placeholder="Select Country" [(ngModel)]="parternership.country" 
+    class="mt-1" formControlName="country" fullWidth
+                       id="country" name="country" selected="0">
+              <nb-option disabled value="0">Country</nb-option>
+              <nb-option *ngFor="let country of countries" value="{{country.country_name}}">
+                {{country.country_name}}</nb-option>
+            </nb-select>
+  
+  </div>
+</div>
+   
+
+
+      
+            
+             
+
+     
+              
+
+              
+              <button (click)="updatePartnerFunction()"  status="success"nbButton>Edit</button>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header>Contact Information</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Email Address</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="parternership.parternershipEmail" fieldSize="large" formControlName="parternershipEmail" fullWidth
+                         id="parternershipEmail" name="parternershipEmail"
+                         nbInput placeholder="parternershipEmail" type="text">
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Phone</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="parternership.parternershipPhone"
+                         formControlName="parternershipPhone"
+                         fullWidth
+                         id="parternershipPhone"
+                         name="parternershipPhone"
+                         nbInput
+                         placeholder="parternershipPhone"
+                         type="text">
+                  <div *ngIf="parternership.parternershipPhone">
+                    <div *ngIf="parternership.touched">
+                      <p class="alert alert-warning text-dark" role="alert">Champ Obligatoire</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Work website</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="parternership.parternershipWebSiteLink"
+                         formControlName="parternershipWebSiteLink"
+                         fullWidth
+                         id="parternershipWebSiteLink"
+                         name="parternershipWebSiteLink"
+                         nbInput
+                         placeholder="Work Website"
+                         type="url">
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Linkedin</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="parternership.parternershipLinkedin"
+                         formControlName="parternershipLinkedin"
+                         fullWidth
+                         id="parternershipLinkedin"
+                         name="parternershipLinkedin"
+                         nbInput
+                         placeholder="linkedin "
+                         type="url"/>
+
+                </div>
+              </div>
+           
+
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 text-sm">Description</p>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="parternership.description"
+                         formControlName="description"
+                         fullWidth
+                         id="description"
+                         name="description"
+                         nbInput
+                         placeholder="linkedin "
+                         type="url"/>
+
+                </div>
+              </div>
+
+
+
+              <button (click)="updatePartnerFunction()"  status="success" nbButton>Edit</button>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <br>
+
+
+        <br>
+
+
+      </div>
+    </div>
+
+
+  </form>
+</div>
+

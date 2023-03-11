@@ -1,0 +1,187 @@
+<nb-card>
+
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <h5 class="more-vertical">
+            Add a visit </h5>
+        </div>
+               <div class="col-md-4">
+   
+        </div>
+        <div align="right" class="col-md-2 justify-content-end">
+          <a [routerLink]="['/crm/visits']" class="w-25 mx-3"
+             fullWidth nbButton nbTooltip="Back to visits list" nbTooltipStatus="primary"
+             shape="round" status="basic">
+            <nb-icon icon="corner-up-right-outline"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+      <nb-card-body>
+    <form  [formGroup]="visitGroup">
+      <nb-stepper #stepper >
+        <nb-step [stepControl]="visitGroup" label="Visit Info">
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label" for="refVisit">Visit Reference</label>
+                <input [(ngModel)]="visit.refVisit" formControlName="refVisit"
+                       fullWidth fieldSize="large"
+                       id="refVisit"
+                       name="refVisit" nbInput placeholder="Visit reference" type="text">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label" for="title">Title</label>
+                <input [(ngModel)]="visit.title" formControlName="title"
+                       fullWidth
+                       id="title" fieldSize="large"
+                       name="title" nbInput placeholder="Title" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label">Hour visit</label>
+                <input [(ngModel)]="visit.hourVisit" class="text-white "
+                       formControlName="hourVisit" fieldSize="large"
+                       fullWidth id="hourVisit"
+                       name="hourVisit" nbInput placeholder="Hour visit" type="time">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label">Date visit</label>
+                <input [(ngModel)]="visit.dateVisit" [nbDatepicker]="dateTimePicker1"
+                       formControlName="dateVisit" fullWidth
+                       id="dateVisit" fieldSize="large"
+                       name="dateVisit" nbInput placeholder="Date visit">
+                <nb-datepicker #dateTimePicker1></nb-datepicker>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label"> Availability</label>
+                <input [(ngModel)]="visit.availability" formControlName="availability"
+                       fullWidth fieldSize="large"
+                       id="availability"
+                       name="availability" nbInput placeholder="Availability" type="text">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label"> Visit Status</label> <br>
+                <nb-select (selectedChange)="onMenuStatusSelected($event)"
+                           [(ngModel)]="visit.status"
+                           class="w-100"
+                           formControlName="status"
+                           fullWidth size="large"
+                           id="status" name="status"
+                           placeholder="Visit status">
+
+                  <nb-option
+
+                    *ngFor="let option of options" value="{{option.value}}">{{option.value}}</nb-option>
+
+                </nb-select>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 mt-2" align="right">
+              <button (click)="onVisitFormSubmit()" class="w-100" nbButton nbStepperNext status="info"
+                      type="submit">next
+              </button>
+            </div>
+          </div>
+        </nb-step>
+        <nb-step [stepControl]="extra_form" label="Other Info">
+          <form class="step-container" formGroupName="extra_form">
+            <div class="row">
+
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="label"> Customer </label> <br>
+                  <nb-select (selectedChange)="onMenuItemSelectedCustomer($event)"
+                             [(ngModel)]="visit.customer"
+                             class="w-100"
+                             formControlName="customer"
+                             fullWidth size="large"
+                             id="customer" name="customer"
+                             placeholder="Customer">
+
+                    <nb-option
+
+                      *ngFor="let optionCustomer of dataCustomers"
+                      value="{{optionCustomer.id}}">                    
+                      <nb-user size="medium" [picture]="optionCustomer.image" [name]="optionCustomer.name"></nb-user>
+</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+                     
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="label"> Property </label> <br>
+                  <nb-select (selectedChange)="onMenuItemSelectedProperty($event)"
+                             [(ngModel)]="visit.property"
+                             [selected]="selectedProperty"
+                             class="w-100" size="large"
+                             formControlName="property"
+                             fullWidth 
+                             id="property" name="property"
+                             placeholder="Property">
+                    <nb-option
+                      *ngFor="let optionProperty of properties"
+                      value="{{optionProperty.propertyId}}">{{optionProperty.propertyName}}</nb-option>
+
+                  </nb-select>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg">
+                <div class="form-group">
+                  <label class="label"> Description</label>
+                  <textarea [(ngModel)]="visit.description" formControlName="description"
+                            fullWidth fieldSize="large"
+                            id="description" name="description"
+                            nbInput rows="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <button class="col-md-2" nbButton nbStepperPrevious>prev</button>
+              <div class="col-md-8"></div>
+             
+                <button (click)="addVisitFunction()" class="col-md-2" nbButton nbStepperNext
+                      status="success" type="submit">Create
+              </button>
+  
+            
+            </div>
+          </form>
+        </nb-step>
+      </nb-stepper>
+    </form> 
+  </nb-card-body>
+</nb-card>

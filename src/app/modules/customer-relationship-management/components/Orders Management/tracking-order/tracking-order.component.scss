@@ -1,0 +1,161 @@
+body {
+  margin-top: 20px;
+}
+
+.steps {
+  border: 1px solid #e7e7e7;
+}
+
+.steps-header {
+  padding: .375rem;
+  border-bottom: 1px solid #e7e7e7;
+
+  .progress {
+    height: 0.25rem;
+  }
+}
+
+.steps-body {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.step {
+  display: table-cell;
+  position: relative;
+  padding: 1rem .75rem;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  border-right: 1px dashed #dfdfdf;
+ 
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+
+  &:last-child {
+    border-right: 0;
+  }
+}
+
+.step-indicator {
+  display: block;
+  position: absolute;
+  top: .75rem;
+  left: .75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: .875rem;
+  line-height: 1.375rem;
+}
+
+.has-indicator {
+  padding-right: 1.5rem;
+  padding-left: 2.375rem;
+
+  .step-indicator {
+    top: 50%;
+    margin-top: -0.75rem;
+  }
+}
+
+.step-icon {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 auto;
+  margin-bottom: .75rem;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  color: #888;
+}
+
+.step:hover {
+  color:#827fc0;
+  text-decoration: none;
+
+  .step-indicator {
+    -webkit-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    border-color: transparent;
+    background-color: #f4f4f4;
+  }
+
+  .step-icon {
+    color: #827fc0;
+  }
+}
+
+.step-active {
+ 
+  pointer-events: none;
+  cursor: default;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .step-indicator, &:hover .step-indicator {
+    border-color: transparent;
+    background-color: #5c77fc;
+    color: #fff;
+  }
+
+  .step-icon, &:hover .step-icon {
+    color: #5c77fc;
+  }
+}
+
+.step-completed {
+  .step-indicator, &:hover .step-indicator {
+    border-color: transparent;
+    background-color: rgba(51, 203, 129, 0.12);
+    color: #33cb81;
+    line-height: 1.25rem;
+  }
+
+  .step-indicator .feather, &:hover .step-indicator .feather {
+    width: .875rem;
+    height: 0.875rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .steps-header {
+    display: none;
+  }
+
+  .steps-body {
+    display: block;
+  }
+
+  .step {
+    display: block;
+    border-right: 0;
+    border-bottom: 1px dashed #e7e7e7;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .has-indicator {
+    padding: 1rem 0.75rem;
+
+    .step-indicator {
+      display: inline-block;
+      position: static;
+      margin: 0;
+      margin-right: 0.75rem;
+    }
+  }
+}
+
+.bg-secondary {
+  background-color: #f7f7f7 !important;
+}

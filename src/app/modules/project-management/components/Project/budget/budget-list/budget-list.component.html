@@ -1,0 +1,89 @@
+
+
+  <div class="row">
+    <div class="col-6 col-sm-4">
+     
+      <div class="card l-bg-green-dark">
+        <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+          <div class="mb-4">
+                <h5 class="card-title mb-0">Initial Estimated Cost </h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+                <div class="col-8">
+                    <h2 class="d-flex align-items-center mb-0">
+                      {{ estimatedBudget }} 
+                    </h2>
+                </div>
+                
+            </div>
+          
+        </div>
+    </div>
+    </div>
+    <div class="col-6 col-sm-4">
+   
+      <div class="card l-bg-blue-dark">
+        <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+          <div class="mb-4">
+                <h5 class="card-title mb-0">Effective Real Cost </h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+                <div class="col-8">
+                    <h2 class="d-flex align-items-center mb-0">
+                      {{ resourceBudget+additionelBudget }} 
+                    </h2>
+                </div>
+                
+            </div>
+          
+        </div>
+    </div>
+    </div>
+    <div class="col-6 col-sm-4">
+      
+      <div class="card l-bg-orange-dark">
+        <div class="card-statistic-3 p-4">
+            <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+            <div class="mb-4">
+                <h5 class="card-title mb-0">Gap Budget</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+                <div class="col-8">
+                    <h2 class="d-flex align-items-center mb-0">
+                      {{( resourceBudget+additionelBudget)-estimatedBudget }} $
+                    </h2>
+                </div>
+                
+            </div>
+          
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+
+
+
+    <nb-card accent="danger" >
+      <nb-card-body >
+        <div class="row">
+
+        <div class="col-12" *ngIf="project?.id">
+            <ngx-budget-estimated [project]="project" (budgetCaluclated)="refreshEstimated($event)"></ngx-budget-estimated>
+
+        </div>
+        <div class="col-12" *ngIf="project?.id" >
+            <ngx-budget-resource [project]="project" (budgetCaluclated)="refreshResource($event)"></ngx-budget-resource>
+
+        </div>
+        <div class="col-12" *ngIf="project?.id">
+            <ngx-budget-additionel [project]="project" (budgetCaluclated)="refreshAdditionel($event)"></ngx-budget-additionel>
+
+        </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+ 

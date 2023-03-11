@@ -1,0 +1,139 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+    <div class="container">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-3">
+        <h3>Quotations</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+            <input [(ngModel)]="searchQ"
+             class="w-100 mx-2" nbInput placeholder="Search Archived Quotation"
+             type="text">
+        </div>
+      </div>
+      <div class="col-md-5">
+          <div>
+            <a (click)="exportAsXLSX()" [disabled]="quotations.length === 0"
+                    align="right" status="success"
+                    nbButton [nbTooltip]="exportExcelMsg" [nbTooltipStatus]="exportExcelStatus">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>
+          </div>
+      </div>
+    </div>
+  </nb-card-header>
+      <div *ngIf="!quotations || quotations.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(quotations | filter : searchQ).length === 0" [hidden]="quotations.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">Item Not Found.</nb-alert>
+    </div>
+  <div class="row">
+    <div class="col-md-3">
+      <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select (selectedChange)="getQuotationsByRFQ_REF($event)"
+                       class="mx-2 mt-3 w-75" placeholder="Filter by RFQ"
+                       selected="0" [disabled]="quotations.length === 0">
+              <nb-option (click)="getAllArchivedQuotations()" value="All">All</nb-option>
+              <nb-option *ngFor="let rfq of rfqs" [value]="rfq.rfqNumber">
+                {{rfq.rfqNumber}}
+              </nb-option>
+            </nb-select>
+        </nb-form-field>
+       <nb-form-field>
+          <nb-icon icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select [disabled]="quotations.length === 0"
+                     class="mx-2 mt-3 w-75"placeholder="Sort by Reference"
+                     selected="0" [disabled]="quotations.length === 0">
+            <nb-option (click)="getAllArchivedQuotations()" value="All">All</nb-option>
+            <nb-option (click)="getAllArchivedQuotationsASC()" value="1">Names (A-Z)</nb-option>
+            <nb-option (click)="getAllArchivedQuotationsDESC()" value="2">Names (Z-A)</nb-option>
+          </nb-select>
+        </nb-form-field>
+      <div class="col-lg-10 mt-3">
+        <label>Items Per Page</label> 
+      <input [(ngModel)]="pageSize" [disabled]="quotations.length === 0"
+             class="w-75" min="3"
+             nbInput type="number">
+      </div>
+    </div>
+  <div class="col-lg-9">
+    <table class="mb-0 table table-hover mt-3" *ngIf="quotations.length > 0">
+        <thead>
+        <tr>
+          <th class="align-middle bt-0">Reference</th>
+          <th class="align-middle bt-0">Created</th>
+          <th class="align-middle bt-0">Materials</th>
+          <th class="align-middle bt-0">Supplier</th>
+          <th class="align-middle bt-0">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let quotation of quotations | filter : searchQ 
+          | paginate : {itemsPerPage:pageSize, currentPage: current,totalItems: quotations.length}; let i =index">
+          <td class="align-middle">
+            <p>{{quotation.quotationNumber}}</p>
+          </td>
+          <td class="align-middle">
+            <p>{{quotation.quotationCreation | date: 'dd MMMM YYYY'}}</p>
+          </td>
+          <td class="align-middle">
+            <p *ngFor="let material of quotation.rfq.pr.material">
+              <a [routerLink]="['/pim/procurement/material', material.materialId]"
+                    style="text-decoration: none">
+                    <button nbButton shape="round" size="small" status="dark" class="materialNames">
+                       {{material.materialName}}
+                    </button>
+                  </a><br/></p>
+          </td>
+          <td class="align-middle">
+            <p><nb-user [name]="quotation.supplier.supplierFirstName + ' ' + quotation.supplier.supplierLastName" 
+                        picture="{{quotation.supplier.supplierImage}}"
+                       size="medium"></nb-user><br/></p>
+          </td>
+          <td class="align-middle text-right">
+            <div class="btn-group">
+              <button shape="round" nbButton status="basic" size="small" [matMenuTriggerFor]="menu" 
+                    aria-label="Example icon-button with a menu">
+              <nb-icon icon="more-horizontal-outline"></nb-icon>
+            </button>
+              <mat-menu #menu="matMenu" class="bg-white">
+                    <a (click)="open2(dialog)">
+                <button mat-menu-item>
+                  <span><nb-icon class="text-secondary" icon="refresh-outline"></nb-icon> Restore</span>
+                </button>
+              </a>
+              </mat-menu>
+              <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card>
+                      <nb-card-header>Confirm Restore Operation</nb-card-header>
+                      <nb-card-body>Are you sure you would like to restore this quotation?</nb-card-body>
+                      <nb-card-footer>
+                        <div class="row">
+                          <button class="col-md-2" status="danger" nbButton (click)="ref.close()">No</button>
+                          <div class="col-md-8"></div>
+                          <a class="col-md-2" status="success" nbButton (click)="onRestoreConfirm(quotation, ref)">Yes</a>
+                        </div>
+                      </nb-card-footer>
+                    </nb-card>
+                  </ng-template>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+      <div class="d-flex justify-content-center mt-2" *ngIf="quotations.length > 0">
+        <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+          <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+        </nav>
+      </div>
+ </div>
+</div>
+

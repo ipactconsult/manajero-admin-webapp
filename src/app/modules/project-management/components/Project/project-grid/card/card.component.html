@@ -1,0 +1,92 @@
+<nb-card size="tiny" accent="info">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-10">
+        {{ project.title }}
+      </div>
+      <div class="col-md-2">
+        <button
+          shape="round"
+          nbButton
+          status="basic"
+          size="small"
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <nb-icon icon="more-horizontal-outline"></nb-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a
+            style="text-decoration: none"
+            nbTooltip="Click here to edit data"
+            nbTooltipStatus="primary"
+          >
+            <button mat-menu-item (click)="detailsProject(project.id)">
+              <span
+                ><nb-icon class="text-warning" icon="edit-outline"></nb-icon
+                >&nbsp; Details</span
+              >
+            </button>
+          </a>
+          <a
+            nbTooltip="Delete data"
+            nbTooltipStatus="primary"
+            (click)="confirmation(dialog)"
+          >
+            <button mat-menu-item>
+              <span *ngIf="!project.archived; else elseBlock"
+                ><nb-icon class="text-danger" icon="trash-outline"></nb-icon
+                >&nbsp; Archive</span
+              >
+              <ng-template #elseBlock>
+                <sapn
+                  ><nb-icon icon="corner-left-up-outline"></nb-icon>
+                  Unarchive</sapn
+                >
+              </ng-template>
+            </button>
+          </a>
+        </mat-menu>
+
+        <ng-template #dialog let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-header>Confirm Archive Operation</nb-card-header>
+            <nb-card-body>
+              Are you sure you want to archive this item ?
+            </nb-card-body>
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-md-2">
+                  <button nbButton status="basic" (click)="ref.close()">
+                    <nb-icon icon="close"></nb-icon>Close
+                  </button>
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                  <button nbButton status="danger" (click)="onArchive(project)">
+                    <div *ngIf="!project.archived; else elseBlock">
+                      <nb-icon icon="archive-outline"></nb-icon> Archive
+                    </div>
+                    <ng-template #elseBlock>
+                      <nb-icon icon="corner-left-up-outline"></nb-icon>
+                      Unarchive
+                    </ng-template>
+                  </button>
+                </div>
+              </div>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    {{ project.description }}
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton outline status="info" [routerLink]="[project.id]">
+      Task List
+    </button>
+  </nb-card-footer>
+</nb-card>

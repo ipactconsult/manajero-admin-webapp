@@ -1,0 +1,226 @@
+<div *ngIf="existedMaterial" class="container">
+  <div class="row">
+    <div class="col-md-10 col-sm-12">
+      <h2 class="more-vertical">
+        Material Details</h2>
+    </div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/pim/procurement/material/update',existedMaterial.materialId]" class="w-25" status="warning"
+         fullWidth nbButton nbTooltip="Click here to edit material data" nbTooltipStatus="primary" shape="round">
+        <nb-icon icon="edit-outline"></nb-icon>
+      </a>
+      <a (click)="goToPreviousRoute()" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back" nbTooltipStatus="primary" shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Material Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Creation Date</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{moment(existedMaterial.materialCreationDate).format('DD MMM YYYY')}}
+              </div>
+            </div>
+            <hr>
+                <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material SKU</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedMaterial.materialSKU}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material Type</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedMaterial.materialType}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material Name</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedMaterial.materialName}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material Category</p>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{existedMaterial.materialCategory?.categoryName}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material Barcode</p>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="!existedMaterial.materialBarcode">
+                No Barcode
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="existedMaterial.materialBarcode">
+                {{existedMaterial.materialBarcode}}
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion>
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>Price Information</nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Purchase Price</p>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "existedMaterial.materialPrice || existedMaterial.supplier">
+                {{existedMaterial.materialPrice}} {{existedMaterial.supplier?.supplierCurrency}}
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "!existedMaterial.materialPrice">
+                No Fixed Price for this Material
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material VAT</p>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "existedMaterial.materialVAT">
+                {{existedMaterial.materialVAT}}%
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "!existedMaterial.materialVAT">
+                There is no current VAT for this Material
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Purchase Price 
+                  <small>
+                    (Incl. Taxes)
+                  </small>
+                </p>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "existedMaterial.materialVAT || existedMaterial.supplier">
+                {{existedMaterial.materialPrice + existedMaterial.materialPrice * (existedMaterial.materialVAT / 100)}} 
+                {{existedMaterial.supplier?.supplierCurrency}}
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "!existedMaterial.materialVAT">
+                Price and VAT do not exist
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Selling Price</p>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf = "existedMaterial.sellingPrice">
+                {{existedMaterial.sellingPrice}} {{existedMaterial.supplier?.supplierCurrency}}
+              </div>
+              <div class="col-sm-9 text-danger font-weight-bold" *ngIf = "existedMaterial.sellingPrice === 0">
+                <u>This Material is not For Sale.</u>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Supplier</p>
+              </div>
+              <a [routerLink]="['/pim/supplier', existedMaterial.supplier?.supplierId]"
+              style="text-decoration: none;" nbTooltip="Supplier Details" nbTooltipStatus="info" *ngIf = "existedMaterial.supplier">
+                <nb-user [name]="existedMaterial.supplier?.supplierFirstName + ' ' + existedMaterial.supplier?.supplierLastName" 
+                     picture="{{existedMaterial.supplier?.supplierImage}}" size="medium"></nb-user>
+              </a>
+              <div class="col-sm-9 text-secondary" *ngIf = "!existedMaterial.supplier">
+                No Supplier for this Material
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <br>
+      <nb-accordion *ngIf="existedMaterial.materialType !== 'Service'">
+        <nb-accordion-item expanded="true">
+          <nb-accordion-item-header>
+            Stock Information <span style="pointer-events: none;">&nbsp;&nbsp;</span>
+            <span class="blinking" *ngIf="existedMaterial.quantityStock < existedMaterial.stockAlert">
+              ALERT!!!
+            </span>
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">In Stock</p>
+              </div>
+              <div class="col-sm-9 text-success font-weight-bold" 
+              *ngIf="existedMaterial.quantityStock >= existedMaterial.stockAlert">
+                {{existedMaterial.quantityStock}}
+              </div>
+              <div class="col-sm-9 text-danger font-weight-bold" 
+              *ngIf="existedMaterial.quantityStock < existedMaterial.stockAlert">
+                {{existedMaterial.quantityStock}}
+              </div>
+              <div class="col-sm-9 text-danger font-weight-bold" *ngIf="!existedMaterial.quantityStock">
+                0
+              </div>
+            </div>
+            <hr>
+                <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Minimum Capacity</p>
+              </div>
+              <div class="col-sm-9 text-danger font-weight-bold" *ngIf="existedMaterial.stockAlert">
+                {{existedMaterial.stockAlert}}
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="!existedMaterial.stockAlert">
+                0
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Maximum Capacity</p>
+              </div>
+              <div class="col-sm-9 text-primary font-weight-bold" *ngIf="existedMaterial.stockMax">
+                {{existedMaterial.stockMax}}
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="!existedMaterial.stockMax">
+                0
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-sm">Material Warehouse</p>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="existedMaterial.warehouse">
+                {{existedMaterial.warehouse.warehouseLocation}}
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="!existedMaterial.warehouse">
+                This Material is not Stocked in any Warehouse
+              </div>
+            </div>
+            <hr>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </div>
+  </div>
+</div>

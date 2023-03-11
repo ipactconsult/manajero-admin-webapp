@@ -1,0 +1,151 @@
+<div *ngIf="graphicalCharter" class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <h2 class="more-vertical">
+        Update graphical Charter </h2>
+    </div>
+    <div class="col-md-5"></div>
+    <div align="right" class="col-md-2 justify-content-end">
+      <a [routerLink]="['/communicationMarketing/DetailsCharter/',graphicalCharter.id]" class="w-25" status="primary"
+         fullWidth nbButton shape="round">
+        <nb-icon icon="eye-outline"></nb-icon>
+      </a>
+      <a [routerLink]="['/communicationMarketing/GraphicalCharter']" class="w-25 mx-3"
+         fullWidth nbButton nbTooltip="Back to Graphical Charter list" nbTooltipStatus="primary" outline shape="round" status="basic">
+        <nb-icon icon="corner-up-right-outline"></nb-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <form [formGroup]="graphicalCharterGroup">
+
+    <label>color </label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="color"
+         name="color" 
+         [(ngModel)]="graphicalCharter.color" 
+         formControlName="color" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+
+<br>
+
+<label>TexType </label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="texType"
+         name="texType" 
+         [(ngModel)]="graphicalCharter.texType" 
+         formControlName="texType" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+<br>
+
+<label>Reference of color </label>
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="reference"
+         name="reference" 
+         [(ngModel)]="graphicalCharter.reference" 
+         formControlName="reference" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+<br>
+<label>FormaText</label>
+<div class="row">
+  <div class="col-md-11">
+         <input id="FormaText"
+         name="FormaText" 
+         [(ngModel)]="graphicalCharter.FormaText" 
+         formControlName="FormaText" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+
+
+
+<label>Description</label>
+
+
+
+<div class="row">
+  <div class="col-md-11">
+         <input id="description"
+         name="description" 
+         [(ngModel)]="graphicalCharter.description" 
+         formControlName="description" 
+         type="text" 
+         class="form-control" 
+         nbInput
+         fullWidth
+         />
+
+  </div>
+  <div class="col-md-1">
+         <nb-icon icon="info-outline" nbTooltip="Please enter valid reference"   status="success" nbTooltipStatus="primary"></nb-icon>
+
+  </div>
+</div>
+
+
+<br>
+
+<button (click)="updateGraphicalCharter()" status="success" nbButton>Edit</button>
+
+
+   
+
+
+  </form>
+</div>
+

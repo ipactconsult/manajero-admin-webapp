@@ -1,0 +1,141 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+  <div class="container">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Warehouses</h3>
+        </div>
+        <div class="col-md-4">
+            <input [(ngModel)]="search"
+                   nbInput class="w-75"
+                   placeholder="Search Archived Warehouse"
+                   type="text">
+        </div>
+        <div class="col-md-5">
+            <a (click)="exportAsXLSX()"
+                    align="right" nbButton [disabled]="warehouses.length === 0"
+                    [nbTooltip]="exportExcelMsg" [nbTooltipStatus]="exportExcelStatus"
+                    status="success">
+              <i class="fas fa-file-excel text-white"></i>
+            </a>&nbsp;
+        </div>
+      </div>
+    </nb-card-header>
+    <div *ngIf="!warehouses || warehouses.length === 0" align="center">
+      <nb-alert class="w-100 mt-3" outline="danger">No Data Found.</nb-alert>
+    </div>
+    <div *ngIf="(warehouses | filter : search).length === 0" [hidden]="warehouses.length === 0"
+         class="">
+      <nb-alert class="col-lg-12 mt-3" fullWidth outline="danger">Item Not Found.</nb-alert>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select 
+                       nbTooltip="Click here to filter by country" nbTooltipStatus="primary"
+                       placeholder="Filter by Country" [disabled]="warehouses.length === 0"
+                       selected="0" class="mx-2 mt-3 w-75" (selectedChange)="getWarehousesByCountry($event)">
+              <nb-option (click)="getAllArchivedWarehouses()" value="All">All</nb-option>
+            <nb-option *ngFor="let country of countries" [value]="country.country_name">
+              {{country.country_name}}
+            </nb-option>
+            </nb-select>
+        </nb-form-field>
+        <nb-form-field>
+          <nb-icon class="mt-3" icon="funnel-outline" nbPrefix></nb-icon>
+          <nb-select [disabled]="warehouses.length === 0"
+                       placeholder="Sort by Name"
+                       selected="0" class="mx-2 mt-3 w-75">
+              <nb-option (click)="getAllArchivedWarehouses()" value="All">All</nb-option>
+              <nb-option (click)="getAllArchivedWarehousesASC()" value="1">Names (A-Z)</nb-option>
+              <nb-option (click)="getAllArchivedWarehousesDESC()" value="2">Names (Z-A)</nb-option>
+            </nb-select>
+        </nb-form-field>
+        <div class="col-lg-10 mt-3">
+        <label>Warehouses Per Page :  </label>
+        <input [(ngModel)]="pageSize" [disabled]="warehouses.length === 0"
+               placeholder="Number to get items per page"
+                 nbTooltip="Tap a number to get items per page" nbTooltipStatus="primary"
+               class="w-100" min="3" nbInput type="number">
+      </div>
+      </div>
+      <div class="input-group col-md-9">
+      <table class="table mb-0 " id="htmlData" *ngIf="warehouses.length > 0">
+        <thead class="bg-light">
+        <tr>
+          <th>Reference</th>
+          <th>Name</th>
+          <th>Created</th>
+          <th>Address</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody
+          *ngFor="let warehouse of warehouses | filter : search | paginate : 
+          {itemsPerPage: pageSize, currentPage: current,totalItems: warehouses.length}">
+        <tr class="col-md-9 col-sm-10">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class=" mb-1">{{warehouse.warehouseCode}}</p>
+              </div>
+            </div>
+          </td>
+          <td><p class="fw-normal mb-1">{{warehouse.warehouseLocation}}</p></td>
+          <td><p class="fw-normal mb-1">{{moment(warehouse.warehouseCreationDate).format("DD MMM YYYY")}}</p></td>
+          <td><p class="fw-normal mb-1">{{warehouse.warehouseAddress}}</p></td>
+          <td><p class="fw-normal mb-1">{{warehouse.warehouseCountry}}</p></td>
+          <td><p class="fw-normal mb-1">{{warehouse.warehouseCity}}, {{warehouse.warehousePostalCode}}</p></td>
+          <td>
+            <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
+                        shape="round" status="basic"
+                        aria-label="Example icon-button with a menu" nbButton
+                        nbTooltip="Click here to see advanced menu"
+                        nbTooltipStatus="primary"
+                        size="small">
+                  <nb-icon icon="more-horizontal-outline"></nb-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                               <button mat-menu-item>
+                        <a (click)="open2(dialog)" fullWidth nbButton>
+                          <span class="text-secondary"><nb-icon icon="refresh-outline"></nb-icon></span>Restore
+                        </a>
+                      </button>
+                </mat-menu>
+                <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>
+                      Confirm restore operation ?
+                    </nb-card-header>
+                    <nb-card-body>
+                      Are you sure you would like to restore this warehouse?
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <button (click)="ref.close()" class="float-left" nbButton status="danger">
+                        No
+                      </button>
+                      <button (click)="onRestoreConfirm(warehouse, ref)" class="float-right" nbButton
+                      status="success">
+                        Yes
+                      </button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="warehouses.length > 0">
+      <nav aria-label="Page navigation example" class="bg-light" style="border-radius: 25px; height: 35px;">
+        <pagination-controls (pageChange)="current = $event" align="right"></pagination-controls>
+      </nav>
+    </div>
+  </div>
+</div>
+
