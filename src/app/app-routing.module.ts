@@ -34,7 +34,7 @@ export const routes: Routes = [
    component: ForgetPasswordComponent
   },
       {
-    path: 'reset_pwd',
+    path: 'reset_pwd/:token',
    component: ResetPasswordComponent
   },
 
